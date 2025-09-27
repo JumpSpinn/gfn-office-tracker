@@ -1,0 +1,32 @@
+﻿<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:OfficeTracker.Views.Controls"
+    x:DataType="vm:StatsControl"
+    xmlns:vm="using:OfficeTracker.Views.Controls"
+    >
+    <Design.PreviewWith>
+        <controls:StatsControl />
+    </Design.PreviewWith>
+    
+    <Style Selector="controls|StatsControl">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border CornerRadius="4" Padding="2" Background="#202020" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <Grid x:Name="StatsGrid" RowDefinitions="*" ColumnDefinitions="*,*">
+                        <StackPanel x:Name="HomeStackPanel" Grid.Column="0" ToolTip.Placement="Top" ToolTip.VerticalOffset="0">
+                            <Border CornerRadius="2 0 0 2" Padding="4 2" Background="#003764" HorizontalAlignment="Stretch">
+                                <TextBlock x:Name="HomeOfficePercentage" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="Regular" LineHeight="16" />
+                            </Border>
+                        </StackPanel>
+                        <StackPanel x:Name="OfficeStackPanel" Grid.Column="1" ToolTip.Placement="Top" ToolTip.VerticalOffset="0">
+                            <Border CornerRadius="0 2 2 0" Padding="4 2" Background="#357a32" HorizontalAlignment="Stretch">
+                                <TextBlock x:Name="OfficePercentage" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="Regular" LineHeight="16" />
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

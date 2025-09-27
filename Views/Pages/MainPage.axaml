@@ -1,0 +1,94 @@
+﻿<UserControl 
+    x:DataType="vm:MainPageViewModel"
+    x:Class="OfficeTracker.Views.Pages.MainPage"
+    xmlns:vm="using:OfficeTracker.ViewModels.Pages"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
+    <Panel>
+        <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+            <!-- Header -->
+            <Grid Grid.Row="0" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*" HorizontalAlignment="Stretch" Margin="20" RowSpacing="8">
+                <!-- Title -->
+                <TextBlock Grid.Row="0" Text="Anwesenheit-Statistik" FontSize="16" HorizontalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="DemiBold" />
+                
+                <!-- Tags -->
+                <Grid Grid.Row="1" RowDefinitions="*" ColumnDefinitions="Auto, Auto" ColumnSpacing="4" HorizontalAlignment="Center">
+                    <Border Grid.Column="0" CornerRadius="4" Padding="4 2" BorderBrush="#003764" BorderThickness="1">
+                        <TextBlock Text="HomeOffice" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="SemiBold" LetterSpacing="0.25"  />
+                    </Border>
+                    <Border Grid.Column="1" CornerRadius="4" Padding="4 2" BorderBrush="#357a32" BorderThickness="1">
+                        <TextBlock Text="Standort" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="SemiBold" LetterSpacing="0.25"  />
+                    </Border>
+                </Grid>
+                
+                <!-- Statistik -->
+                <Grid Grid.Row="2" x:Name="StatsGrid" ColumnDefinitions="*,Auto" ColumnSpacing="5" Margin="0 8 0 0">
+                    <Button Grid.Column="1"
+                            FontSize="12"
+                            Padding="4"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            ToolTip.Tip="Tag hinzufügen"
+                            ToolTip.Placement="Top"
+                            ToolTip.VerticalOffset="0"
+                            Click="OpenModalToAddCurrentDay"
+                            >
+                        <Button.Content>
+                            <fluent:SymbolIcon Symbol="Add" Opacity=".5" />
+                        </Button.Content>
+                    </Button>
+                </Grid>
+                
+                <!-- Statistik Label -->
+                <TextBlock x:Name="StatsLabel" Grid.Row="3" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="SemiBold" LetterSpacing="0.25" />
+                
+            </Grid>
+            
+            <!-- Tabs -->
+            <Grid Grid.Row="1">
+                <fluent:TabView TabWidthMode="SizeToContent" CanReorderTabs="False" CanDragTabs="False" AllowDropTabs="False" IsAddTabButtonVisible="False">
+                    <!-- Geplante Tage -->
+                    <fluent:TabViewItem Header="Geplante Tage" FontFamily="{DynamicResource UrbanistFont}" IsClosable="False">
+                        <Grid RowDefinitions="*,Auto" Margin="10" RowSpacing="5">
+                            <Button Grid.Row="1" HorizontalAlignment="Stretch" FontSize="12" Click="OpenModalToAddPlannableDay" FontFamily="{DynamicResource UrbanistFont}">Planbaren Tag hinzufügen</Button>
+                            <ListBox Grid.Row="0">
+                                <ListBoxItem>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                        <TextBlock Grid.Column="0" Text="29.09.2025" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" />
+                                        <TextBlock Grid.Column="1" Text="Standort" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" />
+                                        <Button Grid.Column="2" 
+                                                FontSize="16" 
+                                                Padding="4" 
+                                                VerticalAlignment="Center" 
+                                                Background="Transparent"
+                                                ToolTip.Tip="Löschen" 
+                                                ToolTip.Placement="Top" 
+                                                ToolTip.VerticalOffset="0"
+                                                Click="OpenModalToDeletePlannableDay"
+                                            >
+                                            <Button.Content>
+                                                <fluent:SymbolIcon Symbol="Delete" Opacity=".5" />
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+                                </ListBoxItem>
+                            </ListBox>
+                        </Grid>
+                    </fluent:TabViewItem>
+                    
+                    <!-- Vorhersage Statistiken -->
+                    <fluent:TabViewItem Header="Vorhersage (Statistiken)" FontFamily="{DynamicResource UrbanistFont}" IsClosable="False">
+                        <Grid RowDefinitions="*,Auto" Margin="10" RowSpacing="5">
+                            <Button Grid.Row="1" HorizontalAlignment="Stretch" FontSize="12">Weitere Woche anzeigen</Button>
+                            <ListBox Grid.Row="0" x:Name="List" />
+                        </Grid>
+                    </fluent:TabViewItem>
+                </fluent:TabView>
+            </Grid>
+        </Grid>
+    </Panel>
+</UserControl>

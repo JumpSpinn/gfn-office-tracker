@@ -1,0 +1,26 @@
+<Application
+        RequestedThemeVariant="Dark"
+        x:Class="OfficeTracker.App"
+        xmlns:local="using:OfficeTracker"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+    
+    <Application.DataTemplates>
+        <local:ViewLocator />
+    </Application.DataTemplates>
+    
+    <Application.Resources>
+        <Color x:Key="SystemAccentColor">#009eb6</Color>
+        <Color x:Key="SystemAccentColorLight1">#009eb6</Color>
+        <Color x:Key="SystemAccentColorDark1">#009eb6</Color>
+        <FontFamily x:Key="UrbanistFont">avares://OfficeTracker/Assets/Fonts#Urbanist</FontFamily>
+    </Application.Resources>
+    
+    <Application.Styles>
+        <styling:FluentAvaloniaTheme CustomAccentColor="#009eb6" />
+        <StyleInclude Source="/Views/Controls/StatsControl.axaml"></StyleInclude>
+    </Application.Styles>
+    
+</Application>

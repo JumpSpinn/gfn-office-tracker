@@ -1,0 +1,11 @@
+﻿bin/
+obj/
+
+Dist/
+
+.vs/
+.idea/
+
+/.run
+
+OfficeTracker.sln.DotSettings.user
