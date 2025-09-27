@@ -1,10 +1,19 @@
 ﻿namespace OfficeTracker.ViewModels.Windows;
 
-using Base;
-
 [RegisterSingleton]
-public sealed partial class MainWindowViewModel(IServiceProvider serviceProvider) : ViewModelBase
+public sealed partial class MainWindowViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private ViewModelBase? _currentPage = serviceProvider.GetRequiredService<MainPageViewModel>();
+	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
+
+	[ObservableProperty]
+	private ViewModelBase? _currentPage;
+
+	public MainWindowViewModel(IServiceProvider serviceProvider)
+	{
+		_currentPage = serviceProvider.GetRequiredService<SplashScreenPageViewModel>();
+		_messenger.Register<MainWindowViewModel, SplashScreenSuccessMessage>(this, (_, _) =>
+		{
+			CurrentPage = serviceProvider.GetRequiredService<MainPageViewModel>();
+		});
+	}
 }

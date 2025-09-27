@@ -19,6 +19,7 @@
     <ItemGroup>
         <Folder Include="Assets\Fonts\" />
         <AvaloniaResource Include="Assets\**" />
+        <Folder Include="Assets\Images\" />
     </ItemGroup>
 
   <ItemGroup>

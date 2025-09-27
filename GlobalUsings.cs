@@ -22,8 +22,10 @@ global using FluentAvalonia.UI.Windowing;
 global using FluentAvalonia.UI.Controls;
 
 global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Messaging.Messages;
+global using CommunityToolkit.Mvvm.Messaging;
 
-global using OfficeTracker.ViewModels;
+global using OfficeTracker.ViewModels.Base;
 global using OfficeTracker.ViewModels.Windows;
 global using OfficeTracker.Views.Windows;
 global using OfficeTracker.Helpers;
@@ -31,3 +33,4 @@ global using OfficeTracker.Views.Controls;
 global using OfficeTracker.Views.Forms;
 global using OfficeTracker.ViewModels.Pages;
 global using OfficeTracker.Enums;
+global using OfficeTracker.Messages;
