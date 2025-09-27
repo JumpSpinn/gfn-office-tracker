@@ -15,7 +15,6 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		_logController = lc;
 		_loadQueue.Enqueue(InitializeLoggerAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
-		// _loadQueue.Enqueue(InitializeDebugAsync);
 		TriggerNextLoadStep();
 	}
 
@@ -82,23 +81,6 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			DisplayInfoBar("Critical Error", $"While initializing Logger:\n{e.Message}", InfoBarSeverity.Error);
 			return false;
 		}
-	}
-
-	private async Task<bool> InitializeDebugAsync()
-	{
-		LoadingText = "Lade Daten vom File..";
-		await Task.Delay(5000);
-
-		LoadingText = "Berechne Daten..";
-		await Task.Delay(5000);
-
-		LoadingText = "Lade eingetragene Tage..";
-		await Task.Delay(5000);
-
-		LoadingText = "Berechne Statistiken..";
-		await Task.Delay(5000);
-
-		return true;
 	}
 
 	#endregion
