@@ -6,11 +6,14 @@ using Services.Windows.Controllers;
 public sealed partial class SplashScreenPageViewModel : ViewModelBase
 {
 	private readonly MainWindowController _mainWindowController;
+	private readonly LogController _logController;
 	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 
-	public SplashScreenPageViewModel(MainWindowController mwc)
+	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc)
 	{
 		_mainWindowController = mwc;
+		_logController = lc;
+		_loadQueue.Enqueue(InitializeLoggerAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
 		// _loadQueue.Enqueue(InitializeDebugAsync);
 		TriggerNextLoadStep();
@@ -56,6 +59,28 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			}
 
 			return await _mainWindowController.Initialize();
+		}
+	}
+
+	private async Task<bool> InitializeLoggerAsync()
+	{
+		try
+		{
+			ShowInfiniteProgressBar = true;
+			LoadingText = "Initializing Logger..";
+			if (!await _logController.EnsureLogFile())
+			{
+				DisplayInfoBar("Error", "Error while trying to ensure Log-File.", InfoBarSeverity.Error);
+				return false;
+			}
+			_logController.Info("Logger initialized.");
+			ShowInfiniteProgressBar = false;
+			return true;
+		}
+		catch (Exception e)
+		{
+			DisplayInfoBar("Critical Error", $"While initializing Logger:\n{e.Message}", InfoBarSeverity.Error);
+			return false;
 		}
 	}
 
