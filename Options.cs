@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace OfficeTracker;
+﻿namespace OfficeTracker;
 
 public static class Options
 {

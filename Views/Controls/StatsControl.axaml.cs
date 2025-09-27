@@ -1,8 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-
-namespace OfficeTracker.Views.Controls;
+﻿namespace OfficeTracker.Views.Controls;
 
 public sealed class StatsControl : TemplatedControl
 {
@@ -13,7 +9,7 @@ public sealed class StatsControl : TemplatedControl
         _homeOfficePercentageText = e.NameScope.Find<TextBlock>("HomeOfficePercentage");
         _homeStackPanel = e.NameScope.Find<StackPanel>("HomeStackPanel");
         _officeStackPanel = e.NameScope.Find<StackPanel>("OfficeStackPanel");
-        
+
         base.OnApplyTemplate(e);
         CalculateStats();
     }
@@ -50,7 +46,7 @@ public sealed class StatsControl : TemplatedControl
     #region CALCULATION
 
     private Grid? _grid;
-    
+
     private void CalculateStats()
     {
         if (_grid is null) return;
@@ -58,17 +54,17 @@ public sealed class StatsControl : TemplatedControl
         if (_officePercentageText is null) return;
         if (_homeStackPanel is null) return;
         if (_officeStackPanel is null) return;
-        
+
         var totalDays = HomeOfficeDays + OfficeDays;
         var homeOfficePercentage = (double)HomeOfficeDays / totalDays * 100;
         var officePercentage = (double)OfficeDays / totalDays * 100;
-        
+
         _grid.ColumnDefinitions[0].Width = new GridLength(homeOfficePercentage, GridUnitType.Star);
         _grid.ColumnDefinitions[1].Width = new GridLength(officePercentage, GridUnitType.Star);
-        
+
         _homeOfficePercentageText.Text = $"{homeOfficePercentage:F2}%";
         _officePercentageText.Text = $"{officePercentage:F2}%";
-        
+
         _homeStackPanel.SetValue(ToolTip.TipProperty, $"{HomeOfficeDays} Tage");
         _officeStackPanel.SetValue(ToolTip.TipProperty, $"{OfficeDays} Tage");
     }

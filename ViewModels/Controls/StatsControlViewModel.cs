@@ -1,19 +1,17 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace OfficeTracker.ViewModels.Controls;
+﻿namespace OfficeTracker.ViewModels.Controls;
 
 [RegisterSingleton]
 public sealed partial class StatsControlViewModel : ViewModelBase
 {
     [ObservableProperty]
     private uint _homeOfficeDays = 13;
-    
+
     [ObservableProperty]
     private double _homeOfficePercent = 50;
-    
+
     [ObservableProperty]
     private uint _officeDays = 13;
-    
+
     [ObservableProperty]
     private double _officePercent = 50;
 

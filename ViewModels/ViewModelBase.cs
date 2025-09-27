@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace OfficeTracker.ViewModels;
+﻿namespace OfficeTracker.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {

@@ -1,14 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
-using FluentAvalonia.UI.Controls;
-using OfficeTracker.Helpers;
-using OfficeTracker.ViewModels;
-using OfficeTracker.Views.Controls;
-using OfficeTracker.Views.Forms;
-
-namespace OfficeTracker.Views.Pages;
+﻿namespace OfficeTracker.Views.Pages;
 
 public partial class MainPage : UserControl
 {
@@ -42,7 +32,7 @@ public partial class MainPage : UserControl
             HomeOfficeDays = 10,
             OfficeDays = 20
         };
-        
+
         var stats2 = new StatsControl()
         {
             HomeOfficeDays = 10,
@@ -84,7 +74,7 @@ public partial class MainPage : UserControl
 
         dialog.ShowAsyncCorrectly();
     }
-    
+
     private void OpenModalToAddPlannableDay(object? sender, RoutedEventArgs e)
     {
         var dialog = new ContentDialog()
@@ -98,8 +88,8 @@ public partial class MainPage : UserControl
 
         dialog.ShowAsyncCorrectly();
     }
-    
+
 
     #endregion
-    
+
 }

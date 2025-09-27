@@ -1,9 +1,4 @@
-﻿using System.Threading.Tasks;
-using Avalonia.Controls;
-using Avalonia.Layout;
-using FluentAvalonia.UI.Controls;
-
-namespace OfficeTracker.Helpers;
+﻿namespace OfficeTracker.Helpers;
 
 public static class DialogHelper
 {

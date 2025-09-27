@@ -1,8 +1,4 @@
-﻿using Avalonia;
-using System;
-using System.Threading;
-
-namespace OfficeTracker;
+﻿namespace OfficeTracker;
 
 internal abstract class Program
 {

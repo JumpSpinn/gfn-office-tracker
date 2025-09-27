@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace OfficeTracker.Data;
+﻿namespace OfficeTracker.Data;
 
 public sealed class OfficeTrackerData
 {
