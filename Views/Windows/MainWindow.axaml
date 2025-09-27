@@ -1,18 +1,16 @@
 <Window
-    Icon="/Assets/logo.ico"
+    Icon="/Assets/logo_white.ico"
     Title="OfficeTracker"
-    TransparencyLevelHint="AcrylicBlur"
-    Background="Transparent"
     Width="400"
     Height="600"
-    
+
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
     xmlns:vm="using:OfficeTracker.ViewModels.Windows"
-    
+
     mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
     x:Class="OfficeTracker.Views.Windows.MainWindow"
     x:DataType="vm:MainWindowViewModel"
@@ -20,5 +18,5 @@
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
-    <controls:Frame Background="#121212" Margin="{Binding $parent[Window].OffScreenMargin}" Content="{ Binding CurrentPage}" />
+    <controls:Frame Margin="{Binding $parent[Window].OffScreenMargin}" Content="{ Binding CurrentPage}" />
 </Window>

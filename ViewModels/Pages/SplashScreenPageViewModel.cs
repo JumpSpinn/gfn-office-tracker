@@ -122,4 +122,11 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	private bool _showInfiniteProgressBar;
 
 	#endregion
+
+	#region VERSION
+
+	[ObservableProperty]
+	private string _version = $"Version: {Options.VERSION}";
+
+	#endregion
 }

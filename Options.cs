@@ -18,5 +18,5 @@ public static class Options
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
-    public const string VERSION = "1.0.0";
+    public const string VERSION = "1.5.3";
 }

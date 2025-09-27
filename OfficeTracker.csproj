@@ -13,7 +13,7 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <ApplicationIcon>Assets/logo.ico</ApplicationIcon>
+    <ApplicationIcon>Assets/logo_white.ico</ApplicationIcon>
   </PropertyGroup>
     
     <ItemGroup>

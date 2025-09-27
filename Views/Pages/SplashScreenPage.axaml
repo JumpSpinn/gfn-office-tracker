@@ -14,8 +14,8 @@
 	<Panel>
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-				<GradientStop Color="#121212" Offset="0.0"/>
-				<GradientStop Color="#090909" Offset="1.0"/>
+				<GradientStop Color="#003764" Offset="0.0"/>
+				<GradientStop Color="#00111f" Offset="1.0"/>
 			</LinearGradientBrush>
 		</Panel.Background>
 
@@ -29,7 +29,8 @@
 					<Image
 						Height="250"
 						Width="250"
-						Source="avares://OfficeTracker/Assets/Images/logo.png"
+						Source="avares://OfficeTracker/Assets/Images/logo_white.png"
+						Opacity="1"
 					/>
 					<TextBlock
 						Text="Office-Tracker"
@@ -66,7 +67,7 @@
 			<Panel Grid.Row="1" Margin="20">
 				<StackPanel HorizontalAlignment="Center" Spacing="4">
 					<TextBlock
-						Text="Version: 1.0.0"
+						Text="{Binding Version}"
 						FontSize="12"
 						FontFamily="{ DynamicResource UrbanistFont}"
 						HorizontalAlignment="Center"
