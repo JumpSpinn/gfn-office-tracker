@@ -1,7 +1,7 @@
 ﻿<UserControl
 	mc:Ignorable="d"
 	d:DesignWidth="400"
-	d:DesignHeight="600"
+	d:DesignHeight="650"
 	x:Class="OfficeTracker.Views.Pages.SplashScreenPage"
 	x:DataType="vmp:SplashScreenPageViewModel"
 	xmlns:vmp="clr-namespace:OfficeTracker.ViewModels.Pages"

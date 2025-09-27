@@ -2,6 +2,14 @@
 
 public sealed class StatsControl : TemplatedControl
 {
+	public StatsControl(bool asList = false)
+	{
+		if (asList)
+		{
+			Margin = new Thickness(0, 10, 0, 10);
+		}
+	}
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         _grid = e.NameScope.Find<Grid>("StatsGrid");
@@ -9,6 +17,8 @@ public sealed class StatsControl : TemplatedControl
         _homeOfficePercentageText = e.NameScope.Find<TextBlock>("HomeOfficePercentage");
         _homeStackPanel = e.NameScope.Find<StackPanel>("HomeStackPanel");
         _officeStackPanel = e.NameScope.Find<StackPanel>("OfficeStackPanel");
+        _error = e.NameScope.Find<Border>("Error");
+        _warning = e.NameScope.Find<Border>("Warning");
 
         base.OnApplyTemplate(e);
         CalculateStats();
@@ -18,13 +28,13 @@ public sealed class StatsControl : TemplatedControl
     private StackPanel? _homeStackPanel;
     private TextBlock? _homeOfficePercentageText;
 
-    private static readonly StyledProperty<uint> HomeOfficeDaysProperty =
+    private static readonly StyledProperty<uint> _homeOfficeDaysProperty =
         AvaloniaProperty.Register<StatsControl, uint>(nameof(HomeOfficeDays));
 
     public uint HomeOfficeDays
     {
-        get => GetValue(HomeOfficeDaysProperty);
-        init => SetValue(HomeOfficeDaysProperty, value);
+        get => GetValue(_homeOfficeDaysProperty);
+        init => SetValue(_homeOfficeDaysProperty, value);
     }
     #endregion
 
@@ -32,13 +42,13 @@ public sealed class StatsControl : TemplatedControl
     private StackPanel? _officeStackPanel;
     private TextBlock? _officePercentageText;
 
-    private static readonly StyledProperty<uint> OfficeDaysProperty =
+    private static readonly StyledProperty<uint> _officeDaysProperty =
         AvaloniaProperty.Register<StatsControl, uint>(nameof(OfficeDays));
 
     public uint OfficeDays
     {
-        get => GetValue(OfficeDaysProperty);
-        init => SetValue(OfficeDaysProperty, value);
+        get => GetValue(_officeDaysProperty);
+        init => SetValue(_officeDaysProperty, value);
     }
 
     #endregion
@@ -46,6 +56,8 @@ public sealed class StatsControl : TemplatedControl
     #region CALCULATION
 
     private Grid? _grid;
+    private Border? _warning;
+    private Border? _error;
 
     private void CalculateStats()
     {
@@ -54,6 +66,8 @@ public sealed class StatsControl : TemplatedControl
         if (_officePercentageText is null) return;
         if (_homeStackPanel is null) return;
         if (_officeStackPanel is null) return;
+        if (_warning is null) return;
+        if (_error is null) return;
 
         var totalDays = HomeOfficeDays + OfficeDays;
         var homeOfficePercentage = (double)HomeOfficeDays / totalDays * 100;
@@ -67,6 +81,9 @@ public sealed class StatsControl : TemplatedControl
 
         _homeStackPanel.SetValue(ToolTip.TipProperty, $"{HomeOfficeDays} Tage");
         _officeStackPanel.SetValue(ToolTip.TipProperty, $"{OfficeDays} Tage");
+
+        _error.IsVisible = homeOfficePercentage > 50.00;
+        _warning.IsVisible = homeOfficePercentage == 50.00;
     }
 
     #endregion

@@ -27,20 +27,34 @@ public partial class MainPage : UserControl
 
     private void DebugCalculatedWeeks()
     {
-        var stats = new StatsControl()
-        {
-            HomeOfficeDays = 10,
-            OfficeDays = 20
-        };
+	    var week1 = new StatsControl(true)
+	    {
+		    OfficeDays = 31,
+		    HomeOfficeDays = 37
+	    };
 
-        var stats2 = new StatsControl()
-        {
-            HomeOfficeDays = 10,
-            OfficeDays = 10
-        };
+	    var week2 = new StatsControl(true)
+	    {
+		    OfficeDays = 35,
+		    HomeOfficeDays = 38
+	    };
 
-        List.Items.Add(stats);
-        List.Items.Add(stats2);
+	    var week3 = new StatsControl(true)
+	    {
+		    OfficeDays = 39,
+		    HomeOfficeDays = 39
+	    };
+
+	    var week4 = new StatsControl(true)
+	    {
+		    OfficeDays = 43,
+		    HomeOfficeDays = 40
+	    };
+
+        List.Items.Add(week1);
+        List.Items.Add(week2);
+        List.Items.Add(week3);
+        List.Items.Add(week4);
     }
 
     #endregion
