@@ -5,6 +5,9 @@ global using System.Text.Json.Serialization;
 global using System.Collections.Generic;
 global using System.Linq;
 global using System.Threading;
+global using System.IO;
+global using System.Collections.ObjectModel;
+global using System.Runtime.CompilerServices;
 
 global using Microsoft.Extensions.DependencyInjection;
 
@@ -34,3 +37,6 @@ global using OfficeTracker.Views.Forms;
 global using OfficeTracker.ViewModels.Pages;
 global using OfficeTracker.Enums;
 global using OfficeTracker.Messages;
+global using OfficeTracker.Services.Log.Controllers;
+global using OfficeTracker.Services.Log.Enums;
+global using OfficeTracker.Services.Log.Models;

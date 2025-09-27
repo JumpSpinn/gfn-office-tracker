@@ -1,6 +1,6 @@
 ﻿namespace OfficeTracker.Enums;
 
-public enum DAYTYPE
+public enum DayType
 {
     HOME,
     OFFICE
