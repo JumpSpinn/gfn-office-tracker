@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Windows;
 
+using Base;
+
 [RegisterSingleton]
 public sealed partial class MainWindowViewModel(IServiceProvider serviceProvider) : ViewModelBase
 {

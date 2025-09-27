@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker;
 
+using ViewModels.Base;
+
 public sealed class ViewLocator : IDataTemplate
 {
     private IServiceProvider? _serviceProvider;

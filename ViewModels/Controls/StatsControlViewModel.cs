@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Controls;
 
+using Base;
+
 [RegisterSingleton]
 public sealed partial class StatsControlViewModel : ViewModelBase
 {

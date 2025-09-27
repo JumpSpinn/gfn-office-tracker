@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels;
+﻿namespace OfficeTracker.ViewModels.Base;
 
 public class ViewModelBase : ObservableObject
 {
