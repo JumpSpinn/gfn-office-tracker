@@ -98,7 +98,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 
 			var context = await _dbContextFactory.CreateDbContextAsync();
 			await context.Database.MigrateAsync();
-			_hasData = context.PlannableDays.Any();
+			_hasData = context.General.Any();
 
 			_logController.Info("Database initialized.");
 			ShowInfiniteProgressBar = false;

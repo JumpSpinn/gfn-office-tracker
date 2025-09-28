@@ -1,14 +1,18 @@
 ﻿namespace OfficeTracker.ViewModels.Forms;
 
+using Services.Forms;
+
 [RegisterSingleton]
 public sealed partial class StatsFormViewModel : ViewModelBase
 {
 	private readonly LogController _logController;
+	private readonly StatsFormService _statsFormService;
 	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 
-	public StatsFormViewModel(LogController lc)
+	public StatsFormViewModel(LogController lc, StatsFormService sfs)
 	{
 		_logController = lc;
+		_statsFormService = sfs;
 	}
 
 	#region CALCULATE STATS
@@ -93,8 +97,11 @@ public sealed partial class StatsFormViewModel : ViewModelBase
 	[RelayCommand]
 	private async Task CompleteSetupAsync()
 	{
-		// TODO: save data (homeoffice days, office days)
-		_messenger.Send(new StatsFormSuccessMessage(true));
+		var result = await _statsFormService.CreateGeneralDataAsync(HomeOfficeDays, OfficeDays, HasBeenDayCounted);
+		if (result is null)
+			_messenger.Send(new StatsFormSuccessMessage(false));
+		else
+			_messenger.Send(new StatsFormSuccessMessage(true));
 	}
 
 	#endregion
