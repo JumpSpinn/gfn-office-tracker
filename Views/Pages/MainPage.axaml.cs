@@ -11,24 +11,78 @@ public partial class MainPage : UserControl
         _mainPageService = ((App)Application.Current!).Services?.GetRequiredService<MainPageService>()
 	        ?? throw new InvalidOperationException("MainPageService not found");
 
+        GetCurrentStatsAsync();
 	    CalculateCurrentStats();
         DebugCalculatedWeeks();
     }
 
     #region CURRENT STATS
 
+    private DbGeneral? _dbGeneralData;
+
+    private async Task GetCurrentStatsAsync()
+	    => _dbGeneralData = await _mainPageService.GetGeneralDataAsync();
+
     private async Task CalculateCurrentStats()
     {
-	    var generalData = await _mainPageService.GetGeneralDataAsync();
-	    if (generalData is null) return;
+	    DynamicStatsContainer.Children.Clear();
 
 	    var cs = new StatsControl()
 	    {
-	        HomeOfficeDays = generalData.HomeOfficeDays,
-	        OfficeDays = generalData.OfficeDays
+	        HomeOfficeDays = _dbGeneralData?.HomeOfficeDays ?? 0,
+	        OfficeDays = _dbGeneralData?.OfficeDays ?? 0
 	    };
 
-	    StatsGrid.Children.Add(cs);
+	    DynamicStatsContainer.Children.Add(cs);
+    }
+
+    #endregion
+
+    #region MODAL: ADD CURRENT DAY
+
+    private void OpenModalToAddCurrentDay(object? sender, RoutedEventArgs e)
+	    => ShowAddCurrentDayDialog();
+
+    private async Task ShowAddCurrentDayDialog()
+    {
+	    if (_dbGeneralData is null) return;
+
+	    var currentDayForm = new CurrentDayForm();
+	    var dialog = new ContentDialog()
+	    {
+		    Title = "Heutigen Tag eintragen",
+		    Content = currentDayForm,
+		    PrimaryButtonText = "Eintragen",
+		    CloseButtonText = "Abbrechen",
+		    DefaultButton = ContentDialogButton.Primary
+	    };
+
+	    var dialogResult = await dialog.ShowAsyncCorrectly(MainPanel);
+	    if (dialogResult == ContentDialogResult.Primary)
+	    {
+		    DayType? selectedType = currentDayForm.SelectedDayType;
+		    switch (selectedType)
+		    {
+			    case DayType.HOME:
+				    {
+					    var dayResult = await _mainPageService.AddHomeOfficeDayAsync();
+					    if (dayResult <= 0) return;
+
+					    _dbGeneralData.HomeOfficeDays = dayResult;
+					    break;
+				    }
+			    case DayType.OFFICE:
+				    {
+					    var dayResult = await _mainPageService.AddOfficeDayAsync();
+					    if (dayResult <= 0) return;
+
+					    _dbGeneralData.OfficeDays = dayResult;
+					    break;
+				    }
+		    }
+
+		    CalculateCurrentStats();
+	    }
     }
 
     #endregion
@@ -61,29 +115,15 @@ public partial class MainPage : UserControl
 		    HomeOfficeDays = 40
 	    };
 
-        List.Items.Add(week1);
-        List.Items.Add(week2);
-        List.Items.Add(week3);
-        List.Items.Add(week4);
+	    List.Items.Add(week1);
+	    List.Items.Add(week2);
+	    List.Items.Add(week3);
+	    List.Items.Add(week4);
     }
 
     #endregion
 
     #region MODALS
-
-    private void OpenModalToAddCurrentDay(object? sender, RoutedEventArgs e)
-    {
-        var dialog = new ContentDialog()
-        {
-            Title = "Heutigen Tag eintragen",
-            Content = new CurrentDayForm(),
-            PrimaryButtonText = "Eintragen",
-            CloseButtonText = "Abbrechen",
-            DefaultButton = ContentDialogButton.Primary
-        };
-
-        dialog.ShowAsyncCorrectly(MainPanel);
-    }
 
     private void OpenModalToDeletePlannableDay(object? sender, RoutedEventArgs e)
     {

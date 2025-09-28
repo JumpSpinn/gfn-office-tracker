@@ -42,6 +42,7 @@
 			            </Border>
 		            </Grid>
 		            <Grid x:Name="StatsGrid" ColumnDefinitions="*,Auto" ColumnSpacing="4" Margin="0 8 0 0">
+			            <StackPanel Grid.Column="0" x:Name="DynamicStatsContainer" />
 			            <Button Grid.Column="1"
 			                    FontSize="12"
 			                    Padding="5"
@@ -76,16 +77,16 @@
 
                 <!-- Statistik -->
                 <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="5" Margin="0 8 0 0">
-                    <Button Grid.Column="1"
-                            FontSize="12"
-                            Padding="5"
-                            VerticalAlignment="Top"
-                            Background="Transparent"
-                            ToolTip.Tip="Tag hinzufügen"
-                            ToolTip.Placement="Top"
-                            ToolTip.VerticalOffset="0"
-                            Click="OpenModalToAddCurrentDay"
-                            >
+	                <Button Grid.Column="1"
+	                        FontSize="12"
+	                        Padding="5"
+	                        VerticalAlignment="Top"
+	                        Background="Transparent"
+	                        ToolTip.Tip="Tag hinzufügen"
+	                        ToolTip.Placement="Top"
+	                        ToolTip.VerticalOffset="0"
+	                        Click="OpenModalToAddCurrentDay"
+	                >
                         <Button.Content>
                             <fluent:SymbolIcon Symbol="Add" Opacity=".5" />
                         </Button.Content>

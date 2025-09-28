@@ -6,4 +6,17 @@ public partial class CurrentDayForm : UserControl
     {
         InitializeComponent();
     }
+
+    public DayType? SelectedDayType
+    {
+	    get
+	    {
+		    if (HomeOfficeRadio.IsChecked == true)
+			    return DayType.HOME;
+		    else if (OfficeRadio.IsChecked == true)
+			    return DayType.OFFICE;
+		    else
+			    return null;
+	    }
+    }
 }
