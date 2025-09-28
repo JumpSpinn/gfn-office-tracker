@@ -5,10 +5,10 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 {
 	private readonly MainWindowController _mainWindowController;
 	private readonly LogController _logController;
-	private readonly IDbContextFactory<OfContext> _dbContextFactory;
+	private readonly IDbContextFactory<OtContext> _dbContextFactory;
 	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 
-	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OfContext> dbContextFactory)
+	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OtContext> dbContextFactory)
 	{
 		_mainWindowController = mwc;
 		_logController = lc;

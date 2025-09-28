@@ -26,9 +26,9 @@ public sealed partial class App : Application
 
         Services = new ServiceCollection()
             .AutoRegister()
-            .AddDbContext<OfContext>(options
+            .AddDbContext<OtContext>(options
 	            => options.UseSqlite($"Data Source={Options.DB_NAME}"))
-            .AddSingleton<IDbContextFactory<OfContext>, OfContextFactory>()
+            .AddSingleton<IDbContextFactory<OtContext>, OtContextFactory>()
             .BuildServiceProvider();
 
         var vm = Services.GetRequiredService<MainWindowViewModel>();

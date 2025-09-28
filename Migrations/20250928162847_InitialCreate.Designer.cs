@@ -10,8 +10,8 @@ using OfficeTracker.Database;
 
 namespace OfficeTracker.Migrations
 {
-    [DbContext(typeof(OfContext))]
-    [Migration("20250928160557_InitialCreate")]
+    [DbContext(typeof(OtContext))]
+    [Migration("20250928162847_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

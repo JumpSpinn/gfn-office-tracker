@@ -9,8 +9,8 @@ using OfficeTracker.Database;
 
 namespace OfficeTracker.Migrations
 {
-    [DbContext(typeof(OfContext))]
-    partial class OfContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(OtContext))]
+    partial class OtContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

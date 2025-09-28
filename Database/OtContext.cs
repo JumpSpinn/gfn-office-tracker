@@ -1,6 +1,6 @@
 ﻿namespace OfficeTracker.Database;
 
-public sealed partial class OfContext(DbContextOptions<OfContext> options) : DbContext(options)
+public sealed partial class OtContext(DbContextOptions<OtContext> options) : DbContext(options)
 {
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		=> base.OnConfiguring(optionsBuilder);
