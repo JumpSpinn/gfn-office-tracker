@@ -11,14 +11,20 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 	public MainWindowViewModel(IServiceProvider sp)
 	{
 		_currentPage = sp.GetRequiredService<SplashScreenPageViewModel>();
-		_messenger.Register<MainWindowViewModel, SplashScreenSuccessMessage>(this, (_, _) =>
+		_messenger.Register<MainWindowViewModel, SplashScreenSuccessMessage>(this, (_, success) =>
 		{
-			CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
+			if(success.Value)
+				CurrentPage = sp.GetRequiredService<MainPageViewModel>();
+			else
+				CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
 		});
 
-		_messenger.Register<MainWindowViewModel, StatsFormSuccessMessage>(this, (_, _) =>
+		_messenger.Register<MainWindowViewModel, StatsFormSuccessMessage>(this, (_, success) =>
 		{
-			CurrentPage = sp.GetRequiredService<MainPageViewModel>();
+			if(success.Value)
+				CurrentPage = sp.GetRequiredService<MainPageViewModel>();
+			else
+				CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
 		});
 	}
 }
