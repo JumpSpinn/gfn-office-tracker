@@ -8,7 +8,10 @@ global using System.Threading;
 global using System.IO;
 global using System.Collections.ObjectModel;
 global using System.Runtime.CompilerServices;
+global using System.ComponentModel.DataAnnotations;
+global using System.ComponentModel.DataAnnotations.Schema;
 
+global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 
 global using Avalonia;
@@ -42,5 +45,5 @@ global using OfficeTracker.Messages;
 global using OfficeTracker.Services.Log.Controllers;
 global using OfficeTracker.Services.Log.Enums;
 global using OfficeTracker.Services.Log.Models;
-global using OfficeTracker.Services.Login.Controllers;
 global using OfficeTracker.ViewModels.Forms;
+global using OfficeTracker.Database.Models;
