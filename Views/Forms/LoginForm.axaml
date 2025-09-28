@@ -16,8 +16,8 @@
 				<GradientStop Color="#00111f" Offset="1.0"/>
 			</LinearGradientBrush>
 		</Panel.Background>
+
 		<StackPanel
-			Spacing="40"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Center"
 		>
@@ -26,40 +26,64 @@
 				Width="150"
 				Height="50"
 				Source="avares://OfficeTracker/Assets/Images/logo_white.png"
+				Margin="0 0 0 40"
 			/>
+
+			<StackPanel Spacing="8" HorizontalAlignment="Center" Margin="0 0 0 20">
+				<TextBlock
+					FontFamily="{DynamicResource UrbanistFont}"
+					FontSize="13"
+					FontWeight="Regular"
+					HorizontalAlignment="Left"
+					MaxWidth="250"
+					TextWrapping="Wrap"
+					Text="Bitte gebe deine bisherigen Tage im HomeOffice, als auch am Standort an."
+				/>
+				<TextBlock
+					FontFamily="{DynamicResource UrbanistFont}"
+					FontSize="13"
+					FontWeight="Regular"
+					HorizontalAlignment="Left"
+					MaxWidth="250"
+					TextWrapping="Wrap"
+					Text="Anschließend berechne ich deine Statistik, damit du diese noch einmal überprüfen/anpassen kannst."
+				/>
+			</StackPanel>
+
 			<!-- Login Maske -->
 			<Border
 				CornerRadius="4"
 				BorderThickness="1"
 				MaxWidth="250"
 				>
-				<StackPanel Spacing="20">
-					<StackPanel Spacing="5">
-						<Label
-							FontSize="12"
-							FontWeight="Thin"
-							FontFamily="{DynamicResource UrbanistFont}"
-						>Benutzername / E-Mail:</Label>
-						<TextBox
-							Text="{Binding Username}"
-							FontFamily="{DynamicResource UrbanistFont}"
-						/>
-					</StackPanel>
-					<StackPanel Spacing="5">
-						<Label
-							FontSize="12"
-							FontWeight="Thin"
-							FontFamily="{DynamicResource UrbanistFont}"
-						>Passwort:</Label>
-						<TextBox
-							Text="{Binding Password}"
-							FontFamily="{DynamicResource UrbanistFont}"
-							PasswordChar="*"
-							RevealPassword="False"
-						/>
-					</StackPanel>
-
-					<!-- Login Action-->
+				<StackPanel>
+					<Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+						<StackPanel Grid.Column="0" Spacing="5">
+							<Label
+								FontSize="12"
+								FontWeight="Thin"
+								FontFamily="{DynamicResource UrbanistFont}"
+							>HomeOffice Tage:</Label>
+							<TextBox
+								Text="{Binding Username}"
+								FontFamily="{DynamicResource UrbanistFont}"
+								Watermark="0"
+							/>
+						</StackPanel>
+						<StackPanel Grid.Column="1" Spacing="5">
+							<Label
+								FontSize="12"
+								FontWeight="Thin"
+								FontFamily="{DynamicResource UrbanistFont}"
+							>Standort Tage:</Label>
+							<TextBox
+								Text="{Binding Password}"
+								FontFamily="{DynamicResource UrbanistFont}"
+								Watermark="0"
+							/>
+						</StackPanel>
+					</Grid>
+					<!-- Calculate Stats Action-->
 					<Button
 						FontFamily="{DynamicResource UrbanistFont}"
 						HorizontalAlignment="Center"
@@ -73,15 +97,9 @@
 					/>
 				</StackPanel>
 			</Border>
-			<fluent:InfoBar
-				Margin="4 0 4 0"
-				Title="{Binding InfoBarTitle}"
-				Message="{Binding InfoBarText}"
-				Severity="{Binding InfoBarSeverity}"
-				IsOpen="{Binding ShowInfoBar}"
-				IsClosable="False"
-				FontFamily="{StaticResource UrbanistFont}"
-			/>
+			<StackPanel x:Name="StatsPreview" IsVisible="False">
+
+			</StackPanel>
 		</StackPanel>
 	</Panel>
 </UserControl>

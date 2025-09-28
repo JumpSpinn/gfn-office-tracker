@@ -22,7 +22,7 @@ public sealed partial class LoginFormViewModel : ViewModelBase
 	private bool _isLoginButtonEnabled = true;
 
 	[ObservableProperty]
-	private string _loginButtonText = "Einloggen";
+	private string _loginButtonText = "Statistik berechnen";
 
 	[ObservableProperty]
 	[NotifyCanExecuteChangedFor(nameof(LoginCommand))]
@@ -53,7 +53,7 @@ public sealed partial class LoginFormViewModel : ViewModelBase
 
 		try
 		{
-			var result = await _loginController.PeformLoginAsync(Username, Password);
+			var result = await _loginController.RequestLoginAsync(Username, Password);
 			if (result is null)
 			{
 				_logController.Error("Login result is null.");
