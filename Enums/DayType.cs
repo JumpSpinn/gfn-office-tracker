@@ -2,6 +2,7 @@
 
 public enum DayType
 {
-    HOME,
-    OFFICE
+	NONE,
+    HOME = 1,
+    OFFICE = 2
 }

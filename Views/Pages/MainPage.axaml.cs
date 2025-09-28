@@ -2,38 +2,29 @@
 
 public partial class MainPage : UserControl
 {
-	private readonly MainPageService _mainPageService;
-
     public MainPage()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
+    }
 
-        _mainPageService = ((App)Application.Current!).Services?.GetRequiredService<MainPageService>()
-	        ?? throw new InvalidOperationException("MainPageService not found");
-
-        GetCurrentStatsAsync();
+    private void OnLoaded(object? sender, RoutedEventArgs e)
+    {
 	    CalculateCurrentStats();
-        DebugCalculatedWeeks();
+	    DebugCalculatedWeeks();
     }
 
     #region CURRENT STATS
 
-    private DbGeneral? _dbGeneralData;
-
-    private async Task GetCurrentStatsAsync()
-	    => _dbGeneralData = await _mainPageService.GetGeneralDataAsync();
-
     private async Task CalculateCurrentStats()
     {
+	    if (DataContext is not MainPageViewModel mpv) return;
+
+	    var newControl = await mpv.CreateNewStatsControl();
+	    if(newControl is null) return;
+
 	    DynamicStatsContainer.Children.Clear();
-
-	    var cs = new StatsControl()
-	    {
-	        HomeOfficeDays = _dbGeneralData?.HomeOfficeDays ?? 0,
-	        OfficeDays = _dbGeneralData?.OfficeDays ?? 0
-	    };
-
-	    DynamicStatsContainer.Children.Add(cs);
+	    DynamicStatsContainer.Children.Add(newControl);
     }
 
     #endregion
@@ -41,11 +32,11 @@ public partial class MainPage : UserControl
     #region MODAL: ADD CURRENT DAY
 
     private void OpenModalToAddCurrentDay(object? sender, RoutedEventArgs e)
-	    => ShowAddCurrentDayDialog();
+	    => ShowAddCurrentDayDialogAsync();
 
-    private async Task ShowAddCurrentDayDialog()
+    private async Task ShowAddCurrentDayDialogAsync()
     {
-	    if (_dbGeneralData is null) return;
+	    if (DataContext is not MainPageViewModel mpv) return;
 
 	    var currentDayForm = new CurrentDayForm();
 	    var dialog = new ContentDialog()
@@ -65,23 +56,54 @@ public partial class MainPage : UserControl
 		    {
 			    case DayType.HOME:
 				    {
-					    var dayResult = await _mainPageService.AddHomeOfficeDayAsync();
-					    if (dayResult <= 0) return;
-
-					    _dbGeneralData.HomeOfficeDays = dayResult;
+					    await mpv.AddHomeOfficeDayAsync();
 					    break;
 				    }
 			    case DayType.OFFICE:
 				    {
-					    var dayResult = await _mainPageService.AddOfficeDayAsync();
-					    if (dayResult <= 0) return;
-
-					    _dbGeneralData.OfficeDays = dayResult;
+					    await mpv.AddOfficeDayAsync();
 					    break;
 				    }
 		    }
 
 		    CalculateCurrentStats();
+	    }
+    }
+
+    #endregion
+
+    #region MODAL: ADD PLANNABLE DAY
+
+    private void OpenModalToAddPlannableDay(object? sender, RoutedEventArgs e)
+	    => ShowAddPlannableDayDialogAsync();
+
+    private async Task ShowAddPlannableDayDialogAsync()
+    {
+	    if (DataContext is not MainPageViewModel mpv) return;
+
+	    var dayForm = new PlannableDayForm();
+	    var dialog = new ContentDialog()
+	    {
+		    Title = "Eintrag hinzufügen",
+		    Content = dayForm,
+		    PrimaryButtonText = "Planen",
+		    CloseButtonText = "Abbrechen",
+		    DefaultButton = ContentDialogButton.Primary
+	    };
+
+	    var dialogResult = await dialog.ShowAsyncCorrectly(MainPanel);
+	    if (dialogResult == ContentDialogResult.Primary)
+	    {
+		    var selectedType = dayForm.SelectedDayType;
+		    var selectedDate = dayForm.GetSelectedDate;
+
+		    if (selectedType == DayType.NONE) return;
+
+		    var plannableDay = await mpv.CreatePlannableDayAsync(selectedType, selectedDate);
+		    // TODO: add handling alla irgendwo liste und so
+
+		    Console.WriteLine($"Ausgewählter Tag: {selectedType}");
+		    Console.WriteLine($"Ausgewähltes Datum: {selectedDate}");
 	    }
     }
 
@@ -138,21 +160,6 @@ public partial class MainPage : UserControl
 
         dialog.ShowAsyncCorrectly(MainPanel);
     }
-
-    private void OpenModalToAddPlannableDay(object? sender, RoutedEventArgs e)
-    {
-        var dialog = new ContentDialog()
-        {
-            Title = "Eintrag hinzufügen",
-            Content = new PlannableDayForm(),
-            PrimaryButtonText = "Planen",
-            CloseButtonText = "Abbrechen",
-            DefaultButton = ContentDialogButton.Primary
-        };
-
-        dialog.ShowAsyncCorrectly(MainPanel);
-    }
-
 
     #endregion
 

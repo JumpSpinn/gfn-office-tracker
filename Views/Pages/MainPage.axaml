@@ -16,7 +16,7 @@
 		    </LinearGradientBrush>
 	    </Panel.Background>
 	    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
-            <!-- Header -->
+		    <!-- Header -->
             <Border Grid.Row="0" Margin="10" Padding="10" CornerRadius="4" BorderThickness="1">
 	            <Border.Background>
 		            <LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">

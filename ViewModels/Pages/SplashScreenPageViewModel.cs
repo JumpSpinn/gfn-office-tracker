@@ -70,7 +70,6 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		{
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Logger..";
-			await Task.Delay(100);
 
 			if (!await _logController.EnsureLogFile())
 			{
@@ -94,7 +93,6 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		{
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Database..";
-			await Task.Delay(100);
 
 			var context = await _dbContextFactory.CreateDbContextAsync();
 			await context.Database.MigrateAsync();

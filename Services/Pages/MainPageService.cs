@@ -12,6 +12,8 @@ public sealed class MainPageService
 		_logController = logController;
 	}
 
+	#region GET
+
 	public async Task<DbGeneral?> GetGeneralDataAsync()
 	{
 		try
@@ -26,6 +28,36 @@ public sealed class MainPageService
 
 		return null;
 	}
+
+	#endregion
+
+	#region CREATE
+
+	public async Task<DbPlannableDay?> CreatePlannableDayAsync(DayType type, DateTime date)
+	{
+		try
+		{
+			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			var day = new DbPlannableDay()
+			{
+				Type = type,
+				Date = date
+			};
+			await db.PlannableDays.AddAsync(day);
+			await db.SaveChangesAsync();
+			return day;
+		}
+		catch (Exception e)
+		{
+			_logController.Error(e.Message);
+		}
+
+		return null;
+	}
+
+	#endregion
+
+	#region ADD
 
 	public async Task<uint> AddHomeOfficeDayAsync()
 	{
@@ -66,4 +98,30 @@ public sealed class MainPageService
 
 		return 0;
 	}
+
+	#endregion
+
+	#region DELETE
+
+	public async Task<bool> DeletePlannableDayAsync(uint id)
+	{
+		try
+		{
+			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			var day = await db.PlannableDays.FirstOrDefaultAsync(x => x.Id == id);
+			if (day is null) return false;
+
+			db.PlannableDays.Remove(day);
+			await db.SaveChangesAsync();
+			return true;
+		}
+		catch (Exception e)
+		{
+			_logController.Error(e.Message);
+		}
+
+		return false;
+	}
+
+	#endregion
 }
