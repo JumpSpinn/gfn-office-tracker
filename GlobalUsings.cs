@@ -13,6 +13,7 @@ global using System.ComponentModel.DataAnnotations.Schema;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.EntityFrameworkCore.Design;
 
 global using Avalonia;
 global using Avalonia.Data.Core.Plugins;
@@ -45,6 +46,7 @@ global using OfficeTracker.Messages;
 global using OfficeTracker.Services.Log.Controllers;
 global using OfficeTracker.Services.Log.Enums;
 global using OfficeTracker.Services.Log.Models;
+global using OfficeTracker.Services.Windows.Controllers;
 global using OfficeTracker.ViewModels.Forms;
 global using OfficeTracker.Database.Models;
 global using OfficeTracker.Database;

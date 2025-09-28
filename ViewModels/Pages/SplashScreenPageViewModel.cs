@@ -1,23 +1,18 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
-using Services.Forms;
-using Services.Windows.Controllers;
-
 [RegisterSingleton]
 public sealed partial class SplashScreenPageViewModel : ViewModelBase
 {
 	private readonly MainWindowController _mainWindowController;
 	private readonly LogController _logController;
-	private readonly SplashScreenPageService _splashScreenPageService;
 	private readonly IDbContextFactory<OfContext> _dbContextFactory;
 	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 
-	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OfContext> dbContextFactory, SplashScreenPageService scs)
+	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OfContext> dbContextFactory)
 	{
 		_mainWindowController = mwc;
 		_logController = lc;
 		_dbContextFactory = dbContextFactory;
-		_splashScreenPageService = scs;
 		_loadQueue.Enqueue(InitializeLoggerAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
 		_loadQueue.Enqueue(InitializeDatabaseAsync);
@@ -40,12 +35,14 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 				return;
 		}
 		else
-			_messenger.Send(new SplashScreenSuccessMessage(false));
+			_messenger.Send(new SplashScreenSuccessMessage(_hasData));
 	}
 
 	#endregion
 
 	#region LOAD STEPS
+
+	private bool _hasData = true;
 
 	private async Task<bool> InitializeAppWindowAsync()
 	{
@@ -73,6 +70,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		{
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Logger..";
+			await Task.Delay(100);
 
 			if (!await _logController.EnsureLogFile())
 			{
@@ -96,9 +94,11 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		{
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Database..";
+			await Task.Delay(100);
 
 			var context = await _dbContextFactory.CreateDbContextAsync();
 			await context.Database.MigrateAsync();
+			_hasData = context.PlannableDays.Any();
 
 			_logController.Info("Database initialized.");
 			ShowInfiniteProgressBar = false;

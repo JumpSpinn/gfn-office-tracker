@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.Database.Factories;
 
-using Microsoft.EntityFrameworkCore.Design;
-
 public sealed class OfDesignTimeFactory : IDesignTimeDbContextFactory<OfContext>
 {
 	public OfContext CreateDbContext(string[] args)
