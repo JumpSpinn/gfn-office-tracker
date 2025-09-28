@@ -2,23 +2,33 @@
 
 public partial class MainPage : UserControl
 {
+	private readonly MainPageService _mainPageService;
+
     public MainPage()
     {
         InitializeComponent();
-        CalculateCurrentStats();
+
+        _mainPageService = ((App)Application.Current!).Services?.GetRequiredService<MainPageService>()
+	        ?? throw new InvalidOperationException("MainPageService not found");
+
+	    CalculateCurrentStats();
         DebugCalculatedWeeks();
     }
 
     #region CURRENT STATS
 
-    private void CalculateCurrentStats()
+    private async Task CalculateCurrentStats()
     {
-        var cs = new StatsControl()
-        {
-            HomeOfficeDays = 36,
-            OfficeDays = 27
-        };
-        StatsGrid.Children.Add(cs);
+	    var generalData = await _mainPageService.GetGeneralDataAsync();
+	    if (generalData is null) return;
+
+	    var cs = new StatsControl()
+	    {
+	        HomeOfficeDays = generalData.HomeOfficeDays,
+	        OfficeDays = generalData.OfficeDays
+	    };
+
+	    StatsGrid.Children.Add(cs);
     }
 
     #endregion

@@ -5,9 +5,7 @@ public sealed class StatsControl : TemplatedControl
 	public StatsControl(bool asList = false)
 	{
 		if (asList)
-		{
 			Margin = new Thickness(0, 10, 0, 10);
-		}
 	}
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -20,8 +18,8 @@ public sealed class StatsControl : TemplatedControl
         _error = e.NameScope.Find<Border>("Error");
         _warning = e.NameScope.Find<Border>("Warning");
 
-        base.OnApplyTemplate(e);
         CalculateStats();
+        base.OnApplyTemplate(e);
     }
 
     #region HOMEOFFICE

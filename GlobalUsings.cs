@@ -47,6 +47,7 @@ global using OfficeTracker.Services.Log.Controllers;
 global using OfficeTracker.Services.Log.Enums;
 global using OfficeTracker.Services.Log.Models;
 global using OfficeTracker.Services.Windows.Controllers;
+global using OfficeTracker.Services.Pages;
 global using OfficeTracker.ViewModels.Forms;
 global using OfficeTracker.Database.Models;
 global using OfficeTracker.Database;
