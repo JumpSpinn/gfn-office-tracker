@@ -13,7 +13,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 		_currentPage = sp.GetRequiredService<SplashScreenPageViewModel>();
 		_messenger.Register<MainWindowViewModel, SplashScreenSuccessMessage>(this, (_, _) =>
 		{
-			// CurrentPage = sp.GetRequiredService<MainPageViewModel>();
+			//CurrentPage = sp.GetRequiredService<MainPageViewModel>();
 			CurrentPage = sp.GetRequiredService<LoginFormViewModel>();
 		});
 	}

@@ -41,6 +41,7 @@
 							FontFamily="{DynamicResource UrbanistFont}"
 						>Benutzername / E-Mail:</Label>
 						<TextBox
+							Text="{Binding Username}"
 							FontFamily="{DynamicResource UrbanistFont}"
 						/>
 					</StackPanel>
@@ -51,6 +52,7 @@
 							FontFamily="{DynamicResource UrbanistFont}"
 						>Passwort:</Label>
 						<TextBox
+							Text="{Binding Password}"
 							FontFamily="{DynamicResource UrbanistFont}"
 							PasswordChar="*"
 							RevealPassword="False"
@@ -65,8 +67,9 @@
 						Width="150"
 						BorderThickness="1"
 						BorderBrush="#30FFFFFF"
-						IsEnabled="{Binding IsLoginButtonEnabled}"
 						Content="{Binding LoginButtonText}"
+						Command="{Binding LoginCommand}"
+						IsEnabled="{Binding CanLoginProperty}"
 					/>
 				</StackPanel>
 			</Border>
