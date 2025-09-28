@@ -30,4 +30,28 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     public async Task<DbPlannableDay?> CreatePlannableDayAsync(DayType type, DateTime date)
 		=> await _mainPageService.CreatePlannableDayAsync(type, date);
+
+    [ObservableProperty]
+    private Effect? _currentEffect;
+
+    [RelayCommand]
+    public async Task FudoSpinnt()
+    {
+	    CurrentEffect = new BlurEffect() { Radius = Options.MODAL_BLUR_RADIUS };
+
+	    Console.WriteLine("Fudo spinnt, richtiger spinner alla");
+
+	    var dayForm = new PlannableDayForm();
+	    var dialog = new ContentDialog()
+	    {
+		    Title = "Eintrag hinzufügen",
+		    Content = dayForm,
+		    PrimaryButtonText = "Planen",
+		    CloseButtonText = "Abbrechen",
+		    DefaultButton = ContentDialogButton.Primary
+	    };
+
+	    await dialog.ShowAsyncCorrectly();
+	    CurrentEffect = null;
+    }
 }

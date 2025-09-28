@@ -22,24 +22,9 @@ public static class DialogHelper
         dialog.Resources["ContentDialogMaxHeight"] = App.MainWindow?.Height - margin;
     }
 
-    public static Task<ContentDialogResult> ShowAsyncCorrectly(this ContentDialog dialog, Panel? panel = null)
+    public static Task<ContentDialogResult> ShowAsyncCorrectly(this ContentDialog dialog)
     {
-	    if (panel is not null)
-	    {
-		    panel.Effect = new BlurEffect()
-		    {
-			    Radius = Options.MODAL_BLUR_RADIUS
-		    };
-
-		    dialog.CloseButtonClick += (s, args) => DisableMainPanelBlur(panel);
-		    dialog.PrimaryButtonClick += (s, args) => DisableMainPanelBlur(panel);
-		    dialog.SecondaryButtonClick += (s, args) => DisableMainPanelBlur(panel);
-	    }
-
         dialog.FitApplicationSize();
         return dialog.ShowAsync();
     }
-
-    private static void DisableMainPanelBlur(Panel panel)
-	    => panel.Effect = null;
 }

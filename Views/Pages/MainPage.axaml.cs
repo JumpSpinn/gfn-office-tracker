@@ -48,7 +48,7 @@ public partial class MainPage : UserControl
 		    DefaultButton = ContentDialogButton.Primary
 	    };
 
-	    var dialogResult = await dialog.ShowAsyncCorrectly(MainPanel);
+	    var dialogResult = await dialog.ShowAsyncCorrectly();
 	    if (dialogResult == ContentDialogResult.Primary)
 	    {
 		    DayType? selectedType = currentDayForm.SelectedDayType;
@@ -91,7 +91,7 @@ public partial class MainPage : UserControl
 		    DefaultButton = ContentDialogButton.Primary
 	    };
 
-	    var dialogResult = await dialog.ShowAsyncCorrectly(MainPanel);
+	    var dialogResult = await dialog.ShowAsyncCorrectly();
 	    if (dialogResult == ContentDialogResult.Primary)
 	    {
 		    var selectedType = dayForm.SelectedDayType;
@@ -158,7 +158,7 @@ public partial class MainPage : UserControl
             DefaultButton = ContentDialogButton.Primary
         };
 
-        dialog.ShowAsyncCorrectly(MainPanel);
+        dialog.ShowAsyncCorrectly();
     }
 
     #endregion
