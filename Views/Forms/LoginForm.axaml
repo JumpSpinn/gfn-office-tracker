@@ -1,0 +1,85 @@
+﻿<UserControl
+	x:DataType="vm:LoginFormViewModel"
+	x:Class="OfficeTracker.Views.Forms.LoginForm"
+	xmlns:vm="using:OfficeTracker.ViewModels.Forms"
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
+	>
+	<Panel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+		<Panel.Background>
+			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+				<GradientStop Color="#003764" Offset="0.0"/>
+				<GradientStop Color="#00111f" Offset="1.0"/>
+			</LinearGradientBrush>
+		</Panel.Background>
+		<StackPanel
+			Spacing="40"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Center"
+		>
+			<!-- Logo -->
+			<Image
+				Width="150"
+				Height="50"
+				Source="avares://OfficeTracker/Assets/Images/logo_white.png"
+			/>
+			<!-- Login Maske -->
+			<Border
+				CornerRadius="4"
+				BorderThickness="1"
+				MaxWidth="250"
+				>
+				<StackPanel Spacing="20">
+					<StackPanel Spacing="5">
+						<Label
+							FontSize="12"
+							FontWeight="Thin"
+							FontFamily="{DynamicResource UrbanistFont}"
+						>Benutzername / E-Mail:</Label>
+						<TextBox
+							FontFamily="{DynamicResource UrbanistFont}"
+						/>
+					</StackPanel>
+					<StackPanel Spacing="5">
+						<Label
+							FontSize="12"
+							FontWeight="Thin"
+							FontFamily="{DynamicResource UrbanistFont}"
+						>Passwort:</Label>
+						<TextBox
+							FontFamily="{DynamicResource UrbanistFont}"
+							PasswordChar="*"
+							RevealPassword="False"
+						/>
+					</StackPanel>
+
+					<!-- Login Action-->
+					<Button
+						FontFamily="{DynamicResource UrbanistFont}"
+						HorizontalAlignment="Center"
+						Margin="0 15 0 0"
+						Width="150"
+						BorderThickness="1"
+						BorderBrush="#30FFFFFF"
+						IsEnabled="{Binding IsLoginButtonEnabled}"
+						Content="{Binding LoginButtonText}"
+					/>
+				</StackPanel>
+			</Border>
+			<fluent:InfoBar
+				Margin="4 0 4 0"
+				Title="{Binding InfoBarTitle}"
+				Message="{Binding InfoBarText}"
+				Severity="{Binding InfoBarSeverity}"
+				IsOpen="{Binding ShowInfoBar}"
+				IsClosable="False"
+				FontFamily="{StaticResource UrbanistFont}"
+			/>
+		</StackPanel>
+	</Panel>
+</UserControl>
+

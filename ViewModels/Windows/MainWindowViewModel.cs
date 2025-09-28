@@ -8,12 +8,13 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 	[ObservableProperty]
 	private ViewModelBase? _currentPage;
 
-	public MainWindowViewModel(IServiceProvider serviceProvider)
+	public MainWindowViewModel(IServiceProvider sp)
 	{
-		_currentPage = serviceProvider.GetRequiredService<SplashScreenPageViewModel>();
+		_currentPage = sp.GetRequiredService<SplashScreenPageViewModel>();
 		_messenger.Register<MainWindowViewModel, SplashScreenSuccessMessage>(this, (_, _) =>
 		{
-			CurrentPage = serviceProvider.GetRequiredService<MainPageViewModel>();
+			// CurrentPage = sp.GetRequiredService<MainPageViewModel>();
+			CurrentPage = sp.GetRequiredService<LoginFormViewModel>();
 		});
 	}
 }
