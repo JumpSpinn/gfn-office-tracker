@@ -68,7 +68,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Logger..";
 
-			await Task.Delay(5000);
+			await Task.Delay(60_000);
 
 			if (!await _logController.EnsureLogFile())
 			{

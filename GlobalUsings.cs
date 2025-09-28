@@ -20,6 +20,7 @@ global using Avalonia.Controls;
 global using Avalonia.Controls.ApplicationLifetimes;
 global using Avalonia.Markup.Xaml;
 global using Avalonia.Controls.Primitives;
+global using Avalonia.Media;
 
 global using FluentAvalonia.UI.Windowing;
 global using FluentAvalonia.UI.Controls;

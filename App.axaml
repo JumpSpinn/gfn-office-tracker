@@ -6,21 +6,40 @@
         xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     >
-    
+
     <Application.DataTemplates>
         <local:ViewLocator />
     </Application.DataTemplates>
-    
+
     <Application.Resources>
         <Color x:Key="SystemAccentColor">#009eb6</Color>
         <Color x:Key="SystemAccentColorLight1">#009eb6</Color>
         <Color x:Key="SystemAccentColorDark1">#009eb6</Color>
+
+        <Color x:Key="TabViewBackground">Transparent</Color>
+        <Color x:Key="TabViewBorderBrush">#30FFFFFF</Color>
+        <Color x:Key="TabViewItemHeaderBackgroundSelected">#10FFFFFF</Color>
+
+	    <Color x:Key="ContentDialogForeground">White</Color>
+	    <Color x:Key="ContentDialogBackground">#10FFFFFF</Color>
+	    <Color x:Key="ContentDialogBorderBrush">#30FFFFFF</Color>
+
+	    <Color x:Key="RadioButtonCheckGlyphFill">#FFFFFF</Color>
+	    <Color x:Key="RadioButtonOuterEllipseCheckedFill">#40FFFFFF</Color>
+
+	    <Color x:Key="RadioButtonCheckGlyphFillPointerOver">#FFFFFF</Color>
+	    <Color x:Key="RadioButtonOuterEllipseCheckedFillPointerOver">#40FFFFFF</Color>
+
+	    <Color x:Key="RadioButtonOuterEllipseCheckedStroke">#30FFFFFF</Color>
+	    <Color x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver">#30FFFFFF</Color>
+	    <x:Double x:Key="RadioButtonBorderThemeThickness">1</x:Double>
+
         <FontFamily x:Key="UrbanistFont">avares://OfficeTracker/Assets/Fonts#Urbanist</FontFamily>
     </Application.Resources>
-    
+
     <Application.Styles>
         <styling:FluentAvaloniaTheme CustomAccentColor="#009eb6" />
         <StyleInclude Source="/Views/Controls/StatsControl.axaml"></StyleInclude>
     </Application.Styles>
-    
+
 </Application>

@@ -18,5 +18,6 @@ public static class Options
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
-    public const string VERSION = "1.5.3";
+    public const uint MODAL_BLUR_RADIUS = 25;
+    public const string VERSION = "1.0.0";
 }

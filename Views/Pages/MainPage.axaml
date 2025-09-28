@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
     mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
-    <Panel>
+    <Panel x:Name="MainPanel">
 	    <Panel.Background>
 		    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
 		     <GradientStop Color="#00111f" Offset="0.0"/>
@@ -57,10 +57,8 @@
 				            </Button.Content>
 			            </Button>
 		            </Grid>
-
 	            </StackPanel>
             </Border>
-
 
             <Grid Grid.Row="0" IsVisible="False" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*" HorizontalAlignment="Stretch" Margin="20" RowSpacing="8">
 	            <!-- Title -->
@@ -97,11 +95,22 @@
 
             <!-- Tabs -->
             <Grid Grid.Row="1">
-                <fluent:TabView TabWidthMode="SizeToContent" CanReorderTabs="False" CanDragTabs="False" AllowDropTabs="False" IsAddTabButtonVisible="False">
-                    <!-- Geplante Tage -->
-                    <fluent:TabViewItem Header="Geplante Tage" FontFamily="{DynamicResource UrbanistFont}" IsClosable="False">
+                <fluent:TabView
+	                TabWidthMode="SizeToContent"
+	                CanReorderTabs="False"
+	                CanDragTabs="False"
+	                AllowDropTabs="False"
+	                IsAddTabButtonVisible="False"
+	            >
+	                <!-- Geplante Tage -->
+                    <fluent:TabViewItem
+	                    Header="Geplante Tage"
+	                    FontFamily="{DynamicResource UrbanistFont}"
+	                    IsClosable="False"
+	                    BorderThickness="4"
+	                >
                         <Grid RowDefinitions="*,Auto" Margin="10" RowSpacing="5">
-                            <Button Grid.Row="1" HorizontalAlignment="Stretch" FontSize="12" Click="OpenModalToAddPlannableDay" FontFamily="{DynamicResource UrbanistFont}">Planbaren Tag hinzufügen</Button>
+                            <Button Grid.Row="1" HorizontalAlignment="Stretch" FontSize="12" Click="OpenModalToAddPlannableDay" FontFamily="{DynamicResource UrbanistFont}">Neuen Tag planen</Button>
                             <ListBox Grid.Row="0">
                                 <ListBoxItem>
                                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">

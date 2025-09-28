@@ -72,7 +72,7 @@ public partial class MainPage : UserControl
             DefaultButton = ContentDialogButton.Primary
         };
 
-        dialog.ShowAsyncCorrectly();
+        dialog.ShowAsyncCorrectly(MainPanel);
     }
 
     private void OpenModalToDeletePlannableDay(object? sender, RoutedEventArgs e)
@@ -86,7 +86,7 @@ public partial class MainPage : UserControl
             DefaultButton = ContentDialogButton.Primary
         };
 
-        dialog.ShowAsyncCorrectly();
+        dialog.ShowAsyncCorrectly(MainPanel);
     }
 
     private void OpenModalToAddPlannableDay(object? sender, RoutedEventArgs e)
@@ -100,7 +100,7 @@ public partial class MainPage : UserControl
             DefaultButton = ContentDialogButton.Primary
         };
 
-        dialog.ShowAsyncCorrectly();
+        dialog.ShowAsyncCorrectly(MainPanel);
     }
 
 
