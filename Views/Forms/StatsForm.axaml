@@ -1,12 +1,11 @@
 ﻿<UserControl
-	x:DataType="vm:LoginFormViewModel"
-	x:Class="OfficeTracker.Views.Forms.LoginForm"
+	x:DataType="vm:StatsFormViewModel"
+	x:Class="OfficeTracker.Views.Forms.StatsForm"
 	xmlns:vm="using:OfficeTracker.ViewModels.Forms"
 	xmlns="https://github.com/avaloniaui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
 	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
 	>
 	<Panel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -21,7 +20,6 @@
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Center"
 		>
-			<!-- Logo -->
 			<Image
 				Width="150"
 				Height="50"
@@ -50,7 +48,6 @@
 				/>
 			</StackPanel>
 
-			<!-- Login Maske -->
 			<Border
 				CornerRadius="4"
 				BorderThickness="1"
@@ -65,9 +62,16 @@
 								FontFamily="{DynamicResource UrbanistFont}"
 							>HomeOffice Tage:</Label>
 							<TextBox
-								Text="{Binding Username}"
+								Text="{Binding HomeOfficeDays}"
 								FontFamily="{DynamicResource UrbanistFont}"
 								Watermark="0"
+							/>
+							<Label
+								FontSize="12"
+								FontWeight="Thin"
+								HorizontalAlignment="Center"
+								FontFamily="{DynamicResource UrbanistFont}"
+								Content="{Binding HomeOfficePercentage}"
 							/>
 						</StackPanel>
 						<StackPanel Grid.Column="1" Spacing="5">
@@ -77,9 +81,16 @@
 								FontFamily="{DynamicResource UrbanistFont}"
 							>Standort Tage:</Label>
 							<TextBox
-								Text="{Binding Password}"
+								Text="{Binding OfficeDays}"
 								FontFamily="{DynamicResource UrbanistFont}"
 								Watermark="0"
+							/>
+							<Label
+								FontSize="12"
+								FontWeight="Thin"
+								HorizontalAlignment="Center"
+								FontFamily="{DynamicResource UrbanistFont}"
+								Content="{Binding OfficePercentage}"
 							/>
 						</StackPanel>
 					</Grid>
@@ -91,15 +102,23 @@
 						Width="150"
 						BorderThickness="1"
 						BorderBrush="#30FFFFFF"
-						Content="{Binding LoginButtonText}"
-						Command="{Binding LoginCommand}"
-						IsEnabled="{Binding CanLoginProperty}"
+						Content="{Binding CalculateButtonText}"
+						Command="{Binding CalculateCommand}"
+						IsEnabled="{Binding CanCalculateProperty}"
+					/>
+					<Button
+						FontFamily="{DynamicResource UrbanistFont}"
+						HorizontalAlignment="Center"
+						Margin="0 15 0 0"
+						Width="150"
+						BorderThickness="1"
+						BorderBrush="#30FFFFFF"
+						Content="Übernehmen"
+						Command="{Binding CompleteSetupCommand}"
+						IsEnabled="{Binding FirstCalculate}"
 					/>
 				</StackPanel>
 			</Border>
-			<StackPanel x:Name="StatsPreview" IsVisible="False">
-
-			</StackPanel>
 		</StackPanel>
 	</Panel>
 </UserControl>

@@ -36,6 +36,10 @@ public sealed class StatsControl : TemplatedControl
         get => GetValue(_homeOfficeDaysProperty);
         init => SetValue(_homeOfficeDaysProperty, value);
     }
+
+    public double HomeOfficePercentage
+	    => (double)HomeOfficeDays / (HomeOfficeDays + OfficeDays) * 100;
+
     #endregion
 
     #region OFFICE
@@ -50,6 +54,9 @@ public sealed class StatsControl : TemplatedControl
         get => GetValue(_officeDaysProperty);
         init => SetValue(_officeDaysProperty, value);
     }
+
+    public double OfficePercentage
+	    => (double)OfficeDays / (HomeOfficeDays + OfficeDays) * 100;
 
     #endregion
 
@@ -69,21 +76,17 @@ public sealed class StatsControl : TemplatedControl
         if (_warning is null) return;
         if (_error is null) return;
 
-        var totalDays = HomeOfficeDays + OfficeDays;
-        var homeOfficePercentage = (double)HomeOfficeDays / totalDays * 100;
-        var officePercentage = (double)OfficeDays / totalDays * 100;
+        _grid.ColumnDefinitions[0].Width = new GridLength(HomeOfficePercentage, GridUnitType.Star);
+        _grid.ColumnDefinitions[1].Width = new GridLength(OfficePercentage, GridUnitType.Star);
 
-        _grid.ColumnDefinitions[0].Width = new GridLength(homeOfficePercentage, GridUnitType.Star);
-        _grid.ColumnDefinitions[1].Width = new GridLength(officePercentage, GridUnitType.Star);
-
-        _homeOfficePercentageText.Text = $"{homeOfficePercentage:F2}%";
-        _officePercentageText.Text = $"{officePercentage:F2}%";
+        _homeOfficePercentageText.Text = $"{HomeOfficePercentage:F2}%";
+        _officePercentageText.Text = $"{OfficePercentage:F2}%";
 
         _homeStackPanel.SetValue(ToolTip.TipProperty, $"{HomeOfficeDays} Tage");
         _officeStackPanel.SetValue(ToolTip.TipProperty, $"{OfficeDays} Tage");
 
-        _error.IsVisible = homeOfficePercentage > 50.00;
-        _warning.IsVisible = homeOfficePercentage == 50.00;
+        _error.IsVisible = HomeOfficePercentage > 50.00;
+        _warning.IsVisible = HomeOfficePercentage == 50.00;
     }
 
     #endregion
