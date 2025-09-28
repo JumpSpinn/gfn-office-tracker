@@ -40,6 +40,9 @@ public sealed partial class StatsFormViewModel : ViewModelBase
 	[ObservableProperty]
 	private bool _firstCalculate;
 
+	[ObservableProperty]
+	private bool _hasBeenDayCounted;
+
 	private bool CanCalculate()
 		=> HomeOfficeDays > 0 &&
 		   OfficeDays > 0 &&

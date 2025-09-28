@@ -94,6 +94,15 @@
 							/>
 						</StackPanel>
 					</Grid>
+
+					<CheckBox
+						FontFamily="{DynamicResource UrbanistFont}"
+						FontSize="12"
+						Padding="10 9 0 0"
+						Content="Heutiger Tag mit einberechnet?"
+						IsChecked="{Binding HasBeenDayCounted}"
+					/>
+
 					<!-- Calculate Stats Action-->
 					<Button
 						FontFamily="{DynamicResource UrbanistFont}"

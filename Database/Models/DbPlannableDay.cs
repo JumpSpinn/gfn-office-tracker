@@ -9,4 +9,6 @@ public sealed class DbPlannableDay
 	public DayType Type { get; set; }
 
 	public DateTime Date { get; set; }
+
+	public bool IsDeleted { get; set; }
 }

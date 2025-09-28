@@ -15,6 +15,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		_logController = lc;
 		_loadQueue.Enqueue(InitializeLoggerAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
+		_loadQueue.Enqueue(InitializeDatabaseAsync);
 		TriggerNextLoadStep();
 	}
 
@@ -34,7 +35,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 				return;
 		}
 		else
-			_messenger.Send(new SplashScreenSuccessMessage(true));
+			_messenger.Send(new SplashScreenSuccessMessage(false));
 	}
 
 	#endregion
@@ -80,6 +81,22 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		catch (Exception e)
 		{
 			DisplayInfoBar("Critical Error", $"While initializing Logger:\n{e.Message}", InfoBarSeverity.Error);
+			return false;
+		}
+	}
+
+	private async Task<bool> InitializeDatabaseAsync()
+	{
+		try
+		{
+			ShowInfiniteProgressBar = true;
+			LoadingText = "Initializing Database..";
+
+			return true;
+		}
+		catch (Exception e)
+		{
+			DisplayInfoBar("Critical Error", $"While initializing Database:\n{e.Message}", InfoBarSeverity.Error);
 			return false;
 		}
 	}
