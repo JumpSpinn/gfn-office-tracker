@@ -1,5 +1,7 @@
 namespace OfficeTracker;
 
+using Database.Factories;
+
 public sealed partial class App : Application
 {
     public IServiceProvider? Services { get; private set; }
@@ -24,6 +26,9 @@ public sealed partial class App : Application
 
         Services = new ServiceCollection()
             .AutoRegister()
+            .AddDbContext<OfContext>(options
+	            => options.UseSqlite($"Data Source={Options.DB_NAME}"))
+            .AddSingleton<IDbContextFactory<OfContext>, OfContextFactory>()
             .BuildServiceProvider();
 
         var vm = Services.GetRequiredService<MainWindowViewModel>();

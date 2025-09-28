@@ -1,5 +1,6 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+using Services.Forms;
 using Services.Windows.Controllers;
 
 [RegisterSingleton]
@@ -7,12 +8,16 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 {
 	private readonly MainWindowController _mainWindowController;
 	private readonly LogController _logController;
+	private readonly SplashScreenPageService _splashScreenPageService;
+	private readonly IDbContextFactory<OfContext> _dbContextFactory;
 	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 
-	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc)
+	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OfContext> dbContextFactory, SplashScreenPageService scs)
 	{
 		_mainWindowController = mwc;
 		_logController = lc;
+		_dbContextFactory = dbContextFactory;
+		_splashScreenPageService = scs;
 		_loadQueue.Enqueue(InitializeLoggerAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
 		_loadQueue.Enqueue(InitializeDatabaseAsync);
@@ -92,6 +97,11 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Database..";
 
+			var context = await _dbContextFactory.CreateDbContextAsync();
+			await context.Database.MigrateAsync();
+
+			_logController.Info("Database initialized.");
+			ShowInfiniteProgressBar = false;
 			return true;
 		}
 		catch (Exception e)
