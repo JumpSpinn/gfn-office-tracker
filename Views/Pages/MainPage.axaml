@@ -82,6 +82,7 @@
 		                    IsAddEnabled="True"
 		                    Items="{Binding PlannableDays}"
 		                    AddButtonClicked="RequestShowAddPlannableDayDialog"
+		                    DeleteButtonClicked="RequestShowDeletePlannableDayDialog"
 	                    />
                     </fluent:TabViewItem>
 

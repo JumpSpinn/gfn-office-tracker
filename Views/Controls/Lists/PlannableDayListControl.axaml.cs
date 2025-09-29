@@ -17,10 +17,7 @@ public class PlannableDayListControl : TemplatedControl
 
 		List = e.NameScope.Find<ListBox>("List");
 		if (List is not null)
-		{
-			Console.WriteLine("Subscribe to selection changed event..");
 			List.SelectionChanged += SelectionChanged;
-		}
 
 		base.OnApplyTemplate(e);
 	}
@@ -78,36 +75,35 @@ public class PlannableDayListControl : TemplatedControl
 
 	public Button? DeleteButton;
 
-	public readonly RoutedEvent<RoutedEventArgs> RemoveButtonClickedEvent =
+	public readonly RoutedEvent<RoutedEventArgs> DeleteButtonClickedEvent =
 		RoutedEvent.Register<PlannableDayListControl, RoutedEventArgs>(nameof(PlannableDayListControl), RoutingStrategies.Bubble);
 
-	public event EventHandler<RoutedEventArgs> RemoveButtonClicked
+	public event EventHandler<RoutedEventArgs> DeleteButtonClicked
 	{
-		add => AddHandler(RemoveButtonClickedEvent, value);
-		remove => RemoveHandler(RemoveButtonClickedEvent, value);
+		add => AddHandler(DeleteButtonClickedEvent, value);
+		remove => RemoveHandler(DeleteButtonClickedEvent, value);
 	}
 
 	private void OnDeleteButtonClick(object? sender, RoutedEventArgs e)
 	{
 		if (!IsAddEnabled) return;
-		RaiseEvent(new () { RoutedEvent = RemoveButtonClickedEvent});
+		RaiseEvent(new () { RoutedEvent = DeleteButtonClickedEvent});
 	}
 
 	#endregion
 
 	#region SELECTION
 
-	private void SelectionChanged(object? sender, SelectionChangedEventArgs e) =>
-		ToggleRemoveEnable();
+	public uint SelectedPlannableDayId
+		=> List?.SelectedItem is DbPlannableDay selectedDay ? selectedDay.Id : 0;
 
-	public void ToggleRemoveEnable()
+	private void SelectionChanged(object? sender, SelectionChangedEventArgs e)
+		=> ToggleRemoveEnable();
+
+	private void ToggleRemoveEnable()
 	{
-		Console.WriteLine($"List is null: {List is null}");
-		Console.WriteLine($"Delete is null: {DeleteButton is null}");
-
 		if (List is null || DeleteButton is null) return;
 		DeleteButton.IsEnabled = List.SelectedIndex >= 0;
-		Console.WriteLine($"Selected index: {List.SelectedIndex}");
 	}
 
 	#endregion

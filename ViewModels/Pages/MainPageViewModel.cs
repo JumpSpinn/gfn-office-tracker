@@ -134,8 +134,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    DisableBlurEffect();
     }
 
-    [RelayCommand]
-    private async Task ShowDeletePlannableDayDialogAsync()
+    public async Task ShowDeletePlannableDayDialogAsync(uint id)
     {
 	    EnableBlurEffect();
 
@@ -148,7 +147,12 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    DefaultButton = ContentDialogButton.Primary
 	    };
 
-	    await dialog.ShowAsyncCorrectly();
+	    var dialogResult = await dialog.ShowAsyncCorrectly();
+	    if(dialogResult == ContentDialogResult.Primary)
+	    {
+		    await _mainPageService.DeletePlannableDayAsync(id);
+		    await LoadPlannableDaysAsync();
+	    }
 
 	    DisableBlurEffect();
     }

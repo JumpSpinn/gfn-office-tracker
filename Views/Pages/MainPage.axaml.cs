@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.Views.Pages;
 
+using Controls.Lists;
+
 public partial class MainPage : UserControl
 {
     public MainPage()
@@ -42,6 +44,14 @@ public partial class MainPage : UserControl
     {
 	    if(DataContext is not MainPageViewModel mpv) return;
 	    mpv.ShowAddPlannableDayDialogAsync();
+    }
+
+    private void RequestShowDeletePlannableDayDialog(object? sender, RoutedEventArgs e)
+    {
+	    if(DataContext is not MainPageViewModel mpv) return;
+	    if (sender is not PlannableDayListControl pdlc) return;
+
+	    mpv.ShowDeletePlannableDayDialogAsync(pdlc.SelectedPlannableDayId);
     }
 
     #endregion
