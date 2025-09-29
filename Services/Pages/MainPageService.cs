@@ -29,6 +29,21 @@ public sealed class MainPageService
 		return null;
 	}
 
+	public async Task<List<DbPlannableDay>?> GetPlannableDaysAsync()
+	{
+		try
+		{
+			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			return db.PlannableDays.ToList();
+		}
+		catch (Exception e)
+		{
+			_logController.Error(e.Message);
+		}
+
+		return null;
+	}
+
 	#endregion
 
 	#region CREATE
