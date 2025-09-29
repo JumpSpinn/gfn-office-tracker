@@ -170,6 +170,8 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    return (false, "Ungültiges Datum", "Den heutigen Tag kannst du nicht mehr planen 🥹");
 	    else if(DateTimeHelper.IsInPast((DateTime)dt))
 		    return (false, "Ungültiges Datum", "Der Tag liegt in der Vergangenheit. 💩");
+	    else if(DateTimeHelper.IsInWeekend((DateTime)dt))
+		    return (false, "Ungültiges Datum", "Du arbeitst am Wochenende?");
 	    return (true, "", "");
     }
 
