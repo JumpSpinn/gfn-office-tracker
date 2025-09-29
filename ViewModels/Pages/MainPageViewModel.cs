@@ -122,14 +122,16 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    if (dialogResult == ContentDialogResult.Primary)
 	    {
 		    var selectedType = dayForm.SelectedDayType;
+		    if (selectedType == DayType.NONE) return; // cannot be selected lul
+
 		    var selectedDate = dayForm.GetSelectedDate;
-
-		    if (selectedType == DayType.NONE) return;
-
-		    var plannableDayEntry = await _mainPageService.CreatePlannableDayAsync(selectedType, selectedDate);
-		    if (plannableDayEntry is null) return;
-
-		    await LoadPlannableDaysAsync();
+		    if (selectedDate == DateTime.Today.AddDays(-1))
+			    await DialogHelper.ShowDialog("Ungültiger Tag", "Du hast kein Tag oder den heutigen angegeben!");
+		    else
+		    {
+			    await _mainPageService.CreatePlannableDayAsync(selectedType, selectedDate);
+			    await LoadPlannableDaysAsync();
+		    }
 	    }
 	    DisableBlurEffect();
     }

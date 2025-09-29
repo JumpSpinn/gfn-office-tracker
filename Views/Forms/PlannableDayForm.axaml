@@ -18,6 +18,7 @@
 	            Grid.Row="1"
 	            HorizontalAlignment="Stretch"
 	            FontFamily="{ DynamicResource UrbanistFont }"
+	            Watermark="tt.mm.jjjj"
 	        />
         </Grid>
         <Grid Grid.Row="1" RowDefinitions="Auto,Auto" HorizontalAlignment="Stretch" RowSpacing="5">

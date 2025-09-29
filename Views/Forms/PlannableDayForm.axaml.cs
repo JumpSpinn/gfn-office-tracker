@@ -14,7 +14,8 @@ public partial class PlannableDayForm : UserControl
 		    DateTimeOffset? selectedDateTimeOffset = DatePicker.SelectedDate;
 		    if (selectedDateTimeOffset.HasValue)
 			    return selectedDateTimeOffset.Value.Date;
-		    else throw new Exception("No Date Selected");
+		    else
+			    return DateTime.Today.AddDays(-1);
 	    }
     }
 
