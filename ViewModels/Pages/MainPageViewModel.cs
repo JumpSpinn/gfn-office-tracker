@@ -118,18 +118,18 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    DefaultButton = ContentDialogButton.Primary
 	    };
 
-	    var dialogResult = await dialog.ShowAsyncCorrectly();
-	    if (dialogResult == ContentDialogResult.Primary)
+	    var result = await dialog.ShowAsyncCorrectly();
+	    if (result == ContentDialogResult.Primary)
 	    {
-		    var selectedType = dayForm.SelectedDayType;
-		    if (selectedType == DayType.NONE) return; // cannot be selected lul
-
-		    var selectedDate = dayForm.GetSelectedDate;
-		    if (selectedDate == DateTime.Today.AddDays(-1))
-			    await DialogHelper.ShowDialog("Ungültiger Tag", "Du hast kein Tag oder den heutigen angegeben!");
+		    if (dayForm.SelectedDayType == DayType.NONE)
+			    await DialogHelper.ShowDialog("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?! 🤯");
+		    else if(dayForm.SelectedDate is null)
+			    await DialogHelper.ShowDialog("Datum?", "Du hast das Datum vergessen 👀");
+		    else if(DateTimeHelper.IsToday((DateTime)dayForm.SelectedDate))
+			    await DialogHelper.ShowDialog("Das ist quatsch", "Den heutigen Tag kannst du nicht mehr planen 🥹");
 		    else
 		    {
-			    await _mainPageService.CreatePlannableDayAsync(selectedType, selectedDate);
+			    await _mainPageService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate);
 			    await LoadPlannableDaysAsync();
 		    }
 	    }

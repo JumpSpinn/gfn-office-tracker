@@ -7,7 +7,7 @@ public partial class PlannableDayForm : UserControl
         InitializeComponent();
     }
 
-    public DateTime GetSelectedDate
+    public DateTime? SelectedDate
     {
 	    get
 	    {
@@ -15,7 +15,7 @@ public partial class PlannableDayForm : UserControl
 		    if (selectedDateTimeOffset.HasValue)
 			    return selectedDateTimeOffset.Value.Date;
 		    else
-			    return DateTime.Today.AddDays(-1);
+			    return null;
 	    }
     }
 
