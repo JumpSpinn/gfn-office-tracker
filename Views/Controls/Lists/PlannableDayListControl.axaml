@@ -98,7 +98,6 @@
 						Grid.Column="0"
 						ColumnDefinitions="*,Auto"
 						RowDefinitions="*"
-						ColumnSpacing="10"
 					>
 						<Button
 							Grid.Column="0"
@@ -111,6 +110,7 @@
 						/>
 						<Button
 							Grid.Column="1"
+							Margin="10 0 0 0"
 							x:Name="DeleteButton"
 							HorizontalAlignment="Stretch"
 							FontSize="12"
