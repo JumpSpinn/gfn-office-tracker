@@ -10,7 +10,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    _mainPageService = mps;
     }
 
-    public async Task<StatsControl?> CreateNewStatsControl()
+    #region CREATE
+
+    public async Task<StatsControl?> CreateNewStatsControlAsync()
     {
 	    var data = await _mainPageService.GetGeneralDataAsync();
 	    if (data is null) return null;
@@ -22,24 +24,70 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    };
     }
 
-    public async Task<uint> AddHomeOfficeDayAsync()
-	    => await _mainPageService.AddHomeOfficeDayAsync();
+    #endregion
 
-    public async Task<uint> AddOfficeDayAsync()
-	    => await _mainPageService.AddOfficeDayAsync();
-
-    public async Task<DbPlannableDay?> CreatePlannableDayAsync(DayType type, DateTime date)
-		=> await _mainPageService.CreatePlannableDayAsync(type, date);
+    #region BLUR EFFECT
 
     [ObservableProperty]
-    private Effect? _currentEffect;
+    private Effect? _blurEffect;
+
+    private void EnableBlurEffect()
+	    => BlurEffect = new BlurEffect() { Radius = Options.MODAL_BLUR_RADIUS };
+
+    private void DisableBlurEffect()
+		=> BlurEffect = null;
+
+    #endregion
+
+    #region CURRENT DAY
 
     [RelayCommand]
-    public async Task FudoSpinnt()
+    private async Task ShowAddCurrentDayDialogAsync()
     {
-	    CurrentEffect = new BlurEffect() { Radius = Options.MODAL_BLUR_RADIUS };
+	    EnableBlurEffect();
 
-	    Console.WriteLine("Fudo spinnt, richtiger spinner alla");
+	    var currentDayForm = new CurrentDayForm();
+	    var dialog = new ContentDialog()
+	    {
+		    Title = "Heutigen Tag eintragen",
+		    Content = currentDayForm,
+		    PrimaryButtonText = "Eintragen",
+		    CloseButtonText = "Abbrechen",
+		    DefaultButton = ContentDialogButton.Primary
+	    };
+
+	    var dialogResult = await dialog.ShowAsyncCorrectly();
+	    if (dialogResult == ContentDialogResult.Primary)
+	    {
+		    DayType? selectedType = currentDayForm.SelectedDayType;
+		    switch (selectedType)
+		    {
+			    case DayType.HOME:
+				    {
+					    await _mainPageService.AddHomeOfficeDayAsync();
+					    break;
+				    }
+			    case DayType.OFFICE:
+				    {
+					    await _mainPageService.AddOfficeDayAsync();
+					    break;
+				    }
+		    }
+
+		    // TODO: update stats in MainPage.axaml.cs
+	    }
+
+	    DisableBlurEffect();
+    }
+
+    #endregion
+
+    #region CREATE PLANNABLE DAY
+
+    [RelayCommand]
+    private async Task ShowAddPlannableDayDialogAsync()
+    {
+	    EnableBlurEffect();
 
 	    var dayForm = new PlannableDayForm();
 	    var dialog = new ContentDialog()
@@ -51,7 +99,45 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    DefaultButton = ContentDialogButton.Primary
 	    };
 
-	    await dialog.ShowAsyncCorrectly();
-	    CurrentEffect = null;
+	    var dialogResult = await dialog.ShowAsyncCorrectly();
+	    if (dialogResult == ContentDialogResult.Primary)
+	    {
+		    var selectedType = dayForm.SelectedDayType;
+		    var selectedDate = dayForm.GetSelectedDate;
+
+		    if (selectedType == DayType.NONE) return;
+
+		    // TODO: add plannable day to database
+
+		    Console.WriteLine($"Ausgewählter Tag: {selectedType}");
+		    Console.WriteLine($"Ausgewähltes Datum: {selectedDate}");
+	    }
+
+	    DisableBlurEffect();
     }
+
+    #endregion
+
+    #region DELETE PLANNABLE DAY
+
+    [RelayCommand]
+    private async Task ShowDeletePlannableDayDialogAsync()
+    {
+	    EnableBlurEffect();
+
+	    var dialog = new ContentDialog()
+	    {
+		    Title = "Geplanten Tag löschen",
+		    Content = "Möchtest du diesen Eintrag wirklich löschen?",
+		    PrimaryButtonText = "Löschen",
+		    CloseButtonText = "Abbrechen",
+		    DefaultButton = ContentDialogButton.Primary
+	    };
+
+	    await dialog.ShowAsyncCorrectly();
+
+	    DisableBlurEffect();
+    }
+
+    #endregion
 }
