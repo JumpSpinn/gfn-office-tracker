@@ -16,8 +16,15 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		_loadQueue.Enqueue(InitializeLoggerAsync);
 		_loadQueue.Enqueue(InitializeDatabaseAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
-		TriggerNextLoadStep();
+		StartInitializationAsync();
 	}
+
+	#region Initialization
+
+	private async Task StartInitializationAsync()
+		=> await TriggerNextLoadStep();
+
+	#endregion
 
 	#region QUEUE
 
@@ -25,17 +32,18 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 
 	private async Task TriggerNextLoadStep()
 	{
-		LoadingText = "";
-		if (_loadQueue.Count > 0)
+		while (_loadQueue.Count > 0)
 		{
 			LoadingText = "";
-			if (await _loadQueue.Dequeue().Invoke())
-				TriggerNextLoadStep();
-			else
-				return;
+			var loadStep = _loadQueue.Dequeue();
+
+			if (await loadStep.Invoke()) continue;
+
+			_logController.Error("Error while initializing application.");
+			return;
 		}
-		else
-			_messenger.Send(new SplashScreenSuccessMessage(_hasData));
+
+		_messenger.Send(new SplashScreenSuccessMessage(_hasData));
 	}
 
 	#endregion
@@ -46,24 +54,24 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 
 	private async Task<bool> InitializeAppWindowAsync()
 	{
-		while (true)
+		const uint maxRetries = 20;
+		uint retryCount = 0;
+
+		while (retryCount < maxRetries)
 		{
-			if (App.MainWindow is null)
-			{
-				_logController.Debug("MainWindow not available yet... Retrying...");
-				await Task.Delay(500);
-				continue;
-			}
+			if (App.MainWindow?.IsLoaded == true)
+				return await _mainWindowController.Initialize();
 
-			if (!App.MainWindow.IsLoaded)
-			{
-				_logController.Debug("MainWindow available, but not loaded yet... Retrying...");
-				await Task.Delay(500);
-				continue;
-			}
+			_logController.Debug(App.MainWindow is null ?
+				"MainWindow not available yet... Retrying..." :
+				"MainWindow available, but not loaded yet... Retrying...");
 
-			return await _mainWindowController.Initialize();
+			await Task.Delay(500);
+			retryCount++;
 		}
+
+		DisplayInfoBar("Timeout", "MainWindow konnte nicht initialisiert werden.", InfoBarSeverity.Error);
+		return false;
 	}
 
 	private async Task<bool> InitializeLoggerAsync()
