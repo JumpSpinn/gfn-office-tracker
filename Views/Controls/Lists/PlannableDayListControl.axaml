@@ -1,0 +1,89 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+        xmlns:models="using:OfficeTracker.Database.Models"
+        xmlns:controls="using:OfficeTracker.Views.Controls.Lists">
+	<Design.PreviewWith>
+		<controls:PlannableDayListControl>
+			<controls:PlannableDayListControl.Items>
+				<ListBoxItem>01.01.2001 | Standort</ListBoxItem>
+				<ListBoxItem>02.02.2003 | HomeOffice</ListBoxItem>
+				<ListBoxItem>04.04.2006 | Standort</ListBoxItem>
+				<ListBoxItem>03.06.2009 | HomeOffice</ListBoxItem>
+				<ListBoxItem>04.08.2012 | HomeOffice</ListBoxItem>
+			</controls:PlannableDayListControl.Items>
+		</controls:PlannableDayListControl>
+	</Design.PreviewWith>
+
+	<Style Selector="controls|PlannableDayListControl">
+		<!-- Set Defaults -->
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Grid
+					RowDefinitions="*,Auto"
+					Margin="10"
+					RowSpacing="5"
+				>
+					<ListBox
+						x:Name="List"
+						Grid.Row="0"
+						SelectionMode="Single"
+						ItemsSource="{TemplateBinding Items}"
+					>
+						<ListBox.ItemTemplate>
+							<DataTemplate DataType="models:DbPlannableDay">
+								<ListBoxItem>
+									<Grid
+										ColumnDefinitions="Auto,*,Auto"
+										ColumnSpacing="10"
+									>
+										<TextBlock
+											Grid.Column="0"
+											Text="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}'}"
+											VerticalAlignment="Center"
+											FontFamily="{DynamicResource UrbanistFont}"
+										/>
+										<TextBlock
+											Grid.Column="1"
+											Text="{Binding Type}"
+											VerticalAlignment="Center"
+											FontFamily="{DynamicResource UrbanistFont}"
+										/>
+										<Button
+											x:Name="DeleteButton"
+											Grid.Column="2"
+											FontSize="16"
+											Padding="4"
+											VerticalAlignment="Center"
+											Background="Transparent"
+											ToolTip.Tip="Löschen"
+											ToolTip.Placement="Top"
+											ToolTip.VerticalOffset="0"
+										>
+											<Button.Content>
+												<fluent:SymbolIcon
+													Symbol="Delete"
+													Opacity=".5"
+												/>
+											</Button.Content>
+										</Button>
+									</Grid>
+								</ListBoxItem>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+					<Button
+						x:Name="AddButton"
+						Grid.Row="1"
+						HorizontalAlignment="Stretch"
+						FontSize="12"
+						IsEnabled="{TemplateBinding IsAddEnabled}"
+						FontFamily="{DynamicResource UrbanistFont}"
+						Content="Neuen Tag planen"
+					/>
+				</Grid>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+</Styles>
+
