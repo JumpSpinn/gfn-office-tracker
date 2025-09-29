@@ -12,6 +12,8 @@ public sealed class StatsFormService
 		_logController = logController;
 	}
 
+	#region CREATE
+
 	public async Task<DbGeneral?> CreateGeneralDataAsync(uint homeOfficeDays, uint officeDays, bool hasBeenDayCounted)
 	{
 		try
@@ -21,7 +23,7 @@ public sealed class StatsFormService
 			{
 				HomeOfficeDays = homeOfficeDays,
 				OfficeDays = officeDays,
-				HasBeenDayCounted = hasBeenDayCounted
+				LastUpdate = hasBeenDayCounted ? DateTime.Today : DateTime.MinValue
 			};
 			db.General.Add(general);
 			await db.SaveChangesAsync();
@@ -33,4 +35,6 @@ public sealed class StatsFormService
 		}
 		return null;
 	}
+
+	#endregion
 }

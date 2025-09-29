@@ -21,6 +21,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
     [ObservableProperty]
     private StatsControl? _currentStatsControl;
 
+    [ObservableProperty]
+    private bool _canAddCurrentDay;
+
     public event EventHandler? CurrentStatsChanged;
 
     private async Task CreateNewStatsControlAsync()
@@ -34,6 +37,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    OfficeDays = data.OfficeDays
 	    };
 
+	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
 	    CurrentStatsChanged?.Invoke(this, EventArgs.Empty);;
     }
 

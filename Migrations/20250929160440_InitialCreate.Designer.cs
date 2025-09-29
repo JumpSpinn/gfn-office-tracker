@@ -11,7 +11,7 @@ using OfficeTracker.Database;
 namespace OfficeTracker.Migrations
 {
     [DbContext(typeof(OtContext))]
-    [Migration("20250928162847_InitialCreate")]
+    [Migration("20250929160440_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,11 +26,11 @@ namespace OfficeTracker.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("HasBeenDayCounted")
-                        .HasColumnType("INTEGER");
-
                     b.Property<uint>("HomeOfficeDays")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("TEXT");
 
                     b.Property<uint>("OfficeDays")
                         .HasColumnType("INTEGER");

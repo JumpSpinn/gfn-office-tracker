@@ -23,11 +23,11 @@ namespace OfficeTracker.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("HasBeenDayCounted")
-                        .HasColumnType("INTEGER");
-
                     b.Property<uint>("HomeOfficeDays")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("TEXT");
 
                     b.Property<uint>("OfficeDays")
                         .HasColumnType("INTEGER");

@@ -19,7 +19,7 @@ namespace OfficeTracker.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     HomeOfficeDays = table.Column<uint>(type: "INTEGER", nullable: false),
                     OfficeDays = table.Column<uint>(type: "INTEGER", nullable: false),
-                    HasBeenDayCounted = table.Column<bool>(type: "INTEGER", nullable: false)
+                    LastUpdate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.ViewModels.Forms;
 
-using Services.Forms;
-
 [RegisterSingleton]
 public sealed partial class StatsFormViewModel : ViewModelBase
 {
@@ -98,10 +96,7 @@ public sealed partial class StatsFormViewModel : ViewModelBase
 	private async Task CompleteSetupAsync()
 	{
 		var result = await _statsFormService.CreateGeneralDataAsync(HomeOfficeDays, OfficeDays, HasBeenDayCounted);
-		if (result is null)
-			_messenger.Send(new StatsFormSuccessMessage(false));
-		else
-			_messenger.Send(new StatsFormSuccessMessage(true));
+		_messenger.Send(result is null ? new StatsFormSuccessMessage(false) : new StatsFormSuccessMessage(true));
 	}
 
 	#endregion

@@ -10,5 +10,5 @@ public sealed class DbGeneral
 
 	public uint OfficeDays { get; set; }
 
-	public bool HasBeenDayCounted { get; set; }
+	public DateTime LastUpdate { get; set; }
 }

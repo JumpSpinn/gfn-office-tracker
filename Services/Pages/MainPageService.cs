@@ -83,6 +83,7 @@ public sealed class MainPageService
 			if (data is null) return 0;
 
 			data.HomeOfficeDays++;
+			data.LastUpdate = DateTime.Today;
 			await db.SaveChangesAsync();
 			return data.HomeOfficeDays;
 		}
@@ -103,6 +104,7 @@ public sealed class MainPageService
 			if (data is null) return 0;
 
 			data.OfficeDays++;
+			data.LastUpdate = DateTime.Today;
 			await db.SaveChangesAsync();
 			return data.OfficeDays;
 		}
