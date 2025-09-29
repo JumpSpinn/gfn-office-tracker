@@ -21,66 +21,70 @@
 			<ControlTemplate>
 				<Grid
 					RowDefinitions="*,Auto"
+					ColumnDefinitions="*"
 					Margin="10"
 					RowSpacing="5"
 				>
 					<ListBox
-						x:Name="List"
 						Grid.Row="0"
+						Grid.Column="0"
 						SelectionMode="Single"
 						ItemsSource="{TemplateBinding Items}"
+						x:Name="List"
 					>
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="models:DbPlannableDay">
-								<ListBoxItem>
-									<Grid
-										ColumnDefinitions="Auto,*,Auto"
-										ColumnSpacing="10"
+								<Grid
+									ColumnDefinitions="Auto,*,Auto"
+									ColumnSpacing="10"
+								>
+									<TextBlock
+										Grid.Column="0"
+										Text="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}'}"
+										VerticalAlignment="Center"
+										FontFamily="{DynamicResource UrbanistFont}"
+									/>
+									<TextBlock
+										Grid.Column="1"
+										Text="{Binding Type}"
+										VerticalAlignment="Center"
+										FontFamily="{DynamicResource UrbanistFont}"
+									/>
+									<Button
+										x:Name="DeleteButton"
+										Grid.Column="2"
+										FontSize="16"
+										Padding="4"
+										VerticalAlignment="Center"
+										Background="Transparent"
+										ToolTip.Tip="Löschen"
+										ToolTip.Placement="Top"
+										ToolTip.VerticalOffset="0"
 									>
-										<TextBlock
-											Grid.Column="0"
-											Text="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}'}"
-											VerticalAlignment="Center"
-											FontFamily="{DynamicResource UrbanistFont}"
-										/>
-										<TextBlock
-											Grid.Column="1"
-											Text="{Binding Type}"
-											VerticalAlignment="Center"
-											FontFamily="{DynamicResource UrbanistFont}"
-										/>
-										<Button
-											x:Name="DeleteButton"
-											Grid.Column="2"
-											FontSize="16"
-											Padding="4"
-											VerticalAlignment="Center"
-											Background="Transparent"
-											ToolTip.Tip="Löschen"
-											ToolTip.Placement="Top"
-											ToolTip.VerticalOffset="0"
-										>
-											<Button.Content>
-												<fluent:SymbolIcon
-													Symbol="Delete"
-													Opacity=".5"
-												/>
-											</Button.Content>
-										</Button>
-									</Grid>
-								</ListBoxItem>
+										<Button.Content>
+											<fluent:SymbolIcon
+												Symbol="Delete"
+												Opacity=".5"
+											/>
+										</Button.Content>
+									</Button>
+								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>
-					<Button
-						x:Name="AddButton"
+					<StackPanel
 						Grid.Row="1"
-						HorizontalAlignment="Stretch"
-						FontSize="12"
-						IsEnabled="{TemplateBinding IsAddEnabled}"
-						FontFamily="{DynamicResource UrbanistFont}"
-						Content="Neuen Tag planen"
-					/>
+						Grid.Column="0"
+					>
+						<Button
+							x:Name="AddButton"
+							HorizontalAlignment="Stretch"
+							FontSize="12"
+							IsEnabled="{TemplateBinding IsAddEnabled}"
+							FontFamily="{DynamicResource UrbanistFont}"
+							Content="Neuen Tag planen"
+						/>
+					</StackPanel>
 				</Grid>
 			</ControlTemplate>
 		</Setter>
