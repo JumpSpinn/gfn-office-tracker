@@ -10,6 +10,7 @@ global using System.Collections.ObjectModel;
 global using System.Runtime.CompilerServices;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
+global using System.Globalization;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ global using Avalonia.Controls.ApplicationLifetimes;
 global using Avalonia.Markup.Xaml;
 global using Avalonia.Controls.Primitives;
 global using Avalonia.Media;
+global using Avalonia.Data.Converters;
 
 global using FluentAvalonia.UI.Windowing;
 global using FluentAvalonia.UI.Controls;
@@ -51,3 +53,4 @@ global using OfficeTracker.Services.Pages;
 global using OfficeTracker.ViewModels.Forms;
 global using OfficeTracker.Database.Models;
 global using OfficeTracker.Database;
+global using OfficeTracker.Converters.Models;

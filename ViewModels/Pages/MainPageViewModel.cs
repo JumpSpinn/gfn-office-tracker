@@ -129,8 +129,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    var plannableDayEntry = await _mainPageService.CreatePlannableDayAsync(selectedType, selectedDate);
 		    if (plannableDayEntry is null) return;
 
-		    Console.WriteLine($"New Entry - ID: {plannableDayEntry.Id}, Type: {plannableDayEntry.Type}, Date: {plannableDayEntry.Date}, IsDeleted: {plannableDayEntry.IsDeleted}");
-
 		    PlannableDays.Add(plannableDayEntry);
 	    }
 	    DisableBlurEffect();

@@ -26,10 +26,10 @@ public class PlannableDayListControl : TemplatedControl
 
 	public ListBox? List;
 
-	public static readonly StyledProperty<ObservableCollection<ListBoxItem>> ItemsProperty =
-		AvaloniaProperty.Register<PlannableDayListControl, ObservableCollection<ListBoxItem>>(nameof(ItemsProperty), defaultValue: []);
+	public static readonly StyledProperty<ObservableCollection<DbPlannableDay>> ItemsProperty =
+		AvaloniaProperty.Register<PlannableDayListControl, ObservableCollection<DbPlannableDay>>(nameof(Items), defaultValue: []);
 
-	public ObservableCollection<ListBoxItem> Items
+	public ObservableCollection<DbPlannableDay> Items
 	{
 		get => GetValue(ItemsProperty);
 		set
