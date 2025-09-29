@@ -3,10 +3,10 @@
 [RegisterSingleton]
 public sealed partial class SplashScreenPageViewModel : ViewModelBase
 {
-	private readonly MainWindowController _mainWindowController;
-	private readonly LogController _logController;
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
 	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
+	private readonly MainWindowController _mainWindowController;
+	private readonly LogController _logController;
 
 	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OtContext> dbContextFactory)
 	{
@@ -14,8 +14,8 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		_logController = lc;
 		_dbContextFactory = dbContextFactory;
 		_loadQueue.Enqueue(InitializeLoggerAsync);
-		_loadQueue.Enqueue(InitializeAppWindowAsync);
 		_loadQueue.Enqueue(InitializeDatabaseAsync);
+		_loadQueue.Enqueue(InitializeAppWindowAsync);
 		TriggerNextLoadStep();
 	}
 
@@ -50,12 +50,14 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		{
 			if (App.MainWindow is null)
 			{
-				await Task.Delay(100);
+				_logController.Debug("MainWindow not available yet... Retrying...");
+				await Task.Delay(500);
 				continue;
 			}
 
 			if (!App.MainWindow.IsLoaded)
 			{
+				_logController.Debug("MainWindow available, but not loaded yet... Retrying...");
 				await Task.Delay(500);
 				continue;
 			}
