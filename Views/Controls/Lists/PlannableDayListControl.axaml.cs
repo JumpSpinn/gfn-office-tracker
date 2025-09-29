@@ -17,7 +17,10 @@ public class PlannableDayListControl : TemplatedControl
 
 		List = e.NameScope.Find<ListBox>("List");
 		if (List is not null)
+		{
+			Console.WriteLine("Subscribe to selection changed event..");
 			List.SelectionChanged += SelectionChanged;
+		}
 
 		base.OnApplyTemplate(e);
 	}
@@ -99,8 +102,12 @@ public class PlannableDayListControl : TemplatedControl
 
 	public void ToggleRemoveEnable()
 	{
+		Console.WriteLine($"List is null: {List is null}");
+		Console.WriteLine($"Delete is null: {DeleteButton is null}");
+
 		if (List is null || DeleteButton is null) return;
 		DeleteButton.IsEnabled = List.SelectedIndex >= 0;
+		Console.WriteLine($"Selected index: {List.SelectedIndex}");
 	}
 
 	#endregion

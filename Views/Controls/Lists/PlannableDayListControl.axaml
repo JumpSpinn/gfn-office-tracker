@@ -1,6 +1,5 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
         xmlns:converters="using:OfficeTracker.Converters"
         xmlns:models="using:OfficeTracker.Database.Models"
         xmlns:controls="using:OfficeTracker.Views.Controls.Lists">
@@ -57,33 +56,19 @@
 										VerticalAlignment="Center"
 										FontFamily="{DynamicResource UrbanistFont}"
 									/>
-									<Button
-										x:Name="DeleteButton"
-										Grid.Column="3"
-										FontSize="16"
-										Padding="4"
-										VerticalAlignment="Center"
-										Background="Transparent"
-										ToolTip.Tip="Löschen"
-										ToolTip.Placement="Top"
-										ToolTip.VerticalOffset="0"
-									>
-										<Button.Content>
-											<fluent:SymbolIcon
-												Symbol="Delete"
-												Opacity=".5"
-											/>
-										</Button.Content>
-									</Button>
 								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>
-					<StackPanel
+					<Grid
 						Grid.Row="1"
 						Grid.Column="0"
+						ColumnDefinitions="*,Auto"
+						RowDefinitions="*"
+						ColumnSpacing="10"
 					>
 						<Button
+							Grid.Column="0"
 							x:Name="AddButton"
 							HorizontalAlignment="Stretch"
 							FontSize="12"
@@ -91,7 +76,15 @@
 							FontFamily="{DynamicResource UrbanistFont}"
 							Content="Neuen Tag planen"
 						/>
-					</StackPanel>
+						<Button
+							Grid.Column="1"
+							x:Name="DeleteButton"
+							HorizontalAlignment="Stretch"
+							FontSize="12"
+							FontFamily="{DynamicResource UrbanistFont}"
+							Content="Löschen"
+						/>
+					</Grid>
 				</Grid>
 			</ControlTemplate>
 		</Setter>
