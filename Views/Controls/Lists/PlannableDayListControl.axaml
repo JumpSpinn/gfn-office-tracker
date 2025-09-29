@@ -1,6 +1,5 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:converters="using:OfficeTracker.Converters"
         xmlns:models="using:OfficeTracker.Database.Models"
         xmlns:controls="using:OfficeTracker.Views.Controls.Lists">
 	<Design.PreviewWith>
@@ -8,10 +7,6 @@
 	</Design.PreviewWith>
 
 	<Style Selector="controls|PlannableDayListControl">
-		<Style.Resources>
-			<converters:PlannableDayTypeConverter x:Key="TypeConverter"/>
-		</Style.Resources>
-
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>
@@ -24,10 +19,12 @@
 					<ListBox
 						Grid.Row="0"
 						Grid.Column="0"
+						x:Name="List"
 						SelectionMode="Single"
 						ItemsSource="{TemplateBinding Items}"
-						x:Name="List"
+						IsVisible="{Binding Items, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NotNullToVisibilityConverter}}"
 					>
+						<!-- LIST -->
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="models:DbPlannableDay">
 								<Grid
@@ -52,7 +49,7 @@
 									/>
 									<TextBlock
 										Grid.Column="2"
-										Text="{Binding Type, Converter={StaticResource TypeConverter}}"
+										Text="{Binding Type, Converter={StaticResource PlannableDayTypeConverter}}"
 										VerticalAlignment="Center"
 										FontFamily="{DynamicResource UrbanistFont}"
 									/>
@@ -60,6 +57,42 @@
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>
+
+					<!-- EMPTY LIST PLACEHOLDER -->
+					<Border
+						Grid.Row="0"
+						Padding="20"
+						IsVisible="{Binding Items, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmptyToVisibilityConverter}}"
+					>
+						<StackPanel
+							Orientation="Vertical"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Spacing="5"
+						>
+							<TextBlock
+								Text="📅"
+								FontSize="42"
+								FontFamily="{DynamicResource UrbanistFont}"
+								HorizontalAlignment="Center"
+							/>
+							<TextBlock
+								Text="Keine Einträge vorhanden"
+								FontSize="16"
+								FontFamily="{DynamicResource UrbanistFont}"
+								HorizontalAlignment="Center"
+							/>
+							<TextBlock
+								Text="Füge einen geplanten Tag hinzu um beginnen"
+								FontSize="12"
+								FontFamily="{DynamicResource UrbanistFont}"
+								HorizontalAlignment="Center"
+								Foreground="#90FFFFFF"
+							/>
+						</StackPanel>
+					</Border>
+
+					<!-- ACTIONS -->
 					<Grid
 						Grid.Row="1"
 						Grid.Column="0"

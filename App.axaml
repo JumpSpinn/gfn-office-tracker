@@ -4,6 +4,7 @@
         xmlns:local="using:OfficeTracker"
         xmlns="https://github.com/avaloniaui"
         xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
+        xmlns:converters="clr-namespace:OfficeTracker.Converters"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     >
 
@@ -34,7 +35,13 @@
 	    <Color x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver">#30FFFFFF</Color>
 	    <x:Double x:Key="RadioButtonBorderThemeThickness">1</x:Double>
 
+	    <converters:PlannableDayTypeConverter x:Key="PlannableDayTypeConverter" />
+	    <converters:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
+	    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+	    <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter" />
+
         <FontFamily x:Key="UrbanistFont">avares://OfficeTracker/Assets/Fonts#Urbanist</FontFamily>
+
     </Application.Resources>
 
     <Application.Styles>

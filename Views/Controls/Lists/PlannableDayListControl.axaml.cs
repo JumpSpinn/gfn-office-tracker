@@ -12,7 +12,7 @@ public class PlannableDayListControl : TemplatedControl
 		if (DeleteButton is not null)
 		{
 			DeleteButton.Click += OnDeleteButtonClick;
-			DeleteButton.IsEnabled = false;
+			DeleteButton.IsVisible = false;
 		}
 
 		List = e.NameScope.Find<ListBox>("List");
@@ -103,6 +103,7 @@ public class PlannableDayListControl : TemplatedControl
 	private void ToggleRemoveEnable()
 	{
 		if (List is null || DeleteButton is null) return;
+		DeleteButton.IsVisible = List.Items.Count > 0;
 		DeleteButton.IsEnabled = List.SelectedIndex >= 0;
 	}
 

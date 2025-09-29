@@ -129,7 +129,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    var plannableDayEntry = await _mainPageService.CreatePlannableDayAsync(selectedType, selectedDate);
 		    if (plannableDayEntry is null) return;
 
-		    PlannableDays.Add(plannableDayEntry);
+		    await LoadPlannableDaysAsync();
 	    }
 	    DisableBlurEffect();
     }
