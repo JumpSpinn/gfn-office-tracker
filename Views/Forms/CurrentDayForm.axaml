@@ -11,7 +11,6 @@
 		    Content="HomeOffice"
 		    GroupName="DaySelection"
 		    FontFamily="{ DynamicResource UrbanistFont }"
-		    IsChecked="True"
 	    />
 	    <RadioButton
 		    x:Name="OfficeRadio"
@@ -19,6 +18,7 @@
 		    Content="Standort"
 		    GroupName="DaySelection"
 		    FontFamily="{ DynamicResource UrbanistFont }"
+		    IsChecked="True"
 	    />
     </Grid>
 </UserControl>
