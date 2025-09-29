@@ -104,7 +104,6 @@
 							x:Name="AddButton"
 							HorizontalAlignment="Stretch"
 							FontSize="12"
-							IsEnabled="{TemplateBinding IsAddEnabled}"
 							FontFamily="{DynamicResource UrbanistFont}"
 							Content="Neuen Tag planen"
 						/>

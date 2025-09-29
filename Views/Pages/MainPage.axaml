@@ -79,7 +79,6 @@
 	                    BorderThickness="4"
 	                >
 	                    <listcontrols:PlannableDayListControl
-		                    IsAddEnabled="True"
 		                    Items="{Binding PlannableDays}"
 		                    AddButtonClicked="RequestShowAddPlannableDayDialog"
 		                    DeleteButtonClicked="RequestShowDeletePlannableDayDialog"
