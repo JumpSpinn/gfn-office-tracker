@@ -10,13 +10,12 @@ public partial class MainPage : UserControl
 
     #region EVENTS
 
-    private void OnLoaded(object? sender, RoutedEventArgs e)
+    private async void OnLoaded(object? sender, RoutedEventArgs e)
     {
 	    if(DataContext is not MainPageViewModel mpv) return;
 
 	    mpv.CurrentStatsChanged += CurrentStatsChanged;
-
-	    UpdateCurrentStats();
+	    await mpv.InitializeAsync();
     }
 
     private void CurrentStatsChanged(object? sender, EventArgs e)

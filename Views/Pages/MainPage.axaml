@@ -2,6 +2,7 @@
     x:DataType="vm:MainPageViewModel"
     x:Class="OfficeTracker.Views.Pages.MainPage"
     xmlns:vm="using:OfficeTracker.ViewModels.Pages"
+    xmlns:listcontrols="using:OfficeTracker.Views.Controls.Lists"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -77,31 +78,10 @@
 	                    IsClosable="False"
 	                    BorderThickness="4"
 	                >
-                        <Grid RowDefinitions="*,Auto" Margin="10" RowSpacing="5">
-                            <Button Grid.Row="1" HorizontalAlignment="Stretch" FontSize="12" Command="{Binding ShowAddPlannableDayDialogCommand}" FontFamily="{DynamicResource UrbanistFont}">Neuen Tag planen</Button>
-                            <ListBox Grid.Row="0">
-                                <ListBoxItem>
-                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
-                                        <TextBlock Grid.Column="0" Text="29.09.2025" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" />
-                                        <TextBlock Grid.Column="1" Text="Standort" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" />
-                                        <Button Grid.Column="2"
-                                                FontSize="16"
-                                                Padding="4"
-                                                VerticalAlignment="Center"
-                                                Background="Transparent"
-                                                ToolTip.Tip="Löschen"
-                                                ToolTip.Placement="Top"
-                                                ToolTip.VerticalOffset="0"
-                                                Command="{Binding ShowDeletePlannableDayDialogCommand}"
-                                            >
-                                            <Button.Content>
-                                                <fluent:SymbolIcon Symbol="Delete" Opacity=".5" />
-                                            </Button.Content>
-                                        </Button>
-                                    </Grid>
-                                </ListBoxItem>
-                            </ListBox>
-                        </Grid>
+	                    <listcontrols:PlannableDayListControl
+		                    IsAddEnabled="True"
+		                    Items="{Binding PlannableDays}"
+	                    />
                     </fluent:TabViewItem>
 
                     <!-- Vorhersage Statistiken -->
