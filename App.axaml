@@ -46,10 +46,19 @@
     </Application.Resources>
 
     <Application.Styles>
-        <styling:FluentAvaloniaTheme CustomAccentColor="#009eb6" />
+	    <!-- Basics -->
+	    <styling:FluentAvaloniaTheme CustomAccentColor="#009eb6" />
         <materialicons:MaterialIconStyles />
+
         <StyleInclude Source="/Views/Controls/StatsControl.axaml" />
+
+        <!-- UI Templated Controls -->
         <StyleInclude Source="/Views/Controls/Lists/PlannableDayListControl.axaml" />
+        <StyleInclude Source="/Views/Controls/Lists/CalculatedWeekListControl.axaml" />
+
+        <!-- UI Components -->
+        <StyleInclude Source="/Components/WeekIndicatorComponent.axaml" />
+
     </Application.Styles>
 
 </Application>

@@ -1,0 +1,55 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:OfficeTracker.Components">
+	<Design.PreviewWith>
+		<controls:WeekIndicatorComponent />
+	</Design.PreviewWith>
+
+	<Style Selector="controls|WeekIndicatorComponent">
+		<!-- Set Defaults -->
+		<Setter Property="Template">
+			<ControlTemplate>
+				<StackPanel
+					Orientation="Vertical"
+					Spacing="6"
+				>
+					<Border
+						Height="30"
+						Width="30"
+						BorderThickness="1"
+						CornerRadius="4"
+					>
+						<Border.BorderBrush>
+							<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity="1">
+								<GradientStop Color="#60FFFFFF" Offset="0.0"/>
+								<GradientStop Color="#20FFFFFF" Offset="1.0"/>
+							</LinearGradientBrush>
+						</Border.BorderBrush>
+						<Label
+							Content="MO"
+							FontFamily="{DynamicResource UrbanistFont}"
+							FontWeight="Regular"
+							FontSize="10"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+						/>
+					</Border>
+					<Border
+						Width="30"
+						Height="2"
+						BorderThickness="0"
+						CornerRadius="2"
+					>
+						<Border.Background>
+							<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity="1">
+								<GradientStop Color="#FFFFFF" Offset="0.0"/>
+								<GradientStop Color="#10FFFFFF" Offset="1.0"/>
+							</LinearGradientBrush>
+						</Border.Background>
+					</Border>
+				</StackPanel>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+</Styles>
+
