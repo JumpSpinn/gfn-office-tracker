@@ -48,7 +48,6 @@
 			                    FontSize="12"
 			                    Padding="5"
 			                    VerticalAlignment="Top"
-			                    Background="Transparent"
 			                    ToolTip.Tip="Tag hinzufügen"
 			                    ToolTip.Placement="Top"
 			                    ToolTip.VerticalOffset="0"
