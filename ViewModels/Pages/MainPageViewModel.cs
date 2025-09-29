@@ -8,20 +8,28 @@ public sealed partial class MainPageViewModel : ViewModelBase
     public MainPageViewModel(MainPageService mps)
     {
 	    _mainPageService = mps;
+	    CreateNewStatsControlAsync();
     }
 
-    #region CREATE
+    #region CURRENT STATS
 
-    public async Task<StatsControl?> CreateNewStatsControlAsync()
+    [ObservableProperty]
+    private StatsControl? _currentStatsControl;
+
+    public event EventHandler? CurrentStatsChanged;
+
+    private async Task CreateNewStatsControlAsync()
     {
 	    var data = await _mainPageService.GetGeneralDataAsync();
-	    if (data is null) return null;
+	    if (data is null) return;
 
-	    return new StatsControl()
+	    CurrentStatsControl = new StatsControl()
 	    {
 		    HomeOfficeDays = data.HomeOfficeDays,
 		    OfficeDays = data.OfficeDays
 	    };
+
+	    CurrentStatsChanged?.Invoke(this, EventArgs.Empty);;
     }
 
     #endregion
@@ -73,10 +81,8 @@ public sealed partial class MainPageViewModel : ViewModelBase
 					    break;
 				    }
 		    }
-
-		    // TODO: update stats in MainPage.axaml.cs
+		    await CreateNewStatsControlAsync();
 	    }
-
 	    DisableBlurEffect();
     }
 
@@ -112,7 +118,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    Console.WriteLine($"Ausgewählter Tag: {selectedType}");
 		    Console.WriteLine($"Ausgewähltes Datum: {selectedDate}");
 	    }
-
 	    DisableBlurEffect();
     }
 

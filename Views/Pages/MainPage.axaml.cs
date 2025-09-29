@@ -8,26 +8,31 @@ public partial class MainPage : UserControl
         Loaded += OnLoaded;
     }
 
-    #region LOADED
+    #region EVENTS
 
     private void OnLoaded(object? sender, RoutedEventArgs e)
     {
-	    CalculateCurrentStats();
+	    if(DataContext is not MainPageViewModel mpv) return;
+
+	    mpv.CurrentStatsChanged += CurrentStatsChanged;
+
+	    UpdateCurrentStats();
     }
+
+    private void CurrentStatsChanged(object? sender, EventArgs e)
+	    => UpdateCurrentStats();
 
     #endregion
 
     #region CURRENT STATS
 
-    private async Task CalculateCurrentStats()
+    private void UpdateCurrentStats()
     {
 	    if (DataContext is not MainPageViewModel mpv) return;
-
-	    var newControl = await mpv.CreateNewStatsControlAsync();
-	    if(newControl is null) return;
+	    if (mpv.CurrentStatsControl is null) return;
 
 	    DynamicStatsContainer.Children.Clear();
-	    DynamicStatsContainer.Children.Add(newControl);
+	    DynamicStatsContainer.Children.Add(mpv.CurrentStatsControl);
     }
 
     #endregion
