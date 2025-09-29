@@ -5,6 +5,7 @@
         xmlns="https://github.com/avaloniaui"
         xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
         xmlns:converters="clr-namespace:OfficeTracker.Converters"
+        xmlns:materialicons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     >
 
@@ -46,6 +47,7 @@
 
     <Application.Styles>
         <styling:FluentAvaloniaTheme CustomAccentColor="#009eb6" />
+        <materialicons:MaterialIconStyles />
         <StyleInclude Source="/Views/Controls/StatsControl.axaml" />
         <StyleInclude Source="/Views/Controls/Lists/PlannableDayListControl.axaml" />
     </Application.Styles>

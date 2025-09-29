@@ -12,6 +12,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
     public MainPageViewModel(MainPageService mps)
     {
 	    _mainPageService = mps;
+
+		#if DEBUG
+	    CanAddCurrentDay = true;
+		#endif
     }
 
     /// <summary>
@@ -51,7 +55,11 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    };
 
 	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
-	    CurrentStatsChanged?.Invoke(this, EventArgs.Empty);;
+	    CurrentStatsChanged?.Invoke(this, EventArgs.Empty);
+
+		#if DEBUG
+	    CanAddCurrentDay = true;
+		#endif
     }
 
     #endregion
