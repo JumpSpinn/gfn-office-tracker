@@ -34,7 +34,7 @@ public sealed class MainPageService
 		try
 		{
 			await using var db = await _dbContextFactory.CreateDbContextAsync();
-			return db.PlannableDays.ToList();
+			return db.PlannableDays.OrderBy(x => x.Date).ToList();
 		}
 		catch (Exception e)
 		{
