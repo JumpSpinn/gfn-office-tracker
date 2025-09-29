@@ -18,7 +18,15 @@ public static class Options
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
+    public static readonly DayOfWeek[] HomeOfficeDays
+	    = [DayOfWeek.Monday, DayOfWeek.Friday];
+
+    public static readonly DayOfWeek[] OfficeDays
+	    = [DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday];
+
     public const uint MODAL_BLUR_RADIUS = 25;
+
     public const string VERSION = "1.0.0";
+
     public const string DB_NAME = "office-tracker.db";
 }

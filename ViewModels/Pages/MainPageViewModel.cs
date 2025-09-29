@@ -152,7 +152,11 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    if(!dateValidation.Result)
 			    await DialogHelper.ShowDialog(dateValidation.Title, dateValidation.Message);
 		    else if (dayForm.SelectedDayType == DayType.NONE)
-			    await DialogHelper.ShowDialog("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?! 🤯");
+			    await DialogHelper.ShowDialog("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!");
+		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsHomeOfficeDay((DateTime)dayForm.SelectedDate!))
+			    await DialogHelper.ShowDialog("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.");
+		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsOfficeDay((DateTime)dayForm.SelectedDate!))
+			    await DialogHelper.ShowDialog("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.");
 		    else
 		    {
 			    await _mainPageService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate!);
@@ -165,11 +169,11 @@ public sealed partial class MainPageViewModel : ViewModelBase
     private (bool Result, string Title, string Message) IsSelectedDateValid(DateTime? dt)
     {
 	    if(dt is null)
-		    return (false, "Ungültiges Datum", "Du hast das Datum vergessen 👀");
+		    return (false, "Ungültiges Datum", "Du hast das Datum vergessen.");
 	    else if(DateTimeHelper.IsToday((DateTime)dt))
-		    return (false, "Ungültiges Datum", "Den heutigen Tag kannst du nicht mehr planen 🥹");
+		    return (false, "Ungültiges Datum", "Den heutigen Tag kannst du nicht mehr planen.");
 	    else if(DateTimeHelper.IsInPast((DateTime)dt))
-		    return (false, "Ungültiges Datum", "Der Tag liegt in der Vergangenheit. 💩");
+		    return (false, "Ungültiges Datum", "Der Tag liegt in der Vergangenheit.");
 	    else if(DateTimeHelper.IsInWeekend((DateTime)dt))
 		    return (false, "Ungültiges Datum", "Du arbeitst am Wochenende?");
 	    return (true, "", "");
