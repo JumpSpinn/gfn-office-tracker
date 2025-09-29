@@ -93,9 +93,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     #endregion
 
-    #region CREATE PLANNABLE DAY
-
-    public event EventHandler? PlannableDaysChanged;
+    #region PLANNABLE DAYS
 
     [ObservableProperty]
     private ObservableCollection<DbPlannableDay> _plannableDays = [];
@@ -104,11 +102,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
     {
 	    var plannableDays = await _mainPageService.GetPlannableDaysAsync();
 	    PlannableDays = new ObservableCollection<DbPlannableDay>(plannableDays ?? []);
-	    PlannableDaysChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    [RelayCommand]
-    private async Task ShowAddPlannableDayDialogAsync()
+    public async Task ShowAddPlannableDayDialogAsync()
     {
 	    EnableBlurEffect();
 
@@ -133,17 +129,12 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    var plannableDayEntry = await _mainPageService.CreatePlannableDayAsync(selectedType, selectedDate);
 		    if (plannableDayEntry is null) return;
 
-		    Console.WriteLine($"Entry - ID: {plannableDayEntry.Id}, Type: {plannableDayEntry.Type}, Date: {plannableDayEntry.Date}, IsDeleted: {plannableDayEntry.IsDeleted}");
+		    Console.WriteLine($"New Entry - ID: {plannableDayEntry.Id}, Type: {plannableDayEntry.Type}, Date: {plannableDayEntry.Date}, IsDeleted: {plannableDayEntry.IsDeleted}");
 
 		    PlannableDays.Add(plannableDayEntry);
-		    PlannableDaysChanged?.Invoke(this, EventArgs.Empty);
 	    }
 	    DisableBlurEffect();
     }
-
-    #endregion
-
-    #region DELETE PLANNABLE DAY
 
     [RelayCommand]
     private async Task ShowDeletePlannableDayDialogAsync()

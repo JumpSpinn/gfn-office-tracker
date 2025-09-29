@@ -81,6 +81,7 @@
 	                    <listcontrols:PlannableDayListControl
 		                    IsAddEnabled="True"
 		                    Items="{Binding PlannableDays}"
+		                    AddButtonClicked="RequestShowAddPlannableDayDialog"
 	                    />
                     </fluent:TabViewItem>
 

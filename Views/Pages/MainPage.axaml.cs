@@ -35,4 +35,14 @@ public partial class MainPage : UserControl
     }
 
     #endregion
+
+    #region PLANNABLE DAYS
+
+    private void RequestShowAddPlannableDayDialog(object? sender, RoutedEventArgs e)
+    {
+	    if(DataContext is not MainPageViewModel mpv) return;
+	    mpv.ShowAddPlannableDayDialogAsync();
+    }
+
+    #endregion
 }

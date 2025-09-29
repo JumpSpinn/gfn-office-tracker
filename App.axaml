@@ -39,7 +39,8 @@
 
     <Application.Styles>
         <styling:FluentAvaloniaTheme CustomAccentColor="#009eb6" />
-        <StyleInclude Source="/Views/Controls/StatsControl.axaml"></StyleInclude>
+        <StyleInclude Source="/Views/Controls/StatsControl.axaml" />
+        <StyleInclude Source="/Views/Controls/Lists/PlannableDayListControl.axaml" />
     </Application.Styles>
 
 </Application>
