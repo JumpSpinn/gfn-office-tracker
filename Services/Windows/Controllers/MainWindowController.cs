@@ -1,5 +1,9 @@
 ﻿namespace OfficeTracker.Services.Windows.Controllers;
 
+/// <summary>
+/// Controller responsible for managing interactions and initialization of the main application window.
+/// Provides methods to initialize and validate the state of the main application window.
+/// </summary>
 [RegisterSingleton]
 public sealed class MainWindowController
 {
@@ -11,6 +15,11 @@ public sealed class MainWindowController
 		_logController = lc;
 	}
 
+	/// <summary>
+	/// Initializes the main application window by verifying its availability and loaded state.
+	/// Updates the internal state to mark the controller as initialized upon success.
+	/// Logs errors or exceptional cases if initialization fails.
+	/// </summary>
 	public async Task<bool> Initialize()
 	{
 		try
@@ -43,6 +52,12 @@ public sealed class MainWindowController
 		}
 	}
 
+	/// <summary>
+	/// Handles the logic for updating the application's state when the main window's
+	/// position or size changes. Logs the updated position and size for debugging purposes.
+	/// If the application is initialized, this method may trigger saving the updated window
+	/// properties to the configuration.
+	/// </summary>
 	private async Task OnPositionSizeChanged(PixelPoint position, Size size)
 	{
 		_logController.Debug($"Window Position: X={position.X}, Y={position.Y}");

@@ -9,6 +9,10 @@
  * falls du zu dem ordner willst , sollte eig ganz nice sein
  */
 
+/// <summary>
+/// Represents the database context for the OfficeTracker application,
+/// configured to manage and interact with database models and operations.
+/// </summary>
 public sealed partial class OtContext(DbContextOptions<OtContext> options) : DbContext(options)
 {
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

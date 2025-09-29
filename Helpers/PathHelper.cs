@@ -1,5 +1,8 @@
 ﻿namespace OfficeTracker.Helpers;
 
+/// <summary>
+/// Provides helper methods and properties for managing and constructing directory paths used by the application.
+/// </summary>
 public static class PathHelper
 {
 	/// <summary>

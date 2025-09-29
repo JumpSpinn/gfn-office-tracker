@@ -1,5 +1,10 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+/// <summary>
+/// Represents the ViewModel for the splash screen page of the application.
+/// Responsible for initializing the application's essential services and operations
+/// during startup.
+/// </summary>
 [RegisterSingleton]
 public sealed partial class SplashScreenPageViewModel : ViewModelBase
 {
@@ -13,16 +18,23 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		_mainWindowController = mwc;
 		_logController = lc;
 		_dbContextFactory = dbContextFactory;
-		_loadQueue.Enqueue(InitializeLoggerAsync);
-		_loadQueue.Enqueue(InitializeDatabaseAsync);
-		_loadQueue.Enqueue(InitializeAppWindowAsync);
 		StartInitializationAsync();
 	}
 
 	#region Initialization
 
+	/// <summary>
+	/// Starts the initialization process of the application's essential services and operations.
+	/// This method enqueues initialization steps such as logger setup, database initialization,
+	/// and application window preparation, and triggers their execution in sequence asynchronously.
+	/// </summary>
 	private async Task StartInitializationAsync()
-		=> await TriggerNextLoadStep();
+	{
+		_loadQueue.Enqueue(InitializeLoggerAsync);
+		_loadQueue.Enqueue(InitializeDatabaseAsync);
+		_loadQueue.Enqueue(InitializeAppWindowAsync);
+		await TriggerNextLoadStep();
+	}
 
 	#endregion
 
@@ -30,6 +42,12 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 
 	private readonly Queue<Func<Task<bool>>> _loadQueue = new();
 
+	/// <summary>
+	/// Processes and executes the next initialization step from the load queue.
+	/// This method retrieves and invokes tasks sequentially from the initialization queue.
+	/// If a task fails, an error is logged, and the process halts. Upon successful execution
+	/// of all steps, it sends a success message indicating the completion of the splash screen procedures.
+	/// </summary>
 	private async Task TriggerNextLoadStep()
 	{
 		while (_loadQueue.Count > 0)
@@ -50,8 +68,14 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 
 	#region LOAD STEPS
 
-	private bool _hasData = true;
+	private bool _hasData;
 
+	/// <summary>
+	/// Attempts to initialize the application's main window asynchronously.
+	/// This method ensures the main window is loaded and then delegates its initialization
+	/// to the MainWindowController. If the initialization fails after a set number of retries,
+	/// an error message is displayed to the user.
+	/// </summary>
 	private async Task<bool> InitializeAppWindowAsync()
 	{
 		const uint maxRetries = 20;
@@ -74,6 +98,12 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		return false;
 	}
 
+	/// <summary>
+	/// Initializes the logging framework for the application asynchronously.
+	/// Ensures that the log file is properly created and ready for use.
+	/// Updates progress indicators during the process, and logs an informational message upon success.
+	/// Displays an error notification in case of failure during initialization.
+	/// </summary>
 	private async Task<bool> InitializeLoggerAsync()
 	{
 		try
@@ -97,6 +127,11 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		}
 	}
 
+	/// <summary>
+	/// Asynchronously initializes the database by creating its context, applying any pending migrations,
+	/// and determining whether it contains any data. Handles logging and displays progress information
+	/// during the initialization process.
+	/// </summary>
 	private async Task<bool> InitializeDatabaseAsync()
 	{
 		try
@@ -142,6 +177,14 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	[ObservableProperty]
 	private InfoBarSeverity _infoBarSeverity = InfoBarSeverity.Informational;
 
+	/// <summary>
+	/// Displays an information bar with the specified title, text, and severity level.
+	/// This method is used to provide user-facing feedback about the application's
+	/// current state or encountered issues.
+	/// </summary>
+	/// <param name="title">The title of the information bar message.</param>
+	/// <param name="text">The detailed text content of the message to be displayed in the information bar.</param>
+	/// <param name="severity">The severity level of the message, determining the visual style and importance of the information bar.</param>
 	private void DisplayInfoBar(string title, string text, InfoBarSeverity severity)
 	{
 		ShowInfoBar = true;

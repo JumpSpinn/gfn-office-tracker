@@ -1,5 +1,8 @@
 ﻿namespace OfficeTracker.Services.Log.Enums;
 
+/// <summary>
+/// Represents the severity level of a log message.
+/// </summary>
 public enum LogSeverity
 {
 	Informational = 0,

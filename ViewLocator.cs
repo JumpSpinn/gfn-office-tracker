@@ -1,11 +1,18 @@
 ﻿namespace OfficeTracker;
 
-using ViewModels.Base;
-
+/// <summary>
+/// ViewLocator is responsible for resolving view instances for corresponding view models.
+/// It implements the <see cref="IDataTemplate"/> interface to build views dynamically.
+/// </summary>
 public sealed class ViewLocator : IDataTemplate
 {
     private IServiceProvider? _serviceProvider;
 
+    /// <summary>
+    /// Constructs and returns a view instance corresponding to the given view model object.
+    /// This method resolves the appropriate view type based on the naming convention
+    /// and uses the service provider for dependency injection if available.
+    /// </summary>
     public Control? Build(object? param)
     {
         if (param is null) return null;
@@ -36,8 +43,10 @@ public sealed class ViewLocator : IDataTemplate
         return control;
     }
 
+    /// <summary>
+    /// Determines whether the provided data object matches the expected type for a view model.
+    /// This method verifies if the data object is of type <see cref="ViewModelBase"/>.
+    /// </summary>
     public bool Match(object? data)
-    {
-        return data is ViewModelBase;
-    }
+	    => data is ViewModelBase;
 }

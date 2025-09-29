@@ -55,4 +55,5 @@ global using OfficeTracker.Services.Forms;
 global using OfficeTracker.ViewModels.Forms;
 global using OfficeTracker.Database.Models;
 global using OfficeTracker.Database;
+global using OfficeTracker.Database.Factories;
 global using OfficeTracker.Converters.Models;

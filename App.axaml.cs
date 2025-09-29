@@ -1,19 +1,38 @@
 namespace OfficeTracker;
 
-using Database.Factories;
-
+/// <summary>
+/// Represents the main application class for the OfficeTracker application.
+/// </summary>
 public sealed partial class App : Application
 {
-    public IServiceProvider? Services { get; private set; }
+	/// <summary>
+	/// Gets the application's configured service provider.
+	/// </summary>
+	public IServiceProvider? Services { get; private set; }
 
-    public override void Initialize()
+	/// <summary>
+	/// Initializes the application's XAML resources and components.
+	/// This method is called during the application startup to load the XAML configuration.
+	/// </summary>
+	public override void Initialize()
         =>  AvaloniaXamlLoader.Load(this);
 
-    public static List<string> StartupArgs { get; set; } = [];
+	/// <summary>
+	/// Gets or sets the list of command-line arguments passed to the application during startup.
+	/// </summary>
+	public static List<string> StartupArgs { get; set; } = [];
 
-    public static Window? MainWindow { get; set; }
+	/// <summary>
+	/// Gets or sets the main application window instance for the OfficeTracker application.
+	/// </summary>
+	public static Window? MainWindow { get; set; }
 
-    public override void OnFrameworkInitializationCompleted()
+	/// <summary>
+	/// Finalizes the initialization of the application framework and sets up the application's main window and services.
+	/// This method is invoked after the application framework completes its setup process.
+	/// It configures services, processes startup arguments, and establishes the main window of the application.
+	/// </summary>
+	public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop) return;
 
@@ -40,7 +59,12 @@ public sealed partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    private void DisableAvaloniaDataAnnotationValidation()
+	/// <summary>
+	/// Disables Avalonia data annotation validation to prevent duplicate validation errors.
+	/// This method removes validation plugins related to data annotations from Avalonia's binding
+	/// system, particularly useful when using additional validation libraries like CommunityToolkit.
+	/// </summary>
+	private void DisableAvaloniaDataAnnotationValidation()
     {
         // Get an array of plugins to remove
         var dataValidationPluginsToRemove =

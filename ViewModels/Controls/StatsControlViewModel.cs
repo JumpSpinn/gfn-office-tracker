@@ -1,7 +1,9 @@
 ﻿namespace OfficeTracker.ViewModels.Controls;
 
-using Base;
-
+/// <summary>
+/// Represents the view model for the StatsControl component in the application.
+/// It manages the logic and state related to statistics calculations and display.
+/// </summary>
 [RegisterSingleton]
 public sealed partial class StatsControlViewModel : ViewModelBase
 {

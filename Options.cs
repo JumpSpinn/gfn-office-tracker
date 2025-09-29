@@ -1,5 +1,8 @@
 ﻿namespace OfficeTracker;
 
+/// <summary>
+/// Provides configurations and constants used throughout the OfficeTracker application.
+/// </summary>
 public static class Options
 {
     public static readonly JsonSerializerOptions JsonOptions = new()

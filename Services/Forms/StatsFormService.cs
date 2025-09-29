@@ -1,5 +1,11 @@
 ﻿namespace OfficeTracker.Services.Forms;
 
+/// <summary>
+/// Provides services related to statistical form data management, specifically for creating
+/// and managing general statistical data in the application. It handles interactions
+/// with the database through <see cref="OtContext"/> and records logs for operations
+/// using the <see cref="LogController"/>.
+/// </summary>
 [RegisterSingleton]
 public sealed class StatsFormService
 {
@@ -14,6 +20,9 @@ public sealed class StatsFormService
 
 	#region CREATE
 
+	/// <summary>
+	/// Creates a new general statistical data entry in the database with the specified parameters.
+	/// </summary>
 	public async Task<DbGeneral?> CreateGeneralDataAsync(uint homeOfficeDays, uint officeDays, bool hasBeenDayCounted)
 	{
 		try

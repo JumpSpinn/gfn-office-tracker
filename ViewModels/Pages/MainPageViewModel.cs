@@ -1,5 +1,9 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+/// <summary>
+/// Represents the ViewModel for the main page, providing functionality to manage and interact with
+/// the main page's data and behavior in an MVVM architecture.
+/// </summary>
 [RegisterSingleton]
 public sealed partial class MainPageViewModel : ViewModelBase
 {
@@ -10,6 +14,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    _mainPageService = mps;
     }
 
+    /// <summary>
+    /// Asynchronously initializes the state of the MainPageViewModel by creating a new stats control
+    /// and loading plannable days data.
+    /// </summary>
     public async Task InitializeAsync()
     {
 	    await CreateNewStatsControlAsync();
@@ -26,6 +34,11 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     public event EventHandler? CurrentStatsChanged;
 
+    /// <summary>
+    /// Asynchronously creates and initializes a new stats control using the general data
+    /// retrieved from the MainPageService, updating the current stats control and related states.
+    /// Triggers the CurrentStatsChanged event upon successful update.
+    /// </summary>
     private async Task CreateNewStatsControlAsync()
     {
 	    var data = await _mainPageService.GetGeneralDataAsync();
@@ -48,9 +61,18 @@ public sealed partial class MainPageViewModel : ViewModelBase
     [ObservableProperty]
     private Effect? _blurEffect;
 
+    /// <summary>
+    /// Enables the blur effect by setting the BlurEffect property
+    /// to a new instance with a predefined radius value, enhancing
+    /// the visual presentation of modals or dialogs.
+    /// </summary>
     private void EnableBlurEffect()
 	    => BlurEffect = new BlurEffect() { Radius = Options.MODAL_BLUR_RADIUS };
 
+    /// <summary>
+    /// Disables the blur effect by setting the BlurEffect property to null.
+    /// Used typically to revert visual blurring after a modal or overlay interaction.
+    /// </summary>
     private void DisableBlurEffect()
 		=> BlurEffect = null;
 
@@ -58,6 +80,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     #region CURRENT DAY
 
+    /// <summary>
+    /// Asynchronously displays a dialog to log the current day as either a home office day or office day,
+    /// handles the selection, and updates the application's state accordingly.
+    /// </summary>
     [RelayCommand]
     private async Task ShowAddCurrentDayDialogAsync()
     {
@@ -96,12 +122,20 @@ public sealed partial class MainPageViewModel : ViewModelBase
     [ObservableProperty]
     private ObservableCollection<DbPlannableDay> _plannableDays = [];
 
+    /// <summary>
+    /// Asynchronously loads the plannable days data by retrieving it from the MainPageService
+    /// and updates the ViewModel's collection of plannable days.
+    /// </summary>
     private async Task LoadPlannableDaysAsync()
     {
 	    var plannableDays = await _mainPageService.GetPlannableDaysAsync();
 	    PlannableDays = new ObservableCollection<DbPlannableDay>(plannableDays ?? []);
     }
 
+    /// <summary>
+    /// Asynchronously shows a confirmation dialog to delete a plannable day and processes the deletion if confirmed.
+    /// </summary>
+    /// <param name="id">The unique identifier of the plannable day to be deleted.</param>
     public async Task ShowDeletePlannableDayDialogAsync(uint id)
     {
 	    EnableBlurEffect();
@@ -129,6 +163,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     #region ADD PLANNABLE DAY
 
+    /// <summary>
+    /// Asynchronously displays a dialog for adding a new plannable day, validates the user input,
+    /// and updates the list of plannable days if a valid new entry is created.
+    /// </summary>
     public async Task ShowAddPlannableDayDialogAsync()
     {
 	    EnableBlurEffect();
@@ -168,6 +206,15 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     #region VALIDATION
 
+    /// <summary>
+    /// Validates whether a selected date is valid based on specific conditions, such as being non-null,
+    /// not in the past, not a weekend, and not the current date.
+    /// </summary>
+    /// <param name="dt">The date to validate, or null if no date is provided.</param>
+    /// <returns>
+    /// A tuple containing a boolean indicating validation success, a title string for error messages,
+    /// and a descriptive message. If the validation succeeds, the title and message will be empty.
+    /// </returns>
     private (bool Result, string Title, string Message) IsSelectedDateValid(DateTime? dt)
     {
 	    if(dt is null)

@@ -1,5 +1,8 @@
 ﻿namespace OfficeTracker.Services.Pages;
 
+/// <summary>
+/// Provides functionality and operations related to the main page of the OfficeTracker application.
+/// </summary>
 [RegisterSingleton]
 public sealed class MainPageService
 {
@@ -14,6 +17,10 @@ public sealed class MainPageService
 
 	#region GET
 
+	/// <summary>
+	/// Asynchronously retrieves general statistical data from the database.
+	/// This data includes information such as home office days, office days, and the last updated timestamp.
+	/// </summary>
 	public async Task<DbGeneral?> GetGeneralDataAsync()
 	{
 		try
@@ -29,6 +36,11 @@ public sealed class MainPageService
 		return null;
 	}
 
+	/// <summary>
+	/// Asynchronously retrieves a list of plannable days from the database.
+	/// The days are ordered by their date and represent plan configurations
+	/// such as day type and associated metadata.
+	/// </summary>
 	public async Task<List<DbPlannableDay>?> GetPlannableDaysAsync()
 	{
 		try
@@ -48,6 +60,10 @@ public sealed class MainPageService
 
 	#region CREATE
 
+	/// <summary>
+	/// Asynchronously creates a new plannable day entry in the database.
+	/// The created entry represents an office-related or home-related day, depending on the specified type and date.
+	/// </summary>
 	public async Task<DbPlannableDay?> CreatePlannableDayAsync(DayType type, DateTime date)
 	{
 		try
@@ -74,6 +90,10 @@ public sealed class MainPageService
 
 	#region ADD
 
+	/// <summary>
+	/// Asynchronously increments the count of home office days in the database
+	/// and updates the last modification date to the current date.
+	/// </summary>
 	public async Task<uint> AddHomeOfficeDayAsync()
 	{
 		try
@@ -95,6 +115,9 @@ public sealed class MainPageService
 		return 0;
 	}
 
+	/// <summary>
+	/// Asynchronously increments the count of office days in the database and updates the last updated timestamp.
+	/// </summary>
 	public async Task<uint> AddOfficeDayAsync()
 	{
 		try
@@ -120,6 +143,10 @@ public sealed class MainPageService
 
 	#region DELETE
 
+	/// <summary>
+	/// Asynchronously deletes a plannable day entry from the database based on the specified identifier.
+	/// </summary>
+	/// <param name="id">The unique identifier of the plannable day to be deleted.</param>
 	public async Task<bool> DeletePlannableDayAsync(uint id)
 	{
 		try
