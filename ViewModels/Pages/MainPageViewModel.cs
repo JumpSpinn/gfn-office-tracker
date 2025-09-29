@@ -104,38 +104,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    PlannableDays = new ObservableCollection<DbPlannableDay>(plannableDays ?? []);
     }
 
-    public async Task ShowAddPlannableDayDialogAsync()
-    {
-	    EnableBlurEffect();
-
-	    var dayForm = new PlannableDayForm();
-	    var dialog = new ContentDialog()
-	    {
-		    Title = "Eintrag hinzufügen",
-		    Content = dayForm,
-		    PrimaryButtonText = "Planen",
-		    CloseButtonText = "Abbrechen",
-		    DefaultButton = ContentDialogButton.Primary
-	    };
-
-	    var result = await dialog.ShowAsyncCorrectly();
-	    if (result == ContentDialogResult.Primary)
-	    {
-		    if (dayForm.SelectedDayType == DayType.NONE)
-			    await DialogHelper.ShowDialog("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?! 🤯");
-		    else if(dayForm.SelectedDate is null)
-			    await DialogHelper.ShowDialog("Datum?", "Du hast das Datum vergessen 👀");
-		    else if(DateTimeHelper.IsToday((DateTime)dayForm.SelectedDate))
-			    await DialogHelper.ShowDialog("Das ist quatsch", "Den heutigen Tag kannst du nicht mehr planen 🥹");
-		    else
-		    {
-			    await _mainPageService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate);
-			    await LoadPlannableDaysAsync();
-		    }
-	    }
-	    DisableBlurEffect();
-    }
-
     public async Task ShowDeletePlannableDayDialogAsync(uint id)
     {
 	    EnableBlurEffect();
@@ -157,6 +125,52 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    }
 
 	    DisableBlurEffect();
+    }
+
+    #endregion
+
+    #region ADD PLANNABLE DAY
+
+    public async Task ShowAddPlannableDayDialogAsync()
+    {
+	    EnableBlurEffect();
+
+	    var dayForm = new PlannableDayForm();
+	    var dialog = new ContentDialog()
+	    {
+		    Title = "Eintrag hinzufügen",
+		    Content = dayForm,
+		    PrimaryButtonText = "Planen",
+		    CloseButtonText = "Abbrechen",
+		    DefaultButton = ContentDialogButton.Primary
+	    };
+
+	    var result = await dialog.ShowAsyncCorrectly();
+	    if (result == ContentDialogResult.Primary)
+	    {
+		    var dateValidation = IsSelectedDateValid(dayForm.SelectedDate);
+		    if(!dateValidation.Result)
+			    await DialogHelper.ShowDialog(dateValidation.Title, dateValidation.Message);
+		    else if (dayForm.SelectedDayType == DayType.NONE)
+			    await DialogHelper.ShowDialog("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?! 🤯");
+		    else
+		    {
+			    await _mainPageService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate!);
+			    await LoadPlannableDaysAsync();
+		    }
+	    }
+	    DisableBlurEffect();
+    }
+
+    private (bool Result, string Title, string Message) IsSelectedDateValid(DateTime? dt)
+    {
+	    if(dt is null)
+		    return (false, "Ungültiges Datum", "Du hast das Datum vergessen 👀");
+	    else if(DateTimeHelper.IsToday((DateTime)dt))
+		    return (false, "Ungültiges Datum", "Den heutigen Tag kannst du nicht mehr planen 🥹");
+	    else if(DateTimeHelper.IsInPast((DateTime)dt))
+		    return (false, "Ungültiges Datum", "Der Tag liegt in der Vergangenheit. 💩");
+	    return (true, "", "");
     }
 
     #endregion
