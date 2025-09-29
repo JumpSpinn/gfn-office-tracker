@@ -90,6 +90,11 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     #region CREATE PLANNABLE DAY
 
+    public EventHandler? PlannableDaysChanged;
+
+    [ObservableProperty]
+    private ObservableCollection<DbPlannableDay> _plannableDays;
+
     [RelayCommand]
     private async Task ShowAddPlannableDayDialogAsync()
     {
@@ -113,10 +118,13 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
 		    if (selectedType == DayType.NONE) return;
 
-		    // TODO: add plannable day to database
+		    var plannableDayEntry = await _mainPageService.CreatePlannableDayAsync(selectedType, selectedDate);
+		    if (plannableDayEntry is null) return;
 
-		    Console.WriteLine($"Ausgewählter Tag: {selectedType}");
-		    Console.WriteLine($"Ausgewähltes Datum: {selectedDate}");
+		    Console.WriteLine($"Entry - ID: {plannableDayEntry.Id}, Type: {plannableDayEntry.Type}, Date: {plannableDayEntry.Date}, IsDeleted: {plannableDayEntry.IsDeleted}");
+
+		    //PlannableDays.Add(plannableDayEntry);
+		    //PlannableDaysChanged?.Invoke(this, EventArgs.Empty);
 	    }
 	    DisableBlurEffect();
     }
