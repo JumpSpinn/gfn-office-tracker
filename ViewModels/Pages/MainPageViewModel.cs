@@ -59,11 +59,11 @@ public sealed partial class MainPageViewModel : ViewModelBase
     {
 	    EnableBlurEffect();
 
-	    var currentDayForm = new CurrentDayForm();
+	    var dayForm = new CurrentDayForm();
 	    var dialog = new ContentDialog()
 	    {
 		    Title = "Heutigen Tag eintragen",
-		    Content = currentDayForm,
+		    Content = dayForm,
 		    PrimaryButtonText = "Eintragen",
 		    CloseButtonText = "Abbrechen",
 		    DefaultButton = ContentDialogButton.Primary
@@ -72,20 +72,14 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    var dialogResult = await dialog.ShowAsyncCorrectly();
 	    if (dialogResult == ContentDialogResult.Primary)
 	    {
-		    DayType? selectedType = currentDayForm.SelectedDayType;
-		    switch (selectedType)
-		    {
-			    case DayType.HOME:
-				    {
-					    await _mainPageService.AddHomeOfficeDayAsync();
-					    break;
-				    }
-			    case DayType.OFFICE:
-				    {
-					    await _mainPageService.AddOfficeDayAsync();
-					    break;
-				    }
-		    }
+		    if (dayForm.SelectedDayType == DayType.NONE)
+			    await DialogHelper.ShowDialog("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!");
+		    else if(DateTimeHelper.IsInWeekend(DateTime.Today))
+			    await DialogHelper.ShowDialog("Wochenende", "Du hast Wochenende, genieß' es.");
+		    else if(dayForm.SelectedDayType == DayType.HOME)
+			    await _mainPageService.AddHomeOfficeDayAsync();
+		    else
+			    await _mainPageService.AddOfficeDayAsync();
 		    await CreateNewStatsControlAsync();
 	    }
 	    DisableBlurEffect();
@@ -165,6 +159,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    }
 	    DisableBlurEffect();
     }
+
+    #endregion
+
+    #region VALIDATION
 
     private (bool Result, string Title, string Message) IsSelectedDateValid(DateTime? dt)
     {
