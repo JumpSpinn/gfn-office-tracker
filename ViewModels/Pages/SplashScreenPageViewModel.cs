@@ -61,7 +61,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			return;
 		}
 
-		_messenger.Send(new SplashScreenSuccessMessage(_hasData));
+		_mainWindowController.ChangePage(_hasData ? Page.MAIN : Page.SETUP);
 	}
 
 	#endregion
