@@ -82,13 +82,12 @@
                     <!-- Vorhersage Statistiken -->
                     <fluent:TabViewItem Header="Vorhersage (Statistiken)" FontFamily="{DynamicResource UrbanistFont}" IsClosable="False">
                         <Grid RowDefinitions="*,Auto" Margin="10" RowSpacing="5">
-                            <Button Grid.Row="1" HorizontalAlignment="Stretch" FontSize="12">Weitere Woche anzeigen</Button>
-                            <!-- <ListBox Grid.Row="0" x:Name="List" /> -->
                             <ListBox Grid.Row="0">
-	                            <listcontrols:CalculatedWeekListControl />
-	                            <listcontrols:CalculatedWeekListControl />
-	                            <listcontrols:CalculatedWeekListControl />
+	                            <listcontrols:CalculatedWeekListControl
+
+		                        />
                             </ListBox>
+	                        <Button Grid.Row="1" HorizontalAlignment="Stretch" FontSize="12">Weitere Woche anzeigen</Button>
                         </Grid>
                     </fluent:TabViewItem>
                 </fluent:TabView>
