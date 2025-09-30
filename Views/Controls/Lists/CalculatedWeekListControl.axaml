@@ -45,7 +45,7 @@
 						>
 							<Label
 								Grid.Column="0"
-								Content="29.09.2025"
+								Content="{TemplateBinding StartWeekDateTime, Converter={StaticResource DateTimeToDateConverter}}"
 								FontFamily="{DynamicResource UrbanistFont}"
 								FontWeight="Light"
 								FontSize="12"
@@ -54,7 +54,7 @@
 							/>
 							<Label
 								Grid.Column="1"
-								Content="Woche 1"
+								Content="{TemplateBinding WeekName}"
 								FontFamily="{DynamicResource UrbanistFont}"
 								FontWeight="Bold"
 								FontSize="14"
@@ -63,7 +63,7 @@
 							/>
 							<Label
 								Grid.Column="2"
-								Content="03.10.2025"
+								Content="{TemplateBinding EndWeekDateTime, Converter={StaticResource DateTimeToDateConverter}}"
 								FontFamily="{DynamicResource UrbanistFont}"
 								FontWeight="Light"
 								FontSize="12"
@@ -75,8 +75,8 @@
 						<!-- STATS -->
 						<controls:StatisticControl
 							Grid.Row="1"
-							HomeOfficeDays="10"
-							OfficeDays="10"
+							HomeOfficeDays="{TemplateBinding HomeOfficeDays}"
+							OfficeDays="{TemplateBinding OfficeDays}"
 						/>
 
 						<!-- DAYS -->
