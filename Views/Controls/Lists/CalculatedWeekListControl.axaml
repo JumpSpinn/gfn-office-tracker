@@ -89,30 +89,37 @@
 							<component:WeekIndicatorComponent
 								Grid.Column="0"
 								ShortWeekDayLabel="MO"
+								DayTypeHexColor="#597485"
 							/>
 							<component:WeekIndicatorComponent
 								Grid.Column="1"
 								ShortWeekDayLabel="DI"
+								DayTypeHexColor="#468295"
 							/>
 							<component:WeekIndicatorComponent
 								Grid.Column="2"
 								ShortWeekDayLabel="MI"
+								DayTypeHexColor="#559977"
 							/>
 							<component:WeekIndicatorComponent
 								Grid.Column="3"
 								ShortWeekDayLabel="DO"
+								DayTypeHexColor="#335599"
 							/>
 							<component:WeekIndicatorComponent
 								Grid.Column="4"
 								ShortWeekDayLabel="FR"
+								DayTypeHexColor="#112233"
 							/>
 							<component:WeekIndicatorComponent
 								Grid.Column="5"
 								ShortWeekDayLabel="SA"
+								DayTypeHexColor="#147851"
 							/>
 							<component:WeekIndicatorComponent
 								Grid.Column="6"
 								ShortWeekDayLabel="SO"
+								DayTypeHexColor="#649738"
 							/>
 						</Grid>
 					</Grid>
