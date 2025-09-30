@@ -168,4 +168,24 @@ public sealed class MainPageService
 	}
 
 	#endregion
+
+	#region CHECK
+
+	public async Task<bool> ExistPlannableDayDateAsync(DateTime dt)
+	{
+		try
+		{
+			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			var day = await db.PlannableDays.FirstOrDefaultAsync(x => x.Date == dt);
+			return day is not null;
+		}
+		catch (Exception e)
+		{
+			_logController.Error(e.Message);
+		}
+
+		return true;
+	}
+
+	#endregion
 }

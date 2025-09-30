@@ -75,7 +75,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// the visual presentation of modals or dialogs.
     /// </summary>
     private void EnableBlurEffect()
-	    => BlurEffect = new BlurEffect() { Radius = Options.MODAL_BLUR_RADIUS };
+    {
+	    if (BlurEffect is not null) return;
+	    BlurEffect = new BlurEffect() { Radius = Options.MODAL_BLUR_RADIUS };
+    }
 
     /// <summary>
     /// Disables the blur effect by setting the BlurEffect property to null.
@@ -107,18 +110,25 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    DefaultButton = ContentDialogButton.Primary
 	    };
 
+	    uint entryResult = 0;
 	    var dialogResult = await dialog.ShowAsyncCorrectly();
 	    if (dialogResult == ContentDialogResult.Primary)
 	    {
 		    if (dayForm.SelectedDayType == DayType.NONE)
-			    await DialogHelper.ShowDialog("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!");
+			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
 		    else if(DateTimeHelper.IsInWeekend(DateTime.Today))
-			    await DialogHelper.ShowDialog("Wochenende", "Du hast Wochenende, genieß' es.");
+			    await DialogHelper.ShowDialogAsync("Wochenende", "Du hast Wochenende, genieß' es.", DialogType.QUESTION);
 		    else if(dayForm.SelectedDayType == DayType.HOME)
-			    await _mainPageService.AddHomeOfficeDayAsync();
+			    entryResult = await _mainPageService.AddHomeOfficeDayAsync();
 		    else
-			    await _mainPageService.AddOfficeDayAsync();
-		    await CreateNewStatsControlAsync();
+			    entryResult = await _mainPageService.AddOfficeDayAsync();
+		    if (entryResult > 0)
+		    {
+			    await CreateNewStatsControlAsync();
+			    await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
+		    }
+		    else
+			    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
 	    }
 	    DisableBlurEffect();
     }
@@ -189,24 +199,43 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    DefaultButton = ContentDialogButton.Primary
 	    };
 
+	    var success = false;
 	    var result = await dialog.ShowAsyncCorrectly();
 	    if (result == ContentDialogResult.Primary)
 	    {
 		    var dateValidation = IsSelectedDateValid(dayForm.SelectedDate);
 		    if(!dateValidation.Result)
-			    await DialogHelper.ShowDialog(dateValidation.Title, dateValidation.Message);
+			    await DialogHelper.ShowDialogAsync(dateValidation.Title, dateValidation.Message, DialogType.WARNING);
+		    else if(await _mainPageService.ExistPlannableDayDateAsync((DateTime)dayForm.SelectedDate!))
+			    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
 		    else if (dayForm.SelectedDayType == DayType.NONE)
-			    await DialogHelper.ShowDialog("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!");
+			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
 		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsHomeOfficeDay((DateTime)dayForm.SelectedDate!))
-			    await DialogHelper.ShowDialog("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.");
+			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.", DialogType.QUESTION);
 		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsOfficeDay((DateTime)dayForm.SelectedDate!))
-			    await DialogHelper.ShowDialog("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.");
+			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.", DialogType.QUESTION);
 		    else
 		    {
-			    await _mainPageService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate!);
-			    await LoadPlannableDaysAsync();
+			    var entry = await _mainPageService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate!);
+			    if (entry is not null)
+			    {
+				    success = true;
+				    await LoadPlannableDaysAsync();
+				    await DialogHelper.ShowDialogAsync("Eintrag hinzugefügt", "Eintrag wurde erfolgreich gespeichert.", DialogType.SUCCESS);
+			    }
+			    else
+				    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
 		    }
 	    }
+	    else
+			success = true;
+
+	    if (!success)
+	    {
+		    await ShowAddPlannableDayDialogAsync();
+		    return;
+	    }
+
 	    DisableBlurEffect();
     }
 
