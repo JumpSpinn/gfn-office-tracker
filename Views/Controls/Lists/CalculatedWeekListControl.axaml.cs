@@ -1,11 +1,5 @@
 ﻿namespace OfficeTracker.Views.Controls.Lists;
 
-/// <summary>
-/// Represents a custom control for managing and displaying calculated weeks in a schedule.
-/// This control allows the configuration and binding of properties such as the week name,
-/// start and end dates, and the number of days allocated for home office and office work.
-/// Inherits from <see cref="TemplatedControl"/>.
-/// </summary>
 public class CalculatedWeekListControl : TemplatedControl
 {
 	/// <summary>
