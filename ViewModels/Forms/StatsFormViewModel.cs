@@ -82,13 +82,10 @@ public sealed partial class StatsFormViewModel : ViewModelBase
 
 		try
 		{
-			var calculatedStats = new StatsControl()
-			{
-				HomeOfficeDays = HomeOfficeDays,
-				OfficeDays = OfficeDays
-			};
-			HomeOfficePercentage = $"{calculatedStats.HomeOfficePercentage:F2}%";
-			OfficePercentage = $"{calculatedStats.OfficePercentage:F2}%";
+			var hop = (double)HomeOfficeDays / (HomeOfficeDays + OfficeDays) * 100;
+			var op = (double)OfficeDays / (HomeOfficeDays + OfficeDays) * 100;
+			HomeOfficePercentage = $"{hop:F2}%";
+			OfficePercentage = $"{op:F2}%";
 		}
 		catch (Exception e)
 		{

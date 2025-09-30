@@ -50,8 +50,6 @@
 	    <styling:FluentAvaloniaTheme CustomAccentColor="#009eb6" />
         <materialicons:MaterialIconStyles />
 
-        <StyleInclude Source="/Views/Controls/StatsControl.axaml" />
-
         <!-- UI Templated Controls -->
         <StyleInclude Source="/Views/Controls/Lists/PlannableDayListControl.axaml" />
         <StyleInclude Source="/Views/Controls/Lists/CalculatedWeekListControl.axaml" />
