@@ -3,6 +3,7 @@
     x:Class="OfficeTracker.Views.Pages.MainPage"
     xmlns:vm="using:OfficeTracker.ViewModels.Pages"
     xmlns:listcontrols="using:OfficeTracker.Views.Controls.Lists"
+    xmlns:controls="using:OfficeTracker.Views.Controls"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -43,21 +44,13 @@
 			            </Border>
 		            </Grid>
 		            <Grid x:Name="StatsGrid" ColumnDefinitions="*,Auto" ColumnSpacing="4" Margin="0 8 0 0">
-			            <StackPanel Grid.Column="0" x:Name="DynamicStatsContainer" />
-			            <Button Grid.Column="1"
-			                    FontSize="12"
-			                    Padding="5"
-			                    VerticalAlignment="Top"
-			                    IsVisible="{Binding CanAddCurrentDay}"
-			                    ToolTip.Tip="Tag hinzufügen"
-			                    ToolTip.Placement="Top"
-			                    ToolTip.VerticalOffset="0"
-			                    Command="{Binding ShowAddCurrentDayDialogCommand}"
-			            >
-				            <Button.Content>
-					            <fluent:SymbolIcon Symbol="Add" Opacity=".5" />
-				            </Button.Content>
-			            </Button>
+			            <controls:StatisticControl
+				            Grid.Column="0"
+				            HomeOfficeDays="{Binding HomeOfficeDays}"
+				            OfficeDays="{Binding OfficeDays}"
+				            AddButtonEnabled="{Binding CanAddCurrentDay}"
+				            AddButtonClicked="RequestShowAddCurrentDayDialog"
+			            />
 		            </Grid>
 	            </StackPanel>
             </Border>
