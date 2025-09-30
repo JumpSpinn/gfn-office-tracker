@@ -18,14 +18,14 @@ public class WeekIndicatorComponent : TemplatedControl
 	}
 
 	/// <summary>
-	/// Identifies a styled property representing the color configuration for a specific day type.
+	/// Identifies a styled property representing the hex color associated with a specific type of day.
 	/// </summary>
-	public static readonly StyledProperty<PlannableDayColorPair> DayTypeColorProperty =
-		AvaloniaProperty.Register<PlannableDayListControl, PlannableDayColorPair>(nameof(DayType), defaultValue: new PlannableDayColorPair("#FFFFFF", "#FFFFFF"));
+	public static readonly StyledProperty<string> DayTypeHexColorProperty =
+		AvaloniaProperty.Register<PlannableDayListControl, string>(nameof(DayTypeHexColor), defaultValue: "#FFFFFF");
 
-	public PlannableDayColorPair DayTypeColor
+	public string DayTypeHexColor
 	{
-		get => GetValue(DayTypeColorProperty);
-		set => SetValue(DayTypeColorProperty, value);
+		get => GetValue(DayTypeHexColorProperty);
+		set => SetValue(DayTypeHexColorProperty, value);
 	}
 }

@@ -39,8 +39,7 @@
 						Height="2"
 						BorderThickness="0"
 						CornerRadius="2"
-						Background="{Binding DayTypeColor.Background, RelativeSource={RelativeSource TemplatedParent}}"
-						BorderBrush="{Binding DayTypeColor.Border, RelativeSource={RelativeSource TemplatedParent}}"
+						Background="{Binding DayTypeHexColor, RelativeSource={RelativeSource TemplatedParent}}"
 					/>
 				</StackPanel>
 			</ControlTemplate>
