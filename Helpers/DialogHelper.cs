@@ -11,9 +11,11 @@ public static class DialogHelper
 	/// <param name="title">The title of the dialog to be displayed.</param>
 	/// <param name="message">The message content of the dialog.</param>
 	public static async Task ShowDialog(string title, string message)
-    {
-        StackPanel sp = new() { Orientation = Orientation.Horizontal };
-        sp.Children.Add(new TextBlock(){ Text = message });
+	{
+		StackPanel sp = new() { Orientation = Orientation.Vertical, Spacing = 4 };
+		TextBlock tb = new() { Text = message, TextWrapping = TextWrapping.Wrap };
+		sp.Children.Add(tb);
+
         var dialog = new ContentDialog()
         {
             Title = title,
@@ -21,6 +23,7 @@ public static class DialogHelper
             DefaultButton = ContentDialogButton.Primary,
             Content = sp
         };
+
         await ShowAsyncCorrectly(dialog);
     }
 
