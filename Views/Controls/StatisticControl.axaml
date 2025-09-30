@@ -1,0 +1,136 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialicons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:controls="using:OfficeTracker.Views.Controls">
+	<Design.PreviewWith>
+		<controls:StatisticControl Width="300" />
+	</Design.PreviewWith>
+
+	<Style Selector="controls|StatisticControl">
+		<!-- Set Defaults -->
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Grid
+					ColumnDefinitions="Auto,*,Auto"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Center"
+					ColumnSpacing="5"
+				>
+					<!-- LEFT ICON -->
+					<Border
+						Grid.Column="0"
+						x:Name="ErrorIcon"
+						CornerRadius="4"
+						Padding="4"
+						BorderBrush="#640000"
+						Background="#40640000"
+						BorderThickness="1"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						ToolTip.Tip="Unzureichende Quote"
+						ToolTip.Placement="Top"
+						ToolTip.VerticalOffset="0"
+					>
+						<materialicons:MaterialIcon Kind="Alert" Foreground="#ff7373" />
+					</Border>
+					<Border
+						Grid.Column="0"
+						x:Name="WarningIcon"
+						CornerRadius="4"
+						Padding="4"
+						BorderBrush="#642b00"
+						Background="#40642b00"
+						BorderThickness="1"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						ToolTip.Tip="Ausgeglichene Quote"
+						ToolTip.Placement="Top"
+						ToolTip.VerticalOffset="0"
+					>
+						<materialicons:MaterialIcon Kind="Equal" Foreground="#ffb073" />
+					</Border>
+					<!-- STATS -->
+					<Grid
+						x:Name="StatisticGrid"
+			            Grid.Column="1"
+			            ColumnDefinitions="*,*"
+			            HorizontalAlignment="Stretch"
+			            VerticalAlignment="Stretch"
+		            >
+			            <StackPanel
+				            x:Name="HomeStackPanel"
+				            Grid.Column="0"
+				            ToolTip.Placement="Top"
+				            ToolTip.VerticalOffset="0"
+			            >
+				            <Border
+					            CornerRadius="2 0 0 2"
+					            Padding="4"
+					            Background="#30003764"
+					            HorizontalAlignment="Stretch"
+					            VerticalAlignment="Stretch"
+					            BorderThickness="1 1 0 1"
+					            BorderBrush="#003764"
+				            >
+					            <TextBlock
+						            x:Name="HomeOfficePercentage"
+						            FontSize="12"
+						            Text="---.--%"
+						            HorizontalAlignment="Center"
+						            VerticalAlignment="Center"
+						            FontFamily="{DynamicResource UrbanistFont}"
+						            FontWeight="Regular"
+						            LineHeight="16"
+					            />
+				            </Border>
+			            </StackPanel>
+			            <StackPanel
+				            x:Name="OfficeStackPanel"
+				            Grid.Column="1"
+				            ToolTip.Placement="Top"
+				            ToolTip.VerticalOffset="0"
+			            >
+				            <Border
+					            CornerRadius="0 2 2 0"
+					            Padding="4"
+					            Background="#30357a32"
+					            HorizontalAlignment="Stretch"
+					            VerticalAlignment="Stretch"
+					            BorderThickness="0 1 1 1"
+					            BorderBrush="#357a32"
+				            >
+					            <TextBlock
+						            x:Name="OfficePercentage"
+						            FontSize="12"
+						            Text="---.--%"
+						            HorizontalAlignment="Center"
+						            VerticalAlignment="Center"
+						            FontFamily="{DynamicResource UrbanistFont}"
+						            FontWeight="Regular"
+						            LineHeight="16"
+					            />
+				            </Border>
+			            </StackPanel>
+		            </Grid>
+					<!-- ADD DAY BUTTON -->
+					<Button
+						x:Name="AddButton"
+						Grid.Column="2"
+						Padding="4"
+						BorderBrush="#60FFFFFF"
+						Background="#20FFFFFF"
+						BorderThickness="1"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						ToolTip.Tip="Tag hinzufügen"
+						ToolTip.Placement="Top"
+						ToolTip.VerticalOffset="0"
+					>
+						<materialicons:MaterialIcon Kind="Plus" Foreground="#FFFFFF" />
+					</Button>
+				</Grid>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+</Styles>
+

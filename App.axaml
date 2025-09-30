@@ -55,6 +55,7 @@
         <!-- UI Templated Controls -->
         <StyleInclude Source="/Views/Controls/Lists/PlannableDayListControl.axaml" />
         <StyleInclude Source="/Views/Controls/Lists/CalculatedWeekListControl.axaml" />
+        <StyleInclude Source="/Views/Controls/StatisticControl.axaml" />
 
         <!-- UI Components -->
         <StyleInclude Source="/Components/WeekIndicatorComponent.axaml" />
