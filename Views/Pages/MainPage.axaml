@@ -49,6 +49,7 @@
 				            HomeOfficeDays="{Binding HomeOfficeDays}"
 				            OfficeDays="{Binding OfficeDays}"
 				            AddButtonEnabled="{Binding CanAddCurrentDay}"
+				            AddButtonVisible="{Binding CanAddCurrentDay}"
 				            AddButtonClicked="RequestShowAddCurrentDayDialog"
 			            />
 		            </Grid>

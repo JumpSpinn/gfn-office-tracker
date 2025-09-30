@@ -9,7 +9,11 @@ public class StatisticControl : TemplatedControl
 	{
 		_addButton = e.NameScope.Find<Button>("AddButton");
 		if (_addButton is not null)
+		{
 			_addButton.Click += OnAddButtonClick;
+			_addButton.IsVisible = false;
+			_addButton.IsEnabled = false;
+		}
 
 		_errorBorderIcon = e.NameScope.Find<Border>("ErrorIcon");
 		if(_errorBorderIcon is not null)
@@ -50,6 +54,12 @@ public class StatisticControl : TemplatedControl
 		{
 			if (control._addButton is not null)
 				control._addButton.IsEnabled = control.AddButtonEnabled;
+		});
+
+		AddButtonVisibleProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
+		{
+			if (control._addButton is not null)
+				control._addButton.IsVisible = control.AddButtonVisible;
 		});
 	}
 
@@ -170,17 +180,34 @@ public class StatisticControl : TemplatedControl
 
 	#endregion
 
-	#region ADD
+	#region ADD BUTTON
 
 	private Button? _addButton;
 
+	/// <summary>
+	/// Represents a styled property that determines whether the "Add" button in the control is enabled.
+	/// When this property changes, it updates the enabled state of the associated button.
+	/// </summary>
 	public static readonly StyledProperty<bool> AddButtonEnabledProperty =
-		AvaloniaProperty.Register<StatisticControl, bool>(nameof(AddButtonEnabled), defaultValue: true);
+		AvaloniaProperty.Register<StatisticControl, bool>(nameof(AddButtonEnabled), defaultValue: false);
 
 	public bool AddButtonEnabled
 	{
 		get => GetValue(AddButtonEnabledProperty);
 		set => SetValue(AddButtonEnabledProperty, value);
+	}
+
+	/// <summary>
+	/// Represents a styled property that determines the visibility of the "Add" button in the control.
+	/// When this property changes, it updates the visibility state of the associated button.
+	/// </summary>
+	public static readonly StyledProperty<bool> AddButtonVisibleProperty =
+		AvaloniaProperty.Register<StatisticControl, bool>(nameof(AddButtonVisible), defaultValue: false);
+
+	public bool AddButtonVisible
+	{
+		get => GetValue(AddButtonVisibleProperty);
+		set => SetValue(AddButtonVisibleProperty, value);
 	}
 
 	/// <summary>

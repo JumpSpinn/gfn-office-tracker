@@ -13,7 +13,7 @@
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>
-				<!-- Main Grid -->
+				<!-- MAIN GRID -->
 				<Border
 					BorderThickness="1"
 					Padding="5"
@@ -38,7 +38,7 @@
 						HorizontalAlignment="Stretch"
 						RowSpacing="5"
 					>
-						<!-- Top Grid-->
+						<!-- TITLE BAR -->
 						<Grid
 							Grid.Row="0"
 							ColumnDefinitions="Auto,*,Auto"
@@ -72,11 +72,14 @@
 							/>
 						</Grid>
 
-						<!-- Middle Grid -->
-						<controls:StatisticControl Grid.Row="1" HomeOfficeDays="10" OfficeDays="10" />
+						<!-- STATS -->
+						<controls:StatisticControl
+							Grid.Row="1"
+							HomeOfficeDays="10"
+							OfficeDays="10"
+						/>
 
-
-						<!-- Bottom Grid -->
+						<!-- DAYS -->
 						<Grid
 							Grid.Row="2"
 							ColumnDefinitions="*,*,*,*,*,*,*"
