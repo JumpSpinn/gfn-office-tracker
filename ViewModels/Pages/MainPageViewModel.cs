@@ -31,12 +31,13 @@ public sealed partial class MainPageViewModel : ViewModelBase
     #region CURRENT STATS
 
     [ObservableProperty]
-    private StatsControl? _currentStatsControl;
+    private uint _homeOfficeDays;
+
+    [ObservableProperty]
+    private uint _officeDays;
 
     [ObservableProperty]
     private bool _canAddCurrentDay;
-
-    public event EventHandler? CurrentStatsChanged;
 
     /// <summary>
     /// Asynchronously creates and initializes a new stats control using the general data
@@ -48,14 +49,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    var data = await _mainPageService.GetGeneralDataAsync();
 	    if (data is null) return;
 
-	    CurrentStatsControl = new StatsControl()
-	    {
-		    HomeOfficeDays = data.HomeOfficeDays,
-		    OfficeDays = data.OfficeDays
-	    };
-
+	    HomeOfficeDays = data.HomeOfficeDays;
+	    OfficeDays = data.OfficeDays;
 	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
-	    CurrentStatsChanged?.Invoke(this, EventArgs.Empty);
 
 		#if DEBUG
 	    CanAddCurrentDay = true;
@@ -95,8 +91,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// Asynchronously displays a dialog to log the current day as either a home office day or office day,
     /// handles the selection, and updates the application's state accordingly.
     /// </summary>
-    [RelayCommand]
-    private async Task ShowAddCurrentDayDialogAsync()
+    public async Task ShowAddCurrentDayDialogAsync()
     {
 	    EnableBlurEffect();
 

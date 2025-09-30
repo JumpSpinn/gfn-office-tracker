@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.Views.Pages;
 
-using Controls.Lists;
-
 /// <summary>
 /// Represents the main page of the OfficeTracker application.
 /// </summary>
@@ -22,35 +20,21 @@ public partial class MainPage : UserControl
     private async void OnLoaded(object? sender, RoutedEventArgs e)
     {
 	    if(DataContext is not MainPageViewModel mpv) return;
-
-	    mpv.CurrentStatsChanged += CurrentStatsChanged;
-	    await mpv.InitializeAsync();
+	    mpv.InitializeAsync();
     }
-
-    /// <summary>
-    /// Handles the CurrentStatsChanged event, which is triggered when there is a change in the current stats.
-    /// This method updates the display of the current stats control on the MainPage.
-    /// </summary>
-    private void CurrentStatsChanged(object? sender, EventArgs e)
-	    => UpdateCurrentStats();
 
     #endregion
 
-    #region CURRENT STATS
+    #region CURRENT DAY
 
     /// <summary>
-    /// Updates the current stats display on the MainPage by clearing the existing contents
-    /// of the dynamic stats container and adding the CurrentStatsControl from the ViewModel.
-    /// Ensures the DataContext is of type MainPageViewModel and validates the presence of the CurrentStatsControl
-    /// before performing the update.
+    /// Handles the AddButtonClicked event from the StatisticControl. This method triggers the
+    /// execution of an asynchronous operation to display a dialog for adding the current day's data.
     /// </summary>
-    private void UpdateCurrentStats()
+    private void RequestShowAddCurrentDayDialog(object? sender, RoutedEventArgs e)
     {
-	    if (DataContext is not MainPageViewModel mpv) return;
-	    if (mpv.CurrentStatsControl is null) return;
-
-	    DynamicStatsContainer.Children.Clear();
-	    DynamicStatsContainer.Children.Add(mpv.CurrentStatsControl);
+	    if(DataContext is not MainPageViewModel mpv) return;
+	    mpv.ShowAddCurrentDayDialogAsync();
     }
 
     #endregion
@@ -76,7 +60,6 @@ public partial class MainPage : UserControl
     {
 	    if(DataContext is not MainPageViewModel mpv) return;
 	    if (sender is not PlannableDayListControl pdlc) return;
-
 	    mpv.ShowDeletePlannableDayDialogAsync(pdlc.SelectedPlannableDayId);
     }
 
