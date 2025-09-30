@@ -9,6 +9,7 @@ public sealed class MainWindowController
 {
 	private bool _initialized;
 	private readonly LogController _logController;
+	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 
 	public MainWindowController(LogController lc)
 	{
@@ -50,6 +51,17 @@ public sealed class MainWindowController
 			_logController.Exception(ex);
 			return false;
 		}
+	}
+
+	/// <summary>
+	/// Changes the current application page to the specified page.
+	/// Logs the page change process and sends a notification to update
+	/// subscribers about the page change.
+	/// </summary>
+	public void ChangePage(Page page)
+	{
+		_logController.Debug($"Changing page to {page}");
+		_messenger.Send(new ChangePageMessage(page));
 	}
 
 	/// <summary>

@@ -10,27 +10,48 @@
 public sealed partial class MainWindowViewModel : ViewModelBase
 {
 	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
+	private readonly IServiceProvider _serviceProvider;
 
 	[ObservableProperty]
 	private ViewModelBase? _currentPage;
 
 	public MainWindowViewModel(IServiceProvider sp)
 	{
+		_serviceProvider = sp;
+
+		// the first page is the splash screen
 		_currentPage = sp.GetRequiredService<SplashScreenPageViewModel>();
-		_messenger.Register<MainWindowViewModel, SplashScreenSuccessMessage>(this, (_, success) =>
+
+		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
 		{
-			if(success.Value)
-				CurrentPage = sp.GetRequiredService<MainPageViewModel>();
-			else
-				CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
+			CurrentPage = GetCurrentPageViewModel(message.Value);
 		});
 
-		_messenger.Register<MainWindowViewModel, StatsFormSuccessMessage>(this, (_, success) =>
-		{
-			if(success.Value)
-				CurrentPage = sp.GetRequiredService<MainPageViewModel>();
-			else
-				CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
-		});
+		// _messenger.Register<MainWindowViewModel, SplashScreenSuccessMessage>(this, (_, success) =>
+		// {
+		// 	if(success.Value)
+		// 		CurrentPage = sp.GetRequiredService<MainPageViewModel>();
+		// 	else
+		// 		CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
+		// });
+		//
+		// _messenger.Register<MainWindowViewModel, StatsFormSuccessMessage>(this, (_, success) =>
+		// {
+		// 	if(success.Value)
+		// 		CurrentPage = sp.GetRequiredService<MainPageViewModel>();
+		// 	else
+		// 		CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
+		// });
 	}
+
+	/// <summary>
+	/// Retrieves the appropriate ViewModel for the specified <see cref="Page"/>.
+	/// </summary>
+	private ViewModelBase GetCurrentPageViewModel(Page page) =>
+		page switch
+		{
+			Page.SETUP => _serviceProvider.GetRequiredService<StatsFormViewModel>(),
+			Page.MAIN => _serviceProvider.GetRequiredService<MainPageViewModel>(),
+			_ => throw new ArgumentOutOfRangeException(nameof(page), page, null)
+		};
 }
