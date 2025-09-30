@@ -37,6 +37,9 @@ global using CommunityToolkit.Mvvm.Messaging.Messages;
 global using CommunityToolkit.Mvvm.Messaging;
 global using CommunityToolkit.Mvvm.Input;
 
+global using Material.Icons;
+global using Material.Icons.Avalonia;
+
 global using OfficeTracker.ViewModels.Base;
 global using OfficeTracker.ViewModels.Windows;
 global using OfficeTracker.Views.Windows;

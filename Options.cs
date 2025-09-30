@@ -29,6 +29,8 @@ public static class Options
 
     public const uint MODAL_BLUR_RADIUS = 25;
 
+    public const double DIALOG_SIZE = 40;
+
     public const string VERSION = "1.0.0";
 
     public const string DB_NAME = "office-tracker.db";
