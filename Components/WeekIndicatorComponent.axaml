@@ -26,7 +26,7 @@
 							</LinearGradientBrush>
 						</Border.BorderBrush>
 						<Label
-							Content="MO"
+							Content="{TemplateBinding ShortWeekDayLabel}"
 							FontFamily="{DynamicResource UrbanistFont}"
 							FontWeight="Regular"
 							FontSize="10"
@@ -39,14 +39,9 @@
 						Height="2"
 						BorderThickness="0"
 						CornerRadius="2"
-					>
-						<Border.Background>
-							<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity="1">
-								<GradientStop Color="#FFFFFF" Offset="0.0"/>
-								<GradientStop Color="#10FFFFFF" Offset="1.0"/>
-							</LinearGradientBrush>
-						</Border.Background>
-					</Border>
+						Background="{Binding DayTypeColor.Background, RelativeSource={RelativeSource TemplatedParent}}"
+						BorderBrush="{Binding DayTypeColor.Border, RelativeSource={RelativeSource TemplatedParent}}"
+					/>
 				</StackPanel>
 			</ControlTemplate>
 		</Setter>
