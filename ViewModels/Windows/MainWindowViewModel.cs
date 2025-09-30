@@ -26,22 +26,6 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 		{
 			CurrentPage = GetCurrentPageViewModel(message.Value);
 		});
-
-		// _messenger.Register<MainWindowViewModel, SplashScreenSuccessMessage>(this, (_, success) =>
-		// {
-		// 	if(success.Value)
-		// 		CurrentPage = sp.GetRequiredService<MainPageViewModel>();
-		// 	else
-		// 		CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
-		// });
-		//
-		// _messenger.Register<MainWindowViewModel, StatsFormSuccessMessage>(this, (_, success) =>
-		// {
-		// 	if(success.Value)
-		// 		CurrentPage = sp.GetRequiredService<MainPageViewModel>();
-		// 	else
-		// 		CurrentPage = sp.GetRequiredService<StatsFormViewModel>();
-		// });
 	}
 
 	/// <summary>
