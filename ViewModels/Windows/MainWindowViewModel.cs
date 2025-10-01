@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Windows;
 
+using Pages.Wizard;
+
 /// <summary>
 /// Represents the main view model for the application's main window.
 /// This ViewModel is responsible for managing the navigation logic
@@ -35,12 +37,12 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 	private ViewModelBase GetCurrentPageViewModel(Page page) =>
 		page switch
 		{
-			Page.SETUP_WELCOME => _serviceProvider.GetRequiredService<SetupWelcomePageViewModel>(),
-			Page.SETUP_NAME => _serviceProvider.GetRequiredService<SetupNamePageViewModel>(),
-			Page.SETUP_BALANCE => _serviceProvider.GetRequiredService<SetupBalancePageViewModel>(),
-			Page.SETUP_DAYS => _serviceProvider.GetRequiredService<SetupDaysPageViewModel>(),
-			Page.SETUP_DATA => _serviceProvider.GetRequiredService<SetupDataPageViewModel>(),
-			Page.SETUP_COMPLETED => _serviceProvider.GetRequiredService<SetupCompletedPageViewModel>(),
+			Page.WIZARD_WELCOME => _serviceProvider.GetRequiredService<WizardWelcomePageViewModel>(),
+			Page.WIZARD_NAME => _serviceProvider.GetRequiredService<WizardNamePageViewModel>(),
+			Page.WIZARD_BALANCE => _serviceProvider.GetRequiredService<WizardBalancePageViewModel>(),
+			Page.WIZARD_DAYS => _serviceProvider.GetRequiredService<WizardDaysPageViewModel>(),
+			Page.WIZARD_DATA => _serviceProvider.GetRequiredService<WizardDataPageViewModel>(),
+			Page.WIZARD_COMPLETED => _serviceProvider.GetRequiredService<WizardCompletedPageViewModel>(),
 			Page.MAIN => _serviceProvider.GetRequiredService<MainPageViewModel>(),
 			_ => throw new ArgumentOutOfRangeException(nameof(page), page, null)
 		};

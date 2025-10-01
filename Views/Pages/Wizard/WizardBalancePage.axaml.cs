@@ -1,11 +1,11 @@
-﻿namespace OfficeTracker.Views.Pages;
+﻿namespace OfficeTracker.Views.Pages.Wizard;
 
 /// <summary>
 /// Represents the SetupBalancePage in the OfficeTracker application.
 /// </summary>
-public partial class SetupBalancePage : UserControl
+public partial class WizardBalancePage : UserControl
 {
-	public SetupBalancePage()
+	public WizardBalancePage()
 	{
 		InitializeComponent();
 	}
@@ -15,7 +15,7 @@ public partial class SetupBalancePage : UserControl
 	/// </summary>
 	private void OnBalanceSliderChanged(object? sender, RangeBaseValueChangedEventArgs e)
 	{
-		if (DataContext is not SetupBalancePageViewModel sbpvw) return;
+		if (DataContext is not WizardBalancePageViewModel sbpvw) return;
 		if (sender is not Slider slider) return;
 		sbpvw.CalculateBalance(slider.Value, slider.Maximum);
 	}

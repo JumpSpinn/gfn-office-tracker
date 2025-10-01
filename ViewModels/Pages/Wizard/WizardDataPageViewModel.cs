@@ -1,11 +1,11 @@
-﻿namespace OfficeTracker.ViewModels.Pages;
+﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
 [RegisterSingleton]
-public sealed partial class SetupDataPageViewModel : ViewModelBase
+public sealed partial class WizardDataPageViewModel : ViewModelBase
 {
 	private readonly LogController _logController;
 
-	public SetupDataPageViewModel(LogController lc)
+	public WizardDataPageViewModel(LogController lc)
 	{
 		_logController = lc;
 	}
@@ -22,10 +22,10 @@ public sealed partial class SetupDataPageViewModel : ViewModelBase
 	[RelayCommand]
 	private void NextSetupPage()
 	{
-		ChangePage(Page.SETUP_COMPLETED);
+		ChangePage(Page.WIZARD_COMPLETED);
 		_logController.Debug($"HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Current day tracked? {CurrentDayTracked}");
 	}
 
 	[RelayCommand]
-	private void PreviousSetupPage() => ChangePage(Page.SETUP_DAYS);
+	private void PreviousSetupPage() => ChangePage(Page.WIZARD_DAYS);
 }

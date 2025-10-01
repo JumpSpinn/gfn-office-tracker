@@ -59,3 +59,4 @@ global using OfficeTracker.Database;
 global using OfficeTracker.Database.Factories;
 global using OfficeTracker.Views.Controls.Lists;
 global using OfficeTracker.Models;
+global using OfficeTracker.ViewModels.Pages.Wizard;

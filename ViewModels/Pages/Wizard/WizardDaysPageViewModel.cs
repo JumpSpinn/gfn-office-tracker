@@ -1,11 +1,11 @@
-﻿namespace OfficeTracker.ViewModels.Pages;
+﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
 [RegisterSingleton]
-public sealed partial class SetupDaysPageViewModel : ViewModelBase
+public sealed partial class WizardDaysPageViewModel : ViewModelBase
 {
 	private readonly LogController _logController;
 
-	public SetupDaysPageViewModel(LogController lc)
+	public WizardDaysPageViewModel(LogController lc)
 	{
 		_logController = lc;
 	}
@@ -31,10 +31,10 @@ public sealed partial class SetupDaysPageViewModel : ViewModelBase
 	[RelayCommand]
 	private void NextSetupPage()
 	{
-		ChangePage(Page.SETUP_DATA);
+		ChangePage(Page.WIZARD_DATA);
 		_logController.Debug($"Monday: {MondaySelected}, Monday: {TuesdaySelected}, Monday: {WednesdaySelected}, Monday: {ThursdaySelected}, Monday: {FridaySelected}, Monday: {SaturdaySelected}");
 	}
 
 	[RelayCommand]
-	private void PreviousSetupPage() => ChangePage(Page.SETUP_BALANCE);
+	private void PreviousSetupPage() => ChangePage(Page.WIZARD_BALANCE);
 }

@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
              xmlns:vm="using:OfficeTracker.ViewModels.Pages"
-             x:DataType="vm:SetupWelcomePageViewModel"
-             x:Class="OfficeTracker.Views.Pages.SetupWelcomePage">
+             xmlns:wizard="clr-namespace:OfficeTracker.ViewModels.Pages.Wizard"
+             x:DataType="wizard:WizardDaysPageViewModel"
+             x:Class="OfficeTracker.Views.Pages.Wizard.WizardDaysPage">
 	<Panel>
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
@@ -23,7 +24,7 @@
 					/>
 					<StackPanel Orientation="Vertical">
 						<Label
-							Content="Willkommen im"
+							Content="Setup-Assistenten"
 							HorizontalAlignment="Center"
 							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="14"
@@ -31,7 +32,7 @@
 							FontWeight="Medium"
 						/>
 						<Label
-							Content="Setup-Assistenten"
+							Content="Schritt 3"
 							HorizontalAlignment="Center"
 							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="18"
@@ -43,18 +44,45 @@
 							HorizontalAlignment="Left"
 							TextWrapping="Wrap"
 							FontFamily="{DynamicResource UrbanistFont}"
-							Text="Damit du den Office-Tracker gut nutzen kannst, benötigen wir einige Daten um Statistiken deiner Anwesenheit zu berechnen."
+							Text="Kreuze bitte alle Wochentage an, an denen du standardmäßig im HomeOffice bist:"
 						/>
-						<TextBlock
-							HorizontalAlignment="Left"
-							TextWrapping="Wrap"
-							FontFamily="{DynamicResource UrbanistFont}"
-							Text="Du kannst zu jederzeit zum vorherigen Schritt zurückkehren um noch Änderungen vorzunehmen."
-						/>
+						<StackPanel Orientation="Vertical">
+							<CheckBox
+								Content="Montag"
+								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding MondaySelected}"
+							/>
+							<CheckBox
+								Content="Dienstag"
+								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding TuesdaySelected}"
+							/>
+							<CheckBox
+								Content="Mittwoch"
+								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding WednesdaySelected}"
+							/>
+							<CheckBox
+								Content="Donnerstag"
+								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding ThursdaySelected}"
+							/>
+							<CheckBox
+								Content="Freitag"
+								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding FridaySelected}"
+							/>
+							<CheckBox
+								Content="Samstag"
+								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding SaturdaySelected}"
+							/>
+						</StackPanel>
 					</StackPanel>
 				</StackPanel>
 				<Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
-					<Button Grid.Column="2" Content="Starten" Command="{Binding NextSetupPageCommand}" />
+					<Button Grid.Column="0" Content="Zurück" Command="{Binding PreviousSetupPageCommand}" />
+					<Button Grid.Column="2" Content="Weiter" Command="{Binding NextSetupPageCommand}" />
 				</Grid>
 			</Grid>
 		</Border>

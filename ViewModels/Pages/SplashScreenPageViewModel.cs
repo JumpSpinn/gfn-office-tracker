@@ -62,7 +62,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			return;
 		}
 
-		ChangePage(_hasData ? Page.MAIN : Page.SETUP_WELCOME);
+		ChangePage(_hasData ? Page.MAIN : Page.WIZARD_WELCOME);
 	}
 
 	#endregion

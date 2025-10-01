@@ -5,8 +5,9 @@
              xmlns:controls="using:OfficeTracker.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
              xmlns:vm="using:OfficeTracker.ViewModels.Pages"
-             x:DataType="vm:SetupCompletedPageViewModel"
-             x:Class="OfficeTracker.Views.Pages.SetupCompletedPage">
+             xmlns:wizard="clr-namespace:OfficeTracker.ViewModels.Pages.Wizard"
+             x:DataType="wizard:WizardCompletedPageViewModel"
+             x:Class="OfficeTracker.Views.Pages.Wizard.WizardCompletedPage">
 	<Panel>
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">

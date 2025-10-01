@@ -1,14 +1,14 @@
-﻿namespace OfficeTracker.ViewModels.Pages;
+﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
 /// <summary>
 /// Represents the ViewModel for the Setup Balance page of the application.
 /// </summary>
 [RegisterSingleton]
-public sealed partial class SetupBalancePageViewModel : ViewModelBase
+public sealed partial class WizardBalancePageViewModel : ViewModelBase
 {
 	private readonly LogController _logController;
 
-	public SetupBalancePageViewModel(LogController lc)
+	public WizardBalancePageViewModel(LogController lc)
 	{
 		_logController = lc;
 		HomeOfficePercentage = "50%";
@@ -39,10 +39,10 @@ public sealed partial class SetupBalancePageViewModel : ViewModelBase
 	[RelayCommand]
 	private void NextSetupPage()
 	{
-		ChangePage(Page.SETUP_DAYS);
+		ChangePage(Page.WIZARD_DAYS);
 		_logController.Debug($"HomeOffice Percentage: {HomeOfficePercentage}, Office Percentage: {OfficePercentage}");
 	}
 
 	[RelayCommand]
-	private void PreviousSetupPage() => ChangePage(Page.SETUP_NAME);
+	private void PreviousSetupPage() => ChangePage(Page.WIZARD_NAME);
 }

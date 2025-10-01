@@ -3,9 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
-             xmlns:vm="using:OfficeTracker.ViewModels.Pages"
-             x:DataType="vm:SetupBalancePageViewModel"
-             x:Class="OfficeTracker.Views.Pages.SetupBalancePage">
+             xmlns:vm="using:OfficeTracker.ViewModels.Pages.Wizard"
+             xmlns:wizard="clr-namespace:OfficeTracker.ViewModels.Pages.Wizard"
+             x:DataType="wizard:WizardBalancePageViewModel"
+             x:Class="OfficeTracker.Views.Pages.Wizard.WizardBalancePage">
 	<Panel>
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
