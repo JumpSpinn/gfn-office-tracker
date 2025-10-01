@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:OfficeTracker.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
              xmlns:vm="using:OfficeTracker.ViewModels.Pages"
              x:DataType="vm:SetupCompletedPageViewModel"
@@ -39,7 +40,153 @@
 						/>
 					</StackPanel>
 
-
+					<Border Padding="10" CornerRadius="4" BorderThickness="1">
+						<Border.Background>
+							<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
+								<GradientStop Color="#30FFFFFF" Offset="0.0"/>
+								<GradientStop Color="#20FFFFFF" Offset="1.0"/>
+							</LinearGradientBrush>
+						</Border.Background>
+						<Border.BorderBrush>
+							<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
+								<GradientStop Color="#40FFFFFF" Offset="0.0"/>
+								<GradientStop Color="#60FFFFFF" Offset="1.0"/>
+							</LinearGradientBrush>
+						</Border.BorderBrush>
+						<StackPanel Orientation="Vertical" Spacing="20">
+							<StackPanel Orientation="Vertical" Spacing="10">
+								<!-- NAME -->
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="Angegebener Name:"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Left"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="JumpSpinn"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Right"
+									/>
+								</Grid>
+								<!-- HOME OFFICE % -->
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="Ziel-Quote - HomeOffice:"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Left"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="50.00%"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Right"
+									/>
+								</Grid>
+								<!-- STANDORT % -->
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="Ziel-Quote - Standort:"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Left"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="50.00%"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Right"
+									/>
+								</Grid>
+								<!-- Tage - HomeOffice -->
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="Tage - HomeOffice:"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Left"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="10"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Right"
+									/>
+								</Grid>
+								<!-- Tage - Standort -->
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="Tage - Standort:"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Left"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="10"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Right"
+									/>
+								</Grid>
+								<!-- Heutiger Tag einberechnet -->
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="Heutiger Tag einberechnet:"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Left"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="Ja"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Right"
+									/>
+								</Grid>
+								<!-- HomeOffice Arbeitstage -->
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="Arbeitstage - HomeOffice:"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Left"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="Mo, Di, Mi, Do, Fr, Sa"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Right"
+									/>
+								</Grid>
+							</StackPanel>
+							<!-- Statistik -->
+							<StackPanel Orientation="Vertical" Spacing="5">
+								<Label
+									Content="Berechnete Statistik:"
+									FontFamily="{DynamicResource UrbanistFont}"
+									FontSize="12"
+									HorizontalAlignment="Left"
+								/>
+								<controls:StatisticControl />
+							</StackPanel>
+						</StackPanel>
+					</Border>
 				</StackPanel>
 				<Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
 					<Button Grid.Column="0" Content="Zurück" Command="{Binding PreviousSetupPageCommand}" />
