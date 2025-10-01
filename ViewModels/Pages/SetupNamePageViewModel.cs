@@ -8,6 +8,9 @@ public sealed partial class SetupNamePageViewModel : ViewModelBase
 
 	}
 
+	[ObservableProperty]
+	private string _name = string.Empty;
+
 	[RelayCommand]
-	public void NextSetupPage() => ChangePage(Page.SETUP_OPTION);
+	public void NextSetupPage() => ChangePage(Page.SETUP_BALANCE);
 }

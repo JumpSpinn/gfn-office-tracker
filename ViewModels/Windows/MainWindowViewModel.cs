@@ -37,7 +37,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 		{
 			Page.SETUP_WELCOME => _serviceProvider.GetRequiredService<SetupWelcomePageViewModel>(),
 			Page.SETUP_NAME => _serviceProvider.GetRequiredService<SetupNamePageViewModel>(),
-			Page.SETUP_OPTION => _serviceProvider.GetRequiredService<SetupOptionPageViewModel>(),
+			Page.SETUP_BALANCE => _serviceProvider.GetRequiredService<SetupBalancePageViewModel>(),
 			Page.SETUP_DAYS => _serviceProvider.GetRequiredService<SetupDaysPageViewModel>(),
 			Page.SETUP_DATA => _serviceProvider.GetRequiredService<SetupDataPageViewModel>(),
 			Page.SETUP_COMPLETED => _serviceProvider.GetRequiredService<SetupCompletedPageViewModel>(),

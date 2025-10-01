@@ -73,8 +73,8 @@
 			<DependentUpon>SetupNamePage.axaml</DependentUpon>
 			<SubType>Code</SubType>
 		</Compile>
-		<Compile Update="Views\Pages\SetupOptionPage.axaml.cs">
-			<DependentUpon>SetupOptionPage.axaml</DependentUpon>
+		<Compile Update="Views\Pages\SetupBalancePage.axaml.cs">
+			<DependentUpon>SetupBalancePage.axaml</DependentUpon>
 			<SubType>Code</SubType>
 		</Compile>
 		<Compile Update="Views\Pages\SetupWelcomePage.axaml.cs">

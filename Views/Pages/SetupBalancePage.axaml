@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
              xmlns:vm="using:OfficeTracker.ViewModels.Pages"
-             x:DataType="vm:SetupOptionPageViewModel"
-             x:Class="OfficeTracker.Views.Pages.SetupOptionPage">
+             x:DataType="vm:SetupBalancePageViewModel"
+             x:Class="OfficeTracker.Views.Pages.SetupBalancePage">
 	<Panel>
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">

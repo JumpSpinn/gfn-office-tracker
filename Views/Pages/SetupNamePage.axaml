@@ -50,6 +50,7 @@
 							TextAlignment="Left"
 							FontFamily="{DynamicResource UrbanistFont}"
 							Watermark="Max Mustermann"
+							Text="{Binding Name}"
 						/>
 					</StackPanel>
 				</StackPanel>

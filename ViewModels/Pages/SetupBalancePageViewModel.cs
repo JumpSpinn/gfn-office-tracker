@@ -1,9 +1,9 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
 [RegisterSingleton]
-public sealed partial class SetupOptionPageViewModel : ViewModelBase
+public sealed partial class SetupBalancePageViewModel : ViewModelBase
 {
-	public SetupOptionPageViewModel()
+	public SetupBalancePageViewModel()
 	{
 
 	}
