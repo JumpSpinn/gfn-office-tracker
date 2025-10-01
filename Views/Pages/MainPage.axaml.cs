@@ -17,10 +17,10 @@ public partial class MainPage : UserControl
     /// </summary>
     protected override void OnInitialized()
     {
-	    base.OnInitialized();
+	    if(DataContext is MainPageViewModel mpv)
+			mpv.InitializeAsync();
 
-	    if(DataContext is not MainPageViewModel mpv) return;
-	    mpv.InitializeAsync();
+	    base.OnInitialized();
     }
 
     /// <summary>

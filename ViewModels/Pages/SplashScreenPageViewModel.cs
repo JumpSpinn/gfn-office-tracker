@@ -50,6 +50,8 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	/// </summary>
 	private async Task TriggerNextLoadStep()
 	{
+		_logController.Debug("Triggering next load step...");
+
 		while (_loadQueue.Count > 0)
 		{
 			LoadingText = "";
@@ -182,15 +184,13 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	/// This method is used to provide user-facing feedback about the application's
 	/// current state or encountered issues.
 	/// </summary>
-	/// <param name="title">The title of the information bar message.</param>
-	/// <param name="text">The detailed text content of the message to be displayed in the information bar.</param>
-	/// <param name="severity">The severity level of the message, determining the visual style and importance of the information bar.</param>
 	private void DisplayInfoBar(string title, string text, InfoBarSeverity severity)
 	{
 		ShowInfoBar = true;
 		InfoBarTitle = title;
 		InfoBarText = text;
 		InfoBarSeverity = severity;
+		_logController.Info(title, text);
 	}
 
 	#endregion

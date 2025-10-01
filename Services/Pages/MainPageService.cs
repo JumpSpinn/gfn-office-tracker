@@ -26,6 +26,7 @@ public sealed class MainPageService
 		try
 		{
 			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			_logController.Debug("Getting general data from database");
 			return await db.General.FirstOrDefaultAsync();
 		}
 		catch (Exception e)
@@ -46,6 +47,7 @@ public sealed class MainPageService
 		try
 		{
 			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			_logController.Debug("Getting plannable days from database");
 			return db.PlannableDays.OrderBy(x => x.Date).ToList();
 		}
 		catch (Exception e)
@@ -76,6 +78,7 @@ public sealed class MainPageService
 			};
 			await db.PlannableDays.AddAsync(day);
 			await db.SaveChangesAsync();
+			_logController.Debug($"Created new plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
 			return day;
 		}
 		catch (Exception e)
@@ -104,6 +107,7 @@ public sealed class MainPageService
 
 			data.HomeOfficeDays++;
 			data.LastUpdate = DateTime.Today;
+			_logController.Debug($"Add home office day to database. New count: {data.HomeOfficeDays} - Last update: {data.LastUpdate}");
 			await db.SaveChangesAsync();
 			return data.HomeOfficeDays;
 		}
@@ -128,6 +132,7 @@ public sealed class MainPageService
 
 			data.OfficeDays++;
 			data.LastUpdate = DateTime.Today;
+			_logController.Debug($"Add office day to database. New count: {data.OfficeDays} - Last update: {data.LastUpdate}");
 			await db.SaveChangesAsync();
 			return data.OfficeDays;
 		}
@@ -157,6 +162,7 @@ public sealed class MainPageService
 
 			db.PlannableDays.Remove(day);
 			await db.SaveChangesAsync();
+			_logController.Debug($"Deleted plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
 			return true;
 		}
 		catch (Exception e)
@@ -177,6 +183,7 @@ public sealed class MainPageService
 		{
 			await using var db = await _dbContextFactory.CreateDbContextAsync();
 			var day = await db.PlannableDays.FirstOrDefaultAsync(x => x.Date == dt);
+			_logController.Debug($"Checking if plannable day entry for date {dt} exists.");
 			return day is not null;
 		}
 		catch (Exception e)

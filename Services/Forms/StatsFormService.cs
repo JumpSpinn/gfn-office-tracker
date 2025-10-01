@@ -36,6 +36,7 @@ public sealed class StatsFormService
 			};
 			db.General.Add(general);
 			await db.SaveChangesAsync();
+			_logController.Debug($"Created new general data entry with home office days: {homeOfficeDays}, office days: {officeDays}, last update: {general.LastUpdate}");
 			return general;
 		}
 		catch (Exception e)

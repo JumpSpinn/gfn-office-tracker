@@ -86,6 +86,7 @@ public sealed partial class StatsFormViewModel : ViewModelBase
 			var op = (double)OfficeDays / (HomeOfficeDays + OfficeDays) * 100;
 			HomeOfficePercentage = $"{hop:F2}%";
 			OfficePercentage = $"{op:F2}%";
+			_logController.Debug($"Stats calculated successfully. HomeOffice: {HomeOfficePercentage}, Office: {OfficePercentage}");
 		}
 		catch (Exception e)
 		{
@@ -121,6 +122,7 @@ public sealed partial class StatsFormViewModel : ViewModelBase
 	{
 		var result = await _statsFormService.CreateGeneralDataAsync(HomeOfficeDays, OfficeDays, HasBeenDayCounted);
 		var page = result is null ? Page.SETUP : Page.MAIN;
+		_logController.Info($"Setup completed.");
 		_mainWindowController.ChangePage(page);
 	}
 

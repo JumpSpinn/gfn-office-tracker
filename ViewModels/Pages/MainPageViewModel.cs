@@ -8,10 +8,12 @@
 public sealed partial class MainPageViewModel : ViewModelBase
 {
 	private readonly MainPageService _mainPageService;
+	private readonly LogController _logController;
 
-    public MainPageViewModel(MainPageService mps)
+    public MainPageViewModel(MainPageService mps, LogController lc)
     {
 	    _mainPageService = mps;
+	    _logController = lc;
 
 		#if DEBUG
 	    CanAddCurrentDay = true;
@@ -24,8 +26,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     public async Task InitializeAsync()
     {
-	    await CreateNewStatsControlAsync();
+	    await SetStatisticsAsync();
 	    await LoadPlannableDaysAsync();
+	    _logController.Debug("MainPageViewModel initialized");
     }
 
     #region CURRENT STATS
@@ -44,7 +47,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// retrieved from the MainPageService, updating the current stats control and related states.
     /// Triggers the CurrentStatsChanged event upon successful update.
     /// </summary>
-    private async Task CreateNewStatsControlAsync()
+    private async Task SetStatisticsAsync()
     {
 	    var data = await _mainPageService.GetGeneralDataAsync();
 	    if (data is null) return;
@@ -119,7 +122,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    entryResult = await _mainPageService.AddOfficeDayAsync();
 		    if (entryResult > 0)
 		    {
-			    await CreateNewStatsControlAsync();
+			    await SetStatisticsAsync();
 			    await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
 		    }
 		    else
