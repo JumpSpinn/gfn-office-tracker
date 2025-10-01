@@ -8,24 +8,20 @@ public partial class MainPage : UserControl
     public MainPage()
     {
         InitializeComponent();
-        Loaded += OnLoaded;
     }
 
-    #region EVENTS
-
     /// <summary>
-    /// Handles the Loaded event for the MainPage. This method sets up event subscriptions
-    /// and initializes the associated ViewModel asynchronously.
+    /// Overrides the OnInitialized method to perform custom initialization for the MainPage.
+    /// If the DataContext is of type MainPageViewModel, this method triggers the asynchronous
+    /// initialization process of the ViewModel.
     /// </summary>
-    private async void OnLoaded(object? sender, RoutedEventArgs e)
+    protected override void OnInitialized()
     {
+	    base.OnInitialized();
+
 	    if(DataContext is not MainPageViewModel mpv) return;
 	    mpv.InitializeAsync();
     }
-
-    #endregion
-
-    #region CURRENT DAY
 
     /// <summary>
     /// Handles the AddButtonClicked event from the StatisticControl. This method triggers the
@@ -36,10 +32,6 @@ public partial class MainPage : UserControl
 	    if(DataContext is not MainPageViewModel mpv) return;
 	    mpv.ShowAddCurrentDayDialogAsync();
     }
-
-    #endregion
-
-    #region PLANNABLE DAYS
 
     /// <summary>
     /// Handles the AddButtonClicked event from the PlannableDayListControl. This method invokes the
@@ -62,6 +54,4 @@ public partial class MainPage : UserControl
 	    if (sender is not PlannableDayListControl pdlc) return;
 	    mpv.ShowDeletePlannableDayDialogAsync(pdlc.SelectedPlannableDayId);
     }
-
-    #endregion
 }
