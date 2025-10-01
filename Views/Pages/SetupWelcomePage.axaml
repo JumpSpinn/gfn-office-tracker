@@ -54,7 +54,7 @@
 					</StackPanel>
 				</StackPanel>
 				<Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
-					<Button Grid.Column="2" Content="Starten" />
+					<Button Grid.Column="2" Content="Starten" Command="{Binding NextSetupPageCommand}" />
 				</Grid>
 			</Grid>
 		</Border>

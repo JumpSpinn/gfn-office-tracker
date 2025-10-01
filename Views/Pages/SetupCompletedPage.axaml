@@ -42,8 +42,8 @@
 
 				</StackPanel>
 				<Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
-					<Button Grid.Column="0" Content="Zurück" />
-					<Button Grid.Column="2" Content="Setup fertigstellen" />
+					<Button Grid.Column="0" Content="Zurück" Command="{Binding PreviousSetupPageCommand}" />
+					<Button Grid.Column="2" Content="Setup fertigstellen" Command="{Binding NextSetupPageCommand}" />
 				</Grid>
 			</Grid>
 		</Border>
