@@ -37,7 +37,11 @@ public sealed partial class SetupBalancePageViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	private void NextSetupPage() => ChangePage(Page.SETUP_DAYS);
+	private void NextSetupPage()
+	{
+		ChangePage(Page.SETUP_DAYS);
+		_logController.Debug($"HomeOffice Percentage: {HomeOfficePercentage}, Office Percentage: {OfficePercentage}");
+	}
 
 	[RelayCommand]
 	private void PreviousSetupPage() => ChangePage(Page.SETUP_NAME);

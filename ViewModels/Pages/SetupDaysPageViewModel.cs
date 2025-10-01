@@ -3,9 +3,11 @@
 [RegisterSingleton]
 public sealed partial class SetupDaysPageViewModel : ViewModelBase
 {
-	public SetupDaysPageViewModel()
-	{
+	private readonly LogController _logController;
 
+	public SetupDaysPageViewModel(LogController lc)
+	{
+		_logController = lc;
 	}
 
 	[ObservableProperty]
@@ -27,7 +29,11 @@ public sealed partial class SetupDaysPageViewModel : ViewModelBase
 	private bool _saturdaySelected;
 
 	[RelayCommand]
-	private void NextSetupPage() => ChangePage(Page.SETUP_DATA);
+	private void NextSetupPage()
+	{
+		ChangePage(Page.SETUP_DATA);
+		_logController.Debug($"Monday: {MondaySelected}, Monday: {TuesdaySelected}, Monday: {WednesdaySelected}, Monday: {ThursdaySelected}, Monday: {FridaySelected}, Monday: {SaturdaySelected}");
+	}
 
 	[RelayCommand]
 	private void PreviousSetupPage() => ChangePage(Page.SETUP_BALANCE);
