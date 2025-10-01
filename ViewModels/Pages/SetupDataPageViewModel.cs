@@ -8,6 +8,15 @@ public sealed partial class SetupDataPageViewModel : ViewModelBase
 
 	}
 
+	[ObservableProperty]
+	private decimal _homeOfficeDays;
+
+	[ObservableProperty]
+	private decimal _OfficeDays;
+
+	[ObservableProperty]
+	private bool _currentDayTracked;
+
 	[RelayCommand]
 	private void NextSetupPage() => ChangePage(Page.SETUP_COMPLETED);
 

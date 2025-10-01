@@ -47,25 +47,32 @@
 						/>
 						<StackPanel Orientation="Vertical">
 							<Label Content="HomeOffice - Tage:" />
-							<TextBox
+							<NumericUpDown
 								HorizontalAlignment="Stretch"
 								TextAlignment="Left"
 								FontFamily="{DynamicResource UrbanistFont}"
 								Watermark="0"
+								ShowButtonSpinner="False"
+								AllowSpin="True"
+								Value="{Binding HomeOfficeDays}"
 							/>
 						</StackPanel>
 						<StackPanel Orientation="Vertical">
 							<Label Content="Standort - Tage:" />
-							<TextBox
+							<NumericUpDown
 								HorizontalAlignment="Stretch"
 								TextAlignment="Left"
 								FontFamily="{DynamicResource UrbanistFont}"
 								Watermark="0"
+								ShowButtonSpinner="False"
+								AllowSpin="True"
+								Value="{Binding OfficeDays}"
 							/>
 						</StackPanel>
 						<CheckBox
 							Content="Heutiger Tag ist mit einberechnet!"
 							FontFamily="{DynamicResource UrbanistFont}"
+							IsChecked="{Binding CurrentDayTracked}"
 						/>
 					</StackPanel>
 				</StackPanel>
