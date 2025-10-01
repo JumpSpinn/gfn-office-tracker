@@ -3,4 +3,4 @@
 /// <summary>
 /// Represents a message used to notify about a page change in the application.
 /// </summary>
-public class ChangePageMessage(Page page) : ValueChangedMessage<Page>(page);
+public sealed class ChangePageMessage(Page page) : ValueChangedMessage<Page>(page);
