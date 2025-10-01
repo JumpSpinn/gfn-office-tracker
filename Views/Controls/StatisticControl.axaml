@@ -122,6 +122,8 @@
 						BorderThickness="1"
 						HorizontalAlignment="Center"
 						VerticalAlignment="Center"
+						IsVisible="{TemplateBinding AddButtonVisible}"
+						IsEnabled="{TemplateBinding AddButtonEnabled}"
 						ToolTip.Tip="Tag hinzufügen"
 						ToolTip.Placement="Top"
 						ToolTip.VerticalOffset="0"

@@ -11,16 +11,15 @@ public partial class MainPage : UserControl
     }
 
     /// <summary>
-    /// Overrides the OnInitialized method to perform custom initialization for the MainPage.
-    /// If the DataContext is of type MainPageViewModel, this method triggers the asynchronous
-    /// initialization process of the ViewModel.
+    /// Invoked when the control is loaded and the associated visual tree is constructed.
+    /// This method ensures that the MainPageViewModel asynchronous initialization is triggered.
     /// </summary>
-    protected override void OnInitialized()
+    protected override void OnLoaded(RoutedEventArgs e)
     {
 	    if(DataContext is MainPageViewModel mpv)
-			mpv.InitializeAsync();
+		    mpv.InitializeAsync();
 
-	    base.OnInitialized();
+	    base.OnLoaded(e);
     }
 
     /// <summary>

@@ -14,10 +14,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
     {
 	    _mainPageService = mps;
 	    _logController = lc;
-
-		#if DEBUG
-	    CanAddCurrentDay = true;
-		#endif
     }
 
     /// <summary>
@@ -28,7 +24,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
     {
 	    await SetStatisticsAsync();
 	    await LoadPlannableDaysAsync();
-	    _logController.Debug("MainPageViewModel initialized");
+	    _logController.Debug($"Initialized with HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Plannable Days Count: {PlannableDays.Count}, CanAddCurrentDay: {CanAddCurrentDay}");
     }
 
     #region CURRENT STATS
@@ -54,10 +50,11 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
 	    HomeOfficeDays = data.HomeOfficeDays;
 	    OfficeDays = data.OfficeDays;
-	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
 
 		#if DEBUG
 	    CanAddCurrentDay = true;
+		#else
+		CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
 		#endif
     }
 

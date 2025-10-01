@@ -9,11 +9,7 @@ public class StatisticControl : TemplatedControl
 	{
 		_addButton = e.NameScope.Find<Button>("AddButton");
 		if (_addButton is not null)
-		{
 			_addButton.Click += OnAddButtonClick;
-			_addButton.IsVisible = false;
-			_addButton.IsEnabled = false;
-		}
 
 		_errorBorderIcon = e.NameScope.Find<Border>("ErrorIcon");
 		if(_errorBorderIcon is not null)
@@ -42,24 +38,12 @@ public class StatisticControl : TemplatedControl
 	{
 		HomeOfficeDaysProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
 		{
-			control.CalculateStatistic();
+			control.ScheduleCalculationStatistic();
 		});
 
 		OfficeDaysProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
 		{
-			control.CalculateStatistic();
-		});
-
-		AddButtonEnabledProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
-		{
-			if (control._addButton is not null)
-				control._addButton.IsEnabled = control.AddButtonEnabled;
-		});
-
-		AddButtonVisibleProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
-		{
-			if (control._addButton is not null)
-				control._addButton.IsVisible = control.AddButtonVisible;
+			control.ScheduleCalculationStatistic();
 		});
 	}
 
@@ -100,6 +84,31 @@ public class StatisticControl : TemplatedControl
 
 	private double OfficePercentage
 		=> (double)OfficeDays / (HomeOfficeDays + OfficeDays) * 100;
+
+	/// <summary>
+	/// Holds a token source used to manage cancellation of ongoing statistic calculation operations.
+	/// This allows interrupting calculations when a new operation is scheduled.
+	/// </summary>
+	private CancellationTokenSource? _calculationCts;
+
+	/// <summary>
+	/// Schedules the calculation of statistical data relating to office and home office days.
+	/// The method cancels any ongoing calculations, creates a new cancellation token, and posts
+	/// a task to the user interface thread to perform the calculation asynchronously.
+	/// </summary>
+	private void ScheduleCalculationStatistic()
+	{
+		_calculationCts?.Cancel();
+		_calculationCts = new CancellationTokenSource();
+
+		var token = _calculationCts.Token;
+
+		Dispatcher.UIThread.Post(() =>
+		{
+			if(!token.IsCancellationRequested)
+				CalculateStatistic();
+		}, DispatcherPriority.Background);
+	}
 
 	/// <summary>
 	/// Recalculates and updates the visual representation of office and home office statistics.
