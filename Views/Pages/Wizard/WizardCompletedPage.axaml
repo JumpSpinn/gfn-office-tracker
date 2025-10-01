@@ -66,7 +66,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="JumpSpinn"
+										Content="{Binding WizardNamePageViewModel.Name}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -83,7 +83,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="50.00%"
+										Content="{Binding WizardBalancePageViewModel.HomeOfficePercentage}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -100,7 +100,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="50.00%"
+										Content="{Binding WizardBalancePageViewModel.OfficePercentage}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -117,7 +117,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="10"
+										Content="{Binding WizardDataPageViewModel.HomeOfficeDays}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -134,7 +134,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="10"
+										Content="{Binding WizardDataPageViewModel.OfficeDays}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -151,7 +151,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="Ja"
+										Content="{Binding CurrentDayTracked}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -168,7 +168,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="Mo, Di, Mi, Do, Fr, Sa"
+										Content="{Binding WizardDaysPageViewModel.SelectedDays}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -183,7 +183,12 @@
 									FontSize="12"
 									HorizontalAlignment="Left"
 								/>
-								<controls:StatisticControl />
+								<controls:StatisticControl
+									HomeOfficeDays="{Binding WizardDataPageViewModel.HomeOfficeDays}"
+									OfficeDays="{Binding WizardDataPageViewModel.OfficeDays}"
+									AddButtonEnabled="False"
+									AddButtonVisible="False"
+								/>
 							</StackPanel>
 						</StackPanel>
 					</Border>

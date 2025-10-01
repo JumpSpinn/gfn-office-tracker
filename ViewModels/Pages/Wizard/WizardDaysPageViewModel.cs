@@ -28,9 +28,28 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	[ObservableProperty]
 	private bool _saturdaySelected;
 
+	public string SelectedDays { get; private set; } = string.Empty;
+
+	private void ConvertSelectedBooleanDays()
+	{
+		var days = new[]
+		{
+			(MondaySelected, "Mo"),
+			(TuesdaySelected, "Di"),
+			(WednesdaySelected, "Mi"),
+			(ThursdaySelected, "Do"),
+			(FridaySelected, "Fr"),
+			(SaturdaySelected, "Sa")
+		};
+		SelectedDays = string.Join(", ", days
+			.Where(d => d.Item1)
+			.Select(d => d.Item2));
+	}
+
 	[RelayCommand]
 	private void NextSetupPage()
 	{
+		ConvertSelectedBooleanDays();
 		ChangePage(Page.WIZARD_DATA);
 		_logController.Debug($"Monday: {MondaySelected}, Monday: {TuesdaySelected}, Monday: {WednesdaySelected}, Monday: {ThursdaySelected}, Monday: {FridaySelected}, Monday: {SaturdaySelected}");
 	}

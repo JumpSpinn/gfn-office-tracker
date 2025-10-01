@@ -4,19 +4,30 @@
 public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 {
 	private readonly LogController _logController;
-	private readonly WizardNamePageViewModel _wizardNamePageViewModel;
-	private readonly WizardDaysPageViewModel _wizardDaysPageViewModel;
-	private readonly WizardDataPageViewModel _wizardDataPageViewModel;
-	private readonly WizardBalancePageViewModel _wizardBalancePageViewModel;
 
 	public WizardCompletedPageViewModel( LogController lc, WizardNamePageViewModel wnpvm, WizardDaysPageViewModel wdpvm, WizardDataPageViewModel wDpvm, WizardBalancePageViewModel wbpvm)
 	{
 		_logController = lc;
-		_wizardNamePageViewModel = wnpvm;
-		_wizardDaysPageViewModel = wdpvm;
-		_wizardDataPageViewModel = wDpvm;
-		_wizardBalancePageViewModel = wbpvm;
+		WizardNamePageViewModel = wnpvm;
+		WizardDaysPageViewModel = wdpvm;
+		WizardDataPageViewModel = wDpvm;
+		WizardBalancePageViewModel = wbpvm;
 	}
+
+	[ObservableProperty]
+	private WizardNamePageViewModel _wizardNamePageViewModel;
+
+	[ObservableProperty]
+	private WizardDaysPageViewModel _wizardDaysPageViewModel;
+
+	[ObservableProperty]
+	private WizardDataPageViewModel _wizardDataPageViewModel;
+
+	[ObservableProperty]
+	private WizardBalancePageViewModel _wizardBalancePageViewModel;
+
+	public string CurrentDayTracked
+		=> WizardDataPageViewModel.CurrentDayTracked ? "Ja" : "Nein";
 
 	[RelayCommand]
 	private void NextSetupPage() => ChangePage(Page.MAIN);
