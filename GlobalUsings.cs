@@ -56,5 +56,5 @@ global using OfficeTracker.Services.Pages;
 global using OfficeTracker.Database.Models;
 global using OfficeTracker.Database;
 global using OfficeTracker.Database.Factories;
-global using OfficeTracker.Converters.Models;
 global using OfficeTracker.Views.Controls.Lists;
+global using OfficeTracker.Models;
