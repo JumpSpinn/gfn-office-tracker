@@ -3,9 +3,19 @@
 [RegisterSingleton]
 public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 {
-	public WizardCompletedPageViewModel()
-	{
+	private readonly LogController _logController;
+	private readonly WizardNamePageViewModel _wizardNamePageViewModel;
+	private readonly WizardDaysPageViewModel _wizardDaysPageViewModel;
+	private readonly WizardDataPageViewModel _wizardDataPageViewModel;
+	private readonly WizardBalancePageViewModel _wizardBalancePageViewModel;
 
+	public WizardCompletedPageViewModel( LogController lc, WizardNamePageViewModel wnpvm, WizardDaysPageViewModel wdpvm, WizardDataPageViewModel wDpvm, WizardBalancePageViewModel wbpvm)
+	{
+		_logController = lc;
+		_wizardNamePageViewModel = wnpvm;
+		_wizardDaysPageViewModel = wdpvm;
+		_wizardDataPageViewModel = wDpvm;
+		_wizardBalancePageViewModel = wbpvm;
 	}
 
 	[RelayCommand]

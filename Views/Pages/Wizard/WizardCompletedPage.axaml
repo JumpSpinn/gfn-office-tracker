@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="using:OfficeTracker.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
-             xmlns:vm="using:OfficeTracker.ViewModels.Pages"
              xmlns:wizard="clr-namespace:OfficeTracker.ViewModels.Pages.Wizard"
              x:DataType="wizard:WizardCompletedPageViewModel"
              x:Class="OfficeTracker.Views.Pages.Wizard.WizardCompletedPage">
