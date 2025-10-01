@@ -11,14 +11,11 @@ public sealed partial class StatsFormViewModel : ViewModelBase
 {
 	private readonly LogController _logController;
 	private readonly StatsFormService _statsFormService;
-	private readonly MainWindowController _mainWindowController;
-	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 
-	public StatsFormViewModel(LogController lc, StatsFormService sfs, MainWindowController mwc)
+	public StatsFormViewModel(LogController lc, StatsFormService sfs)
 	{
 		_logController = lc;
 		_statsFormService = sfs;
-		_mainWindowController = mwc;
 	}
 
 	#region CALCULATE STATS
@@ -123,7 +120,7 @@ public sealed partial class StatsFormViewModel : ViewModelBase
 		var result = await _statsFormService.CreateGeneralDataAsync(HomeOfficeDays, OfficeDays, HasBeenDayCounted);
 		var page = result is null ? Page.SETUP : Page.MAIN;
 		_logController.Info($"Setup completed.");
-		_mainWindowController.ChangePage(page);
+		ChangePage(page);
 	}
 
 	#endregion

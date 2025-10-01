@@ -54,17 +54,6 @@ public sealed class MainWindowController
 	}
 
 	/// <summary>
-	/// Changes the current application page to the specified page.
-	/// Logs the page change process and sends a notification to update
-	/// subscribers about the page change.
-	/// </summary>
-	public void ChangePage(Page page)
-	{
-		_logController.Debug($"Changing page to {page}");
-		_messenger.Send(new ChangePageMessage(page));
-	}
-
-	/// <summary>
 	/// Handles the logic for updating the application's state when the main window's
 	/// position or size changes. Logs the updated position and size for debugging purposes.
 	/// If the application is initialized, this method may trigger saving the updated window

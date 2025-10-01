@@ -9,7 +9,6 @@
 public sealed partial class SplashScreenPageViewModel : ViewModelBase
 {
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
-	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 	private readonly MainWindowController _mainWindowController;
 	private readonly LogController _logController;
 
@@ -63,7 +62,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			return;
 		}
 
-		_mainWindowController.ChangePage(_hasData ? Page.MAIN : Page.SETUP);
+		ChangePage(_hasData ? Page.MAIN : Page.SETUP);
 	}
 
 	#endregion
