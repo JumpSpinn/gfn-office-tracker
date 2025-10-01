@@ -12,5 +12,5 @@ public sealed partial class SetupNamePageViewModel : ViewModelBase
 	private string _name = string.Empty;
 
 	[RelayCommand]
-	public void NextSetupPage() => ChangePage(Page.SETUP_BALANCE);
+	private void NextSetupPage() => ChangePage(Page.SETUP_BALANCE);
 }

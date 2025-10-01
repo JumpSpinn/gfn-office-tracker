@@ -9,8 +9,8 @@ public sealed partial class SetupDataPageViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	public void NextSetupPage() => ChangePage(Page.SETUP_COMPLETED);
+	private void NextSetupPage() => ChangePage(Page.SETUP_COMPLETED);
 
 	[RelayCommand]
-	public void PreviousSetupPage() => ChangePage(Page.SETUP_DAYS);
+	private void PreviousSetupPage() => ChangePage(Page.SETUP_DAYS);
 }

@@ -9,5 +9,5 @@ public sealed partial class SetupWelcomePageViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	public void NextSetupPage() => ChangePage(Page.SETUP_NAME);
+	private void NextSetupPage() => ChangePage(Page.SETUP_NAME);
 }
