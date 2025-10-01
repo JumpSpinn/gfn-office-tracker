@@ -1,6 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
-public sealed class SetupOptionPageViewModel
+[RegisterSingleton]
+public sealed class SetupOptionPageViewModel : ViewModelBase
 {
 	public SetupOptionPageViewModel()
 	{
