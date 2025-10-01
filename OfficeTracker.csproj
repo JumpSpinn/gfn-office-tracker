@@ -8,14 +8,14 @@
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-      
+
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <ApplicationIcon>Assets/logo_white.ico</ApplicationIcon>
   </PropertyGroup>
-    
+
     <ItemGroup>
         <Folder Include="Assets\Fonts\" />
         <AvaloniaResource Include="Assets\**" />
@@ -49,9 +49,65 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Windows\MainWindow.axaml.cs">
-      <DependentUpon>MainWindow.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+		<Compile Update="Views\Windows\MainWindow.axaml.cs">
+			<DependentUpon>MainWindow.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Pages\MainPage.axaml.cs">
+			<DependentUpon>MainPage.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Pages\SetupCompletedPage.axaml.cs">
+			<DependentUpon>SetupCompletedPage.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Pages\SetupDataPage.axaml.cs">
+			<DependentUpon>SetupDataPage.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Pages\SetupDaysPage.axaml.cs">
+			<DependentUpon>SetupDaysPage.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Pages\SetupNamePage.axaml.cs">
+			<DependentUpon>SetupNamePage.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Pages\SetupOptionPage.axaml.cs">
+			<DependentUpon>SetupOptionPage.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Pages\SetupWelcomePage.axaml.cs">
+			<DependentUpon>MainPage.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Pages\SetupWelcomePage.axaml.cs">
+			<DependentUpon>MainPage.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Forms\PlannableDayForm.axaml.cs">
+			<DependentUpon>PlannableDayForm.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Forms\CurrentDayForm.axaml.cs">
+			<DependentUpon>CurrentDayForm.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Controls\StatisticControl.axaml.cs">
+			<DependentUpon>StatisticControl.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Controls\Lists\CalculatedWeekListControl.axaml.cs">
+			<DependentUpon>CalculatedWeekListControl.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Controls\Lists\PlannableDayListControl.axaml.cs">
+			<DependentUpon>PlannableDayListControl.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Components\WeekIndicatorComponent.axaml.cs">
+			<DependentUpon>WeekIndicatorComponent.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
   </ItemGroup>
 </Project>
