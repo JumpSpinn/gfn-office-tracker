@@ -8,6 +8,24 @@ public sealed partial class SetupDaysPageViewModel : ViewModelBase
 
 	}
 
+	[ObservableProperty]
+	private bool _mondaySelected;
+
+	[ObservableProperty]
+	private bool _tuesdaySelected;
+
+	[ObservableProperty]
+	private bool _wednesdaySelected;
+
+	[ObservableProperty]
+	private bool _thursdaySelected;
+
+	[ObservableProperty]
+	private bool _fridaySelected;
+
+	[ObservableProperty]
+	private bool _saturdaySelected;
+
 	[RelayCommand]
 	private void NextSetupPage() => ChangePage(Page.SETUP_DATA);
 

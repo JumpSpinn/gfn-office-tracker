@@ -49,22 +49,32 @@
 							<CheckBox
 								Content="Montag"
 								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding MondaySelected}"
 							/>
 							<CheckBox
 								Content="Dienstag"
 								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding TuesdaySelected}"
 							/>
 							<CheckBox
 								Content="Mittwoch"
 								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding WednesdaySelected}"
 							/>
 							<CheckBox
 								Content="Donnerstag"
 								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding ThursdaySelected}"
 							/>
 							<CheckBox
 								Content="Freitag"
 								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding FridaySelected}"
+							/>
+							<CheckBox
+								Content="Samstag"
+								FontFamily="{DynamicResource UrbanistFont}"
+								IsChecked="{Binding SaturdaySelected}"
 							/>
 						</StackPanel>
 					</StackPanel>
