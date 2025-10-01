@@ -9,7 +9,6 @@ public sealed class MainWindowController
 {
 	private bool _initialized;
 	private readonly LogController _logController;
-	private readonly IMessenger _messenger = WeakReferenceMessenger.Default;
 
 	public MainWindowController(LogController lc)
 	{
