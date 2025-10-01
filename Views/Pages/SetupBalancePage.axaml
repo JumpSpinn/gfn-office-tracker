@@ -76,25 +76,25 @@
 									/>
 								</Grid>
 								<Slider
-									x:Name="BalanceSlider"
 									Maximum="100"
 									Minimum="0"
-									Value="50"
+									Value="{Binding SliderValue}"
 									TickFrequency="1"
 									IsSnapToTickEnabled="True"
 									Margin="0 -10"
+									ValueChanged="OnBalanceSliderChanged"
 								/>
 								<Grid ColumnDefinitions="*,*">
 									<Label
 										Grid.Column="0"
-										Content="50.00%"
+										Content="{Binding HomeOfficePercentage}"
 										HorizontalAlignment="Left"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 									/>
 									<Label
 										Grid.Column="1"
-										Content="50.00%"
+										Content="{Binding OfficePercentage}"
 										HorizontalAlignment="Right"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
