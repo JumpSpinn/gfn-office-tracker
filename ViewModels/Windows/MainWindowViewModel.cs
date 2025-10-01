@@ -36,7 +36,11 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 	private ViewModelBase GetCurrentPageViewModel(Page page) =>
 		page switch
 		{
-			Page.SETUP => _serviceProvider.GetRequiredService<StatsFormViewModel>(),
+			Page.SETUP_WELCOME => _serviceProvider.GetRequiredService<SetupWelcomePageViewModel>(),
+			Page.SETUP_NAME => _serviceProvider.GetRequiredService<SetupNamePageViewModel>(),
+			Page.SETUP_DAYS => _serviceProvider.GetRequiredService<SetupDaysPageViewModel>(),
+			Page.SETUP_DATA => _serviceProvider.GetRequiredService<SetupDataPageViewModel>(),
+			Page.SETUP_COMPLETED => _serviceProvider.GetRequiredService<SetupCompletedPageViewModel>(),
 			Page.MAIN => _serviceProvider.GetRequiredService<MainPageViewModel>(),
 			_ => throw new ArgumentOutOfRangeException(nameof(page), page, null)
 		};
