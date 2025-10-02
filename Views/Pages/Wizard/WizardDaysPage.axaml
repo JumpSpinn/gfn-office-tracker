@@ -81,7 +81,7 @@
 				</StackPanel>
 				<Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
 					<Button Grid.Column="0" Content="Zurück" Command="{Binding PreviousSetupPageCommand}" />
-					<Button Grid.Column="2" Content="Weiter" Command="{Binding NextSetupPageCommand}" />
+					<Button Grid.Column="2" Content="Weiter" Command="{Binding NextSetupPageCommand}" IsEnabled="{Binding IsDaySelected}" />
 				</Grid>
 			</Grid>
 		</Border>

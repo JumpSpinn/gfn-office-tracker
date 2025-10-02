@@ -7,22 +7,35 @@
 [RegisterSingleton]
 public sealed partial class WizardDaysPageViewModel : ViewModelBase
 {
+	/// <summary>
+	/// Gets a value indicating whether any day has been selected in the wizard days selection process.
+	/// </summary>
+	public bool IsDaySelected =>
+		MondaySelected || TuesdaySelected || WednesdaySelected ||
+		ThursdaySelected || FridaySelected || SaturdaySelected;
+
 	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
 	private bool _mondaySelected;
 
 	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
 	private bool _tuesdaySelected;
 
 	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
 	private bool _wednesdaySelected;
 
 	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
 	private bool _thursdaySelected;
 
 	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
 	private bool _fridaySelected;
 
 	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
 	private bool _saturdaySelected;
 
 	/// <summary>
@@ -53,9 +66,15 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 			.Select(d => d.Item2));
 	}
 
+	/// <summary>
+	/// Navigates to the next setup page in the wizard-based workflow if a day is selected.
+	/// This method checks whether at least one day has been marked as selected. If so, it converts
+	/// the selected days into a specific format and transitions the user to the data setup page.
+	/// </summary>
 	[RelayCommand]
 	private void NextSetupPage()
 	{
+		if (!IsDaySelected) return;
 		ConvertSelectedBooleanDays();
 		ChangePage(Page.WIZARD_DATA);
 	}
