@@ -7,12 +7,12 @@
 [RegisterSingleton]
 public sealed partial class MainPageViewModel : ViewModelBase
 {
-	private readonly MainPageService _mainPageService;
+	private readonly DatabaseService _databaseService;
 	private readonly LogService _logService;
 
-    public MainPageViewModel(MainPageService mps, LogService lc)
+    public MainPageViewModel(DatabaseService ds, LogService lc)
     {
-	    _mainPageService = mps;
+	    _databaseService = ds;
 	    _logService = lc;
     }
 
@@ -45,11 +45,15 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     private async Task SetStatisticsAsync()
     {
-	    var data = await _mainPageService.GetGeneralDataAsync();
-	    if (data is null) return;
+	    var data = await _databaseService.GetUserSettingAsync();
+	    if (data is null)
+	    {
+		    _logService.Error("User settings could not be retrieved.");
+		    return;
+	    }
 
-	    HomeOfficeDays = data.HomeOfficeDays;
-	    OfficeDays = data.OfficeDays;
+	    HomeOfficeDays = data.HomeOfficeDayCount;
+	    OfficeDays = data.OfficeDayCount;
 
 		#if DEBUG
 	    CanAddCurrentDay = true;
@@ -89,9 +93,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    else if(DateTimeHelper.IsInWeekend(DateTime.Today))
 			    await DialogHelper.ShowDialogAsync("Wochenende", "Du hast Wochenende, genieß' es.", DialogType.QUESTION);
 		    else if(dayForm.SelectedDayType == DayType.HOME)
-			    entryResult = await _mainPageService.AddHomeOfficeDayAsync();
+			    entryResult = await _databaseService.IncreaseHomeOfficeCountAsync();
 		    else
-			    entryResult = await _mainPageService.AddOfficeDayAsync();
+			    entryResult = await _databaseService.IncreaseOfficeCountAsync();
 		    if (entryResult > 0)
 		    {
 			    await SetStatisticsAsync();
@@ -116,7 +120,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     private async Task LoadPlannableDaysAsync()
     {
-	    var plannableDays = await _mainPageService.GetPlannableDaysAsync();
+	    var plannableDays = await _databaseService.GetAllPlannableDaysAsync();
 	    PlannableDays = new ObservableCollection<DbPlannableDay>(plannableDays ?? []);
     }
 
@@ -140,7 +144,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    var dialogResult = await dialog.ShowAsyncCorrectly();
 	    if(dialogResult == ContentDialogResult.Primary)
 	    {
-		    await _mainPageService.DeletePlannableDayAsync(id);
+		    await _databaseService.DeletePlannableDayAsync(id);
 		    await LoadPlannableDaysAsync();
 	    }
 
@@ -176,7 +180,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    var dateValidation = IsSelectedDateValid(dayForm.SelectedDate);
 		    if(!dateValidation.Result)
 			    await DialogHelper.ShowDialogAsync(dateValidation.Title, dateValidation.Message, DialogType.WARNING);
-		    else if(await _mainPageService.ExistPlannableDayDateAsync((DateTime)dayForm.SelectedDate!))
+		    else if(await _databaseService.GetSinglePlannableDayAsync((DateTime)dayForm.SelectedDate!) is not null)
 			    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
 		    else if (dayForm.SelectedDayType == DayType.NONE)
 			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
@@ -186,7 +190,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.", DialogType.QUESTION);
 		    else
 		    {
-			    var entry = await _mainPageService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate!);
+			    var entry = await _databaseService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate!);
 			    if (entry is not null)
 			    {
 				    success = true;

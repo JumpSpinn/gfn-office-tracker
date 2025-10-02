@@ -11,7 +11,7 @@ using OfficeTracker.Database;
 namespace OfficeTracker.Migrations
 {
     [DbContext(typeof(OtContext))]
-    [Migration("20250929160440_InitialCreate")]
+    [Migration("20251002123549_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -19,26 +19,6 @@ namespace OfficeTracker.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
-
-            modelBuilder.Entity("OfficeTracker.Database.Models.DbGeneral", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<uint>("HomeOfficeDays")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<uint>("OfficeDays")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("general");
-                });
 
             modelBuilder.Entity("OfficeTracker.Database.Models.DbPlannableDay", b =>
                 {
@@ -58,6 +38,44 @@ namespace OfficeTracker.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("plannable_days");
+                });
+
+            modelBuilder.Entity("OfficeTracker.Database.Models.DbUserSettings", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<uint>("HomeOfficeDayCount")
+                        .HasColumnType("INTEGER");
+
+                    b.PrimitiveCollection<string>("HomeOfficeDays")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<uint>("HomeOfficeTargetQuoted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<uint>("OfficeDayCount")
+                        .HasColumnType("INTEGER");
+
+                    b.PrimitiveCollection<string>("OfficeDays")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<uint>("OfficeTargetQuoted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("user_settings");
                 });
 #pragma warning restore 612, 618
         }

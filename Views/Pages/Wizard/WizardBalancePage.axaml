@@ -87,14 +87,14 @@
 								<Grid ColumnDefinitions="*,*">
 									<Label
 										Grid.Column="0"
-										Content="{Binding HomeOfficePercentage}"
+										Content="{Binding HomeOfficePercentageDisplay}"
 										HorizontalAlignment="Left"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 									/>
 									<Label
 										Grid.Column="1"
-										Content="{Binding OfficePercentage}"
+										Content="{Binding OfficePercentageDisplay}"
 										HorizontalAlignment="Right"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"

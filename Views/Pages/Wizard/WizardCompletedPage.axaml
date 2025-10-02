@@ -83,7 +83,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="{Binding WizardBalancePageViewModel.HomeOfficePercentage}"
+										Content="{Binding WizardBalancePageViewModel.HomeOfficePercentageDisplay}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -100,7 +100,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="{Binding WizardBalancePageViewModel.OfficePercentage}"
+										Content="{Binding WizardBalancePageViewModel.OfficePercentageDisplay}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"

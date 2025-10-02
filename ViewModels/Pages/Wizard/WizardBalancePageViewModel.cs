@@ -8,19 +8,24 @@ public sealed partial class WizardBalancePageViewModel : ViewModelBase
 {
 	public WizardBalancePageViewModel()
 	{
-		HomeOfficePercentage = "50%";
-		OfficePercentage = "50%";
+		HomeOfficePercentageDisplay = "50%";
+		OfficePercentageDisplay = "50%";
+		HomeOfficePercentage = 50;
+		OfficePercentage = 50;
 		SliderValue = 50;
 	}
 
 	[ObservableProperty]
-	private string _homeOfficePercentage;
+	private string _homeOfficePercentageDisplay;
 
 	[ObservableProperty]
-	private string _officePercentage;
+	private string _officePercentageDisplay;
 
 	[ObservableProperty]
 	private double _sliderValue;
+
+	public uint HomeOfficePercentage { get; private set; }
+	public uint OfficePercentage { get; private set; }
 
 	/// <summary>
 	/// Updates the home office percentage, office percentage, and slider value
@@ -28,8 +33,10 @@ public sealed partial class WizardBalancePageViewModel : ViewModelBase
 	/// </summary>
 	public void CalculateBalance(double sliderValue, double sliderMaxValue)
 	{
-		HomeOfficePercentage = $"{sliderValue}%";
-		OfficePercentage = $"{sliderMaxValue - sliderValue}%";
+		HomeOfficePercentage = (uint)sliderValue;
+		OfficePercentage = (uint)(sliderMaxValue - sliderValue);
+		HomeOfficePercentageDisplay = $"{HomeOfficePercentage}%";
+		OfficePercentageDisplay = $"{OfficePercentage}%";
 		SliderValue = sliderValue;
 	}
 

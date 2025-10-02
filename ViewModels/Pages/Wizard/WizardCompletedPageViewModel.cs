@@ -6,12 +6,15 @@
 [RegisterSingleton]
 public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 {
-	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, WizardBalancePageViewModel balance)
+	private readonly DatabaseService _databaseService;
+
+	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, WizardBalancePageViewModel balance, DatabaseService dbs)
 	{
 		WizardNamePageViewModel = name;
 		WizardDaysPageViewModel = days;
 		WizardDataPageViewModel = data;
 		WizardBalancePageViewModel = balance;
+		_databaseService = dbs;
 	}
 
 	[ObservableProperty]
@@ -60,6 +63,17 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 			DialogType.QUESTION,
 			"Alles korrekt!",
 			"Abbrechen"
+			);
+
+		await _databaseService.CreateUserSettingAsync(
+			WizardNamePageViewModel.Name,
+			[],
+			[],
+			ValueHelper.GetUintValue(WizardDataPageViewModel.HomeOfficeDays),
+			ValueHelper.GetUintValue(WizardDataPageViewModel.OfficeDays),
+			WizardBalancePageViewModel.HomeOfficePercentage,
+			WizardBalancePageViewModel.OfficePercentage,
+			WizardDataPageViewModel.CurrentDayTracked
 			);
 
 		DisableBlurEffect();
