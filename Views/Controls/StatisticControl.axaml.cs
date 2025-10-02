@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a custom control used to display and manage office and home office statistics within an application.
 /// </summary>
-public sealed class StatisticControl : TemplatedControl
+public sealed class StatisticControl : TemplatedControl, IDisposable
 {
 	protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 	{
@@ -109,6 +109,9 @@ public sealed class StatisticControl : TemplatedControl
 				CalculateStatistic();
 		}, DispatcherPriority.Background);
 	}
+
+	public void Dispose()
+		=> throw new NotImplementedException();
 
 	/// <summary>
 	/// Recalculates and updates the visual representation of office and home office statistics.
