@@ -1,6 +1,6 @@
 ﻿namespace OfficeTracker.Views.Controls.Lists;
 
-public class CalculatedWeekListControl : TemplatedControl
+public sealed class CalculatedWeekListControl : TemplatedControl
 {
 	/// <summary>
 	/// Represents a styled property that specifies the name of the week.

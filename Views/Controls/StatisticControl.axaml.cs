@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a custom control used to display and manage office and home office statistics within an application.
 /// </summary>
-public class StatisticControl : TemplatedControl
+public sealed class StatisticControl : TemplatedControl
 {
 	protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 	{

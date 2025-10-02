@@ -1,6 +1,6 @@
 ﻿namespace OfficeTracker.Views.Pages.Wizard;
 
-public partial class WizardDaysPage : UserControl
+public sealed partial class WizardDaysPage : UserControl
 {
 	public WizardDaysPage()
 	{

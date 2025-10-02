@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a custom UI component that displays indicators for days of the week.
 /// </summary>
-public class WeekIndicatorComponent : TemplatedControl
+public sealed class WeekIndicatorComponent : TemplatedControl
 {
 	/// <summary>
 	/// Identifies a styled property representing the short label for a day of the week.

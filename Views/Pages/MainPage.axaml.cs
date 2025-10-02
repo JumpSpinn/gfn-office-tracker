@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents the main page of the OfficeTracker application.
 /// </summary>
-public partial class MainPage : UserControl
+public sealed partial class MainPage : UserControl
 {
     public MainPage()
     {

@@ -3,7 +3,7 @@
 /// Provides functionality to convert `DayType` enumeration values to descriptive strings
 /// and optionally convert such strings back to the corresponding enumeration values.
 /// Implements the `IValueConverter` interface to support data binding in UI frameworks.
-public class PlannableDayTypeConverter : IValueConverter
+public sealed class PlannableDayTypeConverter : IValueConverter
 {
 	/// Converts an instance of the `DayType` enum to a corresponding descriptive string.
 	/// Non-`DayType` inputs are converted to a default string value "Unbekannt".

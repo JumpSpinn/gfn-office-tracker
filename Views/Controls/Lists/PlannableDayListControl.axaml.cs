@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a custom control that facilitates interaction with a collection of plannable days.
 /// </summary>
-public class PlannableDayListControl : TemplatedControl
+public sealed class PlannableDayListControl : TemplatedControl
 {
 	/// <summary>
 	/// Builds the visual tree for the control when the template is applied. This method locates the elements in the control's

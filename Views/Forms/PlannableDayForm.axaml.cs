@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a user control form for planning a specific day type and selecting a specific date.
 /// </summary>
-public partial class PlannableDayForm : UserControl
+public sealed partial class PlannableDayForm : UserControl
 {
     public PlannableDayForm()
     {

@@ -8,22 +8,22 @@
 [RegisterSingleton]
 public sealed class LogController
 {
-	private bool IsDebugEnabled;
+	private readonly bool _isDebugEnabled;
 
 	private static readonly string _logFileName = $"{DateTime.UtcNow:yyyy-MM-dd HH-mm:ss}.log";
 
-	private static readonly string LogDirectory =
+	private static readonly string _logDirectory =
 		Path.Combine(PathHelper.AppTempPath, "logs");
 
 	private string LogFilePath =>
-		Path.Combine(LogDirectory, _logFileName);
+		Path.Combine(_logDirectory, _logFileName);
 
 	private readonly ObservableCollection<LogMessage> Logs = [];
 
 	public LogController()
 	{
 		#if DEBUG
-		IsDebugEnabled = true;
+		_isDebugEnabled = true;
 		#endif
 	}
 
@@ -33,7 +33,7 @@ public sealed class LogController
 	/// </summary>
 	public async Task<bool> EnsureLogFile()
 	{
-		if (!(Directory.Exists(LogDirectory) || Directory.CreateDirectory(LogDirectory).Exists))
+		if (!(Directory.Exists(_logDirectory) || Directory.CreateDirectory(_logDirectory).Exists))
 			return false;
 		await File.AppendAllTextAsync(LogFilePath, string.Empty);
 		return true;
@@ -61,7 +61,7 @@ public sealed class LogController
 		Console.WriteLine($"{title} - {message}");
 		#endif
 
-		if (severity == LogSeverity.Debug && !IsDebugEnabled) return;
+		if (severity == LogSeverity.Debug && !_isDebugEnabled) return;
 
 		var logMessage = new LogMessage(title, message, severity);
 		Logs.Add(logMessage);

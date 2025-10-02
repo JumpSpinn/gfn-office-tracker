@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.ViewModels.Windows;
 
-using Pages.Wizard;
-
 /// <summary>
 /// Represents the main view model for the application's main window.
 /// This ViewModel is responsible for managing the navigation logic

@@ -1,6 +1,6 @@
 ﻿namespace OfficeTracker.Views.Pages.Wizard;
 
-public partial class WizardCompletedPage : UserControl
+public sealed partial class WizardCompletedPage : UserControl
 {
 	public WizardCompletedPage()
 	{

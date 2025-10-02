@@ -4,7 +4,7 @@
 /// Represents the form for selecting the type of day (e.g., home office or office)
 /// for the current day in the Office Tracker application.
 /// </summary>
-public partial class CurrentDayForm : UserControl
+public sealed partial class CurrentDayForm : UserControl
 {
     public CurrentDayForm()
     {

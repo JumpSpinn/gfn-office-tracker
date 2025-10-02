@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents the SetupBalancePage in the OfficeTracker application.
 /// </summary>
-public partial class WizardBalancePage : UserControl
+public sealed partial class WizardBalancePage : UserControl
 {
 	public WizardBalancePage()
 	{

@@ -1,5 +1,8 @@
 ﻿namespace OfficeTracker.Enums;
 
+/// <summary>
+/// Represents the pages available in the application for navigation purposes.
+/// </summary>
 public enum Page
 {
 	NONE,
