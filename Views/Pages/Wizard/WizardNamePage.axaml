@@ -45,13 +45,23 @@
 							FontFamily="{DynamicResource UrbanistFont}"
 							Text="Damit wir wissen wer du eigentlich bist, verrate uns doch wie du eigentlich heißt?"
 						/>
-						<TextBox
-							HorizontalAlignment="Stretch"
-							TextAlignment="Left"
-							FontFamily="{DynamicResource UrbanistFont}"
-							Watermark="Max Mustermann"
-							Text="{Binding Name}"
-						/>
+						<StackPanel Orientation="Vertical" Spacing="2">
+							<TextBox
+								HorizontalAlignment="Stretch"
+								TextAlignment="Left"
+								FontFamily="{DynamicResource UrbanistFont}"
+								Watermark="Max Mustermann"
+								Text="{Binding Name}"
+							/>
+							<TextBlock
+								Text="{Binding NameError}"
+								IsVisible="{Binding !IsValid}"
+								Foreground="Red"
+								TextWrapping="Wrap"
+								FontFamily="{DynamicResource UrbanistFont}"
+								FontSize="12"
+							/>
+						</StackPanel>
 					</StackPanel>
 				</StackPanel>
 				<Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
