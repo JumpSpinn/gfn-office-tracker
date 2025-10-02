@@ -9,12 +9,7 @@ public static class DialogHelper
 	/// Displays a dialog with the specified title, message, and optional dialog type and button text.
 	/// Allows customization of the dialog's icon and layout based on dialog type.
 	/// </summary>
-	/// <param name="title">The title of the dialog.</param>
-	/// <param name="message">The message or content displayed in the dialog.</param>
-	/// <param name="type">The type of the dialog, determining the appearance and icon. Defaults to DialogType.WITHOUT_ICON.</param>
-	/// <param name="buttonText">The text displayed on the primary button of the dialog. Defaults to "Ok".</param>
-	/// <returns>A task representing the asynchronous operation of showing the dialog.</returns>
-	public static async Task ShowDialogAsync(string title, string message, DialogType type = DialogType.WITHOUT_ICON, string buttonText = "Ok")
+	public static async Task<ContentDialogResult> ShowDialogAsync(string title, string message, DialogType type = DialogType.WITHOUT_ICON, string primaryButtonText = "Ok", string secondaryButtonText = "")
 	{
 		object container = CreateContentContainer(type);
 		object dialogContent = CreateContentWithIcon(container, type, message);
@@ -22,12 +17,14 @@ public static class DialogHelper
 		var dialog = new ContentDialog()
 		{
 			Title = title,
-			PrimaryButtonText = buttonText,
+			PrimaryButtonText = primaryButtonText,
 			DefaultButton = ContentDialogButton.Primary,
+			IsSecondaryButtonEnabled = !string.IsNullOrEmpty(secondaryButtonText),
+			SecondaryButtonText = secondaryButtonText,
 			Content = dialogContent
 		};
 
-		await ShowAsyncCorrectly(dialog);
+		return await ShowAsyncCorrectly(dialog);
 	}
 
 	/// <summary>
