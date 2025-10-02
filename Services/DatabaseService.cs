@@ -46,7 +46,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		try
 		{
 			await using var db = await dbContextFactory.CreateDbContextAsync();
-			var userSettings = new DbUserSettings()
+			var us = new DbUserSettings()
 			{
 				UserName = userName,
 				HomeOfficeDays = homeOfficeDays,
@@ -58,9 +58,9 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 				LastUpdate = isCurrentDayTracked ? DateTime.Today : DateTime.MinValue
 			};
 
-			db.UserSettings.Add(userSettings);
+			db.UserSettings.Add(us);
 			await db.SaveChangesAsync();
-			logService.Debug($"Created new user setting data for user {userSettings.UserName} to database with id {userSettings.Id}");
+			logService.Debug($"Id: {us.Id}, UserName: {us.UserName}, HomeOfficeDays: {us.HomeOfficeDays}, OfficeDays: {us.OfficeDays}, HomeOfficeDayCount: {us.HomeOfficeDayCount}, OfficeDayCount: {us.OfficeDayCount}, HomeOfficeTargetQuoted: {us.HomeOfficeTargetQuoted}, OfficeTargetQuoted: {us.OfficeTargetQuoted}, LastUpdate: {us.LastUpdate}");
 			return await db.UserSettings.FirstOrDefaultAsync();
 		}
 		catch (Exception e)
