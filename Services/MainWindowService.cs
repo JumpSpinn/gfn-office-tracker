@@ -5,7 +5,7 @@
 /// Provides methods to initialize and validate the state of the main application window.
 /// </summary>
 [RegisterSingleton]
-public sealed class MainWindowService(LogService logService)
+public abstract class MainWindowService(LogService logService)
 {
 	private bool _initialized;
 

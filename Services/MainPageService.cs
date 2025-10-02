@@ -4,17 +4,8 @@
 /// Provides functionality and operations related to the main page of the OfficeTracker application.
 /// </summary>
 [RegisterSingleton]
-public sealed class MainPageService
+public abstract class MainPageService(IDbContextFactory<OtContext> dbContextFactory, LogService logService)
 {
-	private readonly IDbContextFactory<OtContext> _dbContextFactory;
-	private readonly LogService _logService;
-
-	public MainPageService(IDbContextFactory<OtContext> dbContextFactory, LogService logService)
-	{
-		_dbContextFactory = dbContextFactory;
-		_logService = logService;
-	}
-
 	#region GET
 
 	/// <summary>
@@ -25,13 +16,13 @@ public sealed class MainPageService
 	{
 		try
 		{
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
-			_logService.Debug("Getting general data from database");
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			logService.Debug("Getting general data from database");
 			return await db.General.FirstOrDefaultAsync();
 		}
 		catch (Exception e)
 		{
-			_logService.Error(e.Message);
+			logService.Error(e.Message);
 		}
 
 		return null;
@@ -46,13 +37,13 @@ public sealed class MainPageService
 	{
 		try
 		{
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
-			_logService.Debug("Getting plannable days from database");
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			logService.Debug("Getting plannable days from database");
 			return db.PlannableDays.OrderBy(x => x.Date).ToList();
 		}
 		catch (Exception e)
 		{
-			_logService.Error(e.Message);
+			logService.Error(e.Message);
 		}
 
 		return null;
@@ -70,7 +61,7 @@ public sealed class MainPageService
 	{
 		try
 		{
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			await using var db = await dbContextFactory.CreateDbContextAsync();
 			var day = new DbPlannableDay()
 			{
 				Type = type,
@@ -78,12 +69,12 @@ public sealed class MainPageService
 			};
 			await db.PlannableDays.AddAsync(day);
 			await db.SaveChangesAsync();
-			_logService.Debug($"Created new plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
+			logService.Debug($"Created new plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
 			return day;
 		}
 		catch (Exception e)
 		{
-			_logService.Error(e.Message);
+			logService.Error(e.Message);
 		}
 
 		return null;
@@ -101,19 +92,19 @@ public sealed class MainPageService
 	{
 		try
 		{
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			await using var db = await dbContextFactory.CreateDbContextAsync();
 			var data = await db.General.FirstOrDefaultAsync();
 			if (data is null) return 0;
 
 			data.HomeOfficeDays++;
 			data.LastUpdate = DateTime.Today;
-			_logService.Debug($"Add home office day to database. New count: {data.HomeOfficeDays} - Last update: {data.LastUpdate}");
+			logService.Debug($"Add home office day to database. New count: {data.HomeOfficeDays} - Last update: {data.LastUpdate}");
 			await db.SaveChangesAsync();
 			return data.HomeOfficeDays;
 		}
 		catch (Exception e)
 		{
-			_logService.Error(e.Message);
+			logService.Error(e.Message);
 		}
 
 		return 0;
@@ -126,19 +117,19 @@ public sealed class MainPageService
 	{
 		try
 		{
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			await using var db = await dbContextFactory.CreateDbContextAsync();
 			var data = await db.General.FirstOrDefaultAsync();
 			if (data is null) return 0;
 
 			data.OfficeDays++;
 			data.LastUpdate = DateTime.Today;
-			_logService.Debug($"Add office day to database. New count: {data.OfficeDays} - Last update: {data.LastUpdate}");
+			logService.Debug($"Add office day to database. New count: {data.OfficeDays} - Last update: {data.LastUpdate}");
 			await db.SaveChangesAsync();
 			return data.OfficeDays;
 		}
 		catch (Exception e)
 		{
-			_logService.Error(e.Message);
+			logService.Error(e.Message);
 		}
 
 		return 0;
@@ -156,18 +147,18 @@ public sealed class MainPageService
 	{
 		try
 		{
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			await using var db = await dbContextFactory.CreateDbContextAsync();
 			var day = await db.PlannableDays.FirstOrDefaultAsync(x => x.Id == id);
 			if (day is null) return false;
 
 			db.PlannableDays.Remove(day);
 			await db.SaveChangesAsync();
-			_logService.Debug($"Deleted plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
+			logService.Debug($"Deleted plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
 			return true;
 		}
 		catch (Exception e)
 		{
-			_logService.Error(e.Message);
+			logService.Error(e.Message);
 		}
 
 		return false;
@@ -181,14 +172,14 @@ public sealed class MainPageService
 	{
 		try
 		{
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			await using var db = await dbContextFactory.CreateDbContextAsync();
 			var day = await db.PlannableDays.FirstOrDefaultAsync(x => x.Date == dt);
-			_logService.Debug($"Checking if plannable day entry for date {dt} exists.");
+			logService.Debug($"Checking if plannable day entry for date {dt} exists.");
 			return day is not null;
 		}
 		catch (Exception e)
 		{
-			_logService.Error(e.Message);
+			logService.Error(e.Message);
 		}
 
 		return true;

@@ -6,7 +6,7 @@
 /// observable collection of log entries for runtime inspection.
 /// </summary>
 [RegisterSingleton]
-public sealed class LogService
+public abstract class LogService
 {
 	private readonly bool _isDebugEnabled;
 
@@ -20,7 +20,7 @@ public sealed class LogService
 
 	private readonly ObservableCollection<LogMessageModel> Logs = [];
 
-	public LogService()
+	protected LogService()
 	{
 		#if DEBUG
 		_isDebugEnabled = true;
