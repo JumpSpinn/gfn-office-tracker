@@ -7,7 +7,7 @@
              xmlns:wizard="clr-namespace:OfficeTracker.ViewModels.Pages.Wizard"
              x:DataType="wizard:WizardCompletedPageViewModel"
              x:Class="OfficeTracker.Views.Pages.Wizard.WizardCompletedPage">
-	<Panel>
+	<Panel Effect="{Binding BlurEffect}">
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
 				<GradientStop Color="#003764" Offset="0.0"/>
@@ -117,7 +117,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="{Binding WizardDataPageViewModel.HomeOfficeDays}"
+										Content="{Binding HomeOfficeDays}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -134,7 +134,7 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="{Binding WizardDataPageViewModel.OfficeDays}"
+										Content="{Binding OfficeDays}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -184,8 +184,8 @@
 									HorizontalAlignment="Left"
 								/>
 								<controls:StatisticControl
-									HomeOfficeDays="{Binding WizardDataPageViewModel.HomeOfficeDays}"
-									OfficeDays="{Binding WizardDataPageViewModel.OfficeDays}"
+									HomeOfficeDays="{Binding HomeOfficeDays}"
+									OfficeDays="{Binding OfficeDays}"
 									AddButtonEnabled="False"
 									AddButtonVisible="False"
 								/>
