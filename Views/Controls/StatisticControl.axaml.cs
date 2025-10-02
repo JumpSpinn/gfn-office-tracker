@@ -5,6 +5,10 @@
 /// </summary>
 public sealed class StatisticControl : TemplatedControl, IDisposable
 {
+	/// <summary>
+	/// Invoked when the control's template is applied. Initializes and binds references to the template's visual elements
+	/// such as buttons, icons, and layout components, and sets their initial states or event handlers.
+	/// </summary>
 	protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 	{
 		_addButton = e.NameScope.Find<Button>("AddButton");
@@ -28,6 +32,9 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 		_officePercentage = e.NameScope.Find<TextBlock>("OfficePercentage");
 
 		base.OnApplyTemplate(e);
+
+		// calculate after a template is applied to handle a zero-day case
+		ScheduleCalculationStatistic();
 	}
 
 	/// <summary>
@@ -79,11 +86,37 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	private StackPanel? _officeStackPanel;
 	private TextBlock? _officePercentage;
 
+	/// <summary>
+	/// Calculates the percentage of total working days spent working from home
+	/// based on the values of <see cref="HomeOfficeDays"/> and <see cref="OfficeDays"/>.
+	/// Returns 0.0 if the total number of days is zero.
+	/// </summary>
 	private double HomeOfficePercentage
-		=> (double)HomeOfficeDays / (HomeOfficeDays + OfficeDays) * 100;
+	{
+		get
+		{
+			var totalDays = HomeOfficeDays + OfficeDays;
+			if (totalDays == 0) return 0.0;
 
+			return (double)HomeOfficeDays / totalDays * 100;
+		}
+	}
+
+	/// <summary>
+	/// Calculates the percentage of total working days spent in the office based on
+	/// the values of <see cref="HomeOfficeDays"/> and <see cref="OfficeDays"/>.
+	/// A value of 0 is returned if the total number of days is zero.
+	/// </summary>
 	private double OfficePercentage
-		=> (double)OfficeDays / (HomeOfficeDays + OfficeDays) * 100;
+	{
+		get
+		{
+			var totalDays = HomeOfficeDays + OfficeDays;
+			if (totalDays == 0) return 0.0;
+
+			return (double)OfficeDays / totalDays * 100;
+		}
+	}
 
 	/// <summary>
 	/// Holds a token source used to manage cancellation of ongoing statistic calculation operations.
@@ -122,19 +155,37 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 		if (_homeOfficePercentage is null || _officePercentage is null) return;
 		if (_homeStackPanel is null || _officeStackPanel is null) return;
 
-		_statisticGrid.ColumnDefinitions[0].Width = new GridLength(HomeOfficePercentage, GridUnitType.Star);
-		_statisticGrid.ColumnDefinitions[1].Width = new GridLength(OfficePercentage, GridUnitType.Star);
+		var totalDays = HomeOfficeDays + OfficeDays;
+		if (totalDays == 0)
+		{
+			_statisticGrid.ColumnDefinitions[0].Width = new GridLength(50, GridUnitType.Star);
+			_statisticGrid.ColumnDefinitions[1].Width = new GridLength(50, GridUnitType.Star);
 
-		_homeOfficePercentage.Text = $"{HomeOfficePercentage:F2}%";
-		_officePercentage.Text = $"{OfficePercentage:F2}%";
+			_homeOfficePercentage.Text = "0.00%";
+			_officePercentage.Text = "0.00%";
+
+			_homeStackPanel.SetValue(ToolTip.TipProperty, "0 Tage");
+			_officeStackPanel.SetValue(ToolTip.TipProperty, "0 Tage");
+
+			HideAllBorderIcons();
+			return;
+		}
+
+		double hoPercent = HomeOfficePercentage;
+		double oPercent = OfficePercentage;
+
+		_statisticGrid.ColumnDefinitions[0].Width = new GridLength(hoPercent, GridUnitType.Star);
+		_statisticGrid.ColumnDefinitions[1].Width = new GridLength(oPercent, GridUnitType.Star);
+
+		_homeOfficePercentage.Text = $"{hoPercent:F2}%";
+		_officePercentage.Text = $"{oPercent:F2}%";
 
 		_homeStackPanel.SetValue(ToolTip.TipProperty, $"{HomeOfficeDays} Tage");
 		_officeStackPanel.SetValue(ToolTip.TipProperty, $"{OfficeDays} Tage");
 
-		if(HomeOfficePercentage > 50.00)
+		if (hoPercent > 50.00)
 			ShowErrorBorderIcon();
-		// ReSharper disable once CompareOfFloatsByEqualityOperator
-		else if(HomeOfficePercentage == 50.00)
+		else if (hoPercent == 50.00)
 			ShowWarningBorderIcon();
 		else
 			HideAllBorderIcons();
