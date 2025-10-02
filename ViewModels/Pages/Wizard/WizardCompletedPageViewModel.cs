@@ -52,6 +52,11 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 	public decimal OfficeDays
 		=> WizardDataPageViewModel.OfficeDays ?? 0;
 
+	/// <summary>
+	/// Navigates to the next setup page in the wizard process. This method performs several actions, including enabling UI effects,
+	/// showing a confirmation dialog to the user, creating user settings in the database, and transitioning to the main page based
+	/// on user confirmation.
+	/// </summary>
 	[RelayCommand]
 	private async Task NextSetupPage()
 	{
@@ -65,7 +70,7 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 			"Abbrechen"
 			);
 
-		await _databaseService.CreateUserSettingAsync(
+		var userSettings = await _databaseService.CreateUserSettingAsync(
 			WizardNamePageViewModel.Name,
 			[],
 			[],
@@ -76,9 +81,12 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 			WizardDataPageViewModel.CurrentDayTracked
 			);
 
+		if(userSettings is null)
+			await DialogHelper.ShowDialogAsync("Fehler", "Beim Speichern der Daten ist ein Fehler aufgetreten.", DialogType.ERROR);
+
 		DisableBlurEffect();
 
-		if(dialogResult == ContentDialogResult.Primary)
+		if(dialogResult == ContentDialogResult.Primary && userSettings is not null)
 			ChangePage(Page.MAIN);
 	}
 
