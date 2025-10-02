@@ -54,7 +54,7 @@
 							</LinearGradientBrush>
 						</Border.BorderBrush>
 						<StackPanel Orientation="Vertical" Spacing="20">
-							<StackPanel Orientation="Vertical" Spacing="10">
+							<StackPanel Orientation="Vertical" Spacing="6">
 								<!-- NAME -->
 								<Grid ColumnDefinitions="*,*">
 									<Label
@@ -168,7 +168,24 @@
 									/>
 									<Label
 										Grid.Column="1"
-										Content="{Binding WizardDaysPageViewModel.SelectedDays}"
+										Content="{Binding WizardDaysPageViewModel.SelectedDaysDisplay}"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Right"
+									/>
+								</Grid>
+								<!-- Office Arbeitstage -->
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="Arbeitstage - Standort:"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="12"
+										HorizontalAlignment="Left"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="{Binding WizardDaysPageViewModel.UnselectedDaysDisplay}"
 										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 										HorizontalAlignment="Right"
@@ -176,7 +193,7 @@
 								</Grid>
 							</StackPanel>
 							<!-- Statistik -->
-							<StackPanel Orientation="Vertical" Spacing="5">
+							<StackPanel Orientation="Vertical" Spacing="2">
 								<Label
 									Content="Berechnete Statistik:"
 									FontFamily="{DynamicResource UrbanistFont}"

@@ -41,29 +41,64 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	/// <summary>
 	/// Gets the string representation of the selected days in the wizard workflow.
 	/// </summary>
-	public string SelectedDays { get; private set; } = string.Empty;
+	public string SelectedDaysDisplay { get; private set; } = string.Empty;
 
 	/// <summary>
-	/// Converts the boolean values indicating selected days into a string representation.
-	/// This method processes a set of boolean flags for each day of the week, representing
-	/// whether a specific day is selected, and maps these flags to their respective
-	/// abbreviated forms. The resulting string contains the selected days concatenated,
-	/// separated by a comma.
+	/// Gets a string representation of the days that have not been selected
+	/// in the wizard days selection process.
+	/// </summary>
+	public string UnselectedDaysDisplay { get; private set; } = string.Empty;
+
+	/// <summary>
+	/// Gets an array of days that have been selected in the wizard days selection process.
+	/// </summary>
+	public DayOfWeek[] SelectedDayEnums { get; private set; } = [];
+
+	/// <summary>
+	/// Gets an array of <see cref="DayOfWeek"/> values representing the days
+	/// that have not been selected in the wizard days selection process.
+	/// </summary>
+	public DayOfWeek[] UnselectedDayEnums { get; private set; } = [];
+
+	/// <summary>
+	/// Converts the currently selected days and unselected days into corresponding
+	/// string representations and enumerations. This method processes the values
+	/// of the boolean properties representing each day of the week and maps them
+	/// to their respective display formats and DayOfWeek enum values. The result
+	/// is stored in properties that represent the selected and unselected days
+	/// in both displayable and enumerated formats.
 	/// </summary>
 	private void ConvertSelectedBooleanDays()
 	{
-		var days = new[]
+		var dayMappings = new[]
 		{
-			(MondaySelected, "Mo"),
-			(TuesdaySelected, "Di"),
-			(WednesdaySelected, "Mi"),
-			(ThursdaySelected, "Do"),
-			(FridaySelected, "Fr"),
-			(SaturdaySelected, "Sa")
+			(MondaySelected, "Mo", DayOfWeek.Monday),
+			(TuesdaySelected, "Di", DayOfWeek.Tuesday),
+			(WednesdaySelected, "Mi", DayOfWeek.Wednesday),
+			(ThursdaySelected, "Do", DayOfWeek.Thursday),
+			(FridaySelected, "Fr", DayOfWeek.Friday),
+			(SaturdaySelected, "Sa", DayOfWeek.Saturday)
 		};
-		SelectedDays = string.Join(", ", days
+
+		SelectedDaysDisplay = string.Join(", ", dayMappings
 			.Where(d => d.Item1)
-			.Select(d => d.Item2));
+			.Select(d => d.Item2)
+			.ToArray());
+
+		UnselectedDaysDisplay = string.Join(", ", dayMappings
+			.Where(d => !d.Item1)
+			.Select(d => d.Item2)
+			.ToArray());
+
+		SelectedDayEnums = dayMappings
+			.Where(d => d.Item1)
+			.Select(d => d.Item3)
+			.ToArray();
+
+		UnselectedDayEnums = dayMappings
+			.Where(d => !d.Item1)
+			.Select(d => d.Item3)
+			.ToArray();
 	}
 
 	/// <summary>

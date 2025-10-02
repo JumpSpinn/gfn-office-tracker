@@ -72,8 +72,8 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 
 		var userSettings = await _databaseService.CreateUserSettingAsync(
 			WizardNamePageViewModel.Name,
-			[],
-			[],
+			WizardDaysPageViewModel.SelectedDayEnums,
+			WizardDaysPageViewModel.UnselectedDayEnums,
 			ValueHelper.GetUintValue(WizardDataPageViewModel.HomeOfficeDays),
 			ValueHelper.GetUintValue(WizardDataPageViewModel.OfficeDays),
 			WizardBalancePageViewModel.HomeOfficePercentage,
