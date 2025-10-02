@@ -57,10 +57,6 @@
 			<DependentUpon>MainPage.axaml</DependentUpon>
 			<SubType>Code</SubType>
 		</Compile>
-		<Compile Update="Views\Pages\SetupWelcomePage.axaml.cs">
-			<DependentUpon>MainPage.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
 		<Compile Update="Views\Forms\PlannableDayForm.axaml.cs">
 			<DependentUpon>PlannableDayForm.axaml</DependentUpon>
 			<SubType>Code</SubType>
