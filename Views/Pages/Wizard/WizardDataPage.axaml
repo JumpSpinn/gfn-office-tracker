@@ -73,6 +73,15 @@
 							Content="Heutiger Tag ist mit einberechnet!"
 							FontFamily="{DynamicResource UrbanistFont}"
 							IsChecked="{Binding CurrentDayTracked}"
+							IsEnabled="{Binding CanTrackCurrentDay}"
+						/>
+						<TextBlock
+							TextWrapping="Wrap"
+							FontFamily="{DynamicResource UrbanistFont}"
+							FontSize="12"
+							FontWeight="Regular"
+							Opacity=".5"
+							Text="Wichtig: Solltest frisch angefangen haben und keinen aktiven Tag gearbeitet hast, kannst du die Angaben leer lassen. Solltest du den heutigen Tag einberechnen, musst du bei einer der beiden Angaben mindestens eine Anzahl von 1 angeben."
 						/>
 					</StackPanel>
 				</StackPanel>
