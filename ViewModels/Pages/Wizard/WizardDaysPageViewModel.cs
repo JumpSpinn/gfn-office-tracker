@@ -1,15 +1,12 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
+/// <summary>
+/// Represents the ViewModel used for handling and managing the logic
+/// of wizard days selection in the wizard-based workflow.
+/// </summary>
 [RegisterSingleton]
 public sealed partial class WizardDaysPageViewModel : ViewModelBase
 {
-	private readonly LogController _logController;
-
-	public WizardDaysPageViewModel(LogController lc)
-	{
-		_logController = lc;
-	}
-
 	[ObservableProperty]
 	private bool _mondaySelected;
 
@@ -28,8 +25,18 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	[ObservableProperty]
 	private bool _saturdaySelected;
 
+	/// <summary>
+	/// Gets the string representation of the selected days in the wizard workflow.
+	/// </summary>
 	public string SelectedDays { get; private set; } = string.Empty;
 
+	/// <summary>
+	/// Converts the boolean values indicating selected days into a string representation.
+	/// This method processes a set of boolean flags for each day of the week, representing
+	/// whether a specific day is selected, and maps these flags to their respective
+	/// abbreviated forms. The resulting string contains the selected days concatenated,
+	/// separated by a comma.
+	/// </summary>
 	private void ConvertSelectedBooleanDays()
 	{
 		var days = new[]
@@ -51,7 +58,6 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	{
 		ConvertSelectedBooleanDays();
 		ChangePage(Page.WIZARD_DATA);
-		_logController.Debug($"Monday: {MondaySelected}, Monday: {TuesdaySelected}, Monday: {WednesdaySelected}, Monday: {ThursdaySelected}, Monday: {FridaySelected}, Monday: {SaturdaySelected}");
 	}
 
 	[RelayCommand]

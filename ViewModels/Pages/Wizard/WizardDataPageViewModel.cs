@@ -1,15 +1,11 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
+/// <summary>
+/// Represents the view model for the data page of the wizard process.
+/// </summary>
 [RegisterSingleton]
 public sealed partial class WizardDataPageViewModel : ViewModelBase
 {
-	private readonly LogController _logController;
-
-	public WizardDataPageViewModel(LogController lc)
-	{
-		_logController = lc;
-	}
-
 	[ObservableProperty]
 	private decimal _homeOfficeDays;
 
@@ -20,11 +16,7 @@ public sealed partial class WizardDataPageViewModel : ViewModelBase
 	private bool _currentDayTracked;
 
 	[RelayCommand]
-	private void NextSetupPage()
-	{
-		ChangePage(Page.WIZARD_COMPLETED);
-		_logController.Debug($"HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Current day tracked? {CurrentDayTracked}");
-	}
+	private void NextSetupPage() => ChangePage(Page.WIZARD_COMPLETED);
 
 	[RelayCommand]
 	private void PreviousSetupPage() => ChangePage(Page.WIZARD_DAYS);

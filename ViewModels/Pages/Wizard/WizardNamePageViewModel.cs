@@ -1,22 +1,14 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
+/// <summary>
+/// Represents the ViewModel for the Wizard Name Page in the application's wizard flow.
+/// </summary>
 [RegisterSingleton]
 public sealed partial class WizardNamePageViewModel : ViewModelBase
 {
-	private readonly LogController _logController;
-
-	public WizardNamePageViewModel(LogController lc)
-	{
-		_logController = lc;
-	}
-
 	[ObservableProperty]
 	private string _name = string.Empty;
 
 	[RelayCommand]
-	private void NextSetupPage()
-	{
-		ChangePage(Page.WIZARD_BALANCE);
-		_logController.Debug($"Name: {Name}");
-	}
+	private void NextSetupPage() => ChangePage(Page.WIZARD_BALANCE);
 }

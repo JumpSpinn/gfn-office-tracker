@@ -1,17 +1,17 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
+/// <summary>
+/// Represents the view model for the "Wizard Completed" page in the wizard process.
+/// </summary>
 [RegisterSingleton]
 public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 {
-	private readonly LogController _logController;
-
-	public WizardCompletedPageViewModel( LogController lc, WizardNamePageViewModel wnpvm, WizardDaysPageViewModel wdpvm, WizardDataPageViewModel wDpvm, WizardBalancePageViewModel wbpvm)
+	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, WizardBalancePageViewModel balance)
 	{
-		_logController = lc;
-		WizardNamePageViewModel = wnpvm;
-		WizardDaysPageViewModel = wdpvm;
-		WizardDataPageViewModel = wDpvm;
-		WizardBalancePageViewModel = wbpvm;
+		WizardNamePageViewModel = name;
+		WizardDaysPageViewModel = days;
+		WizardDataPageViewModel = data;
+		WizardBalancePageViewModel = balance;
 	}
 
 	[ObservableProperty]
@@ -26,6 +26,11 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 	[ObservableProperty]
 	private WizardBalancePageViewModel _wizardBalancePageViewModel;
 
+	/// <summary>
+	/// Represents the current day being tracked in the wizard process.
+	/// Displays a localized string value ("Ja" or "Nein") indicating the tracking status of the current day.
+	/// The value is derived from the <see cref="WizardDataPageViewModel"/>.
+	/// </summary>
 	public string CurrentDayTracked
 		=> WizardDataPageViewModel.CurrentDayTracked ? "Ja" : "Nein";
 

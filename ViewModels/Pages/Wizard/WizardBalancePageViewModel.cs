@@ -6,11 +6,8 @@
 [RegisterSingleton]
 public sealed partial class WizardBalancePageViewModel : ViewModelBase
 {
-	private readonly LogController _logController;
-
-	public WizardBalancePageViewModel(LogController lc)
+	public WizardBalancePageViewModel()
 	{
-		_logController = lc;
 		HomeOfficePercentage = "50%";
 		OfficePercentage = "50%";
 		SliderValue = 50;
@@ -37,11 +34,7 @@ public sealed partial class WizardBalancePageViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	private void NextSetupPage()
-	{
-		ChangePage(Page.WIZARD_DAYS);
-		_logController.Debug($"HomeOffice Percentage: {HomeOfficePercentage}, Office Percentage: {OfficePercentage}");
-	}
+	private void NextSetupPage() => ChangePage(Page.WIZARD_DAYS);
 
 	[RelayCommand]
 	private void PreviousSetupPage() => ChangePage(Page.WIZARD_NAME);
