@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+using Services;
+
 /// <summary>
 /// Represents the ViewModel for the splash screen page of the application.
 /// Responsible for initializing the application's essential services and operations
@@ -9,13 +11,13 @@
 public sealed partial class SplashScreenPageViewModel : ViewModelBase
 {
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
-	private readonly MainWindowController _mainWindowController;
-	private readonly LogController _logController;
+	private readonly MainWindowService _mainWindowService;
+	private readonly LogService _logService;
 
-	public SplashScreenPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OtContext> dbContextFactory)
+	public SplashScreenPageViewModel(MainWindowService mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory)
 	{
-		_mainWindowController = mwc;
-		_logController = lc;
+		_mainWindowService = mwc;
+		_logService = lc;
 		_dbContextFactory = dbContextFactory;
 		StartInitializationAsync();
 	}
@@ -49,7 +51,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	/// </summary>
 	private async Task TriggerNextLoadStep()
 	{
-		_logController.Debug("Triggering next load step...");
+		_logService.Debug("Triggering next load step...");
 
 		while (_loadQueue.Count > 0)
 		{
@@ -58,7 +60,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 
 			if (await loadStep.Invoke()) continue;
 
-			_logController.Error("Error while initializing application.");
+			_logService.Error("Error while initializing application.");
 			return;
 		}
 
@@ -85,9 +87,9 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		while (retryCount < maxRetries)
 		{
 			if (App.MainWindow?.IsLoaded == true)
-				return await _mainWindowController.Initialize();
+				return await _mainWindowService.Initialize();
 
-			_logController.Debug(App.MainWindow is null ?
+			_logService.Debug(App.MainWindow is null ?
 				"MainWindow not available yet... Retrying..." :
 				"MainWindow available, but not loaded yet... Retrying...");
 
@@ -112,12 +114,12 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Logger..";
 
-			if (!await _logController.EnsureLogFile())
+			if (!await _logService.EnsureLogFile())
 			{
 				DisplayInfoBar("Error", "Error while trying to ensure Log-File.", InfoBarSeverity.Error);
 				return false;
 			}
-			_logController.Info("Logger initialized.");
+			_logService.Info("Logger initialized.");
 			ShowInfiniteProgressBar = false;
 			return true;
 		}
@@ -144,7 +146,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			await context.Database.MigrateAsync();
 			_hasData = context.General.Any();
 
-			_logController.Info("Database initialized.");
+			_logService.Info("Database initialized.");
 			ShowInfiniteProgressBar = false;
 			return true;
 		}
@@ -189,7 +191,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		InfoBarTitle = title;
 		InfoBarText = text;
 		InfoBarSeverity = severity;
-		_logController.Info(title, text);
+		_logService.Info(title, text);
 	}
 
 	#endregion

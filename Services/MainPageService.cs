@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services.Pages;
+﻿namespace OfficeTracker.Services;
 
 /// <summary>
 /// Provides functionality and operations related to the main page of the OfficeTracker application.
@@ -7,12 +7,12 @@
 public sealed class MainPageService
 {
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
-	private readonly LogController _logController;
+	private readonly LogService _logService;
 
-	public MainPageService(IDbContextFactory<OtContext> dbContextFactory, LogController logController)
+	public MainPageService(IDbContextFactory<OtContext> dbContextFactory, LogService logService)
 	{
 		_dbContextFactory = dbContextFactory;
-		_logController = logController;
+		_logService = logService;
 	}
 
 	#region GET
@@ -26,12 +26,12 @@ public sealed class MainPageService
 		try
 		{
 			await using var db = await _dbContextFactory.CreateDbContextAsync();
-			_logController.Debug("Getting general data from database");
+			_logService.Debug("Getting general data from database");
 			return await db.General.FirstOrDefaultAsync();
 		}
 		catch (Exception e)
 		{
-			_logController.Error(e.Message);
+			_logService.Error(e.Message);
 		}
 
 		return null;
@@ -47,12 +47,12 @@ public sealed class MainPageService
 		try
 		{
 			await using var db = await _dbContextFactory.CreateDbContextAsync();
-			_logController.Debug("Getting plannable days from database");
+			_logService.Debug("Getting plannable days from database");
 			return db.PlannableDays.OrderBy(x => x.Date).ToList();
 		}
 		catch (Exception e)
 		{
-			_logController.Error(e.Message);
+			_logService.Error(e.Message);
 		}
 
 		return null;
@@ -78,12 +78,12 @@ public sealed class MainPageService
 			};
 			await db.PlannableDays.AddAsync(day);
 			await db.SaveChangesAsync();
-			_logController.Debug($"Created new plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
+			_logService.Debug($"Created new plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
 			return day;
 		}
 		catch (Exception e)
 		{
-			_logController.Error(e.Message);
+			_logService.Error(e.Message);
 		}
 
 		return null;
@@ -107,13 +107,13 @@ public sealed class MainPageService
 
 			data.HomeOfficeDays++;
 			data.LastUpdate = DateTime.Today;
-			_logController.Debug($"Add home office day to database. New count: {data.HomeOfficeDays} - Last update: {data.LastUpdate}");
+			_logService.Debug($"Add home office day to database. New count: {data.HomeOfficeDays} - Last update: {data.LastUpdate}");
 			await db.SaveChangesAsync();
 			return data.HomeOfficeDays;
 		}
 		catch (Exception e)
 		{
-			_logController.Error(e.Message);
+			_logService.Error(e.Message);
 		}
 
 		return 0;
@@ -132,13 +132,13 @@ public sealed class MainPageService
 
 			data.OfficeDays++;
 			data.LastUpdate = DateTime.Today;
-			_logController.Debug($"Add office day to database. New count: {data.OfficeDays} - Last update: {data.LastUpdate}");
+			_logService.Debug($"Add office day to database. New count: {data.OfficeDays} - Last update: {data.LastUpdate}");
 			await db.SaveChangesAsync();
 			return data.OfficeDays;
 		}
 		catch (Exception e)
 		{
-			_logController.Error(e.Message);
+			_logService.Error(e.Message);
 		}
 
 		return 0;
@@ -162,12 +162,12 @@ public sealed class MainPageService
 
 			db.PlannableDays.Remove(day);
 			await db.SaveChangesAsync();
-			_logController.Debug($"Deleted plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
+			_logService.Debug($"Deleted plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
 			return true;
 		}
 		catch (Exception e)
 		{
-			_logController.Error(e.Message);
+			_logService.Error(e.Message);
 		}
 
 		return false;
@@ -183,12 +183,12 @@ public sealed class MainPageService
 		{
 			await using var db = await _dbContextFactory.CreateDbContextAsync();
 			var day = await db.PlannableDays.FirstOrDefaultAsync(x => x.Date == dt);
-			_logController.Debug($"Checking if plannable day entry for date {dt} exists.");
+			_logService.Debug($"Checking if plannable day entry for date {dt} exists.");
 			return day is not null;
 		}
 		catch (Exception e)
 		{
-			_logController.Error(e.Message);
+			_logService.Error(e.Message);
 		}
 
 		return true;

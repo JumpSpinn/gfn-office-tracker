@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Windows;
 
+using Services;
+
 /// <summary>
 /// Represents the main view model for the application's main window.
 /// This ViewModel is responsible for managing the navigation logic
@@ -14,7 +16,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 	[ObservableProperty]
 	private ViewModelBase? _currentPage;
 
-	public MainWindowViewModel(IServiceProvider sp, LogController lc)
+	public MainWindowViewModel(IServiceProvider sp, LogService lc)
 	{
 		_serviceProvider = sp;
 

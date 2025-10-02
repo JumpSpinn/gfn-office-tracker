@@ -18,14 +18,14 @@ public sealed class DbPlannableDay
 	public bool IsDeleted { get; set; }
 
 	/// <summary>
-	/// Gets a <see cref="PlannableDayColorPair"/> that represents the colors associated with
+	/// Gets a <see cref="PlannableDayColorPairModel"/> that represents the colors associated with
 	/// the current day's type. The colors are determined based on the <see cref="DayType"/>
 	/// of the instance.
 	/// </summary>
-	public PlannableDayColorPair TypeColors => Type switch
+	public PlannableDayColorPairModel TypeColors => Type switch
 	{
-		DayType.HOME => new PlannableDayColorPair("#30003764", "#003764"),
-		DayType.OFFICE => new PlannableDayColorPair("#30357a32", "#357a32"),
-		_ => new PlannableDayColorPair("#40640000", "#640000")
+		DayType.HOME => new PlannableDayColorPairModel("#30003764", "#003764"),
+		DayType.OFFICE => new PlannableDayColorPairModel("#30357a32", "#357a32"),
+		_ => new PlannableDayColorPairModel("#40640000", "#640000")
 	};
 }

@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services.Log.Enums;
+﻿namespace OfficeTracker.Enums;
 
 /// <summary>
 /// Represents the severity level of a log message.

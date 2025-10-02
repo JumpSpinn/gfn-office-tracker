@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Controls;
 
+using Services;
+
 /// <summary>
 /// Represents the view model for the StatsControl component in the application.
 /// It manages the logic and state related to statistics calculations and display.
@@ -7,11 +9,11 @@
 [RegisterSingleton]
 public sealed partial class StatsControlViewModel : ViewModelBase
 {
-	private readonly LogController _logController;
+	private readonly LogService _logService;
 
-	public StatsControlViewModel(LogController lc)
+	public StatsControlViewModel(LogService lc)
 	{
-		_logController = lc;
+		_logService = lc;
 		CalculateStats();
 	}
 
@@ -32,6 +34,6 @@ public sealed partial class StatsControlViewModel : ViewModelBase
         var totalDays = HomeOfficeDays + OfficeDays;
         HomeOfficePercent = (double)HomeOfficeDays / totalDays;
         OfficePercent = (double)OfficeDays / totalDays;
-        _logController.Debug("Stats calculated successfully.");
+        _logService.Debug("Stats calculated successfully.");
     }
 }

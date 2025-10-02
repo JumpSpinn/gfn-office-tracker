@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+using Services;
+
 /// <summary>
 /// Represents the ViewModel for the main page, providing functionality to manage and interact with
 /// the main page's data and behavior in an MVVM architecture.
@@ -8,12 +10,12 @@
 public sealed partial class MainPageViewModel : ViewModelBase
 {
 	private readonly MainPageService _mainPageService;
-	private readonly LogController _logController;
+	private readonly LogService _logService;
 
-    public MainPageViewModel(MainPageService mps, LogController lc)
+    public MainPageViewModel(MainPageService mps, LogService lc)
     {
 	    _mainPageService = mps;
-	    _logController = lc;
+	    _logService = lc;
     }
 
     /// <summary>
@@ -24,7 +26,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
     {
 	    await SetStatisticsAsync();
 	    await LoadPlannableDaysAsync();
-	    _logController.Debug($"Initialized with HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Plannable Days Count: {PlannableDays.Count}, CanAddCurrentDay: {CanAddCurrentDay}");
+	    _logService.Debug($"Initialized with HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Plannable Days Count: {PlannableDays.Count}, CanAddCurrentDay: {CanAddCurrentDay}");
     }
 
     #region CURRENT STATS

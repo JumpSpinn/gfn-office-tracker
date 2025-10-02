@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services.Log.Controllers;
+﻿namespace OfficeTracker.Services;
 
 /// <summary>
 /// Provides logging functionality for the application, including support for information, warnings, errors,
@@ -6,7 +6,7 @@
 /// observable collection of log entries for runtime inspection.
 /// </summary>
 [RegisterSingleton]
-public sealed class LogController
+public sealed class LogService
 {
 	private readonly bool _isDebugEnabled;
 
@@ -18,9 +18,9 @@ public sealed class LogController
 	private string LogFilePath =>
 		Path.Combine(_logDirectory, _logFileName);
 
-	private readonly ObservableCollection<LogMessage> Logs = [];
+	private readonly ObservableCollection<LogMessageModel> Logs = [];
 
-	public LogController()
+	public LogService()
 	{
 		#if DEBUG
 		_isDebugEnabled = true;
@@ -63,7 +63,7 @@ public sealed class LogController
 
 		if (severity == LogSeverity.Debug && !_isDebugEnabled) return;
 
-		var logMessage = new LogMessage(title, message, severity);
+		var logMessage = new LogMessageModel(title, message, severity);
 		Logs.Add(logMessage);
 
 		File.AppendAllText(LogFilePath, $"{DateTime.UtcNow} - {severity} - {title} - {message}{Environment.NewLine}");

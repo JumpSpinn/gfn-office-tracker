@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a day of the week with associated details such as type, date, and color.
 /// </summary>
-public sealed class WeekDay
+public sealed class WeekDayModel
 {
 	public DayType Type { get; set; } = DayType.NONE;
 	public DateTime Date { get; set; } = DateTime.MinValue;
