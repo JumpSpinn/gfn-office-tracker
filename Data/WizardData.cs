@@ -1,17 +1,17 @@
 ﻿namespace OfficeTracker.Data;
 
 /// <summary>
-/// The <c>SetupData</c> class provides static constants used for the setup process of the Office Tracker application.
+/// The <c>WizardData</c> class provides static constants used for the setup process of the Office Tracker application.
 /// It defines text content and configurations for various setup pages in a structured and reusable manner.
 /// </summary>
-public static class SetupData
+public static class WizardData
 {
 	/// <summary>
 	/// Represents the name identifier used for the setup process in the Office Tracker application.
 	/// This constant is primarily used across various setup-related functionalities to reference
 	/// the setup configuration or process identifier.
 	/// </summary>
-	public const string SETUP_NAME = "Setup-Assistent";
+	public const string WIZARD_NAME = "Setup-Assistent";
 
 	/// <summary>
 	/// The <c>WelcomePage</c> class contains static constants specific to the Welcome page
