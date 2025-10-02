@@ -55,10 +55,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    HomeOfficeDays = data.HomeOfficeDayCount;
 	    OfficeDays = data.OfficeDayCount;
 
+	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
+
 		#if DEBUG
 	    CanAddCurrentDay = true;
-		#else
-		CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
 		#endif
     }
 
