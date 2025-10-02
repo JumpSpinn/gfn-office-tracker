@@ -34,6 +34,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		_loadQueue.Enqueue(InitializeLoggerAsync);
 		_loadQueue.Enqueue(InitializeDatabaseAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
+		_loadQueue.Enqueue(InitializeDialogsAsync);
 		await TriggerNextLoadStep();
 	}
 
@@ -71,7 +72,22 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 
 	#region LOAD STEPS
 
+	/// <summary>
+	/// Indicates whether the database contains existing data.
+	/// This variable is used during the application's initialization phase
+	/// to determine whether the main page (if data is present) or
+	/// the wizard welcome page (if no data is present) should be displayed
+	/// after the splash screen.
+	/// </summary>
 	private bool _hasData;
+
+	/// <summary>
+	/// Indicates whether the dialogs required for the application's startup sequence
+	/// have been preloaded. This variable assists in managing the initialization process
+	/// by ensuring that essential dialogs are available and ready for display during
+	/// the application's splash screen phase.
+	/// </summary>
+	private bool _dialogsPreloaded;
 
 	/// <summary>
 	/// Attempts to initialize the application's main window asynchronously.
@@ -157,6 +173,61 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		}
 	}
 
+	private async Task<bool> InitializeDialogsAsync()
+	{
+		try
+		{
+			if (_dialogsPreloaded) return true;
+
+			ShowInfiniteProgressBar = false;
+			LoadingText = "Initializing Dialogs..";
+
+			var totalDialogs = Enum.GetValues<DialogType>().Length;
+			var dialogsInitialized = 0;
+
+			InitializeValueProgress(dialogsInitialized, totalDialogs);
+
+			foreach (var type in Enum.GetValues<DialogType>())
+			{
+				var container = DialogHelper.CreateContentContainer(type);
+				var dialogContent = DialogHelper.CreateContentWithIcon(container, type, "Prewarming..");
+				var dialog = new ContentDialog()
+				{
+					Title = "Prewarming...",
+					PrimaryButtonText = "Ok",
+					DefaultButton = ContentDialogButton.Primary,
+					Content = dialogContent,
+					Opacity = 0,
+				};
+
+				var t = dialog.ShowAsync(App.MainWindow);
+				await Task.Yield();
+				dialog.Hide();
+
+				try
+				{
+					await t;
+					dialogsInitialized++;
+					ValueProgress = dialogsInitialized;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+				}
+			}
+
+			_logService.Info("Dialogs initialized.");
+			ShowValueProgress = false;
+			_dialogsPreloaded = true;
+			return true;
+		}
+		catch (Exception e)
+		{
+			DisplayInfoBar("Critical Error", $"While initializing Dialogs:\n{e.Message}", InfoBarSeverity.Error);
+			return false;
+		}
+	}
+
 	#endregion
 
 	#region TEXT
@@ -202,6 +273,33 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	private bool _showInfiniteProgressBar;
 
 	#endregion
+
+	#region VALUE PROGRESSBAR
+	[ObservableProperty]
+	private bool _showValueProgress;
+
+	[ObservableProperty]
+	private double _valueProgress;
+
+	[ObservableProperty]
+	private double _valueProgressMin;
+
+	[ObservableProperty]
+	private double _valueProgressMax = 100;
+
+	/// <summary>
+	/// Initializes the progress value tracking with specified minimum and maximum values.
+	/// Configures the current progress value and enables the display of progress information.
+	/// </summary>
+	private void InitializeValueProgress(double min, double max)
+	{
+		ValueProgress = min;
+		ValueProgressMin = min;
+		ValueProgressMax = max;
+		ShowValueProgress = true;
+	}
+	#endregion
+
 
 	#region VERSION
 

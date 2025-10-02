@@ -43,8 +43,17 @@
 						Name="InfinityProgressBar"
 						Height="1"
 						MaxWidth="300"
+						IsVisible="{Binding ShowInfiniteProgressBar}"
 						IsIndeterminate="True"
 					/>
+					<ProgressBar
+						MaxWidth="300"
+						Name="ValueProgressBar"
+						IsVisible="{Binding ShowValueProgress}"
+						Minimum="{Binding ValueProgressMin}"
+						Maximum="{Binding ValueProgressMax}"
+						Value="{Binding ValueProgress}"></ProgressBar>
+
 					<TextBlock
 						Name="LoadingText"
 						Text="{Binding LoadingText}"

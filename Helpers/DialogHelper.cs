@@ -5,6 +5,15 @@
 /// </summary>
 public static class DialogHelper
 {
+	/// <summary>
+	/// Displays a dialog with the specified title, message, and optional dialog type and button text.
+	/// Allows customization of the dialog's icon and layout based on dialog type.
+	/// </summary>
+	/// <param name="title">The title of the dialog.</param>
+	/// <param name="message">The message or content displayed in the dialog.</param>
+	/// <param name="type">The type of the dialog, determining the appearance and icon. Defaults to DialogType.WITHOUT_ICON.</param>
+	/// <param name="buttonText">The text displayed on the primary button of the dialog. Defaults to "Ok".</param>
+	/// <returns>A task representing the asynchronous operation of showing the dialog.</returns>
 	public static async Task ShowDialogAsync(string title, string message, DialogType type = DialogType.WITHOUT_ICON, string buttonText = "Ok")
 	{
 		object container = CreateContentContainer(type);
@@ -25,7 +34,7 @@ public static class DialogHelper
 	/// Creates and returns a container object for dialog content based on the specified dialog type.
 	/// The container determines the layout structure for the dialog content.
 	/// </summary>
-	private static object CreateContentContainer(DialogType type)
+	public static object CreateContentContainer(DialogType type)
 	{
 		if (type == DialogType.WITHOUT_ICON)
 			return new StackPanel() { Orientation = Orientation.Vertical, Spacing = 4 };
@@ -43,7 +52,7 @@ public static class DialogHelper
 	/// <summary>
 	/// Creates and returns a content object containing a message and an optional icon based on the specified dialog type.
 	/// </summary>
-	private static object CreateContentWithIcon(object container, DialogType type, string message)
+	public static object CreateContentWithIcon(object container, DialogType type, string message)
 	{
 		TextBlock text = new()
 		{
