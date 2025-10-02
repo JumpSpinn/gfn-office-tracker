@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
-using Services;
-
 /// <summary>
 /// Represents the ViewModel for the main page, providing functionality to manage and interact with
 /// the main page's data and behavior in an MVVM architecture.
@@ -59,31 +57,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
 		#endif
     }
-
-    #endregion
-
-    #region BLUR EFFECT
-
-    [ObservableProperty]
-    private Effect? _blurEffect;
-
-    /// <summary>
-    /// Enables the blur effect by setting the BlurEffect property
-    /// to a new instance with a predefined radius value, enhancing
-    /// the visual presentation of modals or dialogs.
-    /// </summary>
-    private void EnableBlurEffect()
-    {
-	    if (BlurEffect is not null) return;
-	    BlurEffect = new BlurEffect() { Radius = Options.MODAL_BLUR_RADIUS };
-    }
-
-    /// <summary>
-    /// Disables the blur effect by setting the BlurEffect property to null.
-    /// Used typically to revert visual blurring after a modal or overlay interaction.
-    /// </summary>
-    private void DisableBlurEffect()
-		=> BlurEffect = null;
 
     #endregion
 
