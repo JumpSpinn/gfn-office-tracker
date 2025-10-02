@@ -20,6 +20,16 @@ public sealed partial class WizardNamePageViewModel : ViewModelBase
 	[GeneratedRegex(@"^[\p{L}\s\-']+$")]
 	private static partial Regex NameRegex();
 
+	/// <summary>
+	/// Validates the name provided by the user in the wizard.
+	/// </summary>
+	/// <returns>
+	/// Returns true if the name meets the following criteria:
+	/// - It is not empty.
+	/// - It contains at most 32 characters.
+	/// - It consists only of letters, spaces, and hyphens.
+	/// Returns false if any of these criteria are not met and sets an appropriate error message.
+	/// </returns>
 	private bool ValidateName()
 	{
 		NameError = string.Empty;
