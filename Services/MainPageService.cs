@@ -4,7 +4,7 @@
 /// Provides functionality and operations related to the main page of the OfficeTracker application.
 /// </summary>
 [RegisterSingleton]
-public abstract class MainPageService(IDbContextFactory<OtContext> dbContextFactory, LogService logService)
+public sealed class MainPageService(IDbContextFactory<OtContext> dbContextFactory, LogService logService)
 {
 	#region GET
 
