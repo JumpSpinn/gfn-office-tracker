@@ -71,11 +71,6 @@
 								FontFamily="{DynamicResource UrbanistFont}"
 								IsChecked="{Binding FridaySelected}"
 							/>
-							<CheckBox
-								Content="Samstag"
-								FontFamily="{DynamicResource UrbanistFont}"
-								IsChecked="{Binding SaturdaySelected}"
-							/>
 						</StackPanel>
 					</StackPanel>
 				</StackPanel>

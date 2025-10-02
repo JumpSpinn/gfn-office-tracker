@@ -12,7 +12,7 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	/// </summary>
 	public bool IsDaySelected =>
 		MondaySelected || TuesdaySelected || WednesdaySelected ||
-		ThursdaySelected || FridaySelected || SaturdaySelected;
+		ThursdaySelected || FridaySelected;
 
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
@@ -33,10 +33,6 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
 	private bool _fridaySelected;
-
-	[ObservableProperty]
-	[NotifyPropertyChangedFor(nameof(IsDaySelected))]
-	private bool _saturdaySelected;
 
 	/// <summary>
 	/// Gets the string representation of the selected days in the wizard workflow.
@@ -70,32 +66,31 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	/// </summary>
 	private void ConvertSelectedBooleanDays()
 	{
-		var dayMappings = new[]
+		var baseMappings = new List<(bool IsSelected, string Abbreviation, DayOfWeek Day)>
 		{
 			(MondaySelected, "Mo", DayOfWeek.Monday),
 			(TuesdaySelected, "Di", DayOfWeek.Tuesday),
 			(WednesdaySelected, "Mi", DayOfWeek.Wednesday),
 			(ThursdaySelected, "Do", DayOfWeek.Thursday),
-			(FridaySelected, "Fr", DayOfWeek.Friday),
-			(SaturdaySelected, "Sa", DayOfWeek.Saturday)
+			(FridaySelected, "Fr", DayOfWeek.Friday)
 		};
 
-		SelectedDaysDisplay = string.Join(", ", dayMappings
+		SelectedDaysDisplay = string.Join(", ", baseMappings
 			.Where(d => d.Item1)
 			.Select(d => d.Item2)
 			.ToArray());
 
-		UnselectedDaysDisplay = string.Join(", ", dayMappings
+		UnselectedDaysDisplay = string.Join(", ", baseMappings
 			.Where(d => !d.Item1)
 			.Select(d => d.Item2)
 			.ToArray());
 
-		SelectedDayEnums = dayMappings
+		SelectedDayEnums = baseMappings
 			.Where(d => d.Item1)
 			.Select(d => d.Item3)
 			.ToArray();
 
-		UnselectedDayEnums = dayMappings
+		UnselectedDayEnums = baseMappings
 			.Where(d => !d.Item1)
 			.Select(d => d.Item3)
 			.ToArray();
