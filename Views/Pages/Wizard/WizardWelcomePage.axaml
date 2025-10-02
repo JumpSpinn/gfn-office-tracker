@@ -31,7 +31,7 @@
 							FontWeight="Medium"
 						/>
 						<Label
-							Content="Setup-Assistenten"
+							Content="Setup-Assistent"
 							HorizontalAlignment="Center"
 							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="18"
