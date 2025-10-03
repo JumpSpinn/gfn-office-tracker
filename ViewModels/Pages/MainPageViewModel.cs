@@ -168,7 +168,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
     {
 	    var pd = PlannableDays.FirstOrDefault(x => x.Id == id);
 	    if (pd is null) return;
-	    PlannableDays.Remove(pd);
+
+	    var currentCollection = PlannableDays;
+	    currentCollection.Remove(pd);
+	    PlannableDays = new ObservableCollection<DbPlannableDay>(currentCollection);
     }
 
     /// <summary>
@@ -178,7 +181,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
     {
 	    var exist = PlannableDays.FirstOrDefault(x => x.Id == pd.Id);
 	    if (exist is not null) return;
-	    PlannableDays.Add(pd);
+
+	    var currentCollection = PlannableDays;
+	    currentCollection.Add(pd);
+	    PlannableDays = new ObservableCollection<DbPlannableDay>(currentCollection);
     }
 
     /// <summary>
