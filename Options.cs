@@ -5,6 +5,10 @@
 /// </summary>
 public static class Options
 {
+	public const string VERSION = "1.0.0";
+
+	public const string DB_NAME = "office-tracker.db";
+
     public static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -25,7 +29,5 @@ public static class Options
 
     public const double DIALOG_SIZE = 40;
 
-    public const string VERSION = "1.0.0";
-
-    public const string DB_NAME = "office-tracker.db";
+    public const uint CALCULATE_WEEKS_COUNT = 3;
 }
