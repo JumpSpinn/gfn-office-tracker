@@ -97,7 +97,9 @@ public sealed class CalculateWeekService
 		_currentOfficeCount = us.OfficeDayCount;
 		_homeOfficeTargetQuoted = us.HomeOfficeTargetQuoted;
 		_officeTargetQuoted = us.OfficeTargetQuoted;
-		_lastUpdateUserSettings = us.LastUpdate;
+
+		// Check if we have a nice date to start from
+		_lastUpdateUserSettings = (us.LastUpdate == DateTime.MinValue ? DateTime.Today : us.LastUpdate);
 		_currentStartOfWeek = DateTimeHelper.GetStartOfWeek(_lastUpdateUserSettings);
 
 		List<CalculatedWeekModel> cwsTotal = new();
