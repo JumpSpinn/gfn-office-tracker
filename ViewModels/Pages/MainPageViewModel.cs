@@ -162,6 +162,26 @@ public sealed partial class MainPageViewModel : ViewModelBase
     private ObservableCollection<DbPlannableDay> _plannableDays = [];
 
     /// <summary>
+    /// Removes a plannable day from the collection based on the specified identifier.
+    /// </summary>
+    private void RemovePlannableDayFromCollection(uint id)
+    {
+	    var pd = PlannableDays.FirstOrDefault(x => x.Id == id);
+	    if (pd is null) return;
+	    PlannableDays.Remove(pd);
+    }
+
+    /// <summary>
+    /// Adds a plannable day to the collection if it does not already exist.
+    /// </summary>
+    private void AddPlannableDayToCollection(DbPlannableDay pd)
+    {
+	    var exist = PlannableDays.FirstOrDefault(x => x.Id == pd.Id);
+	    if (exist is not null) return;
+	    PlannableDays.Add(pd);
+    }
+
+    /// <summary>
     /// Asynchronously loads the plannable days data by retrieving it from the MainPageService
     /// and updates the ViewModel's collection of plannable days.
     /// </summary>
@@ -170,10 +190,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    var plannableDays = await _databaseService.GetAllPlannableDaysAsync();
 	    PlannableDays = new ObservableCollection<DbPlannableDay>(plannableDays ?? []);
     }
-
-    #endregion
-
-    #region DELETE PLANNABLE DAY
 
     /// <summary>
     /// Asynchronously shows a confirmation dialog to delete a plannable day and processes the deletion if confirmed.
@@ -195,17 +211,18 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    var dialogResult = await dialog.ShowAsyncCorrectly();
 	    if(dialogResult == ContentDialogResult.Primary)
 	    {
-		    await _databaseService.DeletePlannableDayAsync(id); // TODO: remove entry from list instead of load the hole fucking list again
-		    await LoadPlannableDaysAsync();
-		    await ReCalculateWeeksAsync();
+		    var deleted = await _databaseService.DeletePlannableDayAsync(id);
+		    if(!deleted)
+			    await DialogHelper.ShowDialogAsync("Eintrag löschen", "Eintrag konnte nicht gelöscht werden.", DialogType.ERROR);
+		    else
+		    {
+			    RemovePlannableDayFromCollection(id);
+			    await ReCalculateWeeksAsync();
+		    }
 	    }
 
 	    DisableBlurEffect();
     }
-
-    #endregion
-
-    #region ADD PLANNABLE DAY
 
     /// <summary>
     /// Asynchronously displays a dialog for adding a new plannable day, validates the user input,
@@ -246,7 +263,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    if (entry is not null)
 			    {
 				    success = true;
-				    await LoadPlannableDaysAsync(); // TODO: add entry to list instead of load the hole list again
+				    AddPlannableDayToCollection(entry);
 				    await ReCalculateWeeksAsync();
 				    await DialogHelper.ShowDialogAsync("Eintrag hinzugefügt", "Eintrag wurde erfolgreich gespeichert.", DialogType.SUCCESS);
 			    }
