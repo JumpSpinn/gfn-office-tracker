@@ -29,7 +29,6 @@ public sealed class CalculateWeekService
 	private uint _currentOfficeCount;
 	private DateTime _lastUpdateUserSettings;
 	private DateTime _currentStartOfWeek;
-	private DateTime _currentEndOfWeek;
 
 	#endregion
 
@@ -45,7 +44,6 @@ public sealed class CalculateWeekService
 		_currentOfficeCount = 0;
 		_lastUpdateUserSettings = DateTime.MinValue;
 		_currentStartOfWeek = DateTime.MinValue;
-		_currentEndOfWeek = DateTime.MinValue;
 	}
 
 	/// <summary>
@@ -136,7 +134,6 @@ public sealed class CalculateWeekService
 
 			// Set the start and end date of the current week + increase the current week index
 			_currentStartOfWeek = _currentStartOfWeek.AddDays(7);
-			_currentEndOfWeek = _currentStartOfWeek.AddDays(6);
 			_currentWeekIndex++;
 
 			var homeOfficeDays = _mainWindowService.RuntimeData.HomeOfficeDays;
