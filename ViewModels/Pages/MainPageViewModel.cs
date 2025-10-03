@@ -29,6 +29,95 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    _logService.Debug($"Initialized with HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Plannable Days Count: {PlannableDays.Count}, CanAddCurrentDay: {CanAddCurrentDay}");
     }
 
+    #region CALCULATED WEEKS
+
+    private CalculatedWeekModel _loadModelDebug = new()
+    {
+	    WeekName = "Woche 2",
+	    HomeOfficeDays = 55,
+	    OfficeDays = 75,
+	    WeekDays = [
+		    new ()
+		    {
+			    Type = DayType.HOME,
+			    Date = new DateTime(2025, 1, 1),
+			    HexColor = "#4CAF50"
+		    },
+		    new ()
+		    {
+			    Type = DayType.HOME,
+			    Date = new DateTime(2025, 2, 10),
+			    HexColor = "#F44336"
+		    },
+		    new ()
+		    {
+			    Type = DayType.HOME,
+			    Date = new DateTime(2025, 3, 20),
+			    HexColor = "#2196F3"
+		    },
+		    new()
+		    {
+			    Type = DayType.HOME,
+			    Date = new DateTime(2025, 4, 15),
+			    HexColor = "#FFEB3B"
+		    },
+		    new()
+		    {
+			    Type = DayType.HOME,
+			    Date = new DateTime(2025, 5, 15),
+			    HexColor = "#FFEB3B"
+		    }
+	    ]
+    };
+
+    [ObservableProperty]
+    private ObservableCollection<CalculatedWeekModel> _calculatedWeekModels = [
+	    new()
+	    {
+		    WeekName = "Woche 1",
+		    HomeOfficeDays = 50,
+		    OfficeDays = 30,
+		    WeekDays = [
+			    new ()
+			    {
+				    Type = DayType.HOME,
+				    Date = new DateTime(2025, 8, 1),
+				    HexColor = "#4CAF50"
+			    },
+			    new ()
+			    {
+				    Type = DayType.HOME,
+				    Date = new DateTime(2025, 8, 10),
+				    HexColor = "#F44336"
+			    },
+			    new ()
+			    {
+				    Type = DayType.HOME,
+				    Date = new DateTime(2025, 8, 20),
+				    HexColor = "#2196F3"
+			    },
+			    new()
+			    {
+				    Type = DayType.HOME,
+				    Date = new DateTime(2025, 9, 15),
+				    HexColor = "#FFEB3B"
+			    },
+			    new()
+			    {
+				    Type = DayType.HOME,
+				    Date = new DateTime(2025, 10, 15),
+				    HexColor = "#FFEB3B"
+			    }
+		    ]
+	    }
+    ];
+
+    [RelayCommand]
+    private void AddNewCalculatedWeekModel()
+	    => CalculatedWeekModels.Add(_loadModelDebug);
+
+    #endregion
+
     #region QUOTE GETTER
 
     public uint HomeOfficeQuote

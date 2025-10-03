@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:listcontrols="using:OfficeTracker.Views.Controls.Lists"
 	xmlns:controls="using:OfficeTracker.Views.Controls"
-	xmlns:component="using:OfficeTracker.Components"
+	xmlns:models="using:OfficeTracker.Models"
 >
 	<Design.PreviewWith>
 		<listcontrols:CalculatedWeekListControl />
@@ -75,53 +75,61 @@
 						<!-- STATS -->
 						<controls:StatisticControl
 							Grid.Row="1"
+							AddButtonEnabled="False"
+							AddButtonVisible="False"
 							HomeOfficeDays="{TemplateBinding HomeOfficeDays}"
 							OfficeDays="{TemplateBinding OfficeDays}"
 						/>
 
 						<!-- DAYS -->
-						<Grid
+						<ItemsControl
 							Grid.Row="2"
-							ColumnDefinitions="*,*,*,*,*,*,*"
-							ColumnSpacing="5"
+							ItemsSource="{TemplateBinding WeekDays}"
 							Margin="0 10"
 						>
-							<component:WeekIndicatorComponent
-								Grid.Column="0"
-								ShortWeekDayLabel="MO"
-								DayTypeHexColor="#597485"
-							/>
-							<component:WeekIndicatorComponent
-								Grid.Column="1"
-								ShortWeekDayLabel="DI"
-								DayTypeHexColor="#468295"
-							/>
-							<component:WeekIndicatorComponent
-								Grid.Column="2"
-								ShortWeekDayLabel="MI"
-								DayTypeHexColor="#559977"
-							/>
-							<component:WeekIndicatorComponent
-								Grid.Column="3"
-								ShortWeekDayLabel="DO"
-								DayTypeHexColor="#335599"
-							/>
-							<component:WeekIndicatorComponent
-								Grid.Column="4"
-								ShortWeekDayLabel="FR"
-								DayTypeHexColor="#112233"
-							/>
-							<component:WeekIndicatorComponent
-								Grid.Column="5"
-								ShortWeekDayLabel="SA"
-								DayTypeHexColor="#147851"
-							/>
-							<component:WeekIndicatorComponent
-								Grid.Column="6"
-								ShortWeekDayLabel="SO"
-								DayTypeHexColor="#649738"
-							/>
-						</Grid>
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<UniformGrid Rows="1" Columns="5" HorizontalAlignment="Stretch" />
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemTemplate>
+								<DataTemplate DataType="models:WeekDayModel">
+									<StackPanel
+										Orientation="Vertical"
+										Spacing="6"
+									>
+										<Border
+											Height="30"
+											Width="30"
+											BorderThickness="1"
+											CornerRadius="4"
+										>
+											<Border.BorderBrush>
+												<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity="1">
+													<GradientStop Color="#60FFFFFF" Offset="0.0"/>
+													<GradientStop Color="#20FFFFFF" Offset="1.0"/>
+												</LinearGradientBrush>
+											</Border.BorderBrush>
+											<Label
+												Content="{Binding Date, StringFormat='{}{0:ddd}'}"
+												FontFamily="{DynamicResource UrbanistFont}"
+												FontWeight="Regular"
+												FontSize="10"
+												VerticalAlignment="Center"
+												HorizontalAlignment="Center"
+											/>
+										</Border>
+										<Border
+											Width="30"
+											Height="2"
+											BorderThickness="0"
+											CornerRadius="2"
+											Background="{Binding HexColor}"
+										/>
+									</StackPanel>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
 					</Grid>
 				</Border>
 			</ControlTemplate>

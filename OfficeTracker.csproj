@@ -85,10 +85,6 @@
 			<DependentUpon>PlannableDayListControl.axaml</DependentUpon>
 			<SubType>Code</SubType>
 		</Compile>
-		<Compile Update="Components\WeekIndicatorComponent.axaml.cs">
-			<DependentUpon>WeekIndicatorComponent.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
 		<Compile Update="Views\Pages\Wizard\WizardBalancePage.axaml.cs">
 		  <DependentUpon>WizardBalancePage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
