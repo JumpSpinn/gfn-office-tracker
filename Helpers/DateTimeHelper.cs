@@ -32,4 +32,18 @@ public static class DateTimeHelper
 	/// </summary>
 	public static bool IsDateInDayArray(DateTime dt, DayOfWeek[] weekDays)
 		=> weekDays.Contains(dt.DayOfWeek);
+
+	/// <summary>
+	/// Calculates the start date of the week for the specified date, assuming the week starts on Monday.
+	/// </summary>
+	public static DateTime GetStartOfWeek(DateTime dt)
+	{
+		DayOfWeek startOfWeek = DayOfWeek.Monday;
+		DayOfWeek today = dt.DayOfWeek;
+
+		int diff = today - startOfWeek;
+		if (diff < 0) diff += 6;
+
+		return dt.AddDays(-1 * diff);
+	}
 }
