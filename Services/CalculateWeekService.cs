@@ -86,7 +86,6 @@ public sealed class CalculateWeekService
 	/// </returns>
 	public async Task<CalculatedWeekModel[]?> CalculateWeeksAsync()
 	{
-		_logService.Debug("Calculate all weeks is running..");
 		ResetCalculationDynamicProperties();
 
 		var us = await _databaseService.GetUserSettingAsync();
@@ -113,12 +112,8 @@ public sealed class CalculateWeekService
 				cw.HomeOfficeTargetQuoted = _homeOfficeTargetQuoted;
 				cw.OfficeTargetQuoted = _officeTargetQuoted;
 				cwsTotal.Add(cw);
-
-				_logService.Debug($"Calculated week: {cw.WeekName}");
 			}
 		}
-
-		_logService.Debug("Calculated all weeks!!");
 
 		return cwsTotal.ToArray();
 	}
@@ -144,31 +139,25 @@ public sealed class CalculateWeekService
 			_currentEndOfWeek = _currentStartOfWeek.AddDays(6);
 			_currentWeekIndex++;
 
-			_logService.Debug($"Start of week: {_currentStartOfWeek}");
-			_logService.Debug($"End of week: {_currentEndOfWeek}");
+			var homeOfficeDays = _mainWindowService.RuntimeData.HomeOfficeDays;
+			var officeDays = _mainWindowService.RuntimeData.OfficeDays;
 
-			var runtimeData = _mainWindowService.RuntimeData;
-			var homeOfficeDays = runtimeData.HomeOfficeDays;
-			var officeDays = runtimeData.OfficeDays;
+			var dayOfWeeks = homeOfficeDays
+				.Select(day => new { Day = day, Type = DayType.HOME })
+				.Concat(officeDays.Select(day => new { Day = day, Type = DayType.OFFICE }))
+				.OrderBy(item => item.Day)
+				.ToArray();
 
 			_currentHomeOfficeCount += (uint)homeOfficeDays.Length;
 			_currentOfficeCount += (uint)officeDays.Length;
 
-			var dayOfWeeks = homeOfficeDays
-				.Concat(officeDays)
-				.OrderBy(x => x);
-
 			var weekDayStart = _currentStartOfWeek.AddDays(-1);
-
 			var weekDays = new List<WeekDayModel>();
-
-			foreach (var day in dayOfWeeks)
+			foreach (var item in dayOfWeeks)
 			{
-				_logService.Debug($"WeekOfDay => {day}");
 				weekDayStart = weekDayStart.AddDays(1);
-				var wd = CreateWeekDayModel(homeOfficeDays.Contains(day) ? DayType.HOME : DayType.OFFICE, weekDayStart);
+				var wd = CreateWeekDayModel(item.Type, weekDayStart);
 				weekDays.Add(wd);
-				_logService.Debug($"Day added to week => Type: {wd.Type}, Date: {wd.Date}, HexColor: {wd.HexColor}");
 			}
 
 			var cw = new CalculatedWeekModel()
