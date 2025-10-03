@@ -7,13 +7,15 @@
 [RegisterSingleton]
 public sealed partial class MainPageViewModel : ViewModelBase
 {
-	private readonly DatabaseService _databaseService;
 	private readonly LogService _logService;
+	private readonly DatabaseService _databaseService;
+	private readonly MainWindowService _mainWindowService;
 
-    public MainPageViewModel(DatabaseService ds, LogService lc)
+    public MainPageViewModel(DatabaseService ds, LogService lc, MainWindowService mws)
     {
-	    _databaseService = ds;
 	    _logService = lc;
+	    _databaseService = ds;
+	    _mainWindowService = mws;
     }
 
     /// <summary>
@@ -22,10 +24,13 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     public async Task InitializeAsync()
     {
-	    await SetStatisticsAsync();
+	    await _mainWindowService.SetRuntimeDataAsync();
+	    await RefreshStatisticsAsync();
 	    await LoadPlannableDaysAsync();
 	    _logService.Debug($"Initialized with HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Plannable Days Count: {PlannableDays.Count}, CanAddCurrentDay: {CanAddCurrentDay}");
     }
+
+
 
     #region CURRENT STATS
 
@@ -39,23 +44,25 @@ public sealed partial class MainPageViewModel : ViewModelBase
     private bool _canAddCurrentDay;
 
     /// <summary>
-    /// Asynchronously creates and initializes a new stats control using the general data
-    /// retrieved from the MainPageService, updating the current stats control and related states.
-    /// Triggers the CurrentStatsChanged event upon successful update.
+    /// Asynchronously refreshes statistical data by retrieving and updating the counts for
+    /// home office days, office days, and determining whether the current day can be added
+    /// based on the last recorded update.
     /// </summary>
-    private async Task SetStatisticsAsync()
+    /// <returns>
+    /// A task that represents the asynchronous operation of refreshing statistics.
+    /// </returns>
+    private async Task RefreshStatisticsAsync()
     {
-	    var data = await _databaseService.GetUserSettingAsync();
+	    var data = await _databaseService.GetDayCountsFromUserSettingsAsync();
 	    if (data is null)
 	    {
-		    _logService.Error("User settings could not be retrieved.");
+		    _logService.Error("Day counts could not be retrieved.");
 		    return;
 	    }
 
-	    HomeOfficeDays = data.HomeOfficeDayCount;
-	    OfficeDays = data.OfficeDayCount;
-
-	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.LastUpdate);
+	    HomeOfficeDays = data.Value.homeOfficeCount;
+	    OfficeDays = data.Value.officeCount;
+	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.Value.lastUpdate);
 
 		#if DEBUG
 	    CanAddCurrentDay = true;
@@ -92,13 +99,13 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
 		    else if(DateTimeHelper.IsInWeekend(DateTime.Today))
 			    await DialogHelper.ShowDialogAsync("Wochenende", "Du hast Wochenende, genieß' es.", DialogType.QUESTION);
-		    else if(dayForm.SelectedDayType == DayType.HOME)
+		    else if (dayForm.SelectedDayType == DayType.HOME)
 			    entryResult = await _databaseService.IncreaseHomeOfficeCountAsync();
 		    else
 			    entryResult = await _databaseService.IncreaseOfficeCountAsync();
 		    if (entryResult > 0)
 		    {
-			    await SetStatisticsAsync();
+			    await RefreshStatisticsAsync();
 			    await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
 		    }
 		    else

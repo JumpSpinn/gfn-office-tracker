@@ -26,6 +26,27 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		return null;
 	}
 
+	/// <summary>
+	/// Asynchronously retrieves the counts of home office and office days from the user's settings in the database.
+	/// </summary>
+	public async Task<(uint homeOfficeCount, uint officeCount, DateTime lastUpdate)?> GetDayCountsFromUserSettingsAsync()
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			if (data is null) return null;
+			logService.Debug($"Getting day counts from user settings. Home office days: {data.HomeOfficeDayCount}, Office days: {data.OfficeDayCount}.");
+			return (data.HomeOfficeDayCount,data.OfficeDayCount, data.LastUpdate);
+		}
+		catch(Exception e)
+		{
+			logService.Error(e.Message);
+		}
+
+		return null;
+	}
+
 	#endregion
 
 	#region CREATE

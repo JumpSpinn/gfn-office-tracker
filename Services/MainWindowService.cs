@@ -5,7 +5,7 @@
 /// Provides methods to initialize and validate the state of the main application window.
 /// </summary>
 [RegisterSingleton]
-public sealed class MainWindowService(LogService logService)
+public sealed class MainWindowService(LogService logService, DatabaseService databaseService)
 {
 	private bool _initialized;
 
@@ -40,5 +40,21 @@ public sealed class MainWindowService(LogService logService)
 			logService.Exception(ex);
 			return false;
 		}
+	}
+
+	public RuntimeData RuntimeData { get; private set; } = new();
+
+	public async Task SetRuntimeDataAsync()
+	{
+		var userSettings = await databaseService.GetUserSettingAsync();
+		if (userSettings is null)
+			throw new Exception("User settings could not be retrieved.");
+
+		RuntimeData.UserName = userSettings.UserName;
+		RuntimeData.HomeOfficeTargetQuoted = userSettings.HomeOfficeTargetQuoted;
+		RuntimeData.OfficeTargetQuoted = userSettings.OfficeTargetQuoted;
+		RuntimeData.HomeOfficeDays = userSettings.HomeOfficeDays;
+		RuntimeData.OfficeDays = userSettings.OfficeDays;
+		logService.Debug("Runtime data set successfully.");
 	}
 }
