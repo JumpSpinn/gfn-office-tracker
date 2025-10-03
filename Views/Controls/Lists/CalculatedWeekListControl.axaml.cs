@@ -38,6 +38,15 @@ public sealed class CalculatedWeekListControl : TemplatedControl
 		set => SetValue(HomeOfficeDaysProperty, value);
 	}
 
+	public static readonly StyledProperty<uint> HomeOfficeTargetQuotedProperty =
+		AvaloniaProperty.Register<CalculatedWeekListControl, uint>(nameof(HomeOfficeTargetQuoted));
+
+	public uint HomeOfficeTargetQuoted
+	{
+		get => GetValue(HomeOfficeTargetQuotedProperty);
+		set => SetValue(HomeOfficeTargetQuotedProperty, value);
+	}
+
 	public static readonly StyledProperty<uint> OfficeDaysProperty =
 		AvaloniaProperty.Register<CalculatedWeekListControl, uint>(nameof(OfficeDays));
 
@@ -45,6 +54,15 @@ public sealed class CalculatedWeekListControl : TemplatedControl
 	{
 		get => GetValue(OfficeDaysProperty);
 		set => SetValue(OfficeDaysProperty, value);
+	}
+
+	public static readonly StyledProperty<uint> OfficeTargetQuotedProperty =
+		AvaloniaProperty.Register<CalculatedWeekListControl, uint>(nameof(OfficeTargetQuoted));
+
+	public uint OfficeTargetQuoted
+	{
+		get => GetValue(OfficeTargetQuotedProperty);
+		set => SetValue(OfficeTargetQuotedProperty, value);
 	}
 
 	public static readonly StyledProperty<WeekDayModel[]> WeekDaysProperty =

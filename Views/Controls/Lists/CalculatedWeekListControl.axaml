@@ -79,6 +79,8 @@
 							AddButtonVisible="False"
 							HomeOfficeDays="{TemplateBinding HomeOfficeDays}"
 							OfficeDays="{TemplateBinding OfficeDays}"
+							HomeOfficeQuote="{TemplateBinding HomeOfficeTargetQuoted}"
+							OfficeQuote="{TemplateBinding OfficeTargetQuoted}"
 						/>
 
 						<!-- DAYS -->
