@@ -35,8 +35,8 @@ Alle Ihre Daten werden sicher in einer lokalen SQLite-Datenbank auf Ihrem System
 ## 🛠️ Installation
 
 1.  Laden Sie die neueste Version des GFN Office-Trackers für Ihr Betriebssystem von den [Releases](https://github.com/JumpSpinn/gfn-office-tracker/releases) herunter.
-    * `OfficeTracker-X.Y.Z-win-x64.exe` für Windows
-    * `OfficeTracker-X.Y.Z-linux-x64.zip` / `.tar.gz` für Linux
+    * `OfficeTracker-win-x64.exe` für Windows
+    * `OfficeTracker-linux-x64` / `.zip` / `.tar.gz` für Linux
 2.  Entpacken Sie die heruntergeladene Datei (falls es eine .zip/.tar.gz ist).
 3.  Führen Sie die `OfficeTracker.exe` (Windows) oder die `OfficeTracker` ausführbare Datei (Linux) aus.
 
