@@ -195,6 +195,7 @@
 							<!-- Statistik -->
 							<StackPanel Orientation="Vertical" Spacing="2">
 								<Label
+									DockPanel.Dock="Left"
 									Content="Berechnete Statistik:"
 									FontFamily="{DynamicResource UrbanistFont}"
 									FontSize="12"
@@ -206,6 +207,28 @@
 									AddButtonEnabled="False"
 									AddButtonVisible="False"
 								/>
+								<Grid ColumnDefinitions="*,*">
+									<Label
+										Grid.Column="0"
+										Content="HomeOffice"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="10"
+										FontWeight="Medium"
+										HorizontalAlignment="Left"
+										Foreground="#50FFFFFF"
+										Padding="4 0 0 0"
+									/>
+									<Label
+										Grid.Column="1"
+										Content="Standort"
+										FontFamily="{DynamicResource UrbanistFont}"
+										FontSize="10"
+										FontWeight="Medium"
+										HorizontalAlignment="Right"
+										Padding="0 0 4 0"
+										Foreground="#50FFFFFF"
+									/>
+								</Grid>
 							</StackPanel>
 						</StackPanel>
 					</Border>
