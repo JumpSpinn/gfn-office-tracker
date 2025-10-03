@@ -29,5 +29,5 @@ public static class Options
 
     public const double DIALOG_SIZE = 40;
 
-    public const uint CALCULATE_WEEKS_COUNT = 30; // Default: 3
+    public const uint CALCULATE_WEEKS_COUNT = 3; // Default: 3
 }

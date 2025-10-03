@@ -130,8 +130,6 @@ public sealed class CalculateWeekService
 	{
 		try
 		{
-			// TODO: add check for plannable day entrys
-
 			// Set the start and end date of the current week + increase the current week index
 			_currentStartOfWeek = _currentStartOfWeek.AddDays(7);
 			_currentWeekIndex++;
@@ -145,15 +143,28 @@ public sealed class CalculateWeekService
 				.OrderBy(item => item.Day)
 				.ToArray();
 
-			_currentHomeOfficeCount += (uint)homeOfficeDays.Length;
-			_currentOfficeCount += (uint)officeDays.Length;
-
 			var weekDayStart = _currentStartOfWeek.AddDays(-1);
 			var weekDays = new List<WeekDayModel>();
 			foreach (var item in dayOfWeeks)
 			{
+				var dayType = item.Type;
+
 				weekDayStart = weekDayStart.AddDays(1);
-				var wd = CreateWeekDayModel(item.Type, weekDayStart);
+				var pd = await _databaseService.GetSinglePlannableDayAsync(weekDayStart);
+				if (pd is not null)
+					dayType = pd.Type;
+
+				switch (dayType)
+				{
+					case DayType.HOME:
+						_currentHomeOfficeCount++;
+						break;
+					case DayType.OFFICE:
+						_currentOfficeCount++;
+						break;
+				}
+
+				var wd = CreateWeekDayModel(dayType, weekDayStart);
 				weekDays.Add(wd);
 			}
 

@@ -15,7 +15,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		try
 		{
 			await using var db = await dbContextFactory.CreateDbContextAsync();
-			logService.Debug("Getting user setting data from database");
 			return await db.UserSettings.FirstOrDefaultAsync();
 		}
 		catch (Exception e)
@@ -36,7 +35,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 			await using var db = await dbContextFactory.CreateDbContextAsync();
 			var data = await db.UserSettings.FirstOrDefaultAsync();
 			if (data is null) return null;
-			logService.Debug($"Getting day counts from user settings. Home office days: {data.HomeOfficeDayCount}, Office days: {data.OfficeDayCount}.");
 			return (data.HomeOfficeDayCount,data.OfficeDayCount, data.LastUpdate);
 		}
 		catch(Exception e)
@@ -81,7 +79,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 
 			db.UserSettings.Add(us);
 			await db.SaveChangesAsync();
-			logService.Debug($"Id: {us.Id}, UserName: {us.UserName}, HomeOfficeDays: {us.HomeOfficeDays}, OfficeDays: {us.OfficeDays}, HomeOfficeDayCount: {us.HomeOfficeDayCount}, OfficeDayCount: {us.OfficeDayCount}, HomeOfficeTargetQuoted: {us.HomeOfficeTargetQuoted}, OfficeTargetQuoted: {us.OfficeTargetQuoted}, LastUpdate: {us.LastUpdate}");
 			return await db.UserSettings.FirstOrDefaultAsync();
 		}
 		catch (Exception e)
@@ -110,7 +107,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 
 			data.HomeOfficeDayCount++;
 			data.LastUpdate = DateTime.Today;
-			logService.Debug($"Add home office day to database. New count: {data.HomeOfficeDayCount} - Last update: {data.LastUpdate}");
 			await db.SaveChangesAsync();
 			return data.HomeOfficeDayCount;
 		}
@@ -166,7 +162,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		try
 		{
 			await using var db = await dbContextFactory.CreateDbContextAsync();
-			logService.Debug("Getting plannable days from database");
 			return db.PlannableDays.OrderBy(x => x.Date).ToList();
 		}
 		catch (Exception e)
@@ -187,7 +182,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		{
 			await using var db = await dbContextFactory.CreateDbContextAsync();
 			var day = await db.PlannableDays.FirstOrDefaultAsync(x => x.Date == dt);
-			logService.Debug($"Checking if plannable day entry for date {dt} exists.");
 			return day;
 		}
 		catch (Exception e)
@@ -218,7 +212,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 			};
 			await db.PlannableDays.AddAsync(day);
 			await db.SaveChangesAsync();
-			logService.Debug($"Created new plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
 			return day;
 		}
 		catch (Exception e)
@@ -247,7 +240,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 
 			db.PlannableDays.Remove(day);
 			await db.SaveChangesAsync();
-			logService.Debug($"Deleted plannable day entry #{day.Id} on date {day.Date} with type {day.Type}");
 			return true;
 		}
 		catch (Exception e)
