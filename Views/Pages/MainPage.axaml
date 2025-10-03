@@ -83,23 +83,42 @@
                     </fluent:TabViewItem>
 
                     <!-- Vorhersage Statistiken -->
-                    <fluent:TabViewItem Header="Vorhersage (Statistiken)" FontFamily="{DynamicResource UrbanistFont}" IsClosable="False">
-                        <Grid RowDefinitions="*,Auto" Margin="10" RowSpacing="5">
-	                        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <fluent:TabViewItem
+	                    Header="Vorhersage (Statistiken)"
+	                    FontFamily="{DynamicResource UrbanistFont}"
+	                    IsClosable="False"
+	                >
+                        <Grid
+	                        RowDefinitions="*,Auto"
+	                        Margin="10"
+	                        RowSpacing="5"
+	                    >
+	                        <ScrollViewer
+		                        Grid.Row="0"
+		                        HorizontalScrollBarVisibility="Disabled"
+		                        VerticalScrollBarVisibility="Auto"
+		                    >
 		                        <ItemsControl
 			                        ItemsSource="{Binding CalculatedWeekModels}"
 			                        Margin="0 10"
 		                        >
 			                        <ItemsControl.ItemsPanel>
 				                        <ItemsPanelTemplate>
-					                        <StackPanel Orientation="Vertical" Spacing="5" />
+					                        <StackPanel
+						                        Orientation="Vertical"
+						                        Spacing="5"
+						                    />
 				                        </ItemsPanelTemplate>
 			                        </ItemsControl.ItemsPanel>
 			                        <ItemsControl.ItemTemplate>
-				                        <DataTemplate DataType="models:CalculatedWeekModel">
+				                        <DataTemplate
+					                        DataType="models:CalculatedWeekModel"
+					                    >
 					                        <listcontrols:CalculatedWeekListControl
 						                        HomeOfficeDays="{Binding HomeOfficeDays}"
 						                        OfficeDays="{Binding OfficeDays}"
+						                        HomeOfficeTargetQuoted="{Binding HomeOfficeTargetQuoted}"
+						                        OfficeTargetQuoted="{Binding OfficeTargetQuoted}"
 						                        WeekName="{Binding WeekName}"
 						                        StartWeekDateTime="{Binding WeekStartDate}"
 						                        EndWeekDateTime="{Binding WeekEndDate}"
@@ -114,7 +133,7 @@
 		                        Content="Weitere Woche anzeigen"
 		                        HorizontalAlignment="Stretch"
 		                        FontSize="12"
-		                        Command="{Binding AddNewCalculatedWeekModelCommand}"
+		                        Command="{Binding AddNewCalculatedWeekCommand}"
 		                    />
                         </Grid>
                     </fluent:TabViewItem>

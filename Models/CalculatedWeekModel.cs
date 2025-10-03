@@ -10,6 +10,8 @@ public sealed class CalculatedWeekModel
 	public string WeekName { get; set; } = string.Empty;
 	public uint HomeOfficeDays { get; set; }
 	public uint OfficeDays { get; set; }
+	public uint HomeOfficeTargetQuoted { get; set; }
+	public uint OfficeTargetQuoted { get; set; }
 
 	public DateTime WeekStartDate => WeekDays[0].Date;
 	public DateTime WeekEndDate => WeekDays[^1].Date;

@@ -10,12 +10,14 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	private readonly LogService _logService;
 	private readonly DatabaseService _databaseService;
 	private readonly MainWindowService _mainWindowService;
+	private readonly CalculateWeekService _calculateWeekService;
 
-    public MainPageViewModel(DatabaseService ds, LogService lc, MainWindowService mws)
+    public MainPageViewModel(DatabaseService ds, LogService lc, MainWindowService mws, CalculateWeekService cws)
     {
 	    _logService = lc;
 	    _databaseService = ds;
 	    _mainWindowService = mws;
+	    _calculateWeekService = cws;
     }
 
     /// <summary>
@@ -24,6 +26,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     public async Task InitializeAsync()
     {
+	    await ReCalculateWeeksAsync();
 	    await RefreshStatisticsAsync();
 	    await LoadPlannableDaysAsync();
 	    _logService.Debug($"Initialized with HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Plannable Days Count: {PlannableDays.Count}, CanAddCurrentDay: {CanAddCurrentDay}");
@@ -31,90 +34,31 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     #region CALCULATED WEEKS
 
-    private CalculatedWeekModel _loadModelDebug = new()
-    {
-	    WeekName = "Woche 2",
-	    HomeOfficeDays = 55,
-	    OfficeDays = 75,
-	    WeekDays = [
-		    new ()
-		    {
-			    Type = DayType.HOME,
-			    Date = new DateTime(2025, 1, 1),
-			    HexColor = "#4CAF50"
-		    },
-		    new ()
-		    {
-			    Type = DayType.HOME,
-			    Date = new DateTime(2025, 2, 10),
-			    HexColor = "#F44336"
-		    },
-		    new ()
-		    {
-			    Type = DayType.HOME,
-			    Date = new DateTime(2025, 3, 20),
-			    HexColor = "#2196F3"
-		    },
-		    new()
-		    {
-			    Type = DayType.HOME,
-			    Date = new DateTime(2025, 4, 15),
-			    HexColor = "#FFEB3B"
-		    },
-		    new()
-		    {
-			    Type = DayType.HOME,
-			    Date = new DateTime(2025, 5, 15),
-			    HexColor = "#FFEB3B"
-		    }
-	    ]
-    };
-
     [ObservableProperty]
-    private ObservableCollection<CalculatedWeekModel> _calculatedWeekModels = [
-	    new()
-	    {
-		    WeekName = "Woche 1",
-		    HomeOfficeDays = 50,
-		    OfficeDays = 30,
-		    WeekDays = [
-			    new ()
-			    {
-				    Type = DayType.HOME,
-				    Date = new DateTime(2025, 8, 1),
-				    HexColor = "#4CAF50"
-			    },
-			    new ()
-			    {
-				    Type = DayType.HOME,
-				    Date = new DateTime(2025, 8, 10),
-				    HexColor = "#F44336"
-			    },
-			    new ()
-			    {
-				    Type = DayType.HOME,
-				    Date = new DateTime(2025, 8, 20),
-				    HexColor = "#2196F3"
-			    },
-			    new()
-			    {
-				    Type = DayType.HOME,
-				    Date = new DateTime(2025, 9, 15),
-				    HexColor = "#FFEB3B"
-			    },
-			    new()
-			    {
-				    Type = DayType.HOME,
-				    Date = new DateTime(2025, 10, 15),
-				    HexColor = "#FFEB3B"
-			    }
-		    ]
-	    }
-    ];
+    private ObservableCollection<CalculatedWeekModel> _calculatedWeekModels;
 
+    /// <summary>
+    /// Asynchronously recalculates the weeks by invoking the calculation service and updates
+    /// the collection of calculated week models in the ViewModel.
+    /// </summary>
+    private async Task ReCalculateWeeksAsync()
+    {
+	    var cws = await _calculateWeekService.CalculateWeeksAsync();
+	    if (cws is null) return;
+	    CalculatedWeekModels = new ObservableCollection<CalculatedWeekModel>(cws);
+    }
+
+    /// <summary>
+    /// Asynchronously adds a new calculated week using the CalculateWeekService and updates the collection
+    /// of CalculatedWeekModels if the calculation produces a valid result.
+    /// </summary>
     [RelayCommand]
-    private void AddNewCalculatedWeekModel()
-	    => CalculatedWeekModels.Add(_loadModelDebug);
+    private async Task AddNewCalculatedWeekAsync()
+    {
+	    var cw = await _calculateWeekService.CalculateNextWeekAsync();
+	    if (cw is null) return;
+	    CalculatedWeekModels = new ObservableCollection<CalculatedWeekModel>(CalculatedWeekModels.Append(cw));
+    }
 
     #endregion
 
@@ -202,6 +146,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    if (entryResult > 0)
 		    {
 			    await RefreshStatisticsAsync();
+			    await ReCalculateWeeksAsync();
 			    await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
 		    }
 		    else
@@ -227,6 +172,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    PlannableDays = new ObservableCollection<DbPlannableDay>(plannableDays ?? []);
     }
 
+    #endregion
+
+    #region DELETE PLANNABLE DAY
+
     /// <summary>
     /// Asynchronously shows a confirmation dialog to delete a plannable day and processes the deletion if confirmed.
     /// </summary>
@@ -247,8 +196,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    var dialogResult = await dialog.ShowAsyncCorrectly();
 	    if(dialogResult == ContentDialogResult.Primary)
 	    {
-		    await _databaseService.DeletePlannableDayAsync(id);
+		    await _databaseService.DeletePlannableDayAsync(id); // TODO: remove entry from list instead of load the hole fucking list again
 		    await LoadPlannableDaysAsync();
+		    await ReCalculateWeeksAsync();
 	    }
 
 	    DisableBlurEffect();
@@ -297,7 +247,8 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    if (entry is not null)
 			    {
 				    success = true;
-				    await LoadPlannableDaysAsync();
+				    await LoadPlannableDaysAsync(); // TODO: add entry to list instead of load the hole list again
+				    await ReCalculateWeeksAsync();
 				    await DialogHelper.ShowDialogAsync("Eintrag hinzugefügt", "Eintrag wurde erfolgreich gespeichert.", DialogType.SUCCESS);
 			    }
 			    else
