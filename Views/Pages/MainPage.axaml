@@ -48,6 +48,8 @@
 				            Grid.Column="0"
 				            HomeOfficeDays="{Binding HomeOfficeDays}"
 				            OfficeDays="{Binding OfficeDays}"
+				            HomeOfficeQuote="{Binding HomeOfficeQuote}"
+				            OfficeQuote="{Binding OfficeQuote}"
 				            AddButtonEnabled="{Binding CanAddCurrentDay}"
 				            AddButtonVisible="{Binding CanAddCurrentDay}"
 				            AddButtonClicked="RequestShowAddCurrentDayDialog"

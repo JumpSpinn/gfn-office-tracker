@@ -52,7 +52,39 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 		{
 			control.ScheduleCalculationStatistic();
 		});
+
+		HomeOfficeQuoteProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
+		{
+			control.ScheduleCalculationStatistic();
+		});
+
+		OfficeQuoteProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
+		{
+			control.ScheduleCalculationStatistic();
+		});
 	}
+
+	#region QUOTE
+
+	public static readonly StyledProperty<uint> HomeOfficeQuoteProperty =
+		AvaloniaProperty.Register<StatisticControl, uint>(nameof(HomeOfficeQuote), defaultValue: 0);
+
+	public uint HomeOfficeQuote
+	{
+		get => GetValue(HomeOfficeQuoteProperty);
+		set => SetValue(HomeOfficeQuoteProperty, value);
+	}
+
+	public static readonly StyledProperty<uint> OfficeQuoteProperty =
+		AvaloniaProperty.Register<StatisticControl, uint>(nameof(OfficeQuote), defaultValue: 0);
+
+	public uint OfficeQuote
+	{
+		get => GetValue(OfficeQuoteProperty);
+		set => SetValue(OfficeQuoteProperty, value);
+	}
+
+	#endregion
 
 	#region STATS
 
@@ -183,12 +215,10 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 		_homeStackPanel.SetValue(ToolTip.TipProperty, $"{HomeOfficeDays} Tage");
 		_officeStackPanel.SetValue(ToolTip.TipProperty, $"{OfficeDays} Tage");
 
-		if (hoPercent > 50.00)
-			ShowErrorBorderIcon();
-		else if (hoPercent == 50.00)
-			ShowWarningBorderIcon();
-		else
+		if(hoPercent < (HomeOfficeQuote + 1))
 			HideAllBorderIcons();
+		else
+			ShowErrorBorderIcon();
 	}
 
 	#endregion

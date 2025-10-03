@@ -7,14 +7,16 @@
 public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 {
 	private readonly DatabaseService _databaseService;
+	private readonly MainWindowService _mainWindowService;
 
-	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, WizardBalancePageViewModel balance, DatabaseService dbs)
+	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, WizardBalancePageViewModel balance, DatabaseService dbs, MainWindowService mws)
 	{
 		WizardNamePageViewModel = name;
 		WizardDaysPageViewModel = days;
 		WizardDataPageViewModel = data;
 		WizardBalancePageViewModel = balance;
 		_databaseService = dbs;
+		_mainWindowService = mws;
 	}
 
 	[ObservableProperty]
@@ -86,8 +88,11 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 
 		DisableBlurEffect();
 
-		if(dialogResult == ContentDialogResult.Primary && userSettings is not null)
+		if (dialogResult == ContentDialogResult.Primary && userSettings is not null)
+		{
+			await _mainWindowService.SetRuntimeDataAsync();
 			ChangePage(Page.MAIN);
+		}
 	}
 
 	[RelayCommand]

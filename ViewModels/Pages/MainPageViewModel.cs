@@ -24,13 +24,20 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     public async Task InitializeAsync()
     {
-	    await _mainWindowService.SetRuntimeDataAsync();
 	    await RefreshStatisticsAsync();
 	    await LoadPlannableDaysAsync();
 	    _logService.Debug($"Initialized with HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Plannable Days Count: {PlannableDays.Count}, CanAddCurrentDay: {CanAddCurrentDay}");
     }
 
+    #region QUOTE GETTER
 
+    public uint HomeOfficeQuote
+	    => _mainWindowService.RuntimeData.HomeOfficeTargetQuoted;
+
+    public uint OfficeQuote
+	    => _mainWindowService.RuntimeData.OfficeTargetQuoted;
+
+    #endregion
 
     #region CURRENT STATS
 

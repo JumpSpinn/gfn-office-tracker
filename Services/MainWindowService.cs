@@ -42,10 +42,31 @@ public sealed class MainWindowService(LogService logService, DatabaseService dat
 		}
 	}
 
+	#region RUNTIME DATA
+
+	/// <summary>
+	/// Indicates whether the runtime data has been initialized.
+	/// This flag is used to prevent reinitialization of runtime data in the application.
+	/// </summary>
+	private bool _runtimeDataInitialized;
+
 	public RuntimeData RuntimeData { get; private set; } = new();
 
+	/// <summary>
+	/// Asynchronously sets the runtime data by fetching user-specific settings from the database.
+	/// Verifies if the runtime data has already been initialized to avoid redundant operations.
+	/// Updates the runtime data with user preferences such as user name, office targets, and selected days.
+	/// Logs progress and status messages during execution.
+	/// Throws an exception if user settings could not be retrieved.
+	/// </summary>
 	public async Task SetRuntimeDataAsync()
 	{
+		if (_runtimeDataInitialized)
+		{
+			logService.Debug("Runtime data already set. Skipping.");
+			return;
+		}
+
 		var userSettings = await databaseService.GetUserSettingAsync();
 		if (userSettings is null)
 			throw new Exception("User settings could not be retrieved.");
@@ -56,5 +77,10 @@ public sealed class MainWindowService(LogService logService, DatabaseService dat
 		RuntimeData.HomeOfficeDays = userSettings.HomeOfficeDays;
 		RuntimeData.OfficeDays = userSettings.OfficeDays;
 		logService.Debug("Runtime data set successfully.");
+		_runtimeDataInitialized = true;
 	}
+
+	#endregion
+
+
 }

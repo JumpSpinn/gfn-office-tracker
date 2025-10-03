@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
-using Services;
-
 /// <summary>
 /// Represents the ViewModel for the splash screen page of the application.
 /// Responsible for initializing the application's essential services and operations
@@ -33,6 +31,7 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	{
 		_loadQueue.Enqueue(InitializeLoggerAsync);
 		_loadQueue.Enqueue(InitializeDatabaseAsync);
+		_loadQueue.Enqueue(LoadRuntimeDataAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
 		_loadQueue.Enqueue(InitializeDialogsAsync);
 		await TriggerNextLoadStep();
@@ -224,6 +223,35 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 		catch (Exception e)
 		{
 			DisplayInfoBar("Critical Error", $"While initializing Dialogs:\n{e.Message}", InfoBarSeverity.Error);
+			return false;
+		}
+	}
+
+	/// <summary>
+	/// Loads essential runtime data required for application operation.
+	/// This method initializes and sets up runtime configurations by invoking dependent
+	/// services and handles errors that may occur during the process.
+	/// </summary>
+	/// <returns>
+	/// A task that represents the asynchronous operation. The task's result is true if
+	/// the runtime data is successfully loaded; otherwise, false in case of errors.
+	/// </returns>
+	public async Task<bool> LoadRuntimeDataAsync()
+	{
+		try
+		{
+			ShowInfiniteProgressBar = true;
+			LoadingText = "Load Runtime Data..";
+
+			await _mainWindowService.SetRuntimeDataAsync();
+
+			_logService.Info("Runtime Data was loaded.");
+			ShowInfiniteProgressBar = false;
+			return true;
+		}
+		catch (Exception e)
+		{
+			DisplayInfoBar("Critical Error", $"While loading Runtime Data:\n{e.Message}", InfoBarSeverity.Error);
 			return false;
 		}
 	}
