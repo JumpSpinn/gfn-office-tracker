@@ -82,6 +82,8 @@ public sealed partial class MainPageViewModel : ViewModelBase
     [ObservableProperty]
     private bool _canAddCurrentDay;
 
+    private bool _notifyToAddCurrentDay;
+
     /// <summary>
     /// Asynchronously refreshes statistical data by retrieving and updating the counts for
     /// home office days, office days, and determining whether the current day can be added
@@ -101,11 +103,17 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
 	    HomeOfficeDays = data.Value.homeOfficeCount;
 	    OfficeDays = data.Value.officeCount;
-	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.Value.lastUpdate);
 
 		#if DEBUG
 	    CanAddCurrentDay = true;
+	    _notifyToAddCurrentDay = true;
+	    #else
+	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.Value.lastUpdate);
+	    _notifyToAddCurrentDay = CanAddCurrentDay;
 		#endif
+
+	    if (_notifyToAddCurrentDay)
+		    await DialogHelper.ShowDialogAsync($"Willkommen zurück, {_mainWindowService.RuntimeData.UserName}", "Vergiss nicht den heutigen Tag einzutragen!", DialogType.INFO);
     }
 
     #endregion
@@ -118,8 +126,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     public async Task ShowAddCurrentDayDialogAsync()
     {
-	    EnableBlurEffect();
-
 	    var dayForm = new CurrentDayForm();
 	    var dialog = new ContentDialog()
 	    {
@@ -142,16 +148,16 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    entryResult = await _databaseService.IncreaseHomeOfficeCountAsync();
 		    else
 			    entryResult = await _databaseService.IncreaseOfficeCountAsync();
-		    if (entryResult > 0)
-		    {
-			    await RefreshStatisticsAsync();
-			    await ReCalculateWeeksAsync();
-			    await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
-		    }
-		    else
-			    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
 	    }
-	    DisableBlurEffect();
+
+	    if (entryResult > 0)
+	    {
+		    await RefreshStatisticsAsync();
+		    await ReCalculateWeeksAsync();
+		    await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
+	    }
+	    else
+		    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
     }
 
     #endregion
@@ -203,8 +209,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// <param name="id">The unique identifier of the plannable day to be deleted.</param>
     public async Task ShowDeletePlannableDayDialogAsync(uint id)
     {
-	    EnableBlurEffect();
-
 	    var dialog = new ContentDialog()
 	    {
 		    Title = "Geplanten Tag löschen",
@@ -226,8 +230,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    await ReCalculateWeeksAsync();
 		    }
 	    }
-
-	    DisableBlurEffect();
     }
 
     /// <summary>
@@ -236,8 +238,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     public async Task ShowAddPlannableDayDialogAsync()
     {
-	    EnableBlurEffect();
-
 	    var dayForm = new PlannableDayForm();
 	    var dialog = new ContentDialog()
 	    {
@@ -281,12 +281,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			success = true;
 
 	    if (!success)
-	    {
 		    await ShowAddPlannableDayDialogAsync();
-		    return;
-	    }
-
-	    DisableBlurEffect();
     }
 
     #endregion

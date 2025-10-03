@@ -62,8 +62,6 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 	[RelayCommand]
 	private async Task NextSetupPage()
 	{
-		EnableBlurEffect();
-
 		var dialogResult = await DialogHelper.ShowDialogAsync(
 			"Setup-Assistent",
 			"Hast du alle Daten auf Richtigkeit geprüft? Du kannst danach keine Änderungen mehr vornehmen!",
@@ -85,8 +83,6 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 
 		if(userSettings is null)
 			await DialogHelper.ShowDialogAsync("Fehler", "Beim Speichern der Daten ist ein Fehler aufgetreten.", DialogType.ERROR);
-
-		DisableBlurEffect();
 
 		if (dialogResult == ContentDialogResult.Primary && userSettings is not null)
 		{

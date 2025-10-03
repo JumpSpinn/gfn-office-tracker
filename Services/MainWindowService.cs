@@ -74,6 +74,4 @@ public sealed class MainWindowService(LogService logService)
 	}
 
 	#endregion
-
-
 }
