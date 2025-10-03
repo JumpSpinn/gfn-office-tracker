@@ -148,16 +148,16 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    entryResult = await _databaseService.IncreaseHomeOfficeCountAsync();
 		    else
 			    entryResult = await _databaseService.IncreaseOfficeCountAsync();
-	    }
 
-	    if (entryResult > 0)
-	    {
-		    await RefreshStatisticsAsync();
-		    await ReCalculateWeeksAsync();
-		    await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
+		    if (entryResult > 0)
+		    {
+			    await RefreshStatisticsAsync();
+			    await ReCalculateWeeksAsync();
+			    await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
+		    }
+		    else
+			    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
 	    }
-	    else
-		    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
     }
 
     #endregion
