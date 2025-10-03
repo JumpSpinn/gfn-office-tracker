@@ -16,11 +16,19 @@
     <ApplicationIcon>Assets/logo_white.ico</ApplicationIcon>
   </PropertyGroup>
 
-    <ItemGroup>
-        <Folder Include="Assets\Fonts\" />
-        <AvaloniaResource Include="Assets\**" />
-        <Folder Include="Assets\Images\" />
-    </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'!='Debug|AnyCPU'">
+		<SelfContained>true</SelfContained>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	</PropertyGroup>
+
+	<ItemGroup>
+			<Folder Include="Assets\Fonts\" />
+			<AvaloniaResource Include="Assets\**" />
+			<Folder Include="Assets\Images\" />
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoRegisterInject" Version="1.4.1" />
