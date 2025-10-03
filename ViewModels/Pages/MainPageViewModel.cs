@@ -191,9 +191,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
 			    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
 		    else if (dayForm.SelectedDayType == DayType.NONE)
 			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
-		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsHomeOfficeDay((DateTime)dayForm.SelectedDate!))
+		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowService.RuntimeData.HomeOfficeDays))
 			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.", DialogType.QUESTION);
-		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsOfficeDay((DateTime)dayForm.SelectedDate!))
+		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowService.RuntimeData.OfficeDays))
 			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.", DialogType.QUESTION);
 		    else
 		    {
