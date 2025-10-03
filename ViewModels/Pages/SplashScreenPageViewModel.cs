@@ -155,9 +155,9 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Database..";
 
-			var context = await _dbContextFactory.CreateDbContextAsync();
-			await context.Database.MigrateAsync();
-			_hasData = context.UserSettings.Any();
+			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			await db.Database.MigrateAsync();
+			_hasData = db.UserSettings.Any();
 
 			_logService.Info("Database initialized.");
 			ShowInfiniteProgressBar = false;
@@ -226,24 +226,25 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	}
 
 	/// <summary>
-	/// Loads essential runtime data required for application operation.
-	/// This method initializes and sets up runtime configurations by invoking dependent
-	/// services and handles errors that may occur during the process.
+	/// Loads necessary runtime data for the application asynchronously. This includes retrieving
+	/// user-specific settings from the database and preparing the application for runtime operations.
 	/// </summary>
-	/// <returns>
-	/// A task that represents the asynchronous operation. The task's result is true if
-	/// the runtime data is successfully loaded; otherwise, false in case of errors.
-	/// </returns>
-	public async Task<bool> LoadRuntimeDataAsync()
+	private async Task<bool> LoadRuntimeDataAsync()
 	{
 		try
 		{
 			ShowInfiniteProgressBar = true;
-			LoadingText = "Load Runtime Data..";
+			LoadingText = "Check for Runtime Data..";
 
-			await _mainWindowService.SetRuntimeDataAsync();
+			await using var db = await _dbContextFactory.CreateDbContextAsync();
+			var userSettings = await db.UserSettings.FirstOrDefaultAsync();
+			if (userSettings is not null)
+			{
+				LoadingText = "Runtime Data found. Loading..";
+				_mainWindowService.SetRuntimeDataAsync(userSettings);
+				_logService.Info("Runtime Data was loaded.");
+			}
 
-			_logService.Info("Runtime Data was loaded.");
 			ShowInfiniteProgressBar = false;
 			return true;
 		}

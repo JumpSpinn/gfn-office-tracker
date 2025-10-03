@@ -5,7 +5,7 @@
 /// Provides methods to initialize and validate the state of the main application window.
 /// </summary>
 [RegisterSingleton]
-public sealed class MainWindowService(LogService logService, DatabaseService databaseService)
+public sealed class MainWindowService(LogService logService)
 {
 	private bool _initialized;
 
@@ -53,29 +53,23 @@ public sealed class MainWindowService(LogService logService, DatabaseService dat
 	public RuntimeData RuntimeData { get; private set; } = new();
 
 	/// <summary>
-	/// Asynchronously sets the runtime data by fetching user-specific settings from the database.
-	/// Verifies if the runtime data has already been initialized to avoid redundant operations.
-	/// Updates the runtime data with user preferences such as user name, office targets, and selected days.
-	/// Logs progress and status messages during execution.
-	/// Throws an exception if user settings could not be retrieved.
+	/// Updates the runtime data with the provided values, including user information,
+	/// work schedule details, and target quotas for home office and office days.
+	/// Marks the runtime data as initialized after setting the new values.
 	/// </summary>
-	public async Task SetRuntimeDataAsync()
+	public void SetRuntimeDataAsync(DbUserSettings data)
 	{
 		if (_runtimeDataInitialized)
 		{
-			logService.Debug("Runtime data already set. Skipping.");
+			logService.Debug("Runtime data already set.");
 			return;
 		}
 
-		var userSettings = await databaseService.GetUserSettingAsync();
-		if (userSettings is null)
-			throw new Exception("User settings could not be retrieved.");
-
-		RuntimeData.UserName = userSettings.UserName;
-		RuntimeData.HomeOfficeTargetQuoted = userSettings.HomeOfficeTargetQuoted;
-		RuntimeData.OfficeTargetQuoted = userSettings.OfficeTargetQuoted;
-		RuntimeData.HomeOfficeDays = userSettings.HomeOfficeDays;
-		RuntimeData.OfficeDays = userSettings.OfficeDays;
+		RuntimeData.UserName = data.UserName;
+		RuntimeData.HomeOfficeTargetQuoted = data.HomeOfficeTargetQuoted;
+		RuntimeData.OfficeTargetQuoted = data.OfficeTargetQuoted;
+		RuntimeData.HomeOfficeDays = data.HomeOfficeDays;
+		RuntimeData.OfficeDays = data.OfficeDays;
 		_runtimeDataInitialized = true;
 	}
 
