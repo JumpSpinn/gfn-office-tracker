@@ -19,7 +19,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return null;
@@ -39,7 +39,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch(Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return null;
@@ -83,7 +83,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return null;
@@ -112,7 +112,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return 0;
@@ -132,13 +132,12 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 
 			data.OfficeDayCount++;
 			data.LastUpdate = DateTime.Today;
-			logService.Debug($"Add office day to database. New count: {data.OfficeDayCount} - Last update: {data.LastUpdate}");
 			await db.SaveChangesAsync();
 			return data.OfficeDayCount;
 		}
 		catch (Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return 0;
@@ -166,7 +165,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return null;
@@ -186,7 +185,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return null;
@@ -216,7 +215,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return null;
@@ -244,7 +243,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Error(e.Message);
+			logService.Exception(e);
 		}
 
 		return false;

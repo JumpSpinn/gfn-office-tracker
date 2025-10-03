@@ -51,8 +51,6 @@ public sealed partial class SplashScreenPageViewModel : ViewModelBase
 	/// </summary>
 	private async Task TriggerNextLoadStep()
 	{
-		_logService.Debug("Triggering next load step...");
-
 		while (_loadQueue.Count > 0)
 		{
 			LoadingText = "";

@@ -76,7 +76,6 @@ public sealed class MainWindowService(LogService logService, DatabaseService dat
 		RuntimeData.OfficeTargetQuoted = userSettings.OfficeTargetQuoted;
 		RuntimeData.HomeOfficeDays = userSettings.HomeOfficeDays;
 		RuntimeData.OfficeDays = userSettings.OfficeDays;
-		logService.Debug("Runtime data set successfully.");
 		_runtimeDataInitialized = true;
 	}
 

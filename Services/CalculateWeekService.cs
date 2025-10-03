@@ -182,7 +182,7 @@ public sealed class CalculateWeekService
 		}
 		catch (Exception e)
 		{
-			_logService.Error(e.Message);
+			_logService.Exception(e);
 		}
 
 		return null;

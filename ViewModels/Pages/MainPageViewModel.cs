@@ -29,7 +29,6 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    await ReCalculateWeeksAsync();
 	    await RefreshStatisticsAsync();
 	    await LoadPlannableDaysAsync();
-	    _logService.Debug($"Initialized with HomeOffice Days: {HomeOfficeDays}, Office Days: {OfficeDays}, Plannable Days Count: {PlannableDays.Count}, CanAddCurrentDay: {CanAddCurrentDay}");
     }
 
     #region CALCULATED WEEKS

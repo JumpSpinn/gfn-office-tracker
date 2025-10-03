@@ -22,12 +22,10 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
 		// the first page is the splash screen
 		_currentPage = sp.GetRequiredService<SplashScreenPageViewModel>();
-		lc.Info("Splash screen page loaded.");
 
 		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
 		{
 			CurrentPage = GetCurrentPageViewModel(message.Value);
-			lc.Debug($"Page changed to {message.Value}.");
 		});
 	}
 
