@@ -1,44 +1,44 @@
-# GFN Office-Tracker
+# Office-Tracker
 
-Der **GFN Office-Tracker** ist eine intuitive und benutzerfreundliche Desktop-Anwendung, entwickelt mit Avalonia UI, um Ihnen die Verwaltung und Planung Ihrer Arbeitsorte zu erleichtern. Egal, ob Sie Ihre Home-Office-Tage im Blick behalten oder Ihre Präsenz im Büro effizient planen möchten – der Office-Tracker liefert Ihnen die notwendigen Statistiken und Prognosen, um Ihre Work-Life-Balance und Unternehmensanforderungen optimal zu managen.
+Der **Office-Tracker** wurde neben meiner aktuellen Umschulung zum Fachinformatiker Anwendungsentwicklung als kleines Nebenprojekt angefangen, damit meine anderen Mitschüler als auch meine Wenigkeit ein kleines Hilfsprogramm haben um unsere Anwesenheitsquote im Blick zu haben und um diese zu planen mit Berechnungen für die kommenden x-Wochen. Der Plan mit dieser Desktop-Anwendung ist es, dies stetig weiterzuentwickeln und es als Open-Source-Projekt anzubieten, damit auch andere die Lust drauf haben zu unterstützen mit Ideen & Co. um es auch noch außerhalb meiner aktuellen Umschulung anbieten zu können. 
 
 ## ✨ Features im Überblick
 
 ### 🚀 Schneller Start mit dem Setup-Assistenten
-Beim ersten Start führt Sie ein einfacher Assistent durch die notwendigen Einstellungen. Geben Sie Ihren Namen, Ihre Ziel-Quote für Home-Office/Büro und Ihre Standard-Arbeitstage an, um sofort mit der Verfolgung zu beginnen. Sie können auch initiale Arbeitszeiten eingeben, um Ihre Statistik zu starten.
+Beim ersten Start führt dich ein einfacher Assistent durch die paar notwendigen Schritte durch, um Anfangsdaten zu haben, mit dem die Anwendung arbeiten kann. Du wirst ein Namen angeben können, deine Tage an denen du standardmäßig HomeOffice hast (Mo. - Fr.) sowie deine Ziel-Quote die du mindestens/höchstens haben kannst, ohne in Schwierigkeiten zu kommen. Am Ende bekommt man noch eine kleine Zusammenfassung und kann seine angegebenen Daten nochmals überprüfen & gegebenenfalls auch zu den Schritten zurückkehren zm noch Änderungen vornehmen zu können.
 
 ![Setup-Assistent Start](Assets/Screenshots/wizard.png)
 
 ### 🗓️ Tägliche Anwesenheit erfassen
-Tragen Sie spielend leicht ein, ob Sie heute im Home Office oder im Büro waren. Ein Klick genügt, um Ihre Statistik zu aktualisieren.
+Trage ganz einfach jeden Tag maximal 1x ein, ob du dich im HomeOffice oder am Standort/Büro befindest. Dazu reichen 2 einfache Klicks aus - fertig!
 
 ![Setup-Assistent Start](Assets/Screenshots/add_current_day.png)
 
-### 📊 Detaillierte Anwesenheits-Statistiken
-Behalten Sie Ihre Office- und Home-Office-Tage stets im Blick. Die Anwendung berechnet automatisch Ihre aktuellen Quoten und zeigt Ihnen übersichtlich, wie Sie im Verhältnis zu Ihrer Zielquote stehen.
+### 📊 Anwesenheits-Statistiken
+Im oberen Bereich der Anwendung hast du jederzeit deine aktuelle Anwesenheits-Statistik im Auge und siehst mit einem Blick, wie das Verhältnis zu deiner Zielquote ausschaut.
 
 ![Setup-Assistent Start](Assets/Screenshots/stats_overview.png)
 
-### 🔮 Intelligente Wochen-Vorhersage
-Basierend auf Ihrer aktuellen Anwesenheitsstatistik und Ihren geplanten Tagen, berechnet der Office-Tracker Prognosen für die kommenden Wochen. So sehen Sie frühzeitig, wie Sie Ihre Zielquote erreichen können und welche Tage Sie im Home Office oder Büro verbringen sollten.
+### 🔮 Wochen-Vorhersage (Statistiken)
+Basierend auf deine aktuelle Anwesenheits-Statistik und mit deinen geplanten Tagen, berechnet die Anwendung eine Art Prognose für die kommenden Wochen aus. So siehst du frühzeitig und ohne selbst rechnen zu müssen, wann deine Zielquote wieder erreicht ist. Weitere Details und Angaben sind hier bereits geplant.
 
 ![Setup-Assistent Start](Assets/Screenshots/calculated_weeks.png)
 
-### 📝 Tage vorausschauend planen
-Planen Sie zukünftige Home-Office- oder Bürotage und lassen Sie diese direkt in die Vorhersage Ihrer Statistiken einfließen. Das hilft Ihnen, flexibel auf Änderungen zu reagieren und Ihre Quoten zu steuern.
+### 📝 Tage planen
+Du hast die Möglichkeit wie oben bereits kurz angeschnitten - Tage zu planen. Trage im vorraus bereits ein ob du einen standardmäßigen HomeOffice Tag zu einem Standort/Büro Tag - oder andersrum machst. Dies soll dabei helfen deine Planung hinsichtlich zu deiner Zielquote besser zu managen ohne viel Stress den man eh zu genüge im Alltag bereits hat.
 
 ![Setup-Assistent Start](Assets/Screenshots/plannable_days.png)
 
 ### 💾 Lokale Datenspeicherung
-Alle Ihre Daten werden sicher in einer lokalen SQLite-Datenbank auf Ihrem System gespeichert. Keine Cloud, volle Kontrolle über Ihre Informationen.
+Die Daten werden auf keinen externen Server gespeichert sondern ist mit einer SQL-Lite Datenbank versehen. Keine Cloud oder sonstiges - alle Informationen sind also zu 100% unter deiner Kontrolle. Du brauchst einen neuen Datensatz? Kein Problem - einfach die Data-Bash Datei entfernen/verschieben und das Programm führt dich erneut durch den Assistenten.
 
 ## 🛠️ Installation
 
-1.  Laden Sie die neueste Version des GFN Office-Trackers für Ihr Betriebssystem von den [Releases](https://github.com/JumpSpinn/gfn-office-tracker/releases) herunter.
+1.  Laden die neueste Version vom Office-Tracker für dein Betriebssystem von den [Releases](https://github.com/JumpSpinn/gfn-office-tracker/releases) herunter.
     * `OfficeTracker-win-x64.exe` für Windows
     * `OfficeTracker-linux-x64` / `.zip` / `.tar.gz` für Linux
-2.  Entpacken Sie die heruntergeladene Datei (falls es eine .zip/.tar.gz ist).
-4.  Führen Sie die `OfficeTracker.exe` (Windows) oder die `OfficeTracker` ausführbare Datei (Linux) aus.
+2.  Entpacken ggbf. die heruntergeladene Datei (falls es eine .zip/.tar.gz ist).
+4.  Führe die `OfficeTracker.exe` (Windows) oder die `OfficeTracker` ausführbare Datei (Linux) aus.
 
 ---
 
