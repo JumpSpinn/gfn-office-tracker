@@ -119,6 +119,33 @@ public sealed class CalculateWeekService
 	}
 
 	/// <summary>
+	/// Calculates the specified number of weekly schedules asynchronously.
+	/// This method generates an array of calculated weekly data by repeatedly
+	/// invoking the logic for computing the next week based on predefined settings.
+	/// </summary>
+	public async Task<CalculatedWeekModel[]?> CalculateWeeksCountAsync(decimal weeksToCalculate)
+	{
+		try
+		{
+			List<CalculatedWeekModel> cwsTotal = new();
+
+			for (int i = 0; i < weeksToCalculate; i++)
+			{
+				var cw = await CalculateNextWeekAsync();
+				if (cw is not null)
+					cwsTotal.Add(cw);
+			}
+
+			return cwsTotal.ToArray();
+		}
+		catch (Exception e)
+		{
+			_logService.Exception(e);
+		}
+		return null;
+	}
+
+	/// <summary>
 	/// Asynchronously calculates the details of the next week, including start and end dates,
 	/// distribution of home office days, office days, and other related properties.
 	/// Constructs a new instance of <see cref="CalculatedWeekModel"/> based on the provided runtime data,

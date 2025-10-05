@@ -98,6 +98,7 @@
 							Grid.Column="0"
 							x:Name="AddButton"
 							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
 							FontSize="12"
 							Content="Neuen Tag planen"
 						/>
@@ -105,6 +106,7 @@
 							Grid.Column="1"
 							Margin="10 0 0 0"
 							x:Name="DeleteButton"
+							VerticalAlignment="Stretch"
 							HorizontalAlignment="Stretch"
 							FontSize="12"
 							Content="Löschen"

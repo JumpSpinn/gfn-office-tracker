@@ -86,6 +86,7 @@
 	                    Header="Vorhersage (Statistiken)"
 	                    FontFamily="{DynamicResource GlobalFont}"
 	                    IsClosable="False"
+	                    IsSelected="True"
 	                >
                         <Grid
 	                        RowDefinitions="*,Auto"
@@ -127,13 +128,34 @@
 			                        </ItemsControl.ItemTemplate>
 		                        </ItemsControl>
 	                        </ScrollViewer>
-	                        <Button
+	                        <Grid
 		                        Grid.Row="1"
-		                        Content="Weitere Woche anzeigen"
-		                        HorizontalAlignment="Stretch"
-		                        FontSize="12"
-		                        Command="{Binding AddNewCalculatedWeekCommand}"
-		                    />
+		                        ColumnDefinitions="Auto,*"
+		                        ColumnSpacing="10"
+		                    >
+		                        <NumericUpDown
+			                        Grid.Column="0"
+			                        TextAlignment="Center"
+			                        Watermark="Anzahl"
+			                        FontSize="11"
+			                        BorderThickness="1"
+			                        VerticalAlignment="Center"
+			                        HorizontalAlignment="Center"
+			                        HorizontalContentAlignment="Center"
+			                        VerticalContentAlignment="Center"
+			                        ShowButtonSpinner="False"
+			                        AllowSpin="False"
+			                        Value="{Binding CalculateWeeksCount}"
+		                        />
+		                        <Button
+			                        Grid.Column="1"
+			                        Content="Weitere Woche anzeigen"
+			                        HorizontalAlignment="Stretch"
+			                        VerticalAlignment="Stretch"
+			                        FontSize="12"
+			                        Command="{Binding AddNewCalculatedWeekCommand}"
+		                        />
+	                        </Grid>
                         </Grid>
                     </fluent:TabViewItem>
                 </fluent:TabView>

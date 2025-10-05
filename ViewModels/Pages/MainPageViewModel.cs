@@ -36,6 +36,9 @@ public sealed partial class MainPageViewModel : ViewModelBase
     [ObservableProperty] private ObservableCollection<CalculatedWeekModel> _calculatedWeekModels =
 	    new ObservableCollection<CalculatedWeekModel>();
 
+    [ObservableProperty]
+    private decimal? _calculateWeeksCount = 1;
+
     /// <summary>
     /// Asynchronously recalculates the weeks by invoking the calculation service and updates
     /// the collection of calculated week models in the ViewModel.
@@ -48,15 +51,28 @@ public sealed partial class MainPageViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Asynchronously adds a new calculated week using the CalculateWeekService and updates the collection
-    /// of CalculatedWeekModels if the calculation produces a valid result.
+    /// Asynchronously calculates new week data based on user-defined input or generates the next week if
+    /// no input is provided, and updates the collection of calculated weeks in the ViewModel.
     /// </summary>
     [RelayCommand]
     private async Task AddNewCalculatedWeekAsync()
     {
-	    var cw = await _calculateWeekService.CalculateNextWeekAsync();
-	    if (cw is null) return;
-	    CalculatedWeekModels = new ObservableCollection<CalculatedWeekModel>(CalculatedWeekModels.Append(cw));
+	    List<CalculatedWeekModel> cwsTotal = [];
+
+	    if (CalculateWeeksCount is not null)
+	    {
+		    var cws = await _calculateWeekService.CalculateWeeksCountAsync((decimal)CalculateWeeksCount);
+		    if(cws is not null)
+			    cwsTotal.AddRange(cws);
+	    }
+	    else
+	    {
+		    var single = await _calculateWeekService.CalculateNextWeekAsync();
+		    if(single is not null)
+			    cwsTotal.Add(single);
+	    }
+
+	    CalculatedWeekModels = new ObservableCollection<CalculatedWeekModel>(CalculatedWeekModels.Concat(cwsTotal));
     }
 
     #endregion
