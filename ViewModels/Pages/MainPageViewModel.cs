@@ -119,13 +119,12 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
 	    HomeOfficeDays = data.Value.homeOfficeCount;
 	    OfficeDays = data.Value.officeCount;
+	    _notifyToAddCurrentDay = CanAddCurrentDay;
 
 #if DEBUG
 	    CanAddCurrentDay = true;
-	    _notifyToAddCurrentDay = true;
 #else
 	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.Value.lastUpdate);
-	    _notifyToAddCurrentDay = CanAddCurrentDay;
 #endif
 
 	    if (_notifyToAddCurrentDay)
