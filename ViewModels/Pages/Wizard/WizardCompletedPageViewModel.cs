@@ -92,5 +92,6 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	private void PreviousSetupPage() => ChangePage(Page.WIZARD_DATA);
+	private void PreviousSetupPage()
+		=> ChangePage(Page.WIZARD_DATA);
 }

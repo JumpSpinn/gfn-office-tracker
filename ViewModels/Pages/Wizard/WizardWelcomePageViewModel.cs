@@ -8,5 +8,6 @@
 public sealed partial class WizardWelcomePageViewModel : ViewModelBase
 {
 	[RelayCommand]
-	private void NextSetupPage() => ChangePage(Page.WIZARD_NAME);
+	private void NextSetupPage()
+		=> ChangePage(Page.WIZARD_NAME);
 }

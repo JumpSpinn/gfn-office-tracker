@@ -2,14 +2,11 @@
     x:DataType="vm:MainPageViewModel"
     x:Class="OfficeTracker.Views.Pages.MainPage"
     xmlns:vm="using:OfficeTracker.ViewModels.Pages"
-    xmlns:listcontrols="using:OfficeTracker.Views.Controls.Lists"
-    xmlns:controls="using:OfficeTracker.Views.Controls"
-    xmlns:models="using:OfficeTracker.Models"
+    xmlns:pages="using:OfficeTracker.Views.Pages"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
     mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
     <Panel Effect="{Binding BlurEffect}">
 	    <Panel.Background>
@@ -20,147 +17,9 @@
 	    </Panel.Background>
 	    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
 		    <!-- Header -->
-            <Border Grid.Row="0" Margin="10" Padding="10" CornerRadius="4" BorderThickness="1">
-	            <Border.Background>
-		            <LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
-			            <GradientStop Color="#30FFFFFF" Offset="0.0"/>
-			            <GradientStop Color="#20FFFFFF" Offset="1.0"/>
-		            </LinearGradientBrush>
-	            </Border.Background>
-	            <Border.BorderBrush>
-		            <LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
-			            <GradientStop Color="#40FFFFFF" Offset="0.0"/>
-			            <GradientStop Color="#60FFFFFF" Offset="1.0"/>
-		            </LinearGradientBrush>
-	            </Border.BorderBrush>
-
-	            <StackPanel Spacing="8">
-		            <TextBlock Text="Anwesenheit-Statistik" FontSize="16" HorizontalAlignment="Center" FontWeight="DemiBold" />
-		            <Grid RowDefinitions="*" ColumnDefinitions="Auto, Auto" ColumnSpacing="6" HorizontalAlignment="Center">
-			            <Border Grid.Column="0" CornerRadius="4" Padding="6 2" BorderBrush="#003764" BorderThickness="1">
-				            <TextBlock Text="HomeOffice" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" LetterSpacing="0.25"  />
-			            </Border>
-			            <Border Grid.Column="1" CornerRadius="4" Padding="6 2" BorderBrush="#357a32" BorderThickness="1">
-				            <TextBlock Text="Standort" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" LetterSpacing="0.25"  />
-			            </Border>
-		            </Grid>
-		            <Grid x:Name="StatsGrid" ColumnDefinitions="*,Auto" ColumnSpacing="4" Margin="0 8 0 0">
-			            <controls:StatisticControl
-				            Grid.Column="0"
-				            HomeOfficeDays="{Binding HomeOfficeDays}"
-				            OfficeDays="{Binding OfficeDays}"
-				            HomeOfficeQuote="{Binding HomeOfficeQuote}"
-				            OfficeQuote="{Binding OfficeQuote}"
-				            AddButtonEnabled="{Binding CanAddCurrentDay}"
-				            AddButtonVisible="{Binding CanAddCurrentDay}"
-				            AddButtonClicked="RequestShowAddCurrentDayDialog"
-			            />
-		            </Grid>
-	            </StackPanel>
-            </Border>
-
-            <!-- Tabs -->
-            <Grid Grid.Row="1">
-                <fluent:TabView
-	                TabWidthMode="SizeToContent"
-	                CanReorderTabs="False"
-	                CanDragTabs="False"
-	                AllowDropTabs="False"
-	                IsAddTabButtonVisible="False"
-	            >
-	                <!-- Geplante Tage -->
-                    <fluent:TabViewItem
-	                    Header="Geplante Tage"
-	                    IsClosable="False"
-	                    BorderThickness="4"
-	                    IsSelected="True"
-	                >
-	                    <listcontrols:PlannableDayListControl
-		                    Items="{Binding PlannableDays}"
-		                    AddButtonClicked="RequestShowAddPlannableDayDialog"
-		                    DeleteButtonClicked="RequestShowDeletePlannableDayDialog"
-	                    />
-                    </fluent:TabViewItem>
-
-                    <!-- Vorhersage Statistiken -->
-                    <fluent:TabViewItem
-	                    Header="Vorhersage (Statistiken)"
-	                    FontFamily="{DynamicResource GlobalFont}"
-	                    IsClosable="False"
-	                >
-                        <Grid
-	                        RowDefinitions="*,Auto"
-	                        Margin="10"
-	                        RowSpacing="5"
-	                    >
-	                        <ScrollViewer
-		                        Grid.Row="0"
-		                        Margin="0"
-		                        Padding="12 0 12 0"
-		                        ClipToBounds="True"
-		                        HorizontalScrollBarVisibility="Disabled"
-		                        VerticalScrollBarVisibility="Auto"
-	                        >
-		                        <ItemsControl
-			                        ItemsSource="{Binding CalculatedWeekModels}"
-		                        >
-			                        <ItemsControl.ItemsPanel>
-				                        <ItemsPanelTemplate>
-					                        <StackPanel
-						                        Orientation="Vertical"
-						                    />
-				                        </ItemsPanelTemplate>
-			                        </ItemsControl.ItemsPanel>
-			                        <ItemsControl.ItemTemplate>
-				                        <DataTemplate
-					                        DataType="models:CalculatedWeekModel"
-					                    >
-					                        <listcontrols:CalculatedWeekListControl
-						                        HomeOfficeDays="{Binding HomeOfficeDays}"
-						                        OfficeDays="{Binding OfficeDays}"
-						                        HomeOfficeTargetQuoted="{Binding HomeOfficeTargetQuoted}"
-						                        OfficeTargetQuoted="{Binding OfficeTargetQuoted}"
-						                        WeekName="{Binding WeekName}"
-						                        StartWeekDateTime="{Binding WeekStartDate}"
-						                        EndWeekDateTime="{Binding WeekEndDate}"
-						                        WeekDays="{Binding WeekDays}"
-					                        />
-				                        </DataTemplate>
-			                        </ItemsControl.ItemTemplate>
-		                        </ItemsControl>
-	                        </ScrollViewer>
-	                        <Grid
-		                        Grid.Row="1"
-		                        ColumnDefinitions="Auto,*"
-		                        ColumnSpacing="10"
-		                    >
-		                        <NumericUpDown
-			                        Grid.Column="0"
-			                        TextAlignment="Center"
-			                        Watermark="Anzahl"
-			                        FontSize="11"
-			                        BorderThickness="1"
-			                        VerticalAlignment="Center"
-			                        HorizontalAlignment="Center"
-			                        HorizontalContentAlignment="Center"
-			                        VerticalContentAlignment="Center"
-			                        ShowButtonSpinner="False"
-			                        AllowSpin="False"
-			                        Value="{Binding CalculateWeeksCount}"
-		                        />
-		                        <Button
-			                        Grid.Column="1"
-			                        Content="Weitere Woche anzeigen"
-			                        HorizontalAlignment="Stretch"
-			                        VerticalAlignment="Stretch"
-			                        FontSize="12"
-			                        Command="{Binding AddNewCalculatedWeekCommand}"
-		                        />
-	                        </Grid>
-                        </Grid>
-                    </fluent:TabViewItem>
-                </fluent:TabView>
-            </Grid>
+		    <pages:MainPageHeader Grid.Row="0" />
+		    <!-- Tabs -->
+		    <pages:MainPageTabs Grid.Row="1" />
         </Grid>
     </Panel>
 </UserControl>

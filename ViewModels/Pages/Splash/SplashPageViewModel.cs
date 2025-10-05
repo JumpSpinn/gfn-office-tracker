@@ -327,7 +327,6 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 	}
 	#endregion
 
-
 	#region VERSION
 
 	[ObservableProperty]

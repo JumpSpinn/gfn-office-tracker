@@ -37,24 +37,28 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	/// <summary>
 	/// Gets the string representation of the selected days in the wizard workflow.
 	/// </summary>
-	public string SelectedDaysDisplay { get; private set; } = string.Empty;
+	public string SelectedDaysDisplay { get; private set; }
+		= string.Empty;
 
 	/// <summary>
 	/// Gets a string representation of the days that have not been selected
 	/// in the wizard days selection process.
 	/// </summary>
-	public string UnselectedDaysDisplay { get; private set; } = string.Empty;
+	public string UnselectedDaysDisplay { get; private set; }
+		= string.Empty;
 
 	/// <summary>
 	/// Gets an array of days that have been selected in the wizard days selection process.
 	/// </summary>
-	public DayOfWeek[] SelectedDayEnums { get; private set; } = [];
+	public DayOfWeek[] SelectedDayEnums { get; private set; }
+		= [];
 
 	/// <summary>
 	/// Gets an array of <see cref="DayOfWeek"/> values representing the days
 	/// that have not been selected in the wizard days selection process.
 	/// </summary>
-	public DayOfWeek[] UnselectedDayEnums { get; private set; } = [];
+	public DayOfWeek[] UnselectedDayEnums { get; private set; }
+		= [];
 
 	/// <summary>
 	/// Converts the currently selected days and unselected days into corresponding
@@ -110,5 +114,6 @@ public sealed partial class WizardDaysPageViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	private void PreviousSetupPage() => ChangePage(Page.WIZARD_BALANCE);
+	private void PreviousSetupPage()
+		=> ChangePage(Page.WIZARD_BALANCE);
 }
