@@ -129,7 +129,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 #endif
 
 	    if (_notifyToAddCurrentDay)
-		    await DialogHelper.ShowDialogAsync($"Willkommen zurück, {_mainWindowService.RuntimeData.UserName}", "Vergiss nicht den heutigen Tag einzutragen!", DialogType.INFO);
+		    DialogHelper.ShowDialogAsync($"Willkommen zurück, {_mainWindowService.RuntimeData.UserName}", "Vergiss nicht den heutigen Tag einzutragen!", DialogType.INFO);
     }
 
     #endregion
