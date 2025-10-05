@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages;
+﻿namespace OfficeTracker.ViewModels.Pages.Splash;
 
 /// <summary>
 /// Represents the ViewModel for the splash screen page of the application.
@@ -6,13 +6,13 @@
 /// during startup.
 /// </summary>
 [RegisterSingleton]
-public sealed partial class SplashScreenPageViewModel : ViewModelBase
+public sealed partial class SplashPageViewModel : ViewModelBase
 {
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
 	private readonly MainWindowService _mainWindowService;
 	private readonly LogService _logService;
 
-	public SplashScreenPageViewModel(MainWindowService mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory)
+	public SplashPageViewModel(MainWindowService mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory)
 	{
 		_mainWindowService = mwc;
 		_logService = lc;

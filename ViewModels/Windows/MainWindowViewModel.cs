@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.ViewModels.Windows;
 
-using Services;
-
 /// <summary>
 /// Represents the main view model for the application's main window.
 /// This ViewModel is responsible for managing the navigation logic
@@ -21,7 +19,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 		_serviceProvider = sp;
 
 		// the first page is the splash screen
-		_currentPage = sp.GetRequiredService<SplashScreenPageViewModel>();
+		_currentPage = sp.GetRequiredService<SplashPageViewModel>();
 
 		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
 		{

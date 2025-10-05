@@ -110,5 +110,9 @@
 		  <DependentUpon>WizardWelcomePage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 		</Compile>
+		<Compile Update="Views\Pages\Splash\SplashPage.axaml.cs">
+		  <DependentUpon>SplashPage.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
   </ItemGroup>
 </Project>
