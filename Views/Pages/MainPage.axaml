@@ -73,6 +73,7 @@
 	                    Header="Geplante Tage"
 	                    IsClosable="False"
 	                    BorderThickness="4"
+	                    IsSelected="True"
 	                >
 	                    <listcontrols:PlannableDayListControl
 		                    Items="{Binding PlannableDays}"
@@ -86,7 +87,6 @@
 	                    Header="Vorhersage (Statistiken)"
 	                    FontFamily="{DynamicResource GlobalFont}"
 	                    IsClosable="False"
-	                    IsSelected="True"
 	                >
                         <Grid
 	                        RowDefinitions="*,Auto"
