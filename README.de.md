@@ -8,12 +8,18 @@
 
 # Über das Projekt
 
-Der **Office-Tracker** wurde neben meiner aktuellen Umschulung zum Fachinformatiker Anwendungsentwicklung als kleines Nebenprojekt angefangen und umgesetzt. Die Idee war, dass meine anderen Mitschüler als auch meine Wenigkeit ein kleines Hilfsprogramm haben um die Anwesenheitsquote im Blick zu haben. Der Plan, mit dieser Desktop-Anwendung ist es, dies stetig weiterzuentwickeln und es als Open-Source-Projekt anzubieten, damit auch andere die Lust drauf haben zu unterstützen.
+Der **Office-Tracker** wurde neben meiner aktuellen Umschulung zum Fachinformatiker Anwendungsentwicklung als kleines Nebenprojekt angefangen und umgesetzt.
+Die Idee war, dass meine anderen Mitschüler als auch meine Wenigkeit ein kleines Hilfsprogramm haben um die Anwesenheitsquote im Blick zu haben.
+Der Plan, mit dieser Desktop-Anwendung ist es, dies stetig weiterzuentwickeln und es als Open-Source-Projekt anzubieten,
+damit auch andere die Lust drauf haben zu unterstützen.
 
 ## ✨ Features im Überblick
 
 ### 🚀 Schneller Start mit dem Setup-Assistenten
-Beim ersten Start führt dich ein einfacher Assistent durch die paar notwendigen Schritte durch, um Anfangsdaten zu haben, mit dem die Anwendung arbeiten kann. Du wirst einen Namen angeben können, deine Tage an denen du standardmäßig Home-Office hast (Mo. – Fr.) sowie deine Ziel-Quote die du mindestens/höchstens haben kannst, ohne in Schwierigkeiten zu kommen. Am Ende bekommt man noch eine kleine Zusammenfassung und kann seine angegebenen Daten nochmals überprüfen & gegebenenfalls auch zu den Schritten zurückkehren, um noch Änderungen vornehmen zu können.
+Beim ersten Start führt dich ein einfacher Assistent durch die paar notwendigen Schritte durch, um Anfangsdaten zu haben, mit dem die Anwendung arbeiten kann.
+Du wirst einen Namen angeben können, deine Tage an denen du standardmäßig Home-Office hast (Mo. – Fr.) sowie deine Ziel-Quote die du mindestens/höchstens haben kannst,
+ohne in Schwierigkeiten zu kommen. Am Ende bekommt man noch eine kleine Zusammenfassung und kann seine angegebenen Daten nochmals überprüfen & gegebenenfalls auch
+zu den Schritten zurückkehren, um noch Änderungen vornehmen zu können.
 
 ![Setup-Assistent Start](Assets/Screenshots/wizard.png)
 
@@ -28,17 +34,22 @@ Im oberen Bereich der Anwendung hast du jederzeit deine aktuelle Anwesenheits-St
 ![Setup-Assistent Start](Assets/Screenshots/stats_overview.png)
 
 ### 🔮 Wochen-Vorhersage (Statistiken)
-Basierend auf deine aktuelle Anwesenheits-Statistik und mit deinen geplanten Tagen, berechnet die Anwendung eine Art Prognose für die kommenden Wochen aus. So siehst du frühzeitig und ohne selbst rechnen zu müssen, wann deine Zielquote wieder erreicht ist. Weitere Details und Angaben sind hier bereits geplant.
+Basierend auf deine aktuelle Anwesenheits-Statistik und mit deinen geplanten Tagen, berechnet die Anwendung eine Art Prognose für die kommenden Wochen aus.
+So siehst du frühzeitig und ohne selbst rechnen zu müssen, wann deine Zielquote wieder erreicht ist. Weitere Details und Angaben sind hier bereits geplant.
 
 ![Setup-Assistent Start](Assets/Screenshots/calculated_weeks.png)
 
 ### 📝 Tage planen
-Du hast die Möglichkeit, wie oben bereits kurz angeschnitten – Tage zu planen. Trage im voraus bereits ein, ob du einen standardmäßigen Home-Office-Tag zu einem Standort/Büro Tag – oder andersrum machst. Dies soll dabei helfen deine Planung hinsichtlich zu deiner Zielquote besser zu managen ohne viel Stress, den man eh zur Genüge im Alltag bereits hat.
+Du hast die Möglichkeit, wie oben bereits kurz angeschnitten – Tage zu planen. Trage im voraus bereits ein, ob du einen standardmäßigen Home-Office-Tag zu
+einem Standort/Büro Tag – oder andersrum machst. Dies soll dabei helfen deine Planung hinsichtlich zu deiner Zielquote besser zu managen ohne viel Stress,
+den man eh zur Genüge im Alltag bereits hat.
 
 ![Setup-Assistent Start](Assets/Screenshots/plannable_days.png)
 
 ### 💾 Lokale Datenspeicherung
-Die Daten werden auf keinen externen Server gespeichert, sondern ist mit einer SQLite Datenbank versehen. Keine Cloud oder sonstiges – alle Informationen sind also zu 100 % unter deiner Kontrolle. Du brauchst einen neuen Datensatz? Kein Problem – einfach die Data-Bash Datei entfernen/verschieben und das Programm führt dich erneut durch den Assistenten.
+Die Daten werden auf keinen externen Server gespeichert, sondern ist mit einer SQLite Datenbank versehen. Keine Cloud oder sonstiges – alle Informationen sind
+also zu 100 % unter deiner Kontrolle. Du brauchst einen neuen Datensatz? Kein Problem – einfach die Data-Bash Datei entfernen/verschieben und das Programm führt
+dich erneut durch den Assistenten.
 
 ---
 
