@@ -50,8 +50,6 @@ Die Daten werden auf keinen externen Server gespeichert, sondern ist mit einer S
 2.  Entpacken ggbf. die heruntergeladene Datei (falls es eine .zip/.tar.gz ist).
 4.  Führe die `OfficeTracker.exe` (Windows) oder die `OfficeTracker` ausführbare Datei (Linux) aus.
 
----
-
 ## 📄 Lizenz
 
 Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die [LICENSE.md](LICENSE.md)-Datei für Details.
