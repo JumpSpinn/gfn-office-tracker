@@ -100,7 +100,7 @@ public sealed class CalculateWeekService
 
 		// Check if we have a nice date to start from
 		_lastUpdateUserSettings = (us.LastUpdate == DateTime.MinValue ? DateTime.Today : us.LastUpdate);
-		_currentStartOfWeek = DateTimeHelper.GetStartOfWeek(_lastUpdateUserSettings);
+		_currentStartOfWeek = DateTimeHelper.GetStartOfCurrentWeek(_lastUpdateUserSettings);
 
 		List<CalculatedWeekModel> cwsTotal = new();
 
