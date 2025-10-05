@@ -44,9 +44,21 @@ public sealed partial class App : Application
             StartupArgs = desktop.Args.ToList();
 
         Services = new ServiceCollection()
-            .AutoRegister()
-            .AddDbContext<OtContext>(options
-	            => options.UseSqlite($"Data Source={Options.DB_NAME}"))
+	        .AutoRegister()
+            .AddDbContext<OtContext>(options =>
+            {
+#if DEBUG
+	            options
+		            .UseSqlite($"Data Source={Options.DB_NAME}")
+		            .EnableSensitiveDataLogging()
+		            .EnableDetailedErrors()
+		            .LogTo(Console.WriteLine, LogLevel.Information);
+#else
+	            options
+		            .UseSqlite($"Data Source={Options.DB_NAME}")
+		            .EnableDetailedErrors();
+#endif
+            })
             .AddSingleton<IDbContextFactory<OtContext>, OtContextFactory>()
             .BuildServiceProvider();
 

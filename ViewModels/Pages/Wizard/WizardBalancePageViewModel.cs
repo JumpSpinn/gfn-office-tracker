@@ -15,15 +15,9 @@ public sealed partial class WizardBalancePageViewModel : ViewModelBase
 		SliderValue = 50;
 	}
 
-	[ObservableProperty]
-	private string _homeOfficePercentageDisplay;
-
-	[ObservableProperty]
-	private string _officePercentageDisplay;
-
-	[ObservableProperty]
-	private double _sliderValue;
-
+	[ObservableProperty] private string _homeOfficePercentageDisplay;
+	[ObservableProperty] private string _officePercentageDisplay;
+	[ObservableProperty] private double _sliderValue;
 	public uint HomeOfficePercentage { get; private set; }
 	public uint OfficePercentage { get; private set; }
 
@@ -40,9 +34,6 @@ public sealed partial class WizardBalancePageViewModel : ViewModelBase
 		SliderValue = sliderValue;
 	}
 
-	[RelayCommand]
-	private void NextSetupPage() => ChangePage(Page.WIZARD_DAYS);
-
-	[RelayCommand]
-	private void PreviousSetupPage() => ChangePage(Page.WIZARD_NAME);
+	[RelayCommand] private void NextSetupPage() => ChangePage(Page.WIZARD_DAYS);
+	[RelayCommand] private void PreviousSetupPage() => ChangePage(Page.WIZARD_NAME);
 }

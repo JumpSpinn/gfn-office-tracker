@@ -8,4 +8,11 @@ public sealed class WeekDayModel
 	public DayType Type { get; set; } = DayType.NONE;
 	public DateTime Date { get; set; } = DateTime.MinValue;
 	public string HexColor { get; set; } = string.Empty;
+	public string TypeName =>
+		Type switch
+		{
+			DayType.HOME => "HomeOffice",
+			DayType.OFFICE => "Standort",
+			_ => "Unknown"
+		};
 }

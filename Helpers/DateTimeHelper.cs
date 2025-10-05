@@ -34,16 +34,26 @@ public static class DateTimeHelper
 		=> weekDays.Contains(dt.DayOfWeek);
 
 	/// <summary>
-	/// Calculates the start date of the week for the specified date, assuming the week starts on Monday.
+	/// Calculates the start date of the current week, assuming the week starts on Monday.
 	/// </summary>
-	public static DateTime GetStartOfWeek(DateTime dt)
+	public static DateTime GetStartOfCurrentWeek(DateTime dt)
 	{
-		DayOfWeek startOfWeek = DayOfWeek.Monday;
-		DayOfWeek today = dt.DayOfWeek;
+		int daysSinceMonday = ((int)dt.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+		return dt.Date.AddDays(-daysSinceMonday);
+	}
 
-		int diff = today - startOfWeek;
-		if (diff < 0) diff += 6;
+	/// <summary>
+	/// Calculates the start date of the next week, assuming the week starts on Monday.
+	/// </summary>
+	public static DateTime GetStartOfNextWeek(DateTime dt)
+	{
+		// find the next Monday
+		int daysUntilNextMonday = ((int)DayOfWeek.Monday - (int)dt.DayOfWeek + 7) % 7;
 
-		return dt.AddDays(-1 * diff);
+		// if currently monday then give back the next Monday (7 days)
+		if (daysUntilNextMonday == 0)
+			daysUntilNextMonday = 7;
+
+		return dt.Date.AddDays(daysUntilNextMonday);
 	}
 }

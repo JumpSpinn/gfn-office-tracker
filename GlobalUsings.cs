@@ -17,6 +17,7 @@ global using System.Text.RegularExpressions;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.EntityFrameworkCore.Design;
+global using Microsoft.Extensions.Logging;
 
 global using Avalonia;
 global using Avalonia.Data.Core.Plugins;

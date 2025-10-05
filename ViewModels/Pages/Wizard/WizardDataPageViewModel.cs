@@ -20,7 +20,8 @@ public sealed partial class WizardDataPageViewModel : ViewModelBase
 	/// <summary>
 	/// Gets a value indicating whether the current day can be tracked based on the specified home office and office day values.
 	/// </summary>
-	public bool CanTrackCurrentDay => HomeOfficeDays > 0 || OfficeDays > 0;
+	public bool CanTrackCurrentDay
+		=> HomeOfficeDays > 0 || OfficeDays > 0;
 
 	/// <summary>
 	/// Invoked when the home office days value is changed.
@@ -41,8 +42,10 @@ public sealed partial class WizardDataPageViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	private void NextSetupPage() => ChangePage(Page.WIZARD_COMPLETED);
+	private void NextSetupPage()
+		=> ChangePage(Page.WIZARD_COMPLETED);
 
 	[RelayCommand]
-	private void PreviousSetupPage() => ChangePage(Page.WIZARD_DAYS);
+	private void PreviousSetupPage()
+		=> ChangePage(Page.WIZARD_DAYS);
 }
