@@ -6,7 +6,7 @@
 	xmlns:models="using:OfficeTracker.Models"
 >
 	<Design.PreviewWith>
-		<listcontrols:CalculatedWeekListControl />
+		<listcontrols:CalculatedWeekListControl Width="450" />
 	</Design.PreviewWith>
 
 	<Style Selector="listcontrols|CalculatedWeekListControl">
@@ -49,7 +49,7 @@
 								FontWeight="Light"
 								FontSize="12"
 								HorizontalAlignment="Center"
-								VerticalAlignment="Bottom"
+								VerticalAlignment="Center"
 							/>
 							<Label
 								Grid.Column="1"
@@ -65,7 +65,7 @@
 								FontWeight="Light"
 								FontSize="12"
 								HorizontalAlignment="Center"
-								VerticalAlignment="Bottom"
+								VerticalAlignment="Center"
 							/>
 						</Grid>
 
@@ -84,11 +84,16 @@
 						<ItemsControl
 							Grid.Row="2"
 							ItemsSource="{TemplateBinding WeekDays}"
-							Margin="0 10"
+							Margin="4 4 4 2"
 						>
 							<ItemsControl.ItemsPanel>
 								<ItemsPanelTemplate>
-									<UniformGrid Rows="1" Columns="5" HorizontalAlignment="Stretch" />
+									<UniformGrid
+										Rows="1"
+										Columns="5"
+										ColumnSpacing="8"
+										HorizontalAlignment="Stretch"
+									/>
 								</ItemsPanelTemplate>
 							</ItemsControl.ItemsPanel>
 							<ItemsControl.ItemTemplate>
@@ -96,29 +101,38 @@
 									<StackPanel
 										Orientation="Vertical"
 										Spacing="6"
+										ToolTip.Tip="{Binding TypeName}"
+										ToolTip.Placement="Top"
+										ToolTip.VerticalOffset="0"
 									>
 										<Border
-											Height="30"
-											Width="30"
+											HorizontalAlignment="Stretch"
 											BorderThickness="1"
-											CornerRadius="4"
+											CornerRadius="2"
+											Height="30"
 										>
+											<Border.Background>
+												<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity="1">
+													<GradientStop Color="Transparent" Offset="0.0" />
+													<GradientStop Color="#09FFFFFF" Offset="1.0" />
+												</LinearGradientBrush>
+											</Border.Background>
 											<Border.BorderBrush>
 												<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity="1">
-													<GradientStop Color="#60FFFFFF" Offset="0.0"/>
-													<GradientStop Color="#20FFFFFF" Offset="1.0"/>
+													<GradientStop Color="Transparent" Offset="0.0" />
+													<GradientStop Color="#35FFFFFF" Offset="1.0" />
 												</LinearGradientBrush>
 											</Border.BorderBrush>
 											<Label
-												Content="{Binding Date, StringFormat='{}{0:ddd}'}"
+												Content="{Binding Date, StringFormat='{}{0:ddd}.'}"
 												FontWeight="Regular"
-												FontSize="10"
+												FontSize="12"
 												VerticalAlignment="Center"
 												HorizontalAlignment="Center"
 											/>
 										</Border>
 										<Border
-											Width="30"
+											HorizontalAlignment="Stretch"
 											Height="2"
 											BorderThickness="0"
 											CornerRadius="2"
