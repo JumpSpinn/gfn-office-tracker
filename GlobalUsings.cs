@@ -12,6 +12,7 @@ global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Globalization;
 global using System.Collections;
+global using System.Text.RegularExpressions;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
@@ -56,3 +57,4 @@ global using OfficeTracker.Views.Controls.Lists;
 global using OfficeTracker.Models;
 global using OfficeTracker.ViewModels.Pages.Wizard;
 global using OfficeTracker.Services;
+global using OfficeTracker.ViewModels.Pages.Splash;

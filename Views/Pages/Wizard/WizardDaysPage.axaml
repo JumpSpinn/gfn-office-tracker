@@ -25,7 +25,6 @@
 						<Label
 							Content="Setup-Assistent"
 							HorizontalAlignment="Center"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="14"
 							Margin="0 -6"
 							FontWeight="Medium"
@@ -33,7 +32,6 @@
 						<Label
 							Content="Schritt 3"
 							HorizontalAlignment="Center"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="18"
 							FontWeight="Medium"
 						/>
@@ -42,13 +40,12 @@
 						<TextBlock
 							HorizontalAlignment="Left"
 							TextWrapping="Wrap"
-							FontFamily="{DynamicResource UrbanistFont}"
 							Text="Kreuze bitte alle Wochentage an, an denen du standardmäßig im HomeOffice bist:"
 						/>
 						<StackPanel Orientation="Vertical">
 							<CheckBox
 								Content="Montag"
-								FontFamily="{DynamicResource UrbanistFont}"
+								FontFamily="{DynamicResource GlobalFont}"
 								IsChecked="{Binding MondaySelected}"
 							/>
 							<CheckBox
@@ -57,17 +54,17 @@
 							/>
 							<CheckBox
 								Content="Mittwoch"
-								FontFamily="{DynamicResource UrbanistFont}"
+								FontFamily="{DynamicResource GlobalFont}"
 								IsChecked="{Binding WednesdaySelected}"
 							/>
 							<CheckBox
 								Content="Donnerstag"
-								FontFamily="{DynamicResource UrbanistFont}"
+								FontFamily="{DynamicResource GlobalFont}"
 								IsChecked="{Binding ThursdaySelected}"
 							/>
 							<CheckBox
 								Content="Freitag"
-								FontFamily="{DynamicResource UrbanistFont}"
+								FontFamily="{DynamicResource GlobalFont}"
 								IsChecked="{Binding FridaySelected}"
 							/>
 						</StackPanel>

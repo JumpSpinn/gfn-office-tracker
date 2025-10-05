@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
-using System.Text.RegularExpressions;
-
 /// <summary>
 /// Represents the ViewModel for the Wizard Name Page in the application's wizard flow.
 /// </summary>

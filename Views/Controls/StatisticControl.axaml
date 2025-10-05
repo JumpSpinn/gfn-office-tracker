@@ -78,7 +78,6 @@
 						            Text="---.--%"
 						            HorizontalAlignment="Center"
 						            VerticalAlignment="Center"
-						            FontFamily="{DynamicResource UrbanistFont}"
 						            FontWeight="Regular"
 						            LineHeight="16"
 					            />
@@ -105,7 +104,6 @@
 						            Text="---.--%"
 						            HorizontalAlignment="Center"
 						            VerticalAlignment="Center"
-						            FontFamily="{DynamicResource UrbanistFont}"
 						            FontWeight="Regular"
 						            LineHeight="16"
 					            />

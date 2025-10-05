@@ -45,13 +45,11 @@
 										Grid.Column="1"
 										Text="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}'}"
 										VerticalAlignment="Center"
-										FontFamily="{DynamicResource UrbanistFont}"
 									/>
 									<TextBlock
 										Grid.Column="2"
 										Text="{Binding Type, Converter={StaticResource PlannableDayTypeConverter}}"
 										VerticalAlignment="Center"
-										FontFamily="{DynamicResource UrbanistFont}"
 									/>
 								</Grid>
 							</DataTemplate>
@@ -73,19 +71,16 @@
 							<TextBlock
 								Text="📅"
 								FontSize="42"
-								FontFamily="{DynamicResource UrbanistFont}"
 								HorizontalAlignment="Center"
 							/>
 							<TextBlock
 								Text="Keine Einträge vorhanden"
 								FontSize="16"
-								FontFamily="{DynamicResource UrbanistFont}"
 								HorizontalAlignment="Center"
 							/>
 							<TextBlock
 								Text="Füge einen geplanten Tag hinzu um beginnen"
 								FontSize="12"
-								FontFamily="{DynamicResource UrbanistFont}"
 								HorizontalAlignment="Center"
 								Foreground="#90FFFFFF"
 							/>
@@ -103,17 +98,17 @@
 							Grid.Column="0"
 							x:Name="AddButton"
 							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
 							FontSize="12"
-							FontFamily="{DynamicResource UrbanistFont}"
 							Content="Neuen Tag planen"
 						/>
 						<Button
 							Grid.Column="1"
 							Margin="10 0 0 0"
 							x:Name="DeleteButton"
+							VerticalAlignment="Stretch"
 							HorizontalAlignment="Stretch"
 							FontSize="12"
-							FontFamily="{DynamicResource UrbanistFont}"
 							Content="Löschen"
 						/>
 					</Grid>

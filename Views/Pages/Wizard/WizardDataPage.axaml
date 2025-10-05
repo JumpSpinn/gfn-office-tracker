@@ -25,7 +25,6 @@
 						<Label
 							Content="Setup-Assistent"
 							HorizontalAlignment="Center"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="14"
 							Margin="0 -6"
 							FontWeight="Medium"
@@ -33,7 +32,6 @@
 						<Label
 							Content="Schritt 4"
 							HorizontalAlignment="Center"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="18"
 							FontWeight="Medium"
 						/>
@@ -42,7 +40,6 @@
 						<TextBlock
 							HorizontalAlignment="Left"
 							TextWrapping="Wrap"
-							FontFamily="{DynamicResource UrbanistFont}"
 							Text="Gebe bitte an wie viele Tage du bereits im HomeOffice und am Standort warst:"
 						/>
 						<StackPanel Orientation="Vertical">
@@ -50,7 +47,7 @@
 							<NumericUpDown
 								HorizontalAlignment="Stretch"
 								TextAlignment="Left"
-								FontFamily="{DynamicResource UrbanistFont}"
+								FontFamily="{DynamicResource GlobalFont}"
 								Watermark="0"
 								ShowButtonSpinner="False"
 								AllowSpin="True"
@@ -62,7 +59,7 @@
 							<NumericUpDown
 								HorizontalAlignment="Stretch"
 								TextAlignment="Left"
-								FontFamily="{DynamicResource UrbanistFont}"
+								FontFamily="{DynamicResource GlobalFont}"
 								Watermark="0"
 								ShowButtonSpinner="False"
 								AllowSpin="True"
@@ -71,13 +68,11 @@
 						</StackPanel>
 						<CheckBox
 							Content="Heutiger Tag ist mit einberechnet!"
-							FontFamily="{DynamicResource UrbanistFont}"
 							IsChecked="{Binding CurrentDayTracked}"
 							IsEnabled="{Binding CanTrackCurrentDay}"
 						/>
 						<TextBlock
 							TextWrapping="Wrap"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="12"
 							FontWeight="Regular"
 							Opacity=".5"

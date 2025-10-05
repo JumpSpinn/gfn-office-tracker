@@ -35,13 +35,13 @@
 	            </Border.BorderBrush>
 
 	            <StackPanel Spacing="8">
-		            <TextBlock Text="Anwesenheit-Statistik" FontSize="16" HorizontalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="DemiBold" />
+		            <TextBlock Text="Anwesenheit-Statistik" FontSize="16" HorizontalAlignment="Center" FontWeight="DemiBold" />
 		            <Grid RowDefinitions="*" ColumnDefinitions="Auto, Auto" ColumnSpacing="6" HorizontalAlignment="Center">
 			            <Border Grid.Column="0" CornerRadius="4" Padding="6 2" BorderBrush="#003764" BorderThickness="1">
-				            <TextBlock Text="HomeOffice" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="SemiBold" LetterSpacing="0.25"  />
+				            <TextBlock Text="HomeOffice" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" LetterSpacing="0.25"  />
 			            </Border>
 			            <Border Grid.Column="1" CornerRadius="4" Padding="6 2" BorderBrush="#357a32" BorderThickness="1">
-				            <TextBlock Text="Standort" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource UrbanistFont}" FontWeight="SemiBold" LetterSpacing="0.25"  />
+				            <TextBlock Text="Standort" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" LetterSpacing="0.25"  />
 			            </Border>
 		            </Grid>
 		            <Grid x:Name="StatsGrid" ColumnDefinitions="*,Auto" ColumnSpacing="4" Margin="0 8 0 0">
@@ -71,7 +71,6 @@
 	                <!-- Geplante Tage -->
                     <fluent:TabViewItem
 	                    Header="Geplante Tage"
-	                    FontFamily="{DynamicResource UrbanistFont}"
 	                    IsClosable="False"
 	                    BorderThickness="4"
 	                >
@@ -85,8 +84,9 @@
                     <!-- Vorhersage Statistiken -->
                     <fluent:TabViewItem
 	                    Header="Vorhersage (Statistiken)"
-	                    FontFamily="{DynamicResource UrbanistFont}"
+	                    FontFamily="{DynamicResource GlobalFont}"
 	                    IsClosable="False"
+	                    IsSelected="True"
 	                >
                         <Grid
 	                        RowDefinitions="*,Auto"
@@ -128,13 +128,34 @@
 			                        </ItemsControl.ItemTemplate>
 		                        </ItemsControl>
 	                        </ScrollViewer>
-	                        <Button
+	                        <Grid
 		                        Grid.Row="1"
-		                        Content="Weitere Woche anzeigen"
-		                        HorizontalAlignment="Stretch"
-		                        FontSize="12"
-		                        Command="{Binding AddNewCalculatedWeekCommand}"
-		                    />
+		                        ColumnDefinitions="Auto,*"
+		                        ColumnSpacing="10"
+		                    >
+		                        <NumericUpDown
+			                        Grid.Column="0"
+			                        TextAlignment="Center"
+			                        Watermark="Anzahl"
+			                        FontSize="11"
+			                        BorderThickness="1"
+			                        VerticalAlignment="Center"
+			                        HorizontalAlignment="Center"
+			                        HorizontalContentAlignment="Center"
+			                        VerticalContentAlignment="Center"
+			                        ShowButtonSpinner="False"
+			                        AllowSpin="False"
+			                        Value="{Binding CalculateWeeksCount}"
+		                        />
+		                        <Button
+			                        Grid.Column="1"
+			                        Content="Weitere Woche anzeigen"
+			                        HorizontalAlignment="Stretch"
+			                        VerticalAlignment="Stretch"
+			                        FontSize="12"
+			                        Command="{Binding AddNewCalculatedWeekCommand}"
+		                        />
+	                        </Grid>
                         </Grid>
                     </fluent:TabViewItem>
                 </fluent:TabView>
