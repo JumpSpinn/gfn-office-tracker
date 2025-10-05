@@ -18,5 +18,5 @@
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
-    <controls:Frame Margin="{Binding $parent[Window].OffScreenMargin}" Content="{ Binding CurrentPage}" />
+    <controls:Frame Content="{ Binding CurrentPage}" />
 </Window>
