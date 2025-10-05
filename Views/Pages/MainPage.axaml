@@ -95,18 +95,19 @@
 	                    >
 	                        <ScrollViewer
 		                        Grid.Row="0"
+		                        Margin="0"
+		                        Padding="12 0 12 0"
+		                        ClipToBounds="True"
 		                        HorizontalScrollBarVisibility="Disabled"
 		                        VerticalScrollBarVisibility="Auto"
-		                    >
+	                        >
 		                        <ItemsControl
 			                        ItemsSource="{Binding CalculatedWeekModels}"
-			                        Margin="0 10"
 		                        >
 			                        <ItemsControl.ItemsPanel>
 				                        <ItemsPanelTemplate>
 					                        <StackPanel
 						                        Orientation="Vertical"
-						                        Spacing="5"
 						                    />
 				                        </ItemsPanelTemplate>
 			                        </ItemsControl.ItemsPanel>
