@@ -33,8 +33,8 @@ public sealed partial class MainPageViewModel : ViewModelBase
 
     #region CALCULATED WEEKS
 
-    [ObservableProperty]
-    private ObservableCollection<CalculatedWeekModel> _calculatedWeekModels;
+    [ObservableProperty] private ObservableCollection<CalculatedWeekModel> _calculatedWeekModels =
+	    new ObservableCollection<CalculatedWeekModel>();
 
     /// <summary>
     /// Asynchronously recalculates the weeks by invoking the calculation service and updates

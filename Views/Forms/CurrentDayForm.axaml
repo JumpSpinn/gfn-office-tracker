@@ -10,14 +10,12 @@
 		    Grid.Column="0"
 		    Content="HomeOffice"
 		    GroupName="DaySelection"
-		    FontFamily="{ DynamicResource UrbanistFont }"
 	    />
 	    <RadioButton
 		    x:Name="OfficeRadio"
 		    Grid.Column="1"
 		    Content="Standort"
 		    GroupName="DaySelection"
-		    FontFamily="{ DynamicResource UrbanistFont }"
 		    IsChecked="True"
 	    />
     </Grid>

@@ -25,7 +25,6 @@
 						<Label
 							Content="Setup-Assistent"
 							HorizontalAlignment="Center"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="14"
 							Margin="0 -6"
 							FontWeight="Medium"
@@ -33,7 +32,6 @@
 						<Label
 							Content="Schritt 2"
 							HorizontalAlignment="Center"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="18"
 							FontWeight="Medium"
 						/>
@@ -42,7 +40,6 @@
 						<TextBlock
 							HorizontalAlignment="Left"
 							TextWrapping="Wrap"
-							FontFamily="{DynamicResource UrbanistFont}"
 							Text="Teile uns mit, welche Quote du einhalten musst, damit wir dies in unseren Berechnungen mit einbeziehen können."
 						/>
 						<Border Padding="10" CornerRadius="4" BorderThickness="1">
@@ -64,14 +61,12 @@
 										Grid.Column="0"
 										Content="HomeOffice"
 										HorizontalAlignment="Left"
-										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 									/>
 									<Label
 										Grid.Column="1"
 										Content="Standort"
 										HorizontalAlignment="Right"
-										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 									/>
 								</Grid>
@@ -89,14 +84,12 @@
 										Grid.Column="0"
 										Content="{Binding HomeOfficePercentageDisplay}"
 										HorizontalAlignment="Left"
-										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 									/>
 									<Label
 										Grid.Column="1"
 										Content="{Binding OfficePercentageDisplay}"
 										HorizontalAlignment="Right"
-										FontFamily="{DynamicResource UrbanistFont}"
 										FontSize="12"
 									/>
 								</Grid>

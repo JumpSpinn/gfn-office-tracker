@@ -60,9 +60,6 @@
 	    <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter" />
 	    <converters:DateTimeToDateConverter x:Key="DateTimeToDateConverter" />
 
-	    <!-- FONTS -->
-        <FontFamily x:Key="UrbanistFont">avares://OfficeTracker/Assets/Fonts#Urbanist</FontFamily>
-
     </Application.Resources>
 
     <Application.Styles>

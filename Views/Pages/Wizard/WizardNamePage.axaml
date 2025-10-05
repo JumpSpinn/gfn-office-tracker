@@ -25,7 +25,6 @@
 						<Label
 							Content="Setup-Assistent"
 							HorizontalAlignment="Center"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="14"
 							Margin="0 -6"
 							FontWeight="Medium"
@@ -33,7 +32,6 @@
 						<Label
 							Content="Schritt 1"
 							HorizontalAlignment="Center"
-							FontFamily="{DynamicResource UrbanistFont}"
 							FontSize="18"
 							FontWeight="Medium"
 						/>
@@ -42,14 +40,13 @@
 						<TextBlock
 							HorizontalAlignment="Left"
 							TextWrapping="Wrap"
-							FontFamily="{DynamicResource UrbanistFont}"
 							Text="Damit wir wissen wer du eigentlich bist, verrate uns doch wie du eigentlich heißt?"
 						/>
 						<StackPanel Orientation="Vertical" Spacing="2">
 							<TextBox
 								HorizontalAlignment="Stretch"
 								TextAlignment="Left"
-								FontFamily="{DynamicResource UrbanistFont}"
+								FontFamily="{DynamicResource GlobalFont}"
 								Watermark="Max Mustermann"
 								Text="{Binding Name}"
 							/>
@@ -58,7 +55,7 @@
 								IsVisible="{Binding !IsValid}"
 								Foreground="Red"
 								TextWrapping="Wrap"
-								FontFamily="{DynamicResource UrbanistFont}"
+								FontFamily="{DynamicResource GlobalFont}"
 								FontSize="12"
 							/>
 						</StackPanel>

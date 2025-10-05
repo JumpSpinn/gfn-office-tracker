@@ -58,4 +58,3 @@ global using OfficeTracker.Models;
 global using OfficeTracker.ViewModels.Pages.Wizard;
 global using OfficeTracker.Services;
 global using OfficeTracker.ViewModels.Pages.Splash;
-global using OfficeTracker.Services;

@@ -33,7 +33,6 @@
 					/>
 					<TextBlock
 						Text="Office-Tracker"
-						FontFamily="{ DynamicResource UrbanistFont}"
 						FontSize="16"
 						Foreground="White"
 						HorizontalAlignment="Center"
@@ -56,7 +55,6 @@
 					<TextBlock
 						Name="LoadingText"
 						Text="{Binding LoadingText}"
-						FontFamily="{StaticResource UrbanistFont}"
 						FontSize="12"
 						HorizontalAlignment="Center"
 						Opacity=".5"
@@ -68,7 +66,6 @@
 						Severity="{Binding InfoBarSeverity}"
 						IsOpen="{Binding ShowInfoBar}"
 						IsClosable="False"
-						FontFamily="{StaticResource UrbanistFont}"
 					/>
 				</StackPanel>
 			</Panel>
@@ -77,14 +74,12 @@
 					<TextBlock
 						Text="{Binding Version}"
 						FontSize="12"
-						FontFamily="{ DynamicResource UrbanistFont}"
 						HorizontalAlignment="Center"
 						Opacity=".3"
 					/>
 					<TextBlock
 						Text="Erstellt von: JumpSpinn"
 						FontSize="10"
-						FontFamily="{ DynamicResource UrbanistFont}"
 						HorizontalAlignment="Center"
 						Opacity=".3"
 						LetterSpacing=".15"
