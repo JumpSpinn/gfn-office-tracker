@@ -22,9 +22,9 @@ public sealed class LogService
 
 	public LogService()
 	{
-		#if DEBUG
+#if DEBUG
 		_isDebugEnabled = true;
-		#endif
+#endif
 	}
 
 	/// <summary>
@@ -57,9 +57,9 @@ public sealed class LogService
 	/// </summary>
 	private void LogInternal(string title, string message, LogSeverity severity)
 	{
-		#if DEBUG
+#if DEBUG
 		Console.WriteLine($"{title} - {message}");
-		#endif
+#endif
 
 		if (severity == LogSeverity.Debug && !_isDebugEnabled) return;
 

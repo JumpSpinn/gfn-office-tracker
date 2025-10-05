@@ -120,13 +120,13 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    HomeOfficeDays = data.Value.homeOfficeCount;
 	    OfficeDays = data.Value.officeCount;
 
-		#if DEBUG
+#if DEBUG
 	    CanAddCurrentDay = true;
 	    _notifyToAddCurrentDay = true;
-	    #else
+#else
 	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.Value.lastUpdate);
 	    _notifyToAddCurrentDay = CanAddCurrentDay;
-		#endif
+#endif
 
 	    if (_notifyToAddCurrentDay)
 		    await DialogHelper.ShowDialogAsync($"Willkommen zurück, {_mainWindowService.RuntimeData.UserName}", "Vergiss nicht den heutigen Tag einzutragen!", DialogType.INFO);
