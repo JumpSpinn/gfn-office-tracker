@@ -6,24 +6,132 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
 	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
 	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
-	<StackPanel Orientation="Vertical">
+	<DockPanel>
+		<DockPanel.Background>
+			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+				<GradientStop Color="#00111f" Offset="0.0"/>
+				<GradientStop Color="#00080f" Offset="1.0"/>
+			</LinearGradientBrush>
+		</DockPanel.Background>
 
-		<fluent:SettingsExpander
-			Header="Titel"
-			Description="Beschreibung"
-			IsExpanded="True"
-			IconSource="Help"
-		>
-			<fluent:SettingsExpanderItem>
-				<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-					<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" />
-					<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" FontSize="12" Opacity=".5" />
-					<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
-				</Grid>
-			</fluent:SettingsExpanderItem>
-		</fluent:SettingsExpander>
+		<!-- Settings title -->
+		<Border DockPanel.Dock="Top" Padding="14" BorderThickness="0 0 0 1">
+			<Border.Background>
+				<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
+					<GradientStop Color="#30FFFFFF" Offset="0.0"/>
+					<GradientStop Color="#20FFFFFF" Offset="1.0"/>
+				</LinearGradientBrush>
+			</Border.Background>
+			<Border.BorderBrush>
+				<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
+					<GradientStop Color="#40FFFFFF" Offset="0.0"/>
+					<GradientStop Color="#60FFFFFF" Offset="1.0"/>
+				</LinearGradientBrush>
+			</Border.BorderBrush>
 
-	</StackPanel>
+			<Grid ColumnDefinitions="*,*,*">
+				<Button Grid.Column="0" Padding="4 4" Margin="0" Command="{Binding LeaveSettingsPageCommand}">
+					<Button.Content>
+						<materialIcons:MaterialIcon Kind="ChevronLeft" VerticalAlignment="Center" />
+					</Button.Content>
+				</Button>
+				<TextBlock Grid.Column="1" Text="Einstellungen" HorizontalAlignment="Center" VerticalAlignment="Center" />
+			</Grid>
+		</Border>
+
+		<!-- Settings menu with options -->
+		<ScrollViewer Padding="16 8 16 16" DockPanel.Dock="Bottom" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+			<StackPanel Orientation="Vertical" Spacing="4">
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+							<materialIcons:MaterialIcon Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Kind="Home" Height="24" Width="24" Margin="0 0 12 0" />
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
+							<TextBlock Grid.Row="1" Grid.Column="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
+							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
+							<TextBlock Grid.Row="1" Grid.Column="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
+							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
+							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
+							<TextBlock Grid.Row="1" Grid.Column="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" />
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 1" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 2" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 3" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
 </UserControl>

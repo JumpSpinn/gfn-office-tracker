@@ -3,8 +3,7 @@
 [RegisterSingleton]
 public sealed partial class SettingsPageViewModel : ViewModelBase
 {
-	public SettingsPageViewModel()
-	{
-
-	}
+	[RelayCommand]
+	private void LeaveSettingsPage()
+		=> ChangePage(Page.MAIN_WINDOW);
 }
