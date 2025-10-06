@@ -9,30 +9,26 @@
 	xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
 	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="60"
 	>
-	<DockPanel
+	<Border
 		MinHeight="32"
 		MaxHeight="32"
 		Background="#151515"
 	>
-		<Border
-			DockPanel.Dock="Top"
+		<Menu
+			FontSize="12"
+			VerticalAlignment="Center"
+			Margin="4 0"
 		>
-			<Menu
-				FontSize="12"
-				VerticalAlignment="Center"
-				Margin="4 0"
-			>
-				<MenuItem Padding="8 0" Margin="0 8" Click="RequestOpenSettingsPage">
-					<MenuItem.Header>
-						<materialIcons:MaterialIcon Kind="Cog" />
-					</MenuItem.Header>
-				</MenuItem>
-				<MenuItem Padding="8 0" Margin="0 8" Click="RequestOpenDatabaseSaveDirectoryFolder">
-					<MenuItem.Header>
-						<materialIcons:MaterialIcon Kind="QuestionMark" />
-					</MenuItem.Header>
-				</MenuItem>
-			</Menu>
-		</Border>
-	</DockPanel>
+			<MenuItem Padding="8 0" Margin="0 8" Click="RequestOpenSettingsPage">
+				<MenuItem.Header>
+					<materialIcons:MaterialIcon Kind="Cog" />
+				</MenuItem.Header>
+			</MenuItem>
+			<MenuItem Padding="8 0" Margin="0 8" Click="RequestOpenDatabaseSaveDirectoryFolder">
+				<MenuItem.Header>
+					<materialIcons:MaterialIcon Kind="QuestionMark" />
+				</MenuItem.Header>
+			</MenuItem>
+		</Menu>
+	</Border>
 </UserControl>
