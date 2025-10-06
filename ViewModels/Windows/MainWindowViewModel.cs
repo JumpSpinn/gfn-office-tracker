@@ -14,7 +14,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 	[ObservableProperty]
 	private ViewModelBase? _currentPage;
 
-	public MainWindowViewModel(IServiceProvider sp, LogService lc)
+	public MainWindowViewModel(IServiceProvider sp)
 	{
 		_serviceProvider = sp;
 
