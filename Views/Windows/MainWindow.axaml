@@ -1,22 +1,25 @@
 <Window
-    Icon="/Assets/logo_white.ico"
-    Title="OfficeTracker"
-    Width="450"
-    Height="650"
-
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
     xmlns:vm="using:OfficeTracker.ViewModels.Windows"
+    xmlns:windows="using:OfficeTracker.Views.Windows"
 
-    mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+    mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
     x:Class="OfficeTracker.Views.Windows.MainWindow"
     x:DataType="vm:MainWindowViewModel"
+
+    Width="450"
+    Height="650"
+    Icon="/Assets/logo_white.ico"
+    Title="OfficeTracker"
     >
-    <Design.DataContext>
-        <vm:MainWindowViewModel />
-    </Design.DataContext>
-    <controls:Frame Content="{ Binding CurrentPage}" />
+	<Panel>
+		<Grid RowDefinitions="Auto,*">
+			<!-- <windows:MainWindowBar Grid.Row="0" /> -->
+			<controls:Frame Grid.Row="1" Content="{ Binding CurrentPage}" />
+		</Grid>
+	</Panel>
 </Window>

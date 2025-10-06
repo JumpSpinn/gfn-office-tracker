@@ -7,6 +7,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:windows="using:OfficeTracker.Views.Windows"
     mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
     <Panel Effect="{Binding BlurEffect}">
 	    <Panel.Background>
@@ -15,11 +16,13 @@
 		     <GradientStop Color="#00080f" Offset="1.0"/>
 		    </LinearGradientBrush>
 	    </Panel.Background>
-	    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+	    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*">
+		    <!-- Bar -->
+		    <windows:MainWindowBar Grid.Row="0" />
 		    <!-- Header -->
-		    <pages:MainPageHeader Grid.Row="0" />
+		    <pages:MainPageHeader Grid.Row="1" />
 		    <!-- Tabs -->
-		    <pages:MainPageTabs Grid.Row="1" />
+		    <pages:MainPageTabs Grid.Row="2" />
         </Grid>
     </Panel>
 </UserControl>
