@@ -6,18 +6,23 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	public SettingsPageViewModel()
 	{
 		ParseEnumToCollection();
+
+		// Remove this check after language support is implemented.
+#if RELEASE
+		IsLanguageSelectionEnabled = false;
+#endif
 	}
 
 	#region LANGUAGE SELECTION
 
-	/// <summary>
-	/// Represents the currently selected language in the settings page.
-	/// </summary>
 	[ObservableProperty]
 	private Language _selectedLanguage = Language.German;
 
 	[ObservableProperty]
 	private ObservableCollection<Language> _languages = new();
+
+	[ObservableProperty]
+	private bool _isLanguageSelectionEnabled = true;
 
 	/// <summary>
 	/// Populates an observable collection with all values from the Language enumeration.
