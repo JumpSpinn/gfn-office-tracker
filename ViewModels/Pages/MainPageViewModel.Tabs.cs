@@ -1,5 +1,9 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+/// <summary>
+/// Represents the view model for the main page, managing application logic and interactions
+/// for the main page view components.
+/// </summary>
 public sealed partial class MainPageViewModel
 {
 	#region PLANNABLE DAYS
