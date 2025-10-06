@@ -14,7 +14,7 @@
 			<StackPanel Orientation="Vertical" Spacing="4">
 
 				<!-- General -->
-				<fluent:SettingsExpander IsExpanded="False">
+				<fluent:SettingsExpander IsExpanded="True">
 					<fluent:SettingsExpander.Header>
 						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
 							<materialIcons:MaterialIcon Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Kind="Settings" Height="24" Width="24" Margin="0 0 12 0" />
@@ -26,17 +26,19 @@
 					<fluent:SettingsExpanderItem>
 						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Sprache" VerticalAlignment="Center" />
-							<!-- Select options -->
-							<fluent:FAComboBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" SelectedIndex="0">
-								<fluent:FAComboBoxItem Content="German" IsSelected="True" />
-								<fluent:FAComboBoxItem Content="English" />
-							</fluent:FAComboBox>
+							<fluent:FAComboBox
+								Grid.Column="0"
+								Grid.Row="0"
+								HorizontalAlignment="Right"
+								ItemsSource="{Binding Languages}"
+								SelectedItem="{Binding SelectedLanguage}"
+							/>
 						</Grid>
 					</fluent:SettingsExpanderItem>
 				</fluent:SettingsExpander>
 
 				<!-- Database -->
-				<fluent:SettingsExpander IsExpanded="False">
+				<fluent:SettingsExpander IsExpanded="True">
 					<fluent:SettingsExpander.Header>
 						<Grid ColumnDefinitions="Auto,*">
 							<materialIcons:MaterialIcon Grid.Column="0" Kind="Database" Height="24" Width="24" Margin="0 0 12 0" />
@@ -49,8 +51,8 @@
 						<Grid ColumnDefinitions="*,Auto" RowSpacing="8">
 							<TextBlock Grid.Column="0" Text="Speicherort ändern" VerticalAlignment="Center" />
 							<StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
-								<Button  Content="Standard" FontSize="12" Background="Transparent" />
-								<Button  Content="Wählen" FontSize="12" />
+								<Button  Content="Standard" Background="Transparent" />
+								<Button  Content="Wählen" />
 							</StackPanel>
 						</Grid>
 					</fluent:SettingsExpanderItem>
