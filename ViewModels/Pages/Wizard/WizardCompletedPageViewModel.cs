@@ -87,7 +87,7 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 		if (dialogResult == ContentDialogResult.Primary && userSettings is not null)
 		{
 			_mainWindowService.SetRuntimeDataAsync(userSettings);
-			ChangePage(Page.MAIN);
+			ChangePage(Page.MAIN_WINDOW);
 		}
 	}
 

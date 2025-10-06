@@ -2,8 +2,12 @@
 
 public sealed partial class MainPageViewModel
 {
+	/// <summary>
+	/// Navigates to the settings page within the application.
+	/// </summary>
 	public void OpenSettings()
-		=> DialogHelper.ShowDialogAsync("Achtung", "Dieses Feature ist noch nicht verfügbar!", DialogType.WARNING);
+		=> ChangePage(Page.SETTINGS_WINDOW);
+
 	public void OpenDatabaseDirectoryFolder()
 		=> DialogHelper.ShowDialogAsync("Achtung", "Dieses Feature ist noch nicht verfügbar!", DialogType.WARNING);
 }

@@ -1,0 +1,29 @@
+﻿<UserControl
+	x:DataType="vm:SettingsPageViewModel"
+	x:Class="OfficeTracker.Views.Pages.Settings.SettingsPage"
+	xmlns:vm="using:OfficeTracker.ViewModels.Pages.Settings"
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
+	<StackPanel Orientation="Vertical">
+
+		<fluent:SettingsExpander
+			Header="Titel"
+			Description="Beschreibung"
+			IsExpanded="True"
+			IconSource="Help"
+		>
+			<fluent:SettingsExpanderItem>
+				<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+					<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" />
+					<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" FontSize="12" Opacity=".5" />
+					<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
+				</Grid>
+			</fluent:SettingsExpanderItem>
+		</fluent:SettingsExpander>
+
+	</StackPanel>
+</UserControl>

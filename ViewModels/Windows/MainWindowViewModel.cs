@@ -18,7 +18,6 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 	{
 		_serviceProvider = sp;
 
-		// the first page is the splash screen
 		_currentPage = sp.GetRequiredService<SplashPageViewModel>();
 
 		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
@@ -39,7 +38,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 			Page.WIZARD_DAYS => _serviceProvider.GetRequiredService<WizardDaysPageViewModel>(),
 			Page.WIZARD_DATA => _serviceProvider.GetRequiredService<WizardDataPageViewModel>(),
 			Page.WIZARD_COMPLETED => _serviceProvider.GetRequiredService<WizardCompletedPageViewModel>(),
-			Page.MAIN => _serviceProvider.GetRequiredService<MainPageViewModel>(),
+			Page.MAIN_WINDOW => _serviceProvider.GetRequiredService<MainPageViewModel>(),
+			Page.SETTINGS_WINDOW => _serviceProvider.GetRequiredService<SettingsPageViewModel>(),
 			_ => throw new ArgumentOutOfRangeException(nameof(page), page, null)
 		};
 }

@@ -53,6 +53,8 @@
 	    <Color x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver">#30FFFFFF</Color>
 	    <x:Double x:Key="RadioButtonBorderThemeThickness">1</x:Double>
 
+	    <Thickness x:Key="ToggleSwitchTopHeaderMargin">0</Thickness>
+
 	    <!-- CONVERTERS -->
 	    <converters:PlannableDayTypeConverter x:Key="PlannableDayTypeConverter" />
 	    <converters:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
