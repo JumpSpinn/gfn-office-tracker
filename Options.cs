@@ -5,7 +5,7 @@
 /// </summary>
 public static class Options
 {
-	public const string VERSION = "1.0.0";
+	public const string VERSION = "0.0.2";
 
 	public const string DB_NAME = "office-tracker.db";
 
