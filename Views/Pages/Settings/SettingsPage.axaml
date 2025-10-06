@@ -9,41 +9,8 @@
 	xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
 	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
 	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
-	<DockPanel>
-		<DockPanel.Background>
-			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-				<GradientStop Color="#00111f" Offset="0.0"/>
-				<GradientStop Color="#00080f" Offset="1.0"/>
-			</LinearGradientBrush>
-		</DockPanel.Background>
-
-		<!-- Settings title -->
-		<Border DockPanel.Dock="Top" Padding="14" BorderThickness="0 0 0 1">
-			<Border.Background>
-				<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
-					<GradientStop Color="#30FFFFFF" Offset="0.0"/>
-					<GradientStop Color="#20FFFFFF" Offset="1.0"/>
-				</LinearGradientBrush>
-			</Border.Background>
-			<Border.BorderBrush>
-				<LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
-					<GradientStop Color="#40FFFFFF" Offset="0.0"/>
-					<GradientStop Color="#60FFFFFF" Offset="1.0"/>
-				</LinearGradientBrush>
-			</Border.BorderBrush>
-
-			<Grid ColumnDefinitions="*,*,*">
-				<Button Grid.Column="0" Padding="4 4" Margin="0" Command="{Binding LeaveSettingsPageCommand}">
-					<Button.Content>
-						<materialIcons:MaterialIcon Kind="ChevronLeft" VerticalAlignment="Center" />
-					</Button.Content>
-				</Button>
-				<TextBlock Grid.Column="1" Text="Einstellungen" HorizontalAlignment="Center" VerticalAlignment="Center" />
-			</Grid>
-		</Border>
-
-		<!-- Settings menu with options -->
-		<ScrollViewer Padding="16 8 16 16" DockPanel.Dock="Bottom" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+	<Panel>
+		<ScrollViewer Padding="16" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
 			<StackPanel Orientation="Vertical" Spacing="4">
 				<fluent:SettingsExpander IsExpanded="False">
 					<fluent:SettingsExpander.Header>
@@ -133,5 +100,5 @@
 				</fluent:SettingsExpander>
 			</StackPanel>
 		</ScrollViewer>
-	</DockPanel>
+	</Panel>
 </UserControl>

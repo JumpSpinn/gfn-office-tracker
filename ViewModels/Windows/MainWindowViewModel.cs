@@ -17,18 +17,20 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 	public MainWindowViewModel(IServiceProvider sp)
 	{
 		_serviceProvider = sp;
-
 		_currentPage = sp.GetRequiredService<SplashPageViewModel>();
 
 		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
 		{
+			SetMainWindowBarVisibility(true);
 			CurrentPage = GetCurrentPageViewModel(message.Value);
 		});
 	}
 
 	/// <summary>
-	/// Retrieves the appropriate ViewModel for the specified <see cref="Page"/>.
+	/// Retrieves the current page's ViewModel based on the provided page type.
 	/// </summary>
+	/// <param name="page">The page enum value representing the desired UI page.</param>
+	/// <returns>A ViewModelBase instance corresponding to the given page type.</returns>
 	private ViewModelBase GetCurrentPageViewModel(Page page) =>
 		page switch
 		{
@@ -40,6 +42,6 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 			Page.WIZARD_COMPLETED => _serviceProvider.GetRequiredService<WizardCompletedPageViewModel>(),
 			Page.MAIN_WINDOW => _serviceProvider.GetRequiredService<MainPageViewModel>(),
 			Page.SETTINGS_WINDOW => _serviceProvider.GetRequiredService<SettingsPageViewModel>(),
-			_ => throw new ArgumentOutOfRangeException(nameof(page), page, null)
+			_ => _serviceProvider.GetRequiredService<NotFoundPageViewModel>()
 		};
 }

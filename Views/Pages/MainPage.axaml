@@ -8,20 +8,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
-    <Panel Effect="{Binding BlurEffect}">
-	    <Panel.Background>
-		    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-			     <GradientStop Color="#00111f" Offset="0.0"/>
-			     <GradientStop Color="#00080f" Offset="1.0"/>
-		    </LinearGradientBrush>
-	    </Panel.Background>
-	    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*">
-		    <!-- Bar -->
-		    <pages:MainPageBar Grid.Row="0" />
-		    <!-- Header -->
-		    <pages:MainPageHeader Grid.Row="1" />
-		    <!-- Tabs -->
-		    <pages:MainPageTabs Grid.Row="2" />
+    <Panel>
+	    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+		    <pages:MainPageHeader Grid.Row="0" />
+		    <pages:MainPageTabs Grid.Row="1" />
         </Grid>
     </Panel>
 </UserControl>

@@ -7,7 +7,7 @@
              xmlns:wizard="clr-namespace:OfficeTracker.ViewModels.Pages.Wizard"
              x:DataType="wizard:WizardCompletedPageViewModel"
              x:Class="OfficeTracker.Views.Pages.Wizard.WizardCompletedPage">
-	<Panel Effect="{Binding BlurEffect}">
+	<Panel>
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
 				<GradientStop Color="#003764" Offset="0.0"/>
