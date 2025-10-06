@@ -18,8 +18,11 @@ public sealed partial class MainPageViewModel
 	private bool _canAddCurrentDay;
 
 	private bool _notifyToAddCurrentDay;
+	private bool _triggeredNotifyToAddCurrentDay;
+
 	public uint HomeOfficeQuote
 		=> _mainWindowService.RuntimeData.HomeOfficeTargetQuoted;
+
 	public uint OfficeQuote
 		=> _mainWindowService.RuntimeData.OfficeTargetQuoted;
 
@@ -42,8 +45,11 @@ public sealed partial class MainPageViewModel
 		CanAddCurrentDay = !DateTimeHelper.IsToday(data.Value.lastUpdate);
 		_notifyToAddCurrentDay = CanAddCurrentDay;
 
-		if (_notifyToAddCurrentDay)
+		if (_notifyToAddCurrentDay && !_triggeredNotifyToAddCurrentDay)
+		{
+			_triggeredNotifyToAddCurrentDay = true;
 			DialogHelper.ShowDialogAsync($"Willkommen zurück, {_mainWindowService.RuntimeData.UserName}", "Vergiss nicht den heutigen Tag einzutragen!", DialogType.INFO);
+		}
 	}
 
 	/// <summary>
