@@ -3,8 +3,11 @@
 [RegisterSingleton]
 public sealed partial class SettingsPageViewModel : ViewModelBase
 {
-	public SettingsPageViewModel()
+	private readonly LogService _logService;
+
+	public SettingsPageViewModel(LogService ls)
 	{
+		_logService = ls;
 		ParseEnumToCollection();
 
 		// Remove this check after language support is implemented.
@@ -39,6 +42,77 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	/// </summary>
 	partial void OnSelectedLanguageChanged(Language value)
 		=> SelectedLanguage = value;
+
+	#endregion
+
+	#region SAVE LOCATION
+
+	private bool _saveLocationChanging;
+
+	[RelayCommand]
+	private async Task ChangeSaveLocationAsync()
+	{
+		if (_saveLocationChanging) return;
+		if(App.MainWindow is null) return;
+
+		var dialog = new OpenFolderDialog();
+		var result = await dialog.ShowAsync(App.MainWindow);
+		if (string.IsNullOrEmpty(result)) return;
+
+		try
+		{
+			_saveLocationChanging = true;
+			// TODO: implement save location service to change location
+
+			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort erfolgreich geändert.", DialogType.SUCCESS);
+			_logService.Info($"Save location changed to: {result}");
+		}
+		catch (Exception e)
+		{
+			_logService.Exception(e);
+			DialogHelper.ShowDialogAsync("Speicherort", "Fehler beim Ändern des Speicherorts.", DialogType.ERROR);
+		}
+		finally
+		{
+			_saveLocationChanging = false;
+		}
+	}
+
+	[RelayCommand]
+	private async Task ChangeSaveLocationToDefaultAsync()
+	{
+		if (_saveLocationChanging) return;
+
+		var dialog = new ContentDialog()
+		{
+			Title = "Speicherort zurücksetzen",
+			Content = "Möchtest du den Speicherort wirklich zurücksetzen?",
+			PrimaryButtonText = "Ja",
+			CloseButtonText = "Abbrechen",
+			DefaultButton = ContentDialogButton.Close
+		};
+
+		var result = await dialog.ShowAsyncCorrectly();
+		if (result != ContentDialogResult.Primary) return;
+
+		try
+		{
+			_saveLocationChanging = true;
+			// TODO: implement save location service to change location
+
+			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort wurde erfolgreich zurückgesetzt!", DialogType.SUCCESS);
+			_logService.Info($"Save location changed to default path: {result}");
+		}
+		catch (Exception e)
+		{
+			_logService.Exception(e);
+			DialogHelper.ShowDialogAsync("Speicherort", "Fehler beim Zurücksetzen des Speicherorts.", DialogType.ERROR);
+		}
+		finally
+		{
+			_saveLocationChanging = false;
+		}
+	}
 
 	#endregion
 }

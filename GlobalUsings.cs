@@ -10,9 +10,11 @@ global using System.Collections.ObjectModel;
 global using System.Linq;
 global using System.IO;
 global using System.Runtime.CompilerServices;
+global using System.Runtime.InteropServices;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Globalization;
+global using System.Diagnostics;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Design;

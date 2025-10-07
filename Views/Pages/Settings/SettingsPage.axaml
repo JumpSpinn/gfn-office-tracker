@@ -42,8 +42,8 @@
 				<fluent:SettingsExpander IsExpanded="True">
 					<fluent:SettingsExpander.Header>
 						<Grid ColumnDefinitions="Auto,*">
-							<materialIcons:MaterialIcon Grid.Column="0" Kind="Database" Height="24" Width="24" Margin="0 0 12 0" />
-							<TextBlock Grid.Column="1" Text="Datenbank" VerticalAlignment="Center" />
+							<materialIcons:MaterialIcon Grid.Column="0" Kind="Folder" Height="24" Width="24" Margin="0 0 12 0" />
+							<TextBlock Grid.Column="1" Text="Speicherort" VerticalAlignment="Center" />
 						</Grid>
 					</fluent:SettingsExpander.Header>
 
@@ -52,8 +52,15 @@
 						<Grid ColumnDefinitions="*,Auto" RowSpacing="8">
 							<TextBlock Grid.Column="0" Text="Speicherort ändern" VerticalAlignment="Center" />
 							<StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
-								<Button  Content="Standard" Background="Transparent" />
-								<Button  Content="Wählen" />
+								<Button
+									Content="Standard"
+									Background="Transparent"
+									Command="{Binding ChangeSaveLocationToDefaultCommand}"
+								/>
+								<Button
+									Content="Wählen"
+									Command="{Binding ChangeSaveLocationCommand}"
+								/>
 							</StackPanel>
 						</Grid>
 					</fluent:SettingsExpanderItem>
