@@ -18,7 +18,7 @@ public static class DialogHelper
 		{
 			Title = title,
 			PrimaryButtonText = primaryButtonText,
-			DefaultButton = ContentDialogButton.Primary,
+			DefaultButton = ContentDialogButton.Close,
 			IsSecondaryButtonEnabled = !string.IsNullOrEmpty(secondaryButtonText),
 			SecondaryButtonText = secondaryButtonText,
 			Content = dialogContent
