@@ -57,6 +57,23 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 	#endregion
 
+	#region REMEMBER WINDOW SIZE
+
+	[ObservableProperty]
+	private bool _rememberWindowSize;
+
+	/// <summary>
+	/// Handles the event when the RememberWindowSize setting is changed.
+	/// Updates the RememberWindowSize property and logs the change using the log service.
+	/// </summary>
+	partial void OnRememberWindowSizeChanged(bool value)
+	{
+		RememberWindowSize = value;
+		_logService.Debug($"Remember window size: {value}");
+	}
+
+	#endregion
+
 	#region SAVE LOCATION
 
 	private bool _saveLocationChanging;
