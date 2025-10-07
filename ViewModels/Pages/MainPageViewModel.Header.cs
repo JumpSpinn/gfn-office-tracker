@@ -65,7 +65,7 @@ public sealed partial class MainPageViewModel
 			Content = dayForm,
 			PrimaryButtonText = "Eintragen",
 			CloseButtonText = "Abbrechen",
-			DefaultButton = ContentDialogButton.Primary
+			DefaultButton = ContentDialogButton.Close
 		};
 
 		uint entryResult = 0;

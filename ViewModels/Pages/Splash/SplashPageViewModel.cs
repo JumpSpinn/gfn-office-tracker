@@ -192,7 +192,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 				{
 					Title = "Prewarming...",
 					PrimaryButtonText = "Ok",
-					DefaultButton = ContentDialogButton.Primary,
+					DefaultButton = ContentDialogButton.Close,
 					Content = dialogContent,
 					Opacity = 0,
 				};

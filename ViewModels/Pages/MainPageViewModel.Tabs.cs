@@ -59,7 +59,7 @@ public sealed partial class MainPageViewModel
 		    Content = "Möchtest du diesen Eintrag wirklich löschen?",
 		    PrimaryButtonText = "Löschen",
 		    CloseButtonText = "Abbrechen",
-		    DefaultButton = ContentDialogButton.Primary
+		    DefaultButton = ContentDialogButton.Close
 	    };
 
 	    var dialogResult = await dialog.ShowAsyncCorrectly();
@@ -89,7 +89,7 @@ public sealed partial class MainPageViewModel
 		    Content = dayForm,
 		    PrimaryButtonText = "Planen",
 		    CloseButtonText = "Abbrechen",
-		    DefaultButton = ContentDialogButton.Primary
+		    DefaultButton = ContentDialogButton.Close
 	    };
 
 	    var success = false;
