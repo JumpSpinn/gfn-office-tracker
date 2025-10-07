@@ -28,6 +28,9 @@
 			<AvaloniaResource Include="Assets\**" />
 			<Folder Include="Assets\Images\" />
 			<Folder Include="Assets\Screenshots\" />
+			<Folder Include="Services\Config\Controllers\" />
+			<Folder Include="Services\Config\Data\" />
+			<Folder Include="Services\Config\Services\" />
 	</ItemGroup>
 
   <ItemGroup>
