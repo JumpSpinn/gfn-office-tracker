@@ -23,8 +23,13 @@ public sealed partial class MainWindowViewModel
 
 	#region SAVE FOLDER
 
+	/// <summary>
+	/// Opens the folder where the application's save or database files are stored
+	/// in the operating system's default file explorer. This method uses helper
+	/// utilities to resolve the save folder path and facilitate folder navigation.
+	/// </summary>
 	public void OpenSaveFolder()
-		=> DialogHelper.ShowDialogAsync("Achtung", "Dieses Feature ist noch nicht verfügbar!", DialogType.WARNING);
+		=> ExplorerHelper.OpenFolder(PathHelper.GetDatabasePath());
 
 	#endregion
 }

@@ -33,9 +33,19 @@
 				VerticalAlignment="Center"
 				Margin="4 0"
 			>
-				<MenuItem Padding="8 0" Margin="0 8" Click="RequestToggleSettingsMenu" IsChecked="{Binding SettingsMenuOpened}">
+				<MenuItem
+					Padding="8 0"
+					Margin="0 8"
+					Click="RequestToggleSettingsMenu"
+					ToolTip.Tip="Einstellungen öffnen"
+					ToolTip.Placement="Bottom"
+					ToolTip.VerticalOffset="0"
+					IsChecked="{Binding SettingsMenuOpened}"
+				>
 					<MenuItem.Header>
-						<materialIcons:MaterialIcon Kind="Cog" />
+						<materialIcons:MaterialIcon
+							Kind="Cog"
+						/>
 					</MenuItem.Header>
 					<MenuItem.Styles>
 						<Style Selector="MenuItem:checked">
@@ -43,9 +53,18 @@
 						</Style>
 					</MenuItem.Styles>
 				</MenuItem>
-				<MenuItem Padding="8 0" Margin="0 8" Click="RequestOpenSaveFolder">
+				<MenuItem
+					Padding="8 0"
+					Margin="0 8"
+					Click="RequestOpenSaveFolder"
+					ToolTip.Tip="Verzeichnis öffnen"
+					ToolTip.Placement="Bottom"
+					ToolTip.VerticalOffset="0"
+				>
 					<MenuItem.Header>
-						<materialIcons:MaterialIcon Kind="QuestionMark" />
+						<materialIcons:MaterialIcon
+							Kind="QuestionMark"
+						/>
 					</MenuItem.Header>
 				</MenuItem>
 			</Menu>
