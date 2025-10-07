@@ -51,10 +51,10 @@ public sealed class ConfigController
 
 			Config.WindowSize = config.WindowSize;
 			Config.WindowPosition = config.WindowPosition;
+			Config.RememberWindowPositionSize = config.RememberWindowPositionSize;
+			Config.Language = config.Language;
 
-			await SaveConfigToFile();
-
-			return true;
+			return await SaveConfigToFile();
 		}
 		catch (Exception e)
 		{
