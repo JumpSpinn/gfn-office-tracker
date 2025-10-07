@@ -27,7 +27,7 @@ public static class ExplorerHelper
 				p.StartInfo = new() { FileName = path, UseShellExecute = true, };
 				p.Start();
 			}
-			catch(Exception _)
+			catch
 			{
 				var url = new Uri(path).AbsoluteUri;
 				Process.Start(new ProcessStartInfo() { FileName = url, UseShellExecute = true });
