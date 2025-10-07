@@ -15,7 +15,7 @@ public sealed class ConfigService
 	/// It combines the application's data directory with the application domain's friendly name
 	/// to construct a unique and consistent location for storing configuration data.
 	/// </summary>
-	public readonly string _configDirectory =
+	private readonly string _configDirectory =
 		Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppDomain.CurrentDomain.FriendlyName);
 
 	/// <summary>
