@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Splash;
 
+using Services.MainWindow.Controllers;
+
 /// <summary>
 /// Represents the ViewModel for the splash screen page of the application.
 /// Responsible for initializing the application's essential services and operations
@@ -9,13 +11,13 @@
 public sealed partial class SplashPageViewModel : ViewModelBase
 {
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
-	private readonly MainWindowService _mainWindowService;
+	private readonly MainWindowController _mainWindowController;
 	private readonly ConfigController _configController;
 	private readonly LogService _logService;
 
-	public SplashPageViewModel(MainWindowService mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory, ConfigController cc)
+	public SplashPageViewModel(MainWindowController mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory, ConfigController cc)
 	{
-		_mainWindowService = mwc;
+		_mainWindowController = mwc;
 		_logService = lc;
 		_dbContextFactory = dbContextFactory;
 		_configController = cc;
@@ -103,7 +105,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		while (retryCount < maxRetries)
 		{
 			if (App.MainWindow?.IsLoaded == true)
-				return await _mainWindowService.Initialize();
+				return await _mainWindowController.Initialize();
 
 			_logService.Debug(App.MainWindow is null ?
 				"MainWindow not available yet... Retrying..." :
@@ -244,7 +246,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			if (userSettings is not null)
 			{
 				LoadingText = "Runtime Data found. Loading..";
-				_mainWindowService.SetRuntimeDataAsync(userSettings);
+				_mainWindowController.SetRuntimeDataAsync(userSettings);
 				_logService.Info("Runtime Data was loaded.");
 			}
 

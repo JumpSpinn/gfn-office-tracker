@@ -1,12 +1,24 @@
-﻿namespace OfficeTracker.Services;
+﻿namespace OfficeTracker.Services.MainWindow.Controllers;
 
 /// <summary>
 /// Controller responsible for managing interactions and initialization of the main application window.
 /// Provides methods to initialize and validate the state of the main application window.
 /// </summary>
 [RegisterSingleton]
-public sealed class MainWindowService(LogService logService)
+public sealed class MainWindowController
 {
+	private readonly LogService _logService;
+	private readonly ConfigController _configController;
+
+	public MainWindowController(LogService ls, ConfigController cc, MainWindowEvents mwe)
+	{
+		_logService = ls;
+		_configController = cc;
+		mwe.OnWindowSizePositionChanged += OnPositionSizeChanged;
+	}
+
+	#region Initialize
+
 	private bool _initialized;
 
 	/// <summary>
@@ -22,25 +34,54 @@ public sealed class MainWindowService(LogService logService)
 
 			if (App.MainWindow is null)
 			{
-				logService.Error("MainWindow not available yet. Can't initialize controller.");
+				_logService.Error("MainWindow not available yet. Can't initialize controller.");
 				return false;
 			}
 
 			if (!App.MainWindow.IsLoaded)
 			{
-				logService.Error("MainWindow available, but not loaded yet. Can't initialize controller.");
+				_logService.Error("MainWindow available, but not loaded yet. Can't initialize controller.");
 				return false;
 			}
+
+			App.MainWindow.Position = new(_configController.Config.WindowPosition.X, _configController.Config.WindowPosition.Y);
+			App.MainWindow.Width = _configController.Config.WindowSize.X;
+			App.MainWindow.Height = _configController.Config.WindowSize.Y;
 
 			_initialized = true;
 			return true;
 		}
 		catch (Exception ex)
 		{
-			logService.Exception(ex);
+			_logService.Exception(ex);
 			return false;
 		}
 	}
+
+	#endregion
+
+	#region WINDOW POSITION CHANGE
+
+	/// <summary>
+	/// Updates the application's configuration with the current window position and size when they change.
+	/// Persists the updated configuration to the relevant storage.
+	/// Logs the changes in window position and size for debugging purposes.
+	/// Does not modify the configuration if the service is uninitialized.
+	/// </summary>
+	private async Task OnPositionSizeChanged(PixelPoint position, Size size)
+	{
+		_logService.Debug($"Window position: X={position.X}, Y={position.Y}");
+		_logService.Debug($"Window Size: Width={size.Width}, Height={size.Height}");
+
+		if (!_initialized) return;
+
+		_configController.Config.WindowPosition = new(position.X, position.Y);
+		_configController.Config.WindowSize = new((int)size.Width, (int)size.Height);
+
+		await _configController.SaveConfigToFile();
+	}
+
+	#endregion
 
 	#region RUNTIME DATA
 
@@ -61,7 +102,7 @@ public sealed class MainWindowService(LogService logService)
 	{
 		if (_runtimeDataInitialized)
 		{
-			logService.Debug("Runtime data already set.");
+			_logService.Debug("Runtime data already set.");
 			return;
 		}
 

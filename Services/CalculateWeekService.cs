@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.Services;
 
+using MainWindow.Controllers;
+
 /// <summary>
 /// Service responsible for calculating and managing weekly schedules based on user settings
 /// and other dynamic properties. It performs operations to compute upcoming weeks
@@ -10,13 +12,13 @@ public sealed class CalculateWeekService
 {
 	private readonly LogService _logService;
 	private readonly DatabaseService _databaseService;
-	private readonly MainWindowService _mainWindowService;
+	private readonly MainWindowController _mainWindowController;
 
-	public CalculateWeekService(LogService ls, DatabaseService ds, MainWindowService mws)
+	public CalculateWeekService(LogService ls, DatabaseService ds, MainWindowController mws)
 	{
 		_logService = ls;
 		_databaseService = ds;
-		_mainWindowService = mws;
+		_mainWindowController = mws;
 	}
 
 	private uint _homeOfficeTargetQuoted;
@@ -163,8 +165,8 @@ public sealed class CalculateWeekService
 			_currentStartOfWeek = _currentStartOfWeek.AddDays(7);
 			_currentWeekIndex++;
 
-			var homeOfficeDays = _mainWindowService.RuntimeData.HomeOfficeDays;
-			var officeDays = _mainWindowService.RuntimeData.OfficeDays;
+			var homeOfficeDays = _mainWindowController.RuntimeData.HomeOfficeDays;
+			var officeDays = _mainWindowController.RuntimeData.OfficeDays;
 
 			var dayOfWeeks = homeOfficeDays
 				.Select(day => new { Day = day, Type = DayType.HOME })

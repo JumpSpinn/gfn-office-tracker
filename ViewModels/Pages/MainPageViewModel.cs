@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+using Services.MainWindow.Controllers;
+
 /// <summary>
 /// Represents the ViewModel for the main page, providing functionality to manage and interact with
 /// the main page's data and behavior in an MVVM architecture.
@@ -9,14 +11,14 @@ public sealed partial class MainPageViewModel : ViewModelBase
 {
 	private readonly LogService _logService;
 	private readonly DatabaseService _databaseService;
-	private readonly MainWindowService _mainWindowService;
+	private readonly MainWindowController _mainWindowController;
 	private readonly CalculateWeekService _calculateWeekService;
 
-    public MainPageViewModel(DatabaseService ds, LogService lc, MainWindowService mws, CalculateWeekService cws)
+    public MainPageViewModel(DatabaseService ds, LogService lc, MainWindowController mws, CalculateWeekService cws)
     {
 	    _logService = lc;
 	    _databaseService = ds;
-	    _mainWindowService = mws;
+	    _mainWindowController = mws;
 	    _calculateWeekService = cws;
     }
 

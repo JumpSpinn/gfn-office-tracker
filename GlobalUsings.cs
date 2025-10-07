@@ -16,6 +16,7 @@ global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Globalization;
 global using System.Diagnostics;
+global using System.Timers;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Design;
@@ -60,6 +61,8 @@ global using OfficeTracker.Services;
 global using OfficeTracker.Services.Config.Models;
 global using OfficeTracker.Services.Config.Controllers;
 global using OfficeTracker.Services.Config.Services;
+
+global using OfficeTracker.Services.MainWindow.Events;
 
 global using OfficeTracker.ViewModels.Base;
 global using OfficeTracker.ViewModels.Windows;
