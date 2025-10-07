@@ -11,6 +11,7 @@ global using System.Linq;
 global using System.IO;
 global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
+global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Globalization;
@@ -50,6 +51,7 @@ global using OfficeTracker.Enums;
 global using OfficeTracker.Messages;
 global using OfficeTracker.Models;
 global using OfficeTracker.Services;
+global using OfficeTracker.Data;
 
 global using OfficeTracker.Database;
 global using OfficeTracker.Database.Models;
