@@ -40,6 +40,23 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 	#endregion
 
+	#region REMEMBER WINDOW POSITION
+
+	[ObservableProperty]
+	private bool _rememberWindowPosition;
+
+	/// <summary>
+	/// Updates the RememberWindowPosition property based on the provided value
+	/// and logs the change in the window position preference.
+	/// </summary>
+	partial void OnRememberWindowPositionChanged(bool value)
+	{
+		RememberWindowPosition = value;
+		_logService.Debug($"Remember window pos: {value}");
+	}
+
+	#endregion
+
 	#region SAVE LOCATION
 
 	private bool _saveLocationChanging;

@@ -36,6 +36,15 @@
 							/>
 						</Grid>
 					</fluent:SettingsExpanderItem>
+
+					<!-- Save window location -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Fensterposition merken" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" IsChecked="{Binding RememberWindowPosition}" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
 				</fluent:SettingsExpander>
 
 				<!-- Database -->
