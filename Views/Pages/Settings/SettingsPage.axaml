@@ -39,20 +39,12 @@
 
 					<!-- Save window location -->
 					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
-							<TextBlock Grid.Column="0" Grid.Row="0" Text="Fensterposition merken" VerticalAlignment="Center" />
-							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" IsChecked="{Binding RememberWindowPosition}" />
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Fenster merken" VerticalAlignment="Center" />
+							<TextBlock Grid.Column="0" Grid.Row="1" Text="Position, Größe" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" IsChecked="{Binding RememberWindowPositionSize}" />
 						</Grid>
 					</fluent:SettingsExpanderItem>
-
-					<!-- Save window size -->
-					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
-							<TextBlock Grid.Column="0" Grid.Row="0" Text="Fenstergröße merken" VerticalAlignment="Center" />
-							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" IsChecked="{Binding RememberWindowSize}" />
-						</Grid>
-					</fluent:SettingsExpanderItem>
-
 				</fluent:SettingsExpander>
 
 				<!-- Database -->
@@ -122,7 +114,7 @@
 						</Grid>
 					</fluent:SettingsExpander.Header>
 					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
 							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
@@ -138,7 +130,7 @@
 						</Grid>
 					</fluent:SettingsExpander.Header>
 					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
 							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
@@ -151,7 +143,7 @@
 						<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
 					</fluent:SettingsExpander.Header>
 					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
 							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
@@ -167,7 +159,7 @@
 						</Grid>
 					</fluent:SettingsExpander.Header>
 					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
 						</Grid>
@@ -179,21 +171,21 @@
 						<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" />
 					</fluent:SettingsExpander.Header>
 					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 1" VerticalAlignment="Center" />
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
 						</Grid>
 					</fluent:SettingsExpanderItem>
 
 					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 2" VerticalAlignment="Center" />
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
 						</Grid>
 					</fluent:SettingsExpanderItem>
 
 					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Margin="36 0 0 0">
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 3" VerticalAlignment="Center" />
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
 						</Grid>

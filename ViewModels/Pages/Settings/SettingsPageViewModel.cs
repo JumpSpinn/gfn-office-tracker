@@ -1,20 +1,35 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Settings;
 
+/// <summary>
+/// Represents the view model for the settings page of the OfficeTracker application.
+/// </summary>
 [RegisterSingleton]
 public sealed partial class SettingsPageViewModel : ViewModelBase
 {
 	private readonly LogService _logService;
+	private readonly ConfigController _configController;
 
-	public SettingsPageViewModel(LogService ls)
+	public SettingsPageViewModel(LogService ls, ConfigController cc)
 	{
 		_logService = ls;
-		ParseEnumToCollection();
+		_configController = cc;
+
+		ParseConfig();
+		ParseLanguageEnumToCollection();
+
+		_configController.Config.PropertyChanged += (_, _) => ParseConfig();
+	}
+
+	private void ParseConfig()
+	{
+		RememberWindowPositionSize = _configController.Config.RememberWindowPositionSize;
+		SelectedLanguage = _configController.Config.Language;
 	}
 
 	#region LANGUAGE SELECTION
 
 	[ObservableProperty]
-	private Language _selectedLanguage = Language.German;
+	private Language _selectedLanguage;
 
 	[ObservableProperty]
 	private ObservableCollection<Language> _languages = new();
@@ -26,7 +41,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	/// Populates an observable collection with all values from the Language enumeration.
 	/// This method iterates through the Language enum and adds each value to the _languages collection.
 	/// </summary>
-	private void ParseEnumToCollection()
+	private void ParseLanguageEnumToCollection()
 	{
 		foreach (var lang in Enum.GetValues<Language>())
 			Languages.Add(lang);
@@ -36,23 +51,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	/// Updates the selected language by setting the SelectedLanguage property to the provided value.
 	/// </summary>
 	partial void OnSelectedLanguageChanged(Language value)
-		=> SelectedLanguage = value;
-
-	#endregion
-
-	#region REMEMBER WINDOW POSITION
-
-	[ObservableProperty]
-	private bool _rememberWindowPosition;
-
-	/// <summary>
-	/// Updates the RememberWindowPosition property based on the provided value
-	/// and logs the change in the window position preference.
-	/// </summary>
-	partial void OnRememberWindowPositionChanged(bool value)
 	{
-		RememberWindowPosition = value;
-		_logService.Debug($"Remember window pos: {value}");
+		_configController.Config.Language = value;
+		_configController.SaveConfigToFile();
 	}
 
 	#endregion
@@ -60,16 +61,17 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	#region REMEMBER WINDOW SIZE
 
 	[ObservableProperty]
-	private bool _rememberWindowSize;
+	private bool _rememberWindowPositionSize;
 
 	/// <summary>
-	/// Handles the event when the RememberWindowSize setting is changed.
-	/// Updates the RememberWindowSize property and logs the change using the log service.
+	/// Handles behavior triggered when the RememberWindowPositionSize setting is changed.
+	/// This method is invoked when the RememberWindowPositionSize property is updated
+	/// to apply and propagate changes in the corresponding configuration.
 	/// </summary>
-	partial void OnRememberWindowSizeChanged(bool value)
+	partial void OnRememberWindowPositionSizeChanged(bool value)
 	{
-		RememberWindowSize = value;
-		_logService.Debug($"Remember window size: {value}");
+		_configController.Config.RememberWindowPositionSize = value;
+		_configController.SaveConfigToFile();
 	}
 
 	#endregion

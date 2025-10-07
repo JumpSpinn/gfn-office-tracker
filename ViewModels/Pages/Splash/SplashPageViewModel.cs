@@ -272,7 +272,11 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Config..";
 
-			await _configController.InitializeConfigAsync();
+			if (!await _configController.InitializeConfigAsync())
+			{
+				DisplayInfoBar("Error", "Error while trying to initialize Config.", InfoBarSeverity.Error);
+				return false;
+			}
 
 			_logService.Info("Config initialized.");
 			ShowInfiniteProgressBar = false;

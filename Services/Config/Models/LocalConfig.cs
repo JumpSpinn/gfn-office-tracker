@@ -6,6 +6,56 @@
 /// </summary>
 public sealed class LocalConfig : INotifyPropertyChanged
 {
+	#region LANGUAGE
+
+	/// <summary>
+	/// Stores the current language setting for the application.
+	/// This determines the language used within the user interface and other language-dependent features.
+	/// </summary>
+	private Language _language = Language.English;
+
+	/// <summary>
+	/// Specifies the language preference for the application. This setting determines
+	/// the language in which the application's user interface will be displayed.
+	/// </summary>
+	public Language Language
+	{
+		get => _language;
+		set
+		{
+			if(value == _language) return;
+			_language = value;
+			OnPropertyChanged();
+		}
+	}
+
+	#endregion
+
+	#region WINDOW SIZE/POSITION
+
+	/// <summary>
+	/// Indicates whether the application should preserve and restore the window's position and size
+	/// during application restarts. If set to true, the window's current position and dimensions
+	/// are saved and reapplied on subsequent launches.
+	/// </summary>
+	private bool _rememberWindowPositionSize = true;
+
+	/// <summary>
+	/// Determines whether the application window's position and size should be remembered across sessions.
+	/// When set to true, the current window dimensions and location are saved and restored upon reopening the application.
+	/// Changing this property triggers a property change notification.
+	/// </summary>
+	public bool RememberWindowPositionSize
+	{
+		get => _rememberWindowPositionSize;
+		set
+		{
+			if (value == _rememberWindowPositionSize) return;
+			_rememberWindowPositionSize = value;
+			OnPropertyChanged();
+		}
+	}
+
 	#region WINDOW POSITION
 
 	/// <summary>
@@ -60,6 +110,8 @@ public sealed class LocalConfig : INotifyPropertyChanged
 			OnPropertyChanged();
 		}
 	}
+
+	#endregion
 
 	#endregion
 

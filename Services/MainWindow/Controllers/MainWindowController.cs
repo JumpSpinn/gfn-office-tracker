@@ -70,6 +70,8 @@ public sealed class MainWindowController
 	/// </summary>
 	private async Task OnPositionSizeChanged(PixelPoint position, Size size)
 	{
+		if (!_configController.Config.RememberWindowPositionSize) return;
+
 		_logService.Debug($"Window position: X={position.X}, Y={position.Y}");
 		_logService.Debug($"Window Size: Width={size.Width}, Height={size.Height}");
 
