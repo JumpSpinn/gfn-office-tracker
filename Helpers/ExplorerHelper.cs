@@ -6,19 +6,19 @@
 public static class ExplorerHelper
 {
 	/// <summary>
-	/// Opens a folder in the file explorer or equivalent system application based on the current operating system.
+	/// Opens the given folder in the operating system's default file explorer.
 	/// </summary>
-	/// <param name="path">The path of the folder to open. Can be a file system path or a URI. It must not be null or empty.</param>
+	/// <param name="path">The full path of the folder to open. Must not be null or empty.</param>
 	public static void OpenFolder(string path)
 	{
 		if (string.IsNullOrEmpty(path)) return;
 
 		if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-			Process.Start("explorer.exe", path);
+			Process.Start("explorer.exe", $"/select,\"{path}\"");
 		else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-			Process.Start("open", path);
+			Process.Start("open", $"/select,\"{path}\"");
 		else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-			Process.Start("xdg-open", path);
+			Process.Start("xdg-open", $"/select,\"{path}\"");
 		else
 		{
 			try
