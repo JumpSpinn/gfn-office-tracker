@@ -28,46 +28,56 @@
 			MaxHeight="32"
 			Background="#00080f"
 		>
-			<Menu
-				FontSize="12"
-				VerticalAlignment="Center"
-				Margin="4 0"
-			>
-				<MenuItem
-					Padding="8 0"
-					Margin="0 8"
-					Click="RequestToggleSettingsMenu"
-					ToolTip.Tip="Einstellungen öffnen"
-					ToolTip.Placement="Bottom"
-					ToolTip.VerticalOffset="0"
-					IsChecked="{Binding SettingsMenuOpened}"
+			<Grid ColumnDefinitions="Auto,*,Auto">
+				<Menu
+					Grid.Column="0"
+					FontSize="12"
+					VerticalAlignment="Center"
+					Margin="4 0"
 				>
-					<MenuItem.Header>
-						<materialIcons:MaterialIcon
-							Kind="Cog"
-						/>
-					</MenuItem.Header>
-					<MenuItem.Styles>
-						<Style Selector="MenuItem:checked">
-							<Setter Property="Background" Value="{DynamicResource AccentButtonBackground}"></Setter>
-						</Style>
-					</MenuItem.Styles>
-				</MenuItem>
-				<MenuItem
-					Padding="8 0"
-					Margin="0 8"
-					Click="RequestOpenSaveFolder"
-					ToolTip.Tip="Verzeichnis öffnen"
-					ToolTip.Placement="Bottom"
-					ToolTip.VerticalOffset="0"
+					<MenuItem
+						Padding="8 0"
+						Margin="0 8"
+						Click="RequestToggleSettingsMenu"
+						ToolTip.Tip="Einstellungen öffnen"
+						ToolTip.Placement="Bottom"
+						ToolTip.VerticalOffset="0"
+						IsChecked="{Binding SettingsMenuOpened}"
+					>
+						<MenuItem.Header>
+							<materialIcons:MaterialIcon
+								Kind="Cog"
+							/>
+						</MenuItem.Header>
+						<MenuItem.Styles>
+							<Style Selector="MenuItem:checked">
+								<Setter Property="Background" Value="{DynamicResource AccentButtonBackground}"></Setter>
+							</Style>
+						</MenuItem.Styles>
+					</MenuItem>
+				</Menu>
+				<Menu
+					Grid.Column="2"
+					FontSize="12"
+					VerticalAlignment="Center"
+					Margin="4 0"
 				>
-					<MenuItem.Header>
-						<materialIcons:MaterialIcon
-							Kind="QuestionMark"
-						/>
-					</MenuItem.Header>
-				</MenuItem>
-			</Menu>
+					<MenuItem
+						Padding="8 0"
+						Margin="0 8"
+						Click="RequestOpenSaveFolder"
+						ToolTip.Tip="Verzeichnis öffnen"
+						ToolTip.Placement="Bottom"
+						ToolTip.VerticalOffset="0"
+					>
+						<MenuItem.Header>
+							<materialIcons:MaterialIcon
+								Kind="QuestionMark"
+							/>
+						</MenuItem.Header>
+					</MenuItem>
+				</Menu>
+			</Grid>
 		</Border>
 		<controls:Frame
 			DockPanel.Dock="Bottom"
