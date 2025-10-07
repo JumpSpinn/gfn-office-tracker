@@ -10,13 +10,15 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 {
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
 	private readonly MainWindowService _mainWindowService;
+	private readonly ConfigController _configController;
 	private readonly LogService _logService;
 
-	public SplashPageViewModel(MainWindowService mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory)
+	public SplashPageViewModel(MainWindowService mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory, ConfigController cc)
 	{
 		_mainWindowService = mwc;
 		_logService = lc;
 		_dbContextFactory = dbContextFactory;
+		_configController = cc;
 		StartInitializationAsync();
 	}
 
@@ -30,6 +32,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 	private async Task StartInitializationAsync()
 	{
 		_loadQueue.Enqueue(InitializeLoggerAsync);
+		_loadQueue.Enqueue(InitializeConfigAsync);
 		_loadQueue.Enqueue(InitializeDatabaseAsync);
 		_loadQueue.Enqueue(LoadRuntimeDataAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
@@ -251,6 +254,31 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		catch (Exception e)
 		{
 			DisplayInfoBar("Critical Error", $"While loading Runtime Data:\n{e.Message}", InfoBarSeverity.Error);
+			return false;
+		}
+	}
+
+	/// <summary>
+	/// Asynchronously initializes the application's configuration settings by invoking the necessary configuration services.
+	/// Handles the display of loading indicators and logs the status of the initialization process.
+	/// Reports any critical errors encountered during the initialization.
+	/// </summary>
+	private async Task<bool> InitializeConfigAsync()
+	{
+		try
+		{
+			ShowInfiniteProgressBar = true;
+			LoadingText = "Initializing Config..";
+
+			await _configController.InitializeConfigAsync();
+
+			_logService.Info("Config initialized.");
+			ShowInfiniteProgressBar = false;
+			return true;
+		}
+		catch (Exception e)
+		{
+			DisplayInfoBar("Critical Error", $"While initializing Config:\n{e.Message}", InfoBarSeverity.Error);
 			return false;
 		}
 	}

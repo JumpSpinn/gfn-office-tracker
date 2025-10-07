@@ -50,12 +50,16 @@ global using OfficeTracker.Helpers;
 global using OfficeTracker.Enums;
 global using OfficeTracker.Messages;
 global using OfficeTracker.Models;
-global using OfficeTracker.Services;
 global using OfficeTracker.Data;
 
 global using OfficeTracker.Database;
 global using OfficeTracker.Database.Models;
 global using OfficeTracker.Database.Factories;
+
+global using OfficeTracker.Services;
+global using OfficeTracker.Services.Config.Models;
+global using OfficeTracker.Services.Config.Controllers;
+global using OfficeTracker.Services.Config.Services;
 
 global using OfficeTracker.ViewModels.Base;
 global using OfficeTracker.ViewModels.Windows;
