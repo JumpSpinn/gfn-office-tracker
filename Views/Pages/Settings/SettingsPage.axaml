@@ -67,9 +67,28 @@
 
 					<!-- Current save directory -->
 					<fluent:SettingsExpanderItem>
-						<Grid RowDefinitions="Auto,Auto">
-							<TextBlock Grid.Column="0" Grid.Row="0" Text="Aktueller Speicherort" VerticalAlignment="Center" />
-							<TextBlock Grid.Column="0" Grid.Row="1" Text="Aktueller Pfad: C:/Users/AppData/asdasdasasdasdasdasdasda..." VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+						<Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="0"
+								Text="Aktueller Speicherort"
+								VerticalAlignment="Center"
+							/>
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="1"
+								Text="{Binding SaveLocationTruncate}"
+								VerticalAlignment="Center"
+								FontSize="12"
+								Opacity=".5"
+							/>
+							<Button
+								Grid.Column="1"
+								Grid.Row="0"
+								Grid.RowSpan="2"
+								Content="Öffnen"
+								Command="{Binding OpenSaveFolderCommand}"
+							/>
 						</Grid>
 					</fluent:SettingsExpanderItem>
 

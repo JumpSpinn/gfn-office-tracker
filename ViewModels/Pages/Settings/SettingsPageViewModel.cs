@@ -9,11 +9,6 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	{
 		_logService = ls;
 		ParseEnumToCollection();
-
-		// Remove this check after language support is implemented.
-#if RELEASE
-		IsLanguageSelectionEnabled = false;
-#endif
 	}
 
 	#region LANGUAGE SELECTION
@@ -49,13 +44,22 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 	private bool _saveLocationChanging;
 
+	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(SaveLocationTruncate))]
+	private string _saveLocation = PathHelper.GetDatabasePath();
+
+	public string SaveLocationTruncate
+		=> SaveLocation.Truncate(45, "..");
+
 	[RelayCommand]
 	private async Task ChangeSaveLocationAsync()
 	{
 		if (_saveLocationChanging) return;
 		if(App.MainWindow is null) return;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 		var dialog = new OpenFolderDialog();
+#pragma warning restore CS0618 // Type or member is obsolete
 		var result = await dialog.ShowAsync(App.MainWindow);
 		if (string.IsNullOrEmpty(result)) return;
 
@@ -63,6 +67,8 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		{
 			_saveLocationChanging = true;
 			// TODO: implement save location service to change location
+
+			SaveLocation = result;
 
 			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort erfolgreich geändert.", DialogType.SUCCESS);
 			_logService.Info($"Save location changed to: {result}");
@@ -98,7 +104,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		try
 		{
 			_saveLocationChanging = true;
-			// TODO: implement save location service to change location
+			// TODO: implement save location service to change location to default
 
 			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort wurde erfolgreich zurückgesetzt!", DialogType.SUCCESS);
 			_logService.Info($"Save location changed to default path: {result}");
@@ -113,6 +119,10 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			_saveLocationChanging = false;
 		}
 	}
+
+	[RelayCommand]
+	private void OpenSaveFolder()
+		=> ExplorerHelper.OpenFolder(SaveLocation);
 
 	#endregion
 }
