@@ -40,22 +40,4 @@ public static class PathHelper
 		=> Directory.Exists(AppDataPath) || Directory.CreateDirectory(AppDataPath).Exists;
 
 	#endregion
-
-	#region DATABASE PATH
-
-	/// <summary>
-	/// Retrieves the file path to the database file used by the application.
-	/// In debug mode, the path is resolved to the current directory for ease of development.
-	/// In production, the database file is stored within the application's data directory.
-	/// </summary>
-	public static string GetDatabasePath()
-	{
-#if DEBUG
-		return Path.GetFullPath(Options.DB_NAME);
-#else
-		return Path.Combine(AppDataPath, Options.DB_NAME);
-#endif
-	}
-
-	#endregion
 }

@@ -24,6 +24,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	{
 		RememberWindowPositionSize = _configController.Config.RememberWindowPositionSize;
 		SelectedLanguage = _configController.Config.Language;
+		SaveLocation = _configController.Config.DatabasePath;
 	}
 
 	#region LANGUAGE SELECTION
@@ -82,7 +83,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(nameof(SaveLocationTruncate))]
-	private string _saveLocation = PathHelper.GetDatabasePath();
+	private string _saveLocation;
 
 	public string SaveLocationTruncate
 		=> SaveLocation.Truncate(45, "..");
@@ -102,9 +103,8 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		try
 		{
 			_saveLocationChanging = true;
+			_configController.Config.DatabasePath = result;
 			// TODO: implement save location service to change location
-
-			SaveLocation = result;
 
 			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort erfolgreich geändert.", DialogType.SUCCESS);
 			_logService.Info($"Save location changed to: {result}");

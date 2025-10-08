@@ -10,13 +10,15 @@
 public sealed partial class MainWindowViewModel : ViewModelBase
 {
 	private readonly IServiceProvider _serviceProvider;
+	private readonly ConfigController _configController;
 
 	[ObservableProperty]
 	private ViewModelBase? _currentPage;
 
-	public MainWindowViewModel(IServiceProvider sp)
+	public MainWindowViewModel(IServiceProvider sp, ConfigController cc)
 	{
 		_serviceProvider = sp;
+		_configController = cc;
 		_currentPage = sp.GetRequiredService<SplashPageViewModel>();
 
 		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
