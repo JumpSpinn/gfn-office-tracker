@@ -25,7 +25,7 @@
                 BorderThickness="4"
                 IsSelected="True"
             >
-                <lists:PlannableDayListControl
+                <lists:PlannableDayListTemplate
                     Items="{Binding PlannableDays}"
                     AddButtonClicked="RequestShowAddPlannableDayDialog"
                     DeleteButtonClicked="RequestShowDeletePlannableDayDialog"
@@ -65,7 +65,7 @@
 		                        <DataTemplate
 			                        DataType="entities:CalculatedWeekEntity"
 			                    >
-			                        <lists:CalculatedWeekListControl
+			                        <lists:CalculatedWeekListTemplate
 				                        HomeOfficeDays="{Binding HomeOfficeDays}"
 				                        OfficeDays="{Binding OfficeDays}"
 				                        HomeOfficeTargetQuoted="{Binding HomeOfficeTargetQuoted}"

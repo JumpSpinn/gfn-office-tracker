@@ -69,9 +69,9 @@
         <materialicons:MaterialIconStyles />
 
         <!-- UI Templated Controls -->
-	    <StyleInclude Source="/Features/Templates/Base/StatisticControl.axaml"></StyleInclude>
-	    <StyleInclude Source="/Features/Templates/Lists/CalculatedWeekListControl.axaml"></StyleInclude>
-	    <StyleInclude Source="/Features/Templates/Lists/PlannableDayListControl.axaml"></StyleInclude>
+	    <StyleInclude Source="/Features/Templates/Base/StatisticTemplate.axaml"></StyleInclude>
+	    <StyleInclude Source="/Features/Templates/Lists/CalculatedWeekListTemplate.axaml"></StyleInclude>
+	    <StyleInclude Source="/Features/Templates/Lists/PlannableDayListTemplate.axaml"></StyleInclude>
 
     </Application.Styles>
 

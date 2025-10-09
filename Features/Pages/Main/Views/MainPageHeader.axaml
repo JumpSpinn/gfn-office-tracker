@@ -33,7 +33,7 @@
 	            </Border>
             </Grid>
             <Grid x:Name="StatsGrid" ColumnDefinitions="*,Auto" ColumnSpacing="4" Margin="0 8 0 0">
-	            <base:StatisticControl
+	            <base:StatisticTemplate
 		            Grid.Column="0"
 		            HomeOfficeDays="{Binding HomeOfficeDays}"
 		            OfficeDays="{Binding OfficeDays}"

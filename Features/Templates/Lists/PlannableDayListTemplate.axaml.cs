@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a custom control that facilitates interaction with a collection of plannable days.
 /// </summary>
-public sealed class PlannableDayListControl : TemplatedControl
+public sealed class PlannableDayListTemplate : TemplatedControl
 {
 	/// <summary>
 	/// Builds the visual tree for the control when the template is applied. This method locates the elements in the control's
@@ -39,7 +39,7 @@ public sealed class PlannableDayListControl : TemplatedControl
 	/// enabling display and interaction with the list of plannable days within the control.
 	/// </summary>
 	public static readonly StyledProperty<ObservableCollection<PlannableDayModel>> ItemsProperty =
-		AvaloniaProperty.Register<PlannableDayListControl, ObservableCollection<PlannableDayModel>>(nameof(Items), defaultValue: []);
+		AvaloniaProperty.Register<PlannableDayListTemplate, ObservableCollection<PlannableDayModel>>(nameof(Items), defaultValue: []);
 
 	/// <summary>
 	/// Gets or sets the collection of plannable days displayed in the control.
@@ -68,7 +68,7 @@ public sealed class PlannableDayListControl : TemplatedControl
 	/// supporting event routing strategies such as bubbling for external handling scenarios.
 	/// </summary>
 	private readonly RoutedEvent<RoutedEventArgs> _addButtonClickedEvent =
-		RoutedEvent.Register<PlannableDayListControl, RoutedEventArgs>(nameof(PlannableDayListControl), RoutingStrategies.Bubble);
+		RoutedEvent.Register<PlannableDayListTemplate, RoutedEventArgs>(nameof(PlannableDayListTemplate), RoutingStrategies.Bubble);
 
 	/// <summary>
 	/// An event that is triggered when the "Add" button in the `PlannableDayListControl` is clicked.
@@ -100,7 +100,7 @@ public sealed class PlannableDayListControl : TemplatedControl
 	/// as it propagates through the visual tree.
 	/// </summary>
 	private readonly RoutedEvent<RoutedEventArgs> _deleteButtonClickedEvent =
-		RoutedEvent.Register<PlannableDayListControl, RoutedEventArgs>(nameof(PlannableDayListControl), RoutingStrategies.Bubble);
+		RoutedEvent.Register<PlannableDayListTemplate, RoutedEventArgs>(nameof(PlannableDayListTemplate), RoutingStrategies.Bubble);
 
 	/// <summary>
 	/// An event that is triggered when the delete button is clicked within the `PlannableDayListControl`.

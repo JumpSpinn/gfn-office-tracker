@@ -28,7 +28,7 @@ public partial class MainPageTabs : UserControl
 	private void RequestShowDeletePlannableDayDialog(object? sender, RoutedEventArgs e)
 	{
 		if(DataContext is not MainPageViewModel mpv) return;
-		if (sender is not PlannableDayListControl pdlc) return;
+		if (sender is not PlannableDayListTemplate pdlc) return;
 		mpv.ShowDeletePlannableDayDialogAsync(pdlc.SelectedPlannableDayId);
 	}
 }
