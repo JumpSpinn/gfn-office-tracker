@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a custom control used to display and manage office and home office statistics within an application.
 /// </summary>
-public sealed class StatisticControl : TemplatedControl, IDisposable
+public sealed class StatisticTemplate : TemplatedControl, IDisposable
 {
 	/// <summary>
 	/// Invoked when the control's template is applied. Initializes and binds references to the template's visual elements
@@ -41,24 +41,24 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	/// Represents a control for managing and displaying office and home office statistics. Provides functionality to calculate and visualize
 	/// the ratio of home office days to office days and includes error notification through visual cues.
 	/// </summary>
-	static StatisticControl()
+	static StatisticTemplate()
 	{
-		HomeOfficeDaysProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
+		HomeOfficeDaysProperty.Changed.AddClassHandler<StatisticTemplate>((control, _) =>
 		{
 			control.ScheduleCalculationStatistic();
 		});
 
-		OfficeDaysProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
+		OfficeDaysProperty.Changed.AddClassHandler<StatisticTemplate>((control, _) =>
 		{
 			control.ScheduleCalculationStatistic();
 		});
 
-		HomeOfficeQuoteProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
+		HomeOfficeQuoteProperty.Changed.AddClassHandler<StatisticTemplate>((control, _) =>
 		{
 			control.ScheduleCalculationStatistic();
 		});
 
-		OfficeQuoteProperty.Changed.AddClassHandler<StatisticControl>((control, _) =>
+		OfficeQuoteProperty.Changed.AddClassHandler<StatisticTemplate>((control, _) =>
 		{
 			control.ScheduleCalculationStatistic();
 		});
@@ -67,7 +67,7 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	#region QUOTE
 
 	public static readonly StyledProperty<uint> HomeOfficeQuoteProperty =
-		AvaloniaProperty.Register<StatisticControl, uint>(nameof(HomeOfficeQuote), defaultValue: 0);
+		AvaloniaProperty.Register<StatisticTemplate, uint>(nameof(HomeOfficeQuote), defaultValue: 0);
 
 	public uint HomeOfficeQuote
 	{
@@ -76,7 +76,7 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	}
 
 	public static readonly StyledProperty<uint> OfficeQuoteProperty =
-		AvaloniaProperty.Register<StatisticControl, uint>(nameof(OfficeQuote), defaultValue: 0);
+		AvaloniaProperty.Register<StatisticTemplate, uint>(nameof(OfficeQuote), defaultValue: 0);
 
 	public uint OfficeQuote
 	{
@@ -89,7 +89,7 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	#region STATS
 
 	public static readonly StyledProperty<uint> HomeOfficeDaysProperty =
-		AvaloniaProperty.Register<StatisticControl, uint>(nameof(HomeOfficeDays), defaultValue: 0);
+		AvaloniaProperty.Register<StatisticTemplate, uint>(nameof(HomeOfficeDays), defaultValue: 0);
 
 	public uint HomeOfficeDays
 	{
@@ -98,7 +98,7 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	}
 
 	public static readonly StyledProperty<uint> OfficeDaysProperty =
-		AvaloniaProperty.Register<StatisticControl, uint>(nameof(OfficeDays), defaultValue: 0);
+		AvaloniaProperty.Register<StatisticTemplate, uint>(nameof(OfficeDays), defaultValue: 0);
 
 	public uint OfficeDays
 	{
@@ -282,7 +282,7 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	/// When this property changes, it updates the enabled state of the associated button.
 	/// </summary>
 	public static readonly StyledProperty<bool> AddButtonEnabledProperty =
-		AvaloniaProperty.Register<StatisticControl, bool>(nameof(AddButtonEnabled), defaultValue: false);
+		AvaloniaProperty.Register<StatisticTemplate, bool>(nameof(AddButtonEnabled), defaultValue: false);
 
 	public bool AddButtonEnabled
 	{
@@ -295,7 +295,7 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	/// When this property changes, it updates the visibility state of the associated button.
 	/// </summary>
 	public static readonly StyledProperty<bool> AddButtonVisibleProperty =
-		AvaloniaProperty.Register<StatisticControl, bool>(nameof(AddButtonVisible), defaultValue: false);
+		AvaloniaProperty.Register<StatisticTemplate, bool>(nameof(AddButtonVisible), defaultValue: false);
 
 	public bool AddButtonVisible
 	{
@@ -309,7 +309,7 @@ public sealed class StatisticControl : TemplatedControl, IDisposable
 	/// button click action within the control context.
 	/// </summary>
 	private readonly RoutedEvent<RoutedEventArgs> _addButtonClickedEvent =
-		RoutedEvent.Register<StatisticControl, RoutedEventArgs>(nameof(StatisticControl), RoutingStrategies.Bubble);
+		RoutedEvent.Register<StatisticTemplate, RoutedEventArgs>(nameof(StatisticTemplate), RoutingStrategies.Bubble);
 
 	/// <summary>
 	/// Represents the event triggered when the "Add" button in the StatisticControl

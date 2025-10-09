@@ -182,7 +182,7 @@
 									FontSize="12"
 									HorizontalAlignment="Left"
 								/>
-								<base:StatisticControl
+								<base:StatisticTemplate
 									HomeOfficeDays="{Binding HomeOfficeDays}"
 									OfficeDays="{Binding OfficeDays}"
 									AddButtonEnabled="False"

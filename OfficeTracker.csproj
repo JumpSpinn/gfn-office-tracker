@@ -112,16 +112,20 @@
 	  </Compile>
 	  
 	  <!-- Core: Features: Templates -->
-	  <Compile Update="Features\Templates\Base\StatisticControl.axaml.cs">
-		  <DependentUpon>StatisticControl.axaml</DependentUpon>
+	  <Compile Update="Features\Templates\Base\StatisticTemplate.axaml.cs">
+		  <DependentUpon>StatisticTemplate.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
-	  <Compile Update="Features\Templates\Lists\CalculatedWeekListControl.axaml.cs">
-		  <DependentUpon>CalculatedWeekListControl.axaml</DependentUpon>
+	  <Compile Update="Features\Templates\Base\LoadingTemplate.axaml.cs">
+		  <DependentUpon>LoadingTemplate.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
-	  <Compile Update="Features\Templates\Lists\PlannableDayListControl.axaml.cs">
-		  <DependentUpon>PlannableDayListControl.axaml</DependentUpon>
+	  <Compile Update="Features\Templates\Lists\CalculatedWeekListTemplate.axaml.cs">
+		  <DependentUpon>CalculatedWeekListTemplate.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Templates\Lists\PlannableDayListTemplate.axaml.cs">
+		  <DependentUpon>PlannableDayListTemplate.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
 	  

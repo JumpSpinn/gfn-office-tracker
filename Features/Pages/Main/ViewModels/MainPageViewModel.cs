@@ -20,16 +20,35 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    _calculateWeekService = cws;
     }
 
+    #region INITIALIZE
+
+    [ObservableProperty]
+    private bool _isInitializing = true;
+
     /// <summary>
     /// Asynchronously initializes the state of the MainPageViewModel by creating a new stats control
     /// and loading plannable days data.
     /// </summary>
     public async Task InitializeAsync()
     {
-	    await ReCalculateWeeksAsync();
-	    await RefreshStatisticsAsync();
-	    await LoadPlannableDaysAsync();
+	    IsInitializing = true;
+	    try
+	    {
+		    await ReCalculateWeeksAsync();
+		    await RefreshStatisticsAsync();
+		    await LoadPlannableDaysAsync();
+	    }
+	    catch (Exception ex)
+	    {
+		    _logController.Exception(ex);
+	    }
+	    finally
+	    {
+		    IsInitializing = false;
+	    }
     }
+
+    #endregion
 
     /// <summary>
     /// Validates whether a selected date is valid based on specific conditions, such as being non-null,

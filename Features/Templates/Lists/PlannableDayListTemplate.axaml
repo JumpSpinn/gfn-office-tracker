@@ -3,10 +3,10 @@
         xmlns:lists="clr-namespace:OfficeTracker.Features.Templates.Lists"
         xmlns:models1="clr-namespace:OfficeTracker.Infrastructure.Database.Models">
 	<Design.PreviewWith>
-		<lists:PlannableDayListControl />
+		<lists:PlannableDayListTemplate />
 	</Design.PreviewWith>
 
-	<Style Selector="lists|PlannableDayListControl">
+	<Style Selector="lists|PlannableDayListTemplate">
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>

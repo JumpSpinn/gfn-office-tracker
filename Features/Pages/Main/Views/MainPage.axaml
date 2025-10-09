@@ -6,12 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:OfficeTracker.Features.Pages.Main.Views"
+    xmlns:baseTemplates="using:OfficeTracker.Features.Templates.Base"
     xmlns:vm="clr-namespace:OfficeTracker.Features.Pages.Main.ViewModels"
     mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
     <Panel>
 	    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
-		    <pages:MainPageHeader Grid.Row="0" />
-		    <pages:MainPageTabs Grid.Row="1" />
+		    <baseTemplates:LoadingTemplate Grid.Row="0" Grid.RowSpan="2" IsVisible="{Binding IsInitializing}" />
+		    <pages:MainPageHeader Grid.Row="0" IsVisible="{Binding !IsInitializing}" />
+		    <pages:MainPageTabs Grid.Row="1" IsVisible="{Binding !IsInitializing}" />
         </Grid>
     </Panel>
 </UserControl>

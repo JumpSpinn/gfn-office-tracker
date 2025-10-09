@@ -3,10 +3,10 @@
         xmlns:materialicons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         xmlns:base="clr-namespace:OfficeTracker.Features.Templates.Base">
 	<Design.PreviewWith>
-		<base:StatisticControl Width="300" />
+		<base:StatisticTemplate Width="300" />
 	</Design.PreviewWith>
 
-	<Style Selector="base|StatisticControl">
+	<Style Selector="base|StatisticTemplate">
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>

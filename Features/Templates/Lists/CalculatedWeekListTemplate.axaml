@@ -5,10 +5,10 @@
 	xmlns:lists="clr-namespace:OfficeTracker.Features.Templates.Lists"
 	xmlns:base="clr-namespace:OfficeTracker.Features.Templates.Base">
 	<Design.PreviewWith>
-		<lists:CalculatedWeekListControl Width="450" />
+		<lists:CalculatedWeekListTemplate Width="450" />
 	</Design.PreviewWith>
 
-	<Style Selector="lists|CalculatedWeekListControl">
+	<Style Selector="lists|CalculatedWeekListTemplate">
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>
@@ -69,7 +69,7 @@
 						</Grid>
 
 						<!-- STATS -->
-						<base:StatisticControl
+						<base:StatisticTemplate
 							Grid.Row="1"
 							AddButtonEnabled="False"
 							AddButtonVisible="False"
