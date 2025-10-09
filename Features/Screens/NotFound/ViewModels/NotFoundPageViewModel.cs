@@ -8,4 +8,4 @@
 /// cannot be determined or is unavailable. It inherits from <see cref="ViewModelBase"/>.
 /// </remarks>
 [RegisterSingleton]
-public sealed partial class NotFoundPageViewModel : ViewModelBase { }
+public sealed partial class NotFoundPageViewModel : ViewModelBase;
