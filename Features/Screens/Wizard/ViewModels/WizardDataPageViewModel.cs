@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
+﻿namespace OfficeTracker.Features.Screens.Wizard.ViewModels;
 
 /// <summary>
 /// Represents the view model for the data page of the wizard process.

@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Database.Models;
+﻿namespace OfficeTracker.Infrastructure.Database.Models;
 
 /// <summary>
 /// Represents a plannable day entity stored in the database.

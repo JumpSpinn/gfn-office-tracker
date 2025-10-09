@@ -1,4 +1,6 @@
-﻿namespace OfficeTracker.Models;
+﻿namespace OfficeTracker.Core.Entities;
+
+using Enums;
 
 /// <summary>
 /// Represents a day of the week with associated details such as type, date, and color.

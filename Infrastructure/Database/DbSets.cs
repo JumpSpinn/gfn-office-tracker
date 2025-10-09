@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Database;
+﻿namespace OfficeTracker.Infrastructure.Database;
 
 /// <summary>
 /// Represents the Entity Framework Core database context for the OfficeTracker application.

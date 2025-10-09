@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages.Settings;
+﻿namespace OfficeTracker.Features.Pages.Settings.ViewModel;
 
 /// <summary>
 /// Represents the view model for the settings page of the OfficeTracker application.
@@ -83,7 +83,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(nameof(SaveLocationTruncate))]
-	private string _saveLocation;
+	private string _saveLocation = string.Empty;
 
 	public string SaveLocationTruncate
 		=> SaveLocation.Truncate(45, "..");

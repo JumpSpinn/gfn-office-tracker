@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services.Config.Services;
+﻿namespace OfficeTracker.Core.Services.Config.Services;
 
 /// <summary>
 /// Provides services for managing configuration files, including saving

@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Windows;
+﻿namespace OfficeTracker.Features.Windows.Main.ViewModels;
 
 /// <summary>
 /// Represents the ViewModel for the main window of the application.

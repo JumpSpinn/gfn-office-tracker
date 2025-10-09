@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Database;
+﻿namespace OfficeTracker.Infrastructure.Database;
 
 /*
  * KAIWO ALLA:
@@ -13,7 +13,7 @@
 /// Represents the database context for the OfficeTracker application,
 /// configured to manage and interact with database models and operations.
 /// </summary>
-public sealed partial class OtContext(DbContextOptions<OtContext> options) : DbContext(options)
+public sealed partial class OtContext(DbContextOptions<Infrastructure.Database.OtContext> options) : DbContext(options)
 {
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		=> base.OnConfiguring(optionsBuilder);

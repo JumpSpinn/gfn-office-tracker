@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Helpers;
+﻿namespace OfficeTracker.Core.Helpers;
 
 /// <summary>
 /// A helper class that provides utility methods and properties for file system path management

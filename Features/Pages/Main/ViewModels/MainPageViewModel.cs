@@ -1,6 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages;
-
-using Services.MainWindow.Controllers;
+﻿namespace OfficeTracker.Features.Pages.Main.ViewModels;
 
 /// <summary>
 /// Represents the ViewModel for the main page, providing functionality to manage and interact with

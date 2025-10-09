@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages;
+﻿namespace OfficeTracker.Features.Screens.NotFound.ViewModels;
 
 /// <summary>
 /// Represents the view model for the "Not Found" page in the application.

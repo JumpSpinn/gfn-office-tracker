@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Views.Controls.Lists;
+﻿namespace OfficeTracker.Features.Templates.Lists;
 
 /// <summary>
 /// Represents a custom control that facilitates interaction with a collection of plannable days.

@@ -1,14 +1,14 @@
 ﻿<UserControl
 	x:DataType="vm:MainPageViewModel"
-	x:Class="OfficeTracker.Views.Pages.MainPageTabs"
-	xmlns:vm="using:OfficeTracker.ViewModels.Pages"
-	xmlns:listcontrols="using:OfficeTracker.Views.Controls.Lists"
-	xmlns:models="using:OfficeTracker.Models"
+	x:Class="OfficeTracker.Features.Pages.Main.Views.MainPageTabs"
 	xmlns="https://github.com/avaloniaui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+	xmlns:entities="clr-namespace:OfficeTracker.Core.Entities"
+	xmlns:lists="clr-namespace:OfficeTracker.Features.Templates.Lists"
+	xmlns:vm="clr-namespace:OfficeTracker.Features.Pages.Main.ViewModels"
 	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
 	<Grid>
         <fluent:TabView
@@ -25,7 +25,7 @@
                 BorderThickness="4"
                 IsSelected="True"
             >
-                <listcontrols:PlannableDayListControl
+                <lists:PlannableDayListControl
                     Items="{Binding PlannableDays}"
                     AddButtonClicked="RequestShowAddPlannableDayDialog"
                     DeleteButtonClicked="RequestShowDeletePlannableDayDialog"
@@ -63,9 +63,9 @@
 	                        </ItemsControl.ItemsPanel>
 	                        <ItemsControl.ItemTemplate>
 		                        <DataTemplate
-			                        DataType="models:CalculatedWeekModel"
+			                        DataType="entities:CalculatedWeekModel"
 			                    >
-			                        <listcontrols:CalculatedWeekListControl
+			                        <lists:CalculatedWeekListControl
 				                        HomeOfficeDays="{Binding HomeOfficeDays}"
 				                        OfficeDays="{Binding OfficeDays}"
 				                        HomeOfficeTargetQuoted="{Binding HomeOfficeTargetQuoted}"

@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Database.Factories;
+﻿namespace OfficeTracker.Infrastructure.Database.Factories;
 
 /// <summary>
 /// A factory class to create instances of the <see cref="OtContext"/> class

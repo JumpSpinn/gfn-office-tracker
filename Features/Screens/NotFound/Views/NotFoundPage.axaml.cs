@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Views.Pages;
+﻿namespace OfficeTracker.Features.Screens.NotFound.Views;
 
 public partial class NotFoundPage : UserControl
 {

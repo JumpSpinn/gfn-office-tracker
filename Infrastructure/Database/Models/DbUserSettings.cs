@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Database.Models;
+﻿namespace OfficeTracker.Infrastructure.Database.Models;
 
 /// <summary>
 /// Represents the user's settings data model for the database.

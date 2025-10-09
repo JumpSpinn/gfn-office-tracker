@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services.MainWindow.Controllers;
+﻿namespace OfficeTracker.Features.Windows.Main.Controllers;
 
 /// <summary>
 /// Controller responsible for managing interactions and initialization of the main application window.

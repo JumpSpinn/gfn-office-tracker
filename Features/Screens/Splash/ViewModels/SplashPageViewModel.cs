@@ -1,6 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages.Splash;
-
-using Services.MainWindow.Controllers;
+﻿namespace OfficeTracker.Features.Screens.Splash.ViewModels;
 
 /// <summary>
 /// Represents the ViewModel for the splash screen page of the application.

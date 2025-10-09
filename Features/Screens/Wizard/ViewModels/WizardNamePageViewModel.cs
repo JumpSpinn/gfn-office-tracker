@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
+﻿namespace OfficeTracker.Features.Screens.Wizard.ViewModels;
 
 /// <summary>
 /// Represents the ViewModel for the Wizard Name Page in the application's wizard flow.
@@ -35,7 +35,7 @@ public sealed partial class WizardNamePageViewModel : ViewModelBase
 			NameError = "Name darf nicht leer sein.";
 		else if(Name.Length > 32)
 			NameError = "Name darf nur maximal 32 Zeichen lang sein.";
-		else if(!NameRegex().IsMatch(Name.Trim()))
+		else if(!NameRegex().IsMatch((string)Name.Trim()))
 			NameError = "Name darf nur Buchstaben, Leerzeichen und Bindestriche enthalten.";
 		return NameError == string.Empty;
 	}

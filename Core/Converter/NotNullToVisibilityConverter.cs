@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Converters;
+﻿namespace OfficeTracker.Core.Converter;
 
 /// Converts a non-null object to a visibility-related value.
 /// This is typically used in UI frameworks to determine visibility

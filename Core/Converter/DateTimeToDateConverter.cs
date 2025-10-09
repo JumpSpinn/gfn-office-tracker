@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Converters;
+﻿namespace OfficeTracker.Core.Converter;
 
 /// <summary>
 /// Converts a <see cref="DateTime"/> value to a formatted date string representation

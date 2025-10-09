@@ -3,13 +3,14 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OfficeTracker.Database;
 
 #nullable disable
 
 namespace OfficeTracker.Migrations
 {
-    [DbContext(typeof(OtContext))]
+	using Infrastructure.Database;
+
+	[DbContext(typeof(OtContext))]
     partial class OtContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

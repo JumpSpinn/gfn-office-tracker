@@ -1,15 +1,14 @@
 ﻿<Styles
 	xmlns="https://github.com/avaloniaui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:listcontrols="using:OfficeTracker.Views.Controls.Lists"
-	xmlns:controls="using:OfficeTracker.Views.Controls"
-	xmlns:models="using:OfficeTracker.Models"
->
+	xmlns:entities="clr-namespace:OfficeTracker.Core.Entities"
+	xmlns:lists="clr-namespace:OfficeTracker.Features.Templates.Lists"
+	xmlns:base="clr-namespace:OfficeTracker.Features.Templates.Base">
 	<Design.PreviewWith>
-		<listcontrols:CalculatedWeekListControl Width="450" />
+		<lists:CalculatedWeekListControl Width="450" />
 	</Design.PreviewWith>
 
-	<Style Selector="listcontrols|CalculatedWeekListControl">
+	<Style Selector="lists|CalculatedWeekListControl">
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>
@@ -70,7 +69,7 @@
 						</Grid>
 
 						<!-- STATS -->
-						<controls:StatisticControl
+						<base:StatisticControl
 							Grid.Row="1"
 							AddButtonEnabled="False"
 							AddButtonVisible="False"
@@ -97,7 +96,7 @@
 								</ItemsPanelTemplate>
 							</ItemsControl.ItemsPanel>
 							<ItemsControl.ItemTemplate>
-								<DataTemplate DataType="models:WeekDayModel">
+								<DataTemplate DataType="entities:WeekDayModel">
 									<StackPanel
 										Orientation="Vertical"
 										Spacing="6"

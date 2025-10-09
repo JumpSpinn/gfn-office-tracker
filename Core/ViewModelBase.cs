@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Base;
+﻿namespace OfficeTracker.Core;
 
 /// <summary>
 /// Represents the base class for all view models in the application.

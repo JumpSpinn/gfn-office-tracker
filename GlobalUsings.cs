@@ -47,30 +47,60 @@ global using CommunityToolkit.Mvvm.Input;
 global using Material.Icons;
 global using Material.Icons.Avalonia;
 
-global using OfficeTracker.Helpers;
-global using OfficeTracker.Enums;
-global using OfficeTracker.Messages;
-global using OfficeTracker.Models;
-global using OfficeTracker.Data;
+global using OfficeTracker.Core;
+global using OfficeTracker.Core.Converter;
+global using OfficeTracker.Core.Entities;
+global using OfficeTracker.Core.Enums;
+global using OfficeTracker.Core.Helpers;
+global using OfficeTracker.Core.Messages;
 
-global using OfficeTracker.Database;
-global using OfficeTracker.Database.Models;
-global using OfficeTracker.Database.Factories;
+global using OfficeTracker.Core.Services;
+global using OfficeTracker.Core.Services.Config;
+global using OfficeTracker.Core.Services.Config.Controllers;
+global using OfficeTracker.Core.Services.Config.Models;
+global using OfficeTracker.Core.Services.Config.Services;
+global using OfficeTracker.Core.Services.Log;
+global using OfficeTracker.Core.Services.Log.Controllers;
+global using OfficeTracker.Core.Services.Log.Entities;
 
-global using OfficeTracker.Services;
-global using OfficeTracker.Services.Config.Models;
-global using OfficeTracker.Services.Config.Controllers;
-global using OfficeTracker.Services.Config.Services;
+global using OfficeTracker.Features;
+global using OfficeTracker.Features.Dialog;
+global using OfficeTracker.Features.Dialog.Forms;
 
-global using OfficeTracker.Services.MainWindow.Events;
+global using OfficeTracker.Features.Pages;
+global using OfficeTracker.Features.Pages.Main;
+global using OfficeTracker.Features.Pages.Main.Views;
+global using OfficeTracker.Features.Pages.Main.ViewModels;
+global using OfficeTracker.Features.Pages.Main.Services;
+global using OfficeTracker.Features.Pages.Settings;
+global using OfficeTracker.Features.Pages.Settings.Views;
+global using OfficeTracker.Features.Pages.Settings.ViewModel;
 
-global using OfficeTracker.ViewModels.Base;
-global using OfficeTracker.ViewModels.Windows;
-global using OfficeTracker.ViewModels.Pages;
-global using OfficeTracker.ViewModels.Pages.Settings;
-global using OfficeTracker.ViewModels.Pages.Wizard;
-global using OfficeTracker.ViewModels.Pages.Splash;
+global using OfficeTracker.Features.Screens;
+global using OfficeTracker.Features.Screens.NotFound;
+global using OfficeTracker.Features.Screens.NotFound.Views;
+global using OfficeTracker.Features.Screens.NotFound.ViewModels;
+global using OfficeTracker.Features.Screens.Splash;
+global using OfficeTracker.Features.Screens.Splash.Views;
+global using OfficeTracker.Features.Screens.Splash.ViewModels;
+global using OfficeTracker.Features.Screens.Wizard;
+global using OfficeTracker.Features.Screens.Wizard.Views;
+global using OfficeTracker.Features.Screens.Wizard.ViewModels;
 
-global using OfficeTracker.Views.Windows;
-global using OfficeTracker.Views.Forms;
-global using OfficeTracker.Views.Controls.Lists;
+global using OfficeTracker.Features.Templates;
+global using OfficeTracker.Features.Templates.Base;
+global using OfficeTracker.Features.Templates.Lists;
+
+global using OfficeTracker.Features.Windows;
+global using OfficeTracker.Features.Windows.Main;
+global using OfficeTracker.Features.Windows.Main.Controllers;
+global using OfficeTracker.Features.Windows.Main.Data;
+global using OfficeTracker.Features.Windows.Main.Events;
+global using OfficeTracker.Features.Windows.Main.Views;
+global using OfficeTracker.Features.Windows.Main.ViewModels;
+
+global using OfficeTracker.Infrastructure;
+global using OfficeTracker.Infrastructure.Database;
+global using OfficeTracker.Infrastructure.Database.Models;
+global using OfficeTracker.Infrastructure.Database.Services;
+global using OfficeTracker.Infrastructure.Database.Factories;

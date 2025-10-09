@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Helpers;
+﻿namespace OfficeTracker.Core.Helpers;
 
 /// <summary>
 /// Provides helper methods for managing and displaying dialog windows in the application.

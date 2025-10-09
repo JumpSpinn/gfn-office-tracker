@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
-             x:Class="OfficeTracker.Views.Forms.PlannableDayForm">
+             x:Class="OfficeTracker.Features.Dialog.Forms.PlannableDayForm">
     <Grid RowDefinitions="Auto,Auto" RowSpacing="30">
         <Grid Grid.Row="0" RowDefinitions="Auto,Auto" HorizontalAlignment="Stretch" RowSpacing="5">
             <TextBlock

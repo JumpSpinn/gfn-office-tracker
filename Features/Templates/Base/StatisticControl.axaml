@@ -1,12 +1,12 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialicons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-        xmlns:controls="using:OfficeTracker.Views.Controls">
+        xmlns:base="clr-namespace:OfficeTracker.Features.Templates.Base">
 	<Design.PreviewWith>
-		<controls:StatisticControl Width="300" />
+		<base:StatisticControl Width="300" />
 	</Design.PreviewWith>
 
-	<Style Selector="controls|StatisticControl">
+	<Style Selector="base|StatisticControl">
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>

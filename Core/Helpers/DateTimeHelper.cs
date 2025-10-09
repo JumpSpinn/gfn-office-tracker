@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Helpers;
+﻿namespace OfficeTracker.Core.Helpers;
 
 /// <summary>
 /// Utility class providing helper methods for common operations related to DateTime.

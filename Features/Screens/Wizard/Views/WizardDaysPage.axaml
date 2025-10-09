@@ -3,9 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
-             xmlns:wizard="clr-namespace:OfficeTracker.ViewModels.Pages.Wizard"
-             x:DataType="wizard:WizardDaysPageViewModel"
-             x:Class="OfficeTracker.Views.Pages.Wizard.WizardDaysPage">
+             xmlns:vm="clr-namespace:OfficeTracker.Features.Screens.Wizard.ViewModels"
+             x:DataType="vm:WizardDaysPageViewModel"
+             x:Class="OfficeTracker.Features.Screens.Wizard.Views.WizardDaysPage">
 	<Panel>
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">

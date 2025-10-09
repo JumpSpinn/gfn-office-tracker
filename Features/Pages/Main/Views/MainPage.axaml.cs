@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Views.Pages;
+﻿namespace OfficeTracker.Features.Pages.Main.Views;
 
 /// <summary>
 /// Represents the main page of the OfficeTracker application.

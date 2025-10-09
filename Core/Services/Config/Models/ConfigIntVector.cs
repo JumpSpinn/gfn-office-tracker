@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services.Config.Models;
+﻿namespace OfficeTracker.Core.Services.Config.Models;
 
 /// <summary>
 /// Represents a configuration vector consisting of two integer components, X and Y.

@@ -1,6 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
-
-using Services.MainWindow.Controllers;
+﻿namespace OfficeTracker.Features.Screens.Wizard.ViewModels;
 
 /// <summary>
 /// Represents the view model for the "Wizard Completed" page in the wizard process.
@@ -11,7 +9,7 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 	private readonly DatabaseService _databaseService;
 	private readonly MainWindowController _mainWindowController;
 
-	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, WizardBalancePageViewModel balance, DatabaseService dbs, MainWindowController mws)
+	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, Features.Screens.Wizard.ViewModels.WizardBalancePageViewModel balance, DatabaseService dbs, MainWindowController mws)
 	{
 		WizardNamePageViewModel = name;
 		WizardDaysPageViewModel = days;
@@ -31,19 +29,19 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 	private WizardDataPageViewModel _wizardDataPageViewModel;
 
 	[ObservableProperty]
-	private WizardBalancePageViewModel _wizardBalancePageViewModel;
+	private Features.Screens.Wizard.ViewModels.WizardBalancePageViewModel _wizardBalancePageViewModel;
 
 	/// <summary>
 	/// Represents the current day being tracked in the wizard process.
 	/// Displays a localized string value ("Ja" or "Nein") indicating the tracking status of the current day.
-	/// The value is derived from the <see cref="WizardDataPageViewModel"/>.
+	/// The value is derived from the <see cref="OfficeTracker.ViewModels.Pages.Wizard.WizardCompletedPageViewModel.WizardDataPageViewModel"/>.
 	/// </summary>
 	public string CurrentDayTracked
 		=> WizardDataPageViewModel.CurrentDayTracked ? "Ja" : "Nein";
 
 	/// <summary>
 	/// Represents the total number of days spent working from home, as tracked within the wizard process.
-	/// Provides a numeric value retrieved from the underlying <see cref="WizardDataPageViewModel"/>.
+	/// Provides a numeric value retrieved from the underlying <see cref="OfficeTracker.ViewModels.Pages.Wizard.WizardCompletedPageViewModel.WizardDataPageViewModel"/>.
 	/// If no value is available, it defaults to zero.
 	/// </summary>
 	public decimal HomeOfficeDays
@@ -51,7 +49,7 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 
 	/// <summary>
 	/// Represents the number of office days calculated or stored in the "Wizard Completed" process.
-	/// Retrieves its value from the <see cref="WizardDataPageViewModel"/>, defaulting to 0 if undefined.
+	/// Retrieves its value from the <see cref="OfficeTracker.ViewModels.Pages.Wizard.WizardCompletedPageViewModel.WizardDataPageViewModel"/>, defaulting to 0 if undefined.
 	/// </summary>
 	public decimal OfficeDays
 		=> WizardDataPageViewModel.OfficeDays ?? 0;

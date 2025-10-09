@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Views.Pages.Wizard;
+﻿namespace OfficeTracker.Features.Screens.Wizard.Views;
 
 /// <summary>
 /// Represents the SetupBalancePage in the OfficeTracker application.

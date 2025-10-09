@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Views.Controls.Lists;
+﻿namespace OfficeTracker.Features.Templates.Lists;
 
 public sealed class CalculatedWeekListControl : TemplatedControl
 {

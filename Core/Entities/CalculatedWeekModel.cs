@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Models;
+﻿namespace OfficeTracker.Core.Entities;
 
 /// <summary>
 /// Represents a calculated week, including information about the days in the week,

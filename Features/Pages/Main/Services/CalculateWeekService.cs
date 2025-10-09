@@ -1,6 +1,4 @@
-﻿namespace OfficeTracker.Services;
-
-using MainWindow.Controllers;
+﻿namespace OfficeTracker.Features.Pages.Main.Services;
 
 /// <summary>
 /// Service responsible for calculating and managing weekly schedules based on user settings

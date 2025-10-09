@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services;
+﻿namespace OfficeTracker.Core.Services.Log.Controllers;
 
 /// <summary>
 /// Provides logging functionality for the application, including support for information, warnings, errors,
@@ -18,7 +18,7 @@ public sealed class LogService
 	private string LogFilePath =>
 		Path.Combine(_logDirectory, _logFileName);
 
-	private readonly ObservableCollection<LogMessageModel> Logs = [];
+	private readonly ObservableCollection<LogMessageModel> _logs = [];
 
 	public LogService()
 	{
@@ -43,13 +43,13 @@ public sealed class LogService
 	/// Removes a log entry from the collection based on its unique identifier.
 	/// </summary>
 	public void RemoveLog(Guid id) =>
-		Logs.Remove(Logs.First(x => x.Id == id));
+		_logs.Remove(_logs.First(x => x.Id == id));
 
 	/// <summary>
 	/// Clears all log entries from the collection, effectively removing all stored log messages.
 	/// </summary>
 	public void ClearLogs()
-		=> Logs.Clear();
+		=> _logs.Clear();
 
 	/// <summary>
 	/// Logs a message with a specific title and severity to internal storage and the log file.
@@ -64,7 +64,7 @@ public sealed class LogService
 		if (severity == LogSeverity.Debug && !_isDebugEnabled) return;
 
 		var logMessage = new LogMessageModel(title, message, severity);
-		Logs.Add(logMessage);
+		_logs.Add(logMessage);
 
 		File.AppendAllText(LogFilePath, $"{DateTime.UtcNow} - {severity} - {title} - {message}{Environment.NewLine}");
 	}

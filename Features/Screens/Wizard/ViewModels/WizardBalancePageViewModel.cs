@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
+﻿namespace OfficeTracker.Features.Screens.Wizard.ViewModels;
 
 /// <summary>
 /// Represents the ViewModel for the Setup Balance page of the application.

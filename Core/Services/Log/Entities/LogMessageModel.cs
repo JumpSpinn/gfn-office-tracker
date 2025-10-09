@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Models;
+﻿namespace OfficeTracker.Core.Services.Log.Entities;
 
 /// <summary>
 /// Represents a log message with a title, message, and severity level.

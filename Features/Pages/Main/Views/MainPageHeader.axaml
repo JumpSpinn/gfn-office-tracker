@@ -1,12 +1,12 @@
 ﻿<UserControl
 	x:DataType="vm:MainPageViewModel"
-	x:Class="OfficeTracker.Views.Pages.MainPageHeader"
-	xmlns:vm="using:OfficeTracker.ViewModels.Pages"
-	xmlns:controls="using:OfficeTracker.Views.Controls"
+	x:Class="OfficeTracker.Features.Pages.Main.Views.MainPageHeader"
 	xmlns="https://github.com/avaloniaui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:base="clr-namespace:OfficeTracker.Features.Templates.Base"
+	xmlns:vm="clr-namespace:OfficeTracker.Features.Pages.Main.ViewModels"
 	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
 	<Border Margin="10" Padding="10" CornerRadius="4" BorderThickness="1">
         <Border.Background>
@@ -33,7 +33,7 @@
 	            </Border>
             </Grid>
             <Grid x:Name="StatsGrid" ColumnDefinitions="*,Auto" ColumnSpacing="4" Margin="0 8 0 0">
-	            <controls:StatisticControl
+	            <base:StatisticControl
 		            Grid.Column="0"
 		            HomeOfficeDays="{Binding HomeOfficeDays}"
 		            OfficeDays="{Binding OfficeDays}"

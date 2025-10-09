@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services.Config.Controllers;
+﻿namespace OfficeTracker.Core.Services.Config.Controllers;
 
 /// <summary>
 /// The ConfigController class is responsible for managing the application's configuration,

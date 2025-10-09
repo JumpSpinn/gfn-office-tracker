@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Converters;
+﻿namespace OfficeTracker.Core.Converter;
 
 /// Converts an empty collection to a visibility state.
 /// This class is used as a XAML converter to determine the visibility of UI elements

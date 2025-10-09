@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.ViewModels.Pages;
+﻿namespace OfficeTracker.Features.Pages.Main.ViewModels;
 
 /// <summary>
 /// Represents the view model for the main page of the OfficeTracker application.

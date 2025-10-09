@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Data;
+﻿namespace OfficeTracker.Features.Windows.Main.Data;
 
 /// <summary>
 /// Provides static data related to the properties and configuration

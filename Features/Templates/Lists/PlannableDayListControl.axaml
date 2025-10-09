@@ -1,12 +1,12 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:models="using:OfficeTracker.Database.Models"
-        xmlns:controls="using:OfficeTracker.Views.Controls.Lists">
+        xmlns:lists="clr-namespace:OfficeTracker.Features.Templates.Lists"
+        xmlns:models1="clr-namespace:OfficeTracker.Infrastructure.Database.Models">
 	<Design.PreviewWith>
-		<controls:PlannableDayListControl />
+		<lists:PlannableDayListControl />
 	</Design.PreviewWith>
 
-	<Style Selector="controls|PlannableDayListControl">
+	<Style Selector="lists|PlannableDayListControl">
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>
@@ -26,7 +26,7 @@
 					>
 						<!-- LIST -->
 						<ListBox.ItemTemplate>
-							<DataTemplate DataType="models:DbPlannableDay">
+							<DataTemplate DataType="models1:DbPlannableDay">
 								<Grid
 									ColumnDefinitions="Auto,*,2*,Auto"
 									ColumnSpacing="10"

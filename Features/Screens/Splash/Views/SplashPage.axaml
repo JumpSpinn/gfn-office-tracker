@@ -2,14 +2,14 @@
 	mc:Ignorable="d"
 	d:DesignWidth="400"
 	d:DesignHeight="650"
-	x:Class="OfficeTracker.Views.Pages.Splash.SplashPage"
-	x:DataType="splash:SplashPageViewModel"
+	x:Class="OfficeTracker.Features.Screens.Splash.Views.SplashPage"
+	x:DataType="vm:SplashPageViewModel"
 	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
 	xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:splash="clr-namespace:OfficeTracker.ViewModels.Pages.Splash">
+    xmlns:vm="clr-namespace:OfficeTracker.Features.Screens.Splash.ViewModels">
 	<Panel>
 		<Panel.Background>
 			<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">

@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Converters;
+﻿namespace OfficeTracker.Core.Converter;
 
 /// Converts a null object to a visibility state.
 /// This converter implements `IValueConverter` and is primarily used in XAML bindings

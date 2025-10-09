@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Helpers;
+﻿namespace OfficeTracker.Core.Helpers;
 
 /// <summary>
 /// Provides utility methods for interacting with the file explorer or folder navigation system on different operating systems.

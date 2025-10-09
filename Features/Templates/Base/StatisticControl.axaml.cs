@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Views.Controls;
+﻿namespace OfficeTracker.Features.Templates.Base;
 
 /// <summary>
 /// Represents a custom control used to display and manage office and home office statistics within an application.

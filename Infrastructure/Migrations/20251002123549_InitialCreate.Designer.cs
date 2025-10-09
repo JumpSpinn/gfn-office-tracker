@@ -4,13 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OfficeTracker.Database;
 
 #nullable disable
 
 namespace OfficeTracker.Migrations
 {
-    [DbContext(typeof(OtContext))]
+	using Infrastructure.Database;
+
+	[DbContext(typeof(OtContext))]
     [Migration("20251002123549_InitialCreate")]
     partial class InitialCreate
     {

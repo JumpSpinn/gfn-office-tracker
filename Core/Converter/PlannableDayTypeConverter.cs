@@ -1,4 +1,6 @@
-﻿namespace OfficeTracker.Converters;
+﻿namespace OfficeTracker.Core.Converter;
+
+using Enums;
 
 /// Provides functionality to convert `DayType` enumeration values to descriptive strings
 /// and optionally convert such strings back to the corresponding enumeration values.

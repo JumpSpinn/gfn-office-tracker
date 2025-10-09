@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Messages;
+﻿namespace OfficeTracker.Core.Messages;
 
 /// <summary>
 /// Represents a message used to notify about a page change in the application.

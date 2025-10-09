@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services.MainWindow.Events;
+﻿namespace OfficeTracker.Features.Windows.Main.Events;
 
 /// <summary>
 /// Provides event handling for the main window, enabling subscribers to react to changes in

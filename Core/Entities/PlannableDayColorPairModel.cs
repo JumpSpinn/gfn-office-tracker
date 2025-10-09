@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Models;
+﻿namespace OfficeTracker.Core.Entities;
 
 /// <summary>
 /// Represents a pair of colors associated with a plannable day entity.

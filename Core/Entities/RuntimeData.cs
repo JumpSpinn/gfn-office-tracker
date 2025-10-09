@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Models;
+﻿namespace OfficeTracker.Core.Entities;
 
 /// <summary>
 /// Represents runtime configuration data for a user's work schedule and targets.

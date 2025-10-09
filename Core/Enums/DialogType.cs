@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Enums;
+﻿namespace OfficeTracker.Core.Enums;
 
 /// <summary>
 /// Represents the different types of dialog boxes that can be displayed.

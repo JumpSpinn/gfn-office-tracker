@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Database.Factories;
+﻿namespace OfficeTracker.Infrastructure.Database.Factories;
 
 /// <summary>
 /// Provides a factory for creating instances of the OtContext database context.

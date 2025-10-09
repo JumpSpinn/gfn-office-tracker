@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Services;
+﻿namespace OfficeTracker.Infrastructure.Database.Services;
 
 [RegisterSingleton]
 public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactory, LogService logService)

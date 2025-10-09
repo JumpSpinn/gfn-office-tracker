@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Helpers;
+﻿namespace OfficeTracker.Core.Helpers;
 
 /// <summary>
 /// Provides utility methods for handling and converting values.

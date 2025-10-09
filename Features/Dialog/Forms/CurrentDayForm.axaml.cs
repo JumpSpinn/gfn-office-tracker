@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Views.Forms;
+﻿namespace OfficeTracker.Features.Dialog.Forms;
 
 /// <summary>
 /// Represents the form for selecting the type of day (e.g., home office or office)

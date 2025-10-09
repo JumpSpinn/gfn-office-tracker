@@ -1,4 +1,4 @@
-namespace OfficeTracker.Views.Windows;
+namespace OfficeTracker.Features.Windows.Main.Views;
 
 public sealed partial class MainWindow : AppWindow, IDisposable
 {

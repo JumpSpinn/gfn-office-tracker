@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Views.Pages.Settings;
+﻿namespace OfficeTracker.Features.Pages.Settings.Views;
 
 public partial class SettingsPage : UserControl
 {

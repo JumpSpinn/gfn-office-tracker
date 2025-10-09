@@ -1,4 +1,6 @@
-﻿namespace OfficeTracker.Services.Config.Models;
+﻿namespace OfficeTracker.Core.Services.Config.Models;
+
+using Features.Windows.Main.Data;
 
 /// <summary>
 /// Represents local configuration settings for the application window, including position and size.

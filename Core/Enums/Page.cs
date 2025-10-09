@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Enums;
+﻿namespace OfficeTracker.Core.Enums;
 
 /// <summary>
 /// Represents the pages available in the application for navigation purposes.
