@@ -6,7 +6,7 @@
 /// observable collection of log entries for runtime inspection.
 /// </summary>
 [RegisterSingleton]
-public sealed class LogService
+public sealed class LogController
 {
 	private readonly bool _isDebugEnabled;
 
@@ -18,9 +18,9 @@ public sealed class LogService
 	private string LogFilePath =>
 		Path.Combine(_logDirectory, _logFileName);
 
-	private readonly ObservableCollection<LogMessageModel> _logs = [];
+	private readonly ObservableCollection<LogMessageEntity> _logs = [];
 
-	public LogService()
+	public LogController()
 	{
 #if DEBUG
 		_isDebugEnabled = true;
@@ -63,7 +63,7 @@ public sealed class LogService
 
 		if (severity == LogSeverity.Debug && !_isDebugEnabled) return;
 
-		var logMessage = new LogMessageModel(title, message, severity);
+		var logMessage = new LogMessageEntity(title, message, severity);
 		_logs.Add(logMessage);
 
 		File.AppendAllText(LogFilePath, $"{DateTime.UtcNow} - {severity} - {title} - {message}{Environment.NewLine}");

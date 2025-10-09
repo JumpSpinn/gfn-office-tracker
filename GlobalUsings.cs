@@ -57,7 +57,6 @@ global using OfficeTracker.Core.Messages;
 global using OfficeTracker.Core.Services;
 global using OfficeTracker.Core.Services.Config;
 global using OfficeTracker.Core.Services.Config.Controllers;
-global using OfficeTracker.Core.Services.Config.Models;
 global using OfficeTracker.Core.Services.Config.Services;
 global using OfficeTracker.Core.Services.Log;
 global using OfficeTracker.Core.Services.Log.Controllers;

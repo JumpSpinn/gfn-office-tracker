@@ -6,7 +6,7 @@
 /// It also provides logic for determining associated colors based on the day type.
 /// </summary>
 [Table("plannable_days")]
-public sealed class DbPlannableDay
+public sealed class PlannableDayModel
 {
 	[Key]
 	public uint Id { get; set; }
@@ -18,14 +18,14 @@ public sealed class DbPlannableDay
 	public bool IsDeleted { get; set; }
 
 	/// <summary>
-	/// Gets a <see cref="PlannableDayColorPairModel"/> that represents the colors associated with
+	/// Gets a <see cref="PlannableDayColorPairEntity"/> that represents the colors associated with
 	/// the current day's type. The colors are determined based on the <see cref="DayType"/>
 	/// of the instance.
 	/// </summary>
-	public PlannableDayColorPairModel TypeColors => Type switch
+	public PlannableDayColorPairEntity TypeColors => Type switch
 	{
-		DayType.HOME => new PlannableDayColorPairModel("#30003764", "#003764"),
-		DayType.OFFICE => new PlannableDayColorPairModel("#30357a32", "#357a32"),
-		_ => new PlannableDayColorPairModel("#40640000", "#640000")
+		DayType.HOME => new PlannableDayColorPairEntity("#30003764", "#003764"),
+		DayType.OFFICE => new PlannableDayColorPairEntity("#30357a32", "#357a32"),
+		_ => new PlannableDayColorPairEntity("#40640000", "#640000")
 	};
 }

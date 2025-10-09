@@ -4,9 +4,9 @@
 /// Represents a calculated week, including information about the days in the week,
 /// the name of the week, and the distribution of home office and office days.
 /// </summary>
-public sealed class CalculatedWeekModel
+public sealed class CalculatedWeekEntity
 {
-	public WeekDayModel[] WeekDays { get; set; } = [];
+	public WeekDayEntity[] WeekDays { get; set; } = [];
 	public string WeekName { get; set; } = string.Empty;
 	public uint HomeOfficeDays { get; set; }
 	public uint OfficeDays { get; set; }

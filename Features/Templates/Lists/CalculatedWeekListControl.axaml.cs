@@ -65,10 +65,10 @@ public sealed class CalculatedWeekListControl : TemplatedControl
 		set => SetValue(OfficeTargetQuotedProperty, value);
 	}
 
-	public static readonly StyledProperty<WeekDayModel[]> WeekDaysProperty =
-		AvaloniaProperty.Register<CalculatedWeekListControl, WeekDayModel[]>(nameof(WeekDays));
+	public static readonly StyledProperty<WeekDayEntity[]> WeekDaysProperty =
+		AvaloniaProperty.Register<CalculatedWeekListControl, WeekDayEntity[]>(nameof(WeekDays));
 
-	public WeekDayModel[] WeekDays
+	public WeekDayEntity[] WeekDays
 	{
 		get => GetValue(WeekDaysProperty);
 		set => SetValue(WeekDaysProperty, value);

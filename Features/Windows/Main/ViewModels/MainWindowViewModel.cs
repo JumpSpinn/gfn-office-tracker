@@ -21,7 +21,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 		_configController = cc;
 		_currentPage = sp.GetRequiredService<SplashPageViewModel>();
 
-		_messenger.Register<Features.Windows.Main.ViewModels.MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
+		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
 		{
 			SetMainWindowBarVisibility(true);
 			CurrentPage = GetCurrentPageViewModel(message.Value);

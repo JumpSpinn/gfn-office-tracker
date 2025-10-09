@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.Core.Services.Config.Controllers;
 
+using Entities;
+
 /// <summary>
 /// The ConfigController class is responsible for managing the application's configuration,
 /// including initializing, storing, and saving configurations.
@@ -9,12 +11,12 @@
 [RegisterSingleton]
 public sealed class ConfigController
 {
-	private readonly LogService _logService;
+	private readonly LogController _logController;
 	private readonly ConfigService _configService;
 
-	public ConfigController(LogService ls, ConfigService cs)
+	public ConfigController(LogController ls, ConfigService cs)
 	{
-		_logService = ls;
+		_logController = ls;
 		_configService = cs;
 	}
 
@@ -23,14 +25,14 @@ public sealed class ConfigController
 	/// Allows retrieval and updates to the current configuration.
 	/// Provides property change notifications when the configuration is updated.
 	/// </summary>
-	public LocalConfig Config { get; private set; } = new();
+	public ConfigEntity ConfigEntity { get; private set; } = new();
 
 	/// <summary>
 	/// Asynchronously saves the current configuration to a file.
 	/// Delegates the actual saving process to the ConfigService.
 	/// </summary>
 	public async Task<bool> SaveConfigToFile()
-		=> await _configService.SaveConfigToFileAsync(Config);
+		=> await _configService.SaveConfigToFileAsync(ConfigEntity);
 
 	/// <summary>
 	/// Asynchronously initializes the configuration by attempting to load it from a file.
@@ -45,20 +47,20 @@ public sealed class ConfigController
 			var config = await _configService.LoadConfigFromFileAsync();
 			if (config is null)
 			{
-				_logService.Info("Config file could not be loaded, creating dummy config.");
+				_logController.Info("Config file could not be loaded, creating dummy config.");
 				return await SaveConfigToFile();
 			}
 
-			Config.WindowSize = config.WindowSize;
-			Config.WindowPosition = config.WindowPosition;
-			Config.RememberWindowPositionSize = config.RememberWindowPositionSize;
-			Config.Language = config.Language;
+			ConfigEntity.WindowSize = config.WindowSize;
+			ConfigEntity.WindowPosition = config.WindowPosition;
+			ConfigEntity.RememberWindowPositionSize = config.RememberWindowPositionSize;
+			ConfigEntity.Language = config.Language;
 
 			return await SaveConfigToFile();
 		}
 		catch (Exception e)
 		{
-			_logService.Exception(e);
+			_logController.Exception(e);
 		}
 
 		return false;

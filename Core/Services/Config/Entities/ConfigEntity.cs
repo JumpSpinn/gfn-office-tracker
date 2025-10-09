@@ -1,12 +1,10 @@
-﻿namespace OfficeTracker.Core.Services.Config.Models;
-
-using Features.Windows.Main.Data;
+﻿namespace OfficeTracker.Core.Services.Config.Entities;
 
 /// <summary>
 /// Represents local configuration settings for the application window, including position and size.
 /// This class implements the INotifyPropertyChanged interface to enable property change notifications.
 /// </summary>
-public sealed class LocalConfig : INotifyPropertyChanged
+public sealed class ConfigEntity : INotifyPropertyChanged
 {
 	#region DATABASE PATH
 
@@ -93,7 +91,7 @@ public sealed class LocalConfig : INotifyPropertyChanged
 	/// The X and Y components represent the horizontal and vertical positions of the window on the screen, respectively.
 	/// Updated when the window is repositioned and triggers a property change notification.
 	/// </summary>
-	private ConfigIntVector _windowPosition
+	private ConfigIntVectorEntity _windowPosition
 		= new(MainWindowData.WindowPosition.X, MainWindowData.WindowPosition.Y);
 
 	/// <summary>
@@ -101,7 +99,7 @@ public sealed class LocalConfig : INotifyPropertyChanged
 	/// Allows getting or setting the horizontal (X) and vertical (Y) screen coordinates of the window.
 	/// Updates the backing field and triggers a property change notification when modified.
 	/// </summary>
-	public ConfigIntVector WindowPosition
+	public ConfigIntVectorEntity WindowPosition
 	{
 		get => _windowPosition;
 		set
@@ -122,7 +120,7 @@ public sealed class LocalConfig : INotifyPropertyChanged
 	/// This value is initialized based on the MainWindowData.WindowSize and updated
 	/// when the window size changes, triggering a property change notification.
 	/// </summary>
-	private ConfigIntVector _windowSize
+	private ConfigIntVectorEntity _windowSize
 		= new((int)MainWindowData.WindowSize.Width, (int)MainWindowData.WindowSize.Height);
 
 	/// <summary>
@@ -130,7 +128,7 @@ public sealed class LocalConfig : INotifyPropertyChanged
 	/// The X component represents the width of the window in pixels, and the Y component represents the height in pixels.
 	/// This property is monitored for changes and triggers a property change notification when updated.
 	/// </summary>
-	public ConfigIntVector WindowSize
+	public ConfigIntVectorEntity WindowSize
 	{
 		get => _windowSize;
 		set

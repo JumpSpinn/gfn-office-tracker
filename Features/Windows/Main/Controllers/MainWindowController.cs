@@ -7,17 +7,17 @@
 [RegisterSingleton]
 public sealed class MainWindowController
 {
-	private readonly LogService _logService;
+	private readonly LogController _logController;
 	private readonly ConfigController _configController;
 
-	public MainWindowController(LogService ls, ConfigController cc, MainWindowEvents mwe)
+	public MainWindowController(LogController ls, ConfigController cc, MainWindowEvents mwe)
 	{
-		_logService = ls;
+		_logController = ls;
 		_configController = cc;
 		mwe.OnWindowSizePositionChanged += OnPositionSizeChanged;
 	}
 
-	#region Initialize
+	#region INITIALIZATION
 
 	private bool _initialized;
 
@@ -34,26 +34,26 @@ public sealed class MainWindowController
 
 			if (App.MainWindow is null)
 			{
-				_logService.Error("MainWindow not available yet. Can't initialize controller.");
+				_logController.Error("MainWindow not available yet. Can't initialize controller.");
 				return false;
 			}
 
 			if (!App.MainWindow.IsLoaded)
 			{
-				_logService.Error("MainWindow available, but not loaded yet. Can't initialize controller.");
+				_logController.Error("MainWindow available, but not loaded yet. Can't initialize controller.");
 				return false;
 			}
 
-			App.MainWindow.Position = new(_configController.Config.WindowPosition.X, _configController.Config.WindowPosition.Y);
-			App.MainWindow.Width = _configController.Config.WindowSize.X;
-			App.MainWindow.Height = _configController.Config.WindowSize.Y;
+			App.MainWindow.Position = new(_configController.ConfigEntity.WindowPosition.X, _configController.ConfigEntity.WindowPosition.Y);
+			App.MainWindow.Width = _configController.ConfigEntity.WindowSize.X;
+			App.MainWindow.Height = _configController.ConfigEntity.WindowSize.Y;
 
 			_initialized = true;
 			return true;
 		}
 		catch (Exception ex)
 		{
-			_logService.Exception(ex);
+			_logController.Exception(ex);
 			return false;
 		}
 	}
@@ -70,15 +70,15 @@ public sealed class MainWindowController
 	/// </summary>
 	private async Task OnPositionSizeChanged(PixelPoint position, Size size)
 	{
-		if (!_configController.Config.RememberWindowPositionSize) return;
+		if (!_configController.ConfigEntity.RememberWindowPositionSize) return;
 
-		_logService.Debug($"Window position: X={position.X}, Y={position.Y}");
-		_logService.Debug($"Window Size: Width={size.Width}, Height={size.Height}");
+		_logController.Debug($"Window position: X={position.X}, Y={position.Y}");
+		_logController.Debug($"Window Size: Width={size.Width}, Height={size.Height}");
 
 		if (!_initialized) return;
 
-		_configController.Config.WindowPosition = new(position.X, position.Y);
-		_configController.Config.WindowSize = new((int)size.Width, (int)size.Height);
+		_configController.ConfigEntity.WindowPosition = new(position.X, position.Y);
+		_configController.ConfigEntity.WindowSize = new((int)size.Width, (int)size.Height);
 
 		await _configController.SaveConfigToFile();
 	}
@@ -93,26 +93,26 @@ public sealed class MainWindowController
 	/// </summary>
 	private bool _runtimeDataInitialized;
 
-	public RuntimeData RuntimeData { get; private set; } = new();
+	public RuntimeDataEntity RuntimeDataEntity { get; private set; } = new();
 
 	/// <summary>
 	/// Updates the runtime data with the provided values, including user information,
 	/// work schedule details, and target quotas for home office and office days.
 	/// Marks the runtime data as initialized after setting the new values.
 	/// </summary>
-	public void SetRuntimeDataAsync(DbUserSettings data)
+	public void SetRuntimeDataAsync(UserSettingsModel data)
 	{
 		if (_runtimeDataInitialized)
 		{
-			_logService.Debug("Runtime data already set.");
+			_logController.Debug("Runtime data already set.");
 			return;
 		}
 
-		RuntimeData.UserName = data.UserName;
-		RuntimeData.HomeOfficeTargetQuoted = data.HomeOfficeTargetQuoted;
-		RuntimeData.OfficeTargetQuoted = data.OfficeTargetQuoted;
-		RuntimeData.HomeOfficeDays = data.HomeOfficeDays;
-		RuntimeData.OfficeDays = data.OfficeDays;
+		RuntimeDataEntity.UserName = data.UserName;
+		RuntimeDataEntity.HomeOfficeTargetQuoted = data.HomeOfficeTargetQuoted;
+		RuntimeDataEntity.OfficeTargetQuoted = data.OfficeTargetQuoted;
+		RuntimeDataEntity.HomeOfficeDays = data.HomeOfficeDays;
+		RuntimeDataEntity.OfficeDays = data.OfficeDays;
 		_runtimeDataInitialized = true;
 	}
 

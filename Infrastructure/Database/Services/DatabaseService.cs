@@ -1,7 +1,7 @@
 ﻿namespace OfficeTracker.Infrastructure.Database.Services;
 
 [RegisterSingleton]
-public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactory, LogService logService)
+public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactory, LogController logController)
 {
 	#region USER SETTINGS
 
@@ -10,7 +10,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	/// <summary>
 	/// Asynchronously retrieves the user's settings from the database.
 	/// </summary>
-	public async Task<DbUserSettings?> GetUserSettingAsync()
+	public async Task<UserSettingsModel?> GetUserSettingAsync()
 	{
 		try
 		{
@@ -19,7 +19,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return null;
@@ -39,7 +39,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch(Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return null;
@@ -60,12 +60,12 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	/// <param name="homeOfficeTargetQuoted">The target number of home office days.</param>
 	/// <param name="officeTargetQuoted">The target number of office days.</param>
 	/// <param name="isCurrentDayTracked">Indicates whether the current day should be set as tracked.</param>
-	public async Task<DbUserSettings?> CreateUserSettingAsync(string userName, DayOfWeek[] homeOfficeDays, DayOfWeek[] officeDays, uint homeOfficeDayCount, uint officeDayCount, uint homeOfficeTargetQuoted, uint officeTargetQuoted, bool isCurrentDayTracked)
+	public async Task<UserSettingsModel?> CreateUserSettingAsync(string userName, DayOfWeek[] homeOfficeDays, DayOfWeek[] officeDays, uint homeOfficeDayCount, uint officeDayCount, uint homeOfficeTargetQuoted, uint officeTargetQuoted, bool isCurrentDayTracked)
 	{
 		try
 		{
 			await using var db = await dbContextFactory.CreateDbContextAsync();
-			var us = new DbUserSettings()
+			var us = new UserSettingsModel()
 			{
 				UserName = userName,
 				HomeOfficeDays = homeOfficeDays,
@@ -83,7 +83,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return null;
@@ -112,7 +112,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return 0;
@@ -137,7 +137,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return 0;
@@ -156,7 +156,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	/// The days are ordered by their date and represent plan configurations
 	/// such as day type and associated metadata.
 	/// </summary>
-	public async Task<List<DbPlannableDay>?> GetAllPlannableDaysAsync()
+	public async Task<List<PlannableDayModel>?> GetAllPlannableDaysAsync()
 	{
 		try
 		{
@@ -165,7 +165,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return null;
@@ -175,7 +175,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	/// Asynchronously retrieves a specific plannable day from the database based on the provided date.
 	/// If no entry matches the given date, null is returned.
 	/// </summary>
-	public async Task<DbPlannableDay?> GetSinglePlannableDayAsync(DateTime dt)
+	public async Task<PlannableDayModel?> GetSinglePlannableDayAsync(DateTime dt)
 	{
 		try
 		{
@@ -185,7 +185,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return null;
@@ -199,12 +199,12 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	/// Asynchronously creates a new plannable day entry in the database.
 	/// The created entry represents an office-related or home-related day, depending on the specified type and date.
 	/// </summary>
-	public async Task<DbPlannableDay?> CreatePlannableDayAsync(DayType type, DateTime date)
+	public async Task<PlannableDayModel?> CreatePlannableDayAsync(DayType type, DateTime date)
 	{
 		try
 		{
 			await using var db = await dbContextFactory.CreateDbContextAsync();
-			var day = new DbPlannableDay()
+			var day = new PlannableDayModel()
 			{
 				Type = type,
 				Date = date
@@ -215,7 +215,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return null;
@@ -243,7 +243,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 		catch (Exception e)
 		{
-			logService.Exception(e);
+			logController.Exception(e);
 		}
 
 		return false;

@@ -9,7 +9,7 @@ public sealed partial class MainPageViewModel
 	#region PLANNABLE DAYS
 
     [ObservableProperty]
-    private ObservableCollection<DbPlannableDay> _plannableDays = [];
+    private ObservableCollection<PlannableDayModel> _plannableDays = [];
 
     /// <summary>
     /// Removes a plannable day from the collection based on the specified identifier.
@@ -21,20 +21,20 @@ public sealed partial class MainPageViewModel
 
 	    var currentCollection = PlannableDays;
 	    currentCollection.Remove(pd);
-	    PlannableDays = new ObservableCollection<DbPlannableDay>(currentCollection);
+	    PlannableDays = new ObservableCollection<PlannableDayModel>(currentCollection);
     }
 
     /// <summary>
     /// Adds a plannable day to the collection if it does not already exist.
     /// </summary>
-    private void AddPlannableDayToCollection(DbPlannableDay pd)
+    private void AddPlannableDayToCollection(PlannableDayModel pd)
     {
 	    var exist = PlannableDays.FirstOrDefault(x => x.Id == pd.Id);
 	    if (exist is not null) return;
 
 	    var currentCollection = PlannableDays;
 	    currentCollection.Add(pd);
-	    PlannableDays = new ObservableCollection<DbPlannableDay>(currentCollection);
+	    PlannableDays = new ObservableCollection<PlannableDayModel>(currentCollection);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public sealed partial class MainPageViewModel
     private async Task LoadPlannableDaysAsync()
     {
 	    var plannableDays = await _databaseService.GetAllPlannableDaysAsync();
-	    PlannableDays = new ObservableCollection<DbPlannableDay>(plannableDays ?? []);
+	    PlannableDays = new ObservableCollection<PlannableDayModel>(plannableDays ?? []);
     }
 
     /// <summary>
@@ -103,9 +103,9 @@ public sealed partial class MainPageViewModel
 			    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
 		    else if (dayForm.SelectedDayType == DayType.NONE)
 			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
-		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowController.RuntimeData.HomeOfficeDays))
+		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowController.RuntimeDataEntity.HomeOfficeDays))
 			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.", DialogType.QUESTION);
-		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowController.RuntimeData.OfficeDays))
+		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowController.RuntimeDataEntity.OfficeDays))
 			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.", DialogType.QUESTION);
 		    else
 		    {
@@ -133,7 +133,7 @@ public sealed partial class MainPageViewModel
     #region CALCULATED WEEKS
 
     [ObservableProperty]
-    private ObservableCollection<CalculatedWeekModel> _calculatedWeekModels = new();
+    private ObservableCollection<CalculatedWeekEntity> _calculatedWeekModels = new();
 
     [ObservableProperty]
     private decimal? _calculateWeeksCount = 1;
@@ -146,7 +146,7 @@ public sealed partial class MainPageViewModel
     {
 	    var cws = await _calculateWeekService.CalculateWeeksAsync();
 	    if (cws is null) return;
-	    CalculatedWeekModels = new ObservableCollection<CalculatedWeekModel>(cws);
+	    CalculatedWeekModels = new ObservableCollection<CalculatedWeekEntity>(cws);
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ public sealed partial class MainPageViewModel
     [RelayCommand]
     private async Task AddNewCalculatedWeekAsync()
     {
-	    List<CalculatedWeekModel> cwsTotal = [];
+	    List<CalculatedWeekEntity> cwsTotal = [];
 
 	    if (CalculateWeeksCount is not null)
 	    {
@@ -171,7 +171,7 @@ public sealed partial class MainPageViewModel
 			    cwsTotal.Add(single);
 	    }
 
-	    CalculatedWeekModels = new ObservableCollection<CalculatedWeekModel>(CalculatedWeekModels.Concat(cwsTotal));
+	    CalculatedWeekModels = new ObservableCollection<CalculatedWeekEntity>(CalculatedWeekModels.Concat(cwsTotal));
     }
 
     #endregion

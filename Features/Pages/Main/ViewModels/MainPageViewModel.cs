@@ -7,14 +7,14 @@
 [RegisterSingleton]
 public sealed partial class MainPageViewModel : ViewModelBase
 {
-	private readonly LogService _logService;
+	private readonly LogController _logController;
 	private readonly DatabaseService _databaseService;
 	private readonly MainWindowController _mainWindowController;
 	private readonly CalculateWeekService _calculateWeekService;
 
-    public MainPageViewModel(DatabaseService ds, LogService lc, MainWindowController mws, CalculateWeekService cws)
+    public MainPageViewModel(DatabaseService ds, LogController lc, MainWindowController mws, CalculateWeekService cws)
     {
-	    _logService = lc;
+	    _logController = lc;
 	    _databaseService = ds;
 	    _mainWindowController = mws;
 	    _calculateWeekService = cws;

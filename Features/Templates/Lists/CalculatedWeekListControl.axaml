@@ -96,7 +96,7 @@
 								</ItemsPanelTemplate>
 							</ItemsControl.ItemsPanel>
 							<ItemsControl.ItemTemplate>
-								<DataTemplate DataType="entities:WeekDayModel">
+								<DataTemplate DataType="entities:WeekDayEntity">
 									<StackPanel
 										Orientation="Vertical"
 										Spacing="6"

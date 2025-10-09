@@ -6,25 +6,25 @@
 [RegisterSingleton]
 public sealed partial class SettingsPageViewModel : ViewModelBase
 {
-	private readonly LogService _logService;
+	private readonly LogController _logController;
 	private readonly ConfigController _configController;
 
-	public SettingsPageViewModel(LogService ls, ConfigController cc)
+	public SettingsPageViewModel(LogController ls, ConfigController cc)
 	{
-		_logService = ls;
+		_logController = ls;
 		_configController = cc;
 
 		ParseConfig();
 		ParseLanguageEnumToCollection();
 
-		_configController.Config.PropertyChanged += (_, _) => ParseConfig();
+		_configController.ConfigEntity.PropertyChanged += (_, _) => ParseConfig();
 	}
 
 	private void ParseConfig()
 	{
-		RememberWindowPositionSize = _configController.Config.RememberWindowPositionSize;
-		SelectedLanguage = _configController.Config.Language;
-		SaveLocation = _configController.Config.DatabasePath;
+		RememberWindowPositionSize = _configController.ConfigEntity.RememberWindowPositionSize;
+		SelectedLanguage = _configController.ConfigEntity.Language;
+		SaveLocation = _configController.ConfigEntity.DatabasePath;
 	}
 
 	#region LANGUAGE SELECTION
@@ -53,7 +53,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	/// </summary>
 	partial void OnSelectedLanguageChanged(Language value)
 	{
-		_configController.Config.Language = value;
+		_configController.ConfigEntity.Language = value;
 		_configController.SaveConfigToFile();
 	}
 
@@ -71,7 +71,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	/// </summary>
 	partial void OnRememberWindowPositionSizeChanged(bool value)
 	{
-		_configController.Config.RememberWindowPositionSize = value;
+		_configController.ConfigEntity.RememberWindowPositionSize = value;
 		_configController.SaveConfigToFile();
 	}
 
@@ -103,15 +103,15 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		try
 		{
 			_saveLocationChanging = true;
-			_configController.Config.DatabasePath = result;
+			_configController.ConfigEntity.DatabasePath = result;
 			// TODO: implement save location service to change location
 
 			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort erfolgreich geändert.", DialogType.SUCCESS);
-			_logService.Info($"Save location changed to: {result}");
+			_logController.Info($"Save location changed to: {result}");
 		}
 		catch (Exception e)
 		{
-			_logService.Exception(e);
+			_logController.Exception(e);
 			DialogHelper.ShowDialogAsync("Speicherort", "Fehler beim Ändern des Speicherorts.", DialogType.ERROR);
 		}
 		finally
@@ -143,11 +143,11 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			// TODO: implement save location service to change location to default
 
 			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort wurde erfolgreich zurückgesetzt!", DialogType.SUCCESS);
-			_logService.Info($"Save location changed to default path: {result}");
+			_logController.Info($"Save location changed to default path: {result}");
 		}
 		catch (Exception e)
 		{
-			_logService.Exception(e);
+			_logController.Exception(e);
 			DialogHelper.ShowDialogAsync("Speicherort", "Fehler beim Zurücksetzen des Speicherorts.", DialogType.ERROR);
 		}
 		finally

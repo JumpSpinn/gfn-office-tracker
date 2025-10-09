@@ -38,15 +38,15 @@ public sealed class PlannableDayListControl : TemplatedControl
 	/// This property is primarily used to bind a collection of `DbPlannableDay` objects to the `PlannableDayListControl`,
 	/// enabling display and interaction with the list of plannable days within the control.
 	/// </summary>
-	public static readonly StyledProperty<ObservableCollection<DbPlannableDay>> ItemsProperty =
-		AvaloniaProperty.Register<PlannableDayListControl, ObservableCollection<DbPlannableDay>>(nameof(Items), defaultValue: []);
+	public static readonly StyledProperty<ObservableCollection<PlannableDayModel>> ItemsProperty =
+		AvaloniaProperty.Register<PlannableDayListControl, ObservableCollection<PlannableDayModel>>(nameof(Items), defaultValue: []);
 
 	/// <summary>
 	/// Gets or sets the collection of plannable days displayed in the control.
 	/// This property is bound to the `ItemsSource` of the `ListBox` and determines the collection of items
 	/// available within the `PlannableDayListControl`.
 	/// </summary>
-	public ObservableCollection<DbPlannableDay> Items
+	public ObservableCollection<PlannableDayModel> Items
 	{
 		get => GetValue(ItemsProperty);
 		set
@@ -129,7 +129,7 @@ public sealed class PlannableDayListControl : TemplatedControl
 	/// This property is used to retrieve the identifier for further operations, such as editing or deleting the selected item.
 	/// </summary>
 	public uint SelectedPlannableDayId
-		=> _list?.SelectedItem is DbPlannableDay selectedDay ? selectedDay.Id : 0;
+		=> _list?.SelectedItem is PlannableDayModel selectedDay ? selectedDay.Id : 0;
 
 	/// <summary>
 	/// Handles the event triggered when the selection in the ListBox changes. This method ensures that the visual state of related

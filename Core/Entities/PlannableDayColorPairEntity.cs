@@ -5,7 +5,7 @@
 /// This class provides properties for both background and border colors,
 /// allowing customization of the appearance for different day types.
 /// </summary>
-public class PlannableDayColorPairModel(string backgroundColor, string borderColor)
+public class PlannableDayColorPairEntity(string backgroundColor, string borderColor)
 {
 	public IBrush Background { get; set; }
 		= new SolidColorBrush(Color.Parse(backgroundColor));

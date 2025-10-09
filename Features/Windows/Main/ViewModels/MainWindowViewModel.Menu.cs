@@ -29,7 +29,7 @@ public sealed partial class MainWindowViewModel
 	/// utilities to resolve the save folder path and facilitate folder navigation.
 	/// </summary>
 	public void OpenSaveFolder()
-		=> ExplorerHelper.OpenFolder(_configController.Config.DatabasePath);
+		=> ExplorerHelper.OpenFolder(_configController.ConfigEntity.DatabasePath);
 
 	#endregion
 }

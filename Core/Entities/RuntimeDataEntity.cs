@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents runtime configuration data for a user's work schedule and targets.
 /// </summary>
-public sealed class RuntimeData
+public sealed class RuntimeDataEntity
 {
 	public string UserName { get; set; } = string.Empty;
 

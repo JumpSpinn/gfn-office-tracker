@@ -4,7 +4,7 @@
 /// Represents the user's settings data model for the database.
 /// </summary>
 [Table("user_settings")]
-public sealed class DbUserSettings
+public sealed class UserSettingsModel
 {
 	[Key]
 	public uint Id { get; set; }

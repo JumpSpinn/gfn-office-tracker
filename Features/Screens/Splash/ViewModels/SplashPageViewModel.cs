@@ -11,12 +11,12 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
 	private readonly MainWindowController _mainWindowController;
 	private readonly ConfigController _configController;
-	private readonly LogService _logService;
+	private readonly LogController _logController;
 
-	public SplashPageViewModel(MainWindowController mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory, ConfigController cc)
+	public SplashPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OtContext> dbContextFactory, ConfigController cc)
 	{
 		_mainWindowController = mwc;
-		_logService = lc;
+		_logController = lc;
 		_dbContextFactory = dbContextFactory;
 		_configController = cc;
 		StartInitializationAsync();
@@ -61,7 +61,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 
 			if (await loadStep.Invoke()) continue;
 
-			_logService.Error("Error while initializing application.");
+			_logController.Error("Error while initializing application.");
 			return;
 		}
 
@@ -105,7 +105,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			if (App.MainWindow?.IsLoaded == true)
 				return await _mainWindowController.Initialize();
 
-			_logService.Debug(App.MainWindow is null ?
+			_logController.Debug(App.MainWindow is null ?
 				"MainWindow not available yet... Retrying..." :
 				"MainWindow available, but not loaded yet... Retrying...");
 
@@ -130,12 +130,12 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Logger..";
 
-			if (!await _logService.EnsureLogFile())
+			if (!await _logController.EnsureLogFile())
 			{
 				DisplayInfoBar("Error", "Error while trying to ensure Log-File.", InfoBarSeverity.Error);
 				return false;
 			}
-			_logService.Info("Logger initialized.");
+			_logController.Info("Logger initialized.");
 			ShowInfiniteProgressBar = false;
 			return true;
 		}
@@ -162,7 +162,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			await db.Database.MigrateAsync();
 			_hasData = db.UserSettings.Any();
 
-			_logService.Info("Database initialized.");
+			_logController.Info("Database initialized.");
 			ShowInfiniteProgressBar = false;
 			return true;
 		}
@@ -216,7 +216,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 				}
 			}
 
-			_logService.Info("Dialogs initialized.");
+			_logController.Info("Dialogs initialized.");
 			ShowValueProgress = false;
 			_dialogsPreloaded = true;
 			return true;
@@ -245,7 +245,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			{
 				LoadingText = "Runtime Data found. Loading..";
 				_mainWindowController.SetRuntimeDataAsync(userSettings);
-				_logService.Info("Runtime Data was loaded.");
+				_logController.Info("Runtime Data was loaded.");
 			}
 
 			ShowInfiniteProgressBar = false;
@@ -276,7 +276,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 				return false;
 			}
 
-			_logService.Info("Config initialized.");
+			_logController.Info("Config initialized.");
 			ShowInfiniteProgressBar = false;
 			return true;
 		}
@@ -321,7 +321,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		InfoBarTitle = title;
 		InfoBarText = text;
 		InfoBarSeverity = severity;
-		_logService.Info(title, text);
+		_logController.Info(title, text);
 	}
 
 	#endregion
