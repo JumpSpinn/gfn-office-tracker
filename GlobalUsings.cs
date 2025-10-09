@@ -104,3 +104,5 @@ global using OfficeTracker.Infrastructure.Database;
 global using OfficeTracker.Infrastructure.Database.Models;
 global using OfficeTracker.Infrastructure.Database.Services;
 global using OfficeTracker.Infrastructure.Database.Factories;
+global using OfficeTracker.Infrastructure.Database.Extensions;
+global using OfficeTracker.Infrastructure.Database.Controllers;

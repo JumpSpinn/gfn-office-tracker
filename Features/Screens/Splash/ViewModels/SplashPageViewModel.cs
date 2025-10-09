@@ -8,16 +8,18 @@
 [RegisterSingleton]
 public sealed partial class SplashPageViewModel : ViewModelBase
 {
-	private readonly IDbContextFactory<OtContext> _dbContextFactory;
 	private readonly MainWindowController _mainWindowController;
 	private readonly ConfigController _configController;
+	private readonly DatabaseController _databaseController;
+	private readonly DatabaseService _databaseService;
 	private readonly LogController _logController;
 
-	public SplashPageViewModel(MainWindowController mwc, LogController lc, IDbContextFactory<OtContext> dbContextFactory, ConfigController cc)
+	public SplashPageViewModel(MainWindowController mwc, LogController lc, DatabaseController dbc, ConfigController cc, DatabaseService dbs)
 	{
 		_mainWindowController = mwc;
 		_logController = lc;
-		_dbContextFactory = dbContextFactory;
+		_databaseController = dbc;
+		_databaseService = dbs;
 		_configController = cc;
 		StartInitializationAsync();
 	}
@@ -158,10 +160,14 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Initializing Database..";
 
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
-			await db.Database.MigrateAsync();
-			_hasData = db.UserSettings.Any();
+			var res = await _databaseController.InitializeAsync();
+			if (!res.Result)
+			{
+				DisplayInfoBar("Error", "Error while trying to initialize Database.", InfoBarSeverity.Error);
+				return false;
+			}
 
+			_hasData = res.HasData;
 			_logController.Info("Database initialized.");
 			ShowInfiniteProgressBar = false;
 			return true;
@@ -239,8 +245,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			ShowInfiniteProgressBar = true;
 			LoadingText = "Check for Runtime Data..";
 
-			await using var db = await _dbContextFactory.CreateDbContextAsync();
-			var userSettings = await db.UserSettings.FirstOrDefaultAsync();
+			var userSettings = await _databaseService.GetUserSettingAsync();
 			if (userSettings is not null)
 			{
 				LoadingText = "Runtime Data found. Loading..";

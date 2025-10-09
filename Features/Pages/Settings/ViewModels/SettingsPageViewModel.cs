@@ -20,6 +20,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		_configController.ConfigEntity.PropertyChanged += (_, _) => ParseConfig();
 	}
 
+	/// <summary>
+	/// Parses the current configuration and updates the corresponding properties.
+	/// </summary>
 	private void ParseConfig()
 	{
 		RememberWindowPositionSize = _configController.ConfigEntity.RememberWindowPositionSize;
@@ -86,7 +89,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	private string _saveLocation = string.Empty;
 
 	public string SaveLocationTruncate
-		=> StringHelper.Truncate(SaveLocation, 45, "..");
+		=> SaveLocation.Truncate(45, "..");
 
 	[RelayCommand]
 	private async Task ChangeSaveLocationAsync()
