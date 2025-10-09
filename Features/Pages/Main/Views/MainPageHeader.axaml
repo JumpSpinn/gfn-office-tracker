@@ -1,0 +1,49 @@
+﻿<UserControl
+	x:DataType="vm:MainPageViewModel"
+	x:Class="OfficeTracker.Features.Pages.Main.Views.MainPageHeader"
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:base="clr-namespace:OfficeTracker.Features.Templates.Base"
+	xmlns:vm="clr-namespace:OfficeTracker.Features.Pages.Main.ViewModels"
+	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
+	<Border Margin="10" Padding="10" CornerRadius="4" BorderThickness="1">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
+	            <GradientStop Color="#30FFFFFF" Offset="0.0"/>
+	            <GradientStop Color="#20FFFFFF" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%" Opacity=".5">
+	            <GradientStop Color="#40FFFFFF" Offset="0.0"/>
+	            <GradientStop Color="#60FFFFFF" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <StackPanel Spacing="8">
+            <TextBlock Text="Anwesenheit-Statistik" FontSize="16" HorizontalAlignment="Center" FontWeight="DemiBold" />
+            <Grid RowDefinitions="*" ColumnDefinitions="Auto, Auto" ColumnSpacing="6" HorizontalAlignment="Center">
+	            <Border Grid.Column="0" CornerRadius="4" Padding="6 2" BorderBrush="#003764" BorderThickness="1">
+		            <TextBlock Text="HomeOffice" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" LetterSpacing="0.25"  />
+	            </Border>
+	            <Border Grid.Column="1" CornerRadius="4" Padding="6 2" BorderBrush="#357a32" BorderThickness="1">
+		            <TextBlock Text="Standort" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" LetterSpacing="0.25"  />
+	            </Border>
+            </Grid>
+            <Grid x:Name="StatsGrid" ColumnDefinitions="*,Auto" ColumnSpacing="4" Margin="0 8 0 0">
+	            <base:StatisticControl
+		            Grid.Column="0"
+		            HomeOfficeDays="{Binding HomeOfficeDays}"
+		            OfficeDays="{Binding OfficeDays}"
+		            HomeOfficeQuote="{Binding HomeOfficeQuote}"
+		            OfficeQuote="{Binding OfficeQuote}"
+		            AddButtonEnabled="{Binding CanAddCurrentDay}"
+		            AddButtonVisible="{Binding CanAddCurrentDay}"
+		            AddButtonClicked="RequestShowAddCurrentDayDialog"
+	            />
+            </Grid>
+        </StackPanel>
+    </Border>
+</UserControl>

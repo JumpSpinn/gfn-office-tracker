@@ -1,0 +1,29 @@
+﻿<UserControl
+	x:DataType="vm:NotFoundPageViewModel"
+	x:Class="OfficeTracker.Features.Screens.NotFound.Views.NotFoundPage"
+	xmlns="https://github.com/avaloniaui"
+ 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+ 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+	xmlns:vm="clr-namespace:OfficeTracker.Features.Screens.NotFound.ViewModels"
+	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
+ 	>
+	<StackPanel
+		VerticalAlignment="Center"
+		HorizontalAlignment="Center"
+		Spacing="24"
+	>
+		<materialIcons:MaterialIcon
+			Kind="EmojiCry"
+			Height="100"
+			Width="100"
+		/>
+		<TextBlock
+			Text="Seite wurde nicht gefunden!"
+			FontSize="16"
+			Opacity="1"
+		/>
+	</StackPanel>
+</UserControl>
+
