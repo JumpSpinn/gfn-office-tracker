@@ -1,0 +1,115 @@
+﻿<UserControl
+	x:DataType="vm:MainPageViewModel"
+	x:Class="OfficeTracker.Features.Pages.Main.Views.MainPageTabs"
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+	xmlns:entities="clr-namespace:OfficeTracker.Core.Entities"
+	xmlns:lists="clr-namespace:OfficeTracker.Features.Templates.Lists"
+	xmlns:vm="clr-namespace:OfficeTracker.Features.Pages.Main.ViewModels"
+	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
+	<Grid>
+        <fluent:TabView
+            TabWidthMode="SizeToContent"
+            CanReorderTabs="False"
+            CanDragTabs="False"
+            AllowDropTabs="False"
+            IsAddTabButtonVisible="False"
+        >
+            <!-- Plannable Days -->
+            <fluent:TabViewItem
+                Header="Geplante Tage"
+                IsClosable="False"
+                BorderThickness="4"
+                IsSelected="True"
+            >
+                <lists:PlannableDayListControl
+                    Items="{Binding PlannableDays}"
+                    AddButtonClicked="RequestShowAddPlannableDayDialog"
+                    DeleteButtonClicked="RequestShowDeletePlannableDayDialog"
+                />
+            </fluent:TabViewItem>
+
+            <!-- Calculated Weeks -->
+            <fluent:TabViewItem
+                Header="Vorhersage (Statistiken)"
+                FontFamily="{DynamicResource GlobalFont}"
+                IsClosable="False"
+            >
+                <Grid
+                    RowDefinitions="*,Auto"
+                    Margin="10"
+                    RowSpacing="5"
+                >
+                    <ScrollViewer
+                        Grid.Row="0"
+                        Margin="0"
+                        Padding="12 0 12 0"
+                        ClipToBounds="True"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto"
+                    >
+                        <ItemsControl
+	                        ItemsSource="{Binding CalculatedWeekModels}"
+                        >
+	                        <ItemsControl.ItemsPanel>
+		                        <ItemsPanelTemplate>
+			                        <StackPanel
+				                        Orientation="Vertical"
+				                    />
+		                        </ItemsPanelTemplate>
+	                        </ItemsControl.ItemsPanel>
+	                        <ItemsControl.ItemTemplate>
+		                        <DataTemplate
+			                        DataType="entities:CalculatedWeekEntity"
+			                    >
+			                        <lists:CalculatedWeekListControl
+				                        HomeOfficeDays="{Binding HomeOfficeDays}"
+				                        OfficeDays="{Binding OfficeDays}"
+				                        HomeOfficeTargetQuoted="{Binding HomeOfficeTargetQuoted}"
+				                        OfficeTargetQuoted="{Binding OfficeTargetQuoted}"
+				                        WeekName="{Binding WeekName}"
+				                        StartWeekDateTime="{Binding WeekStartDate}"
+				                        EndWeekDateTime="{Binding WeekEndDate}"
+				                        WeekDays="{Binding WeekDays}"
+			                        />
+		                        </DataTemplate>
+	                        </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Grid
+                        Grid.Row="1"
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="10"
+                    >
+                        <NumericUpDown
+	                        Grid.Column="0"
+	                        TextAlignment="Center"
+	                        Watermark="Anzahl"
+	                        FontSize="11"
+	                        BorderThickness="1"
+	                        VerticalAlignment="Center"
+	                        HorizontalAlignment="Center"
+	                        HorizontalContentAlignment="Center"
+	                        VerticalContentAlignment="Center"
+	                        ShowButtonSpinner="False"
+	                        AllowSpin="False"
+	                        Value="{Binding CalculateWeeksCount}"
+                        />
+                        <Button
+	                        Grid.Column="1"
+	                        Content="Weitere Woche anzeigen"
+	                        HorizontalAlignment="Stretch"
+	                        VerticalAlignment="Stretch"
+	                        FontSize="12"
+	                        Command="{Binding AddNewCalculatedWeekCommand}"
+                        />
+                    </Grid>
+                </Grid>
+            </fluent:TabViewItem>
+        </fluent:TabView>
+    </Grid>
+</UserControl>
+

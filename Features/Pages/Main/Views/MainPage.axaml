@@ -1,0 +1,17 @@
+﻿<UserControl
+    x:DataType="vm:MainPageViewModel"
+    x:Class="OfficeTracker.Features.Pages.Main.Views.MainPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:OfficeTracker.Features.Pages.Main.Views"
+    xmlns:vm="clr-namespace:OfficeTracker.Features.Pages.Main.ViewModels"
+    mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
+    <Panel>
+	    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+		    <pages:MainPageHeader Grid.Row="0" />
+		    <pages:MainPageTabs Grid.Row="1" />
+        </Grid>
+    </Panel>
+</UserControl>

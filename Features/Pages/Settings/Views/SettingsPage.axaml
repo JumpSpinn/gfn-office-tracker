@@ -1,0 +1,198 @@
+﻿<UserControl
+	x:DataType="vm:SettingsPageViewModel"
+	x:Class="OfficeTracker.Features.Pages.Settings.Views.SettingsPage"
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+	xmlns:fluent="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+	xmlns:vm="clr-namespace:OfficeTracker.Features.Pages.Settings.ViewModels"
+	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650">
+	<Panel>
+		<ScrollViewer Padding="16" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+			<StackPanel Orientation="Vertical" Spacing="4">
+
+				<!-- General -->
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+							<materialIcons:MaterialIcon Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Kind="Settings" Height="24" Width="24" Margin="0 0 12 0" />
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Allgemein" VerticalAlignment="Center" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+
+					<!-- Select Language -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Sprache" VerticalAlignment="Center" />
+							<fluent:FAComboBox
+								Grid.Column="0"
+								Grid.Row="0"
+								HorizontalAlignment="Right"
+								IsEnabled="{Binding IsLanguageSelectionEnabled}"
+								ItemsSource="{Binding Languages}"
+								SelectedItem="{Binding SelectedLanguage}"
+							/>
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<!-- Save window location -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Fenster merken" VerticalAlignment="Center" />
+							<TextBlock Grid.Column="0" Grid.Row="1" Text="Position, Größe" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" IsChecked="{Binding RememberWindowPositionSize}" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<!-- Database -->
+				<fluent:SettingsExpander IsExpanded="True">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*">
+							<materialIcons:MaterialIcon Grid.Column="0" Kind="Database" Height="24" Width="24" Margin="0 0 12 0" />
+							<TextBlock Grid.Column="1" Text="Datenbank" VerticalAlignment="Center" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+
+					<!-- Change save directory -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowSpacing="8">
+							<TextBlock Grid.Column="0" Text="Verzeichnis ändern" VerticalAlignment="Center" />
+							<StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+								<Button
+									Content="Standard"
+									Background="Transparent"
+									Command="{Binding ChangeSaveLocationToDefaultCommand}"
+								/>
+								<Button
+									Content="Wählen"
+									Command="{Binding ChangeSaveLocationCommand}"
+								/>
+							</StackPanel>
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<!-- Current save directory -->
+					<fluent:SettingsExpanderItem>
+						<Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="0"
+								Text="Aktuelles Verzeichnis:"
+								VerticalAlignment="Center"
+							/>
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="1"
+								Text="{Binding SaveLocationTruncate}"
+								VerticalAlignment="Center"
+								FontSize="12"
+								Opacity=".5"
+							/>
+							<Button
+								Grid.Column="1"
+								Grid.Row="0"
+								Grid.RowSpan="2"
+								Content="Öffnen"
+								Command="{Binding OpenSaveFolderCommand}"
+							/>
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+				</fluent:SettingsExpander>
+
+
+<!-- Templates
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+							<materialIcons:MaterialIcon Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Kind="Home" Height="24" Width="24" Margin="0 0 12 0" />
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
+							<TextBlock Grid.Row="1" Grid.Column="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
+							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
+							<TextBlock Grid.Row="1" Grid.Column="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
+							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
+							<TextBlock Grid.Column="0" Grid.Row="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" VerticalAlignment="Center" />
+							<TextBlock Grid.Row="1" Grid.Column="1" Text="Beschreibung" VerticalAlignment="Center" FontSize="12" Opacity=".5" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<fluent:SettingsExpander IsExpanded="False">
+					<fluent:SettingsExpander.Header>
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="Header" />
+					</fluent:SettingsExpander.Header>
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 1" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 2" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Content 3" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+-->
+			</StackPanel>
+		</ScrollViewer>
+	</Panel>
+</UserControl>
