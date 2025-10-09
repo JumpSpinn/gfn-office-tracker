@@ -61,6 +61,7 @@ global using OfficeTracker.Core.Services.Config.Services;
 global using OfficeTracker.Core.Services.Log;
 global using OfficeTracker.Core.Services.Log.Controllers;
 global using OfficeTracker.Core.Services.Log.Entities;
+global using OfficeTracker.Core.Services.Log.Enums;
 
 global using OfficeTracker.Features;
 global using OfficeTracker.Features.Dialog;
