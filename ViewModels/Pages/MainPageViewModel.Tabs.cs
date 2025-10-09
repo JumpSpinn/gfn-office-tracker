@@ -1,5 +1,9 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+/// <summary>
+/// Represents the view model for the main page, managing application logic and interactions
+/// for the main page view components.
+/// </summary>
 public sealed partial class MainPageViewModel
 {
 	#region PLANNABLE DAYS
@@ -55,7 +59,7 @@ public sealed partial class MainPageViewModel
 		    Content = "Möchtest du diesen Eintrag wirklich löschen?",
 		    PrimaryButtonText = "Löschen",
 		    CloseButtonText = "Abbrechen",
-		    DefaultButton = ContentDialogButton.Primary
+		    DefaultButton = ContentDialogButton.Close
 	    };
 
 	    var dialogResult = await dialog.ShowAsyncCorrectly();
@@ -85,7 +89,7 @@ public sealed partial class MainPageViewModel
 		    Content = dayForm,
 		    PrimaryButtonText = "Planen",
 		    CloseButtonText = "Abbrechen",
-		    DefaultButton = ContentDialogButton.Primary
+		    DefaultButton = ContentDialogButton.Close
 	    };
 
 	    var success = false;
@@ -99,9 +103,9 @@ public sealed partial class MainPageViewModel
 			    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
 		    else if (dayForm.SelectedDayType == DayType.NONE)
 			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
-		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowService.RuntimeData.HomeOfficeDays))
+		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowController.RuntimeData.HomeOfficeDays))
 			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.", DialogType.QUESTION);
-		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowService.RuntimeData.OfficeDays))
+		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowController.RuntimeData.OfficeDays))
 			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.", DialogType.QUESTION);
 		    else
 		    {

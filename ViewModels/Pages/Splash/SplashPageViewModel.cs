@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Splash;
 
+using Services.MainWindow.Controllers;
+
 /// <summary>
 /// Represents the ViewModel for the splash screen page of the application.
 /// Responsible for initializing the application's essential services and operations
@@ -9,14 +11,16 @@
 public sealed partial class SplashPageViewModel : ViewModelBase
 {
 	private readonly IDbContextFactory<OtContext> _dbContextFactory;
-	private readonly MainWindowService _mainWindowService;
+	private readonly MainWindowController _mainWindowController;
+	private readonly ConfigController _configController;
 	private readonly LogService _logService;
 
-	public SplashPageViewModel(MainWindowService mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory)
+	public SplashPageViewModel(MainWindowController mwc, LogService lc, IDbContextFactory<OtContext> dbContextFactory, ConfigController cc)
 	{
-		_mainWindowService = mwc;
+		_mainWindowController = mwc;
 		_logService = lc;
 		_dbContextFactory = dbContextFactory;
+		_configController = cc;
 		StartInitializationAsync();
 	}
 
@@ -30,6 +34,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 	private async Task StartInitializationAsync()
 	{
 		_loadQueue.Enqueue(InitializeLoggerAsync);
+		_loadQueue.Enqueue(InitializeConfigAsync);
 		_loadQueue.Enqueue(InitializeDatabaseAsync);
 		_loadQueue.Enqueue(LoadRuntimeDataAsync);
 		_loadQueue.Enqueue(InitializeAppWindowAsync);
@@ -62,7 +67,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			return;
 		}
 
-		ChangePage(_hasData ? Page.MAIN : Page.WIZARD_WELCOME);
+		ChangePage(_hasData ? Page.MAIN_WINDOW : Page.WIZARD_WELCOME);
 	}
 
 	#endregion
@@ -100,7 +105,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		while (retryCount < maxRetries)
 		{
 			if (App.MainWindow?.IsLoaded == true)
-				return await _mainWindowService.Initialize();
+				return await _mainWindowController.Initialize();
 
 			_logService.Debug(App.MainWindow is null ?
 				"MainWindow not available yet... Retrying..." :
@@ -192,7 +197,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 				{
 					Title = "Prewarming...",
 					PrimaryButtonText = "Ok",
-					DefaultButton = ContentDialogButton.Primary,
+					DefaultButton = ContentDialogButton.Close,
 					Content = dialogContent,
 					Opacity = 0,
 				};
@@ -241,7 +246,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			if (userSettings is not null)
 			{
 				LoadingText = "Runtime Data found. Loading..";
-				_mainWindowService.SetRuntimeDataAsync(userSettings);
+				_mainWindowController.SetRuntimeDataAsync(userSettings);
 				_logService.Info("Runtime Data was loaded.");
 			}
 
@@ -251,6 +256,35 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		catch (Exception e)
 		{
 			DisplayInfoBar("Critical Error", $"While loading Runtime Data:\n{e.Message}", InfoBarSeverity.Error);
+			return false;
+		}
+	}
+
+	/// <summary>
+	/// Asynchronously initializes the application's configuration settings by invoking the necessary configuration services.
+	/// Handles the display of loading indicators and logs the status of the initialization process.
+	/// Reports any critical errors encountered during the initialization.
+	/// </summary>
+	private async Task<bool> InitializeConfigAsync()
+	{
+		try
+		{
+			ShowInfiniteProgressBar = true;
+			LoadingText = "Initializing Config..";
+
+			if (!await _configController.InitializeConfigAsync())
+			{
+				DisplayInfoBar("Error", "Error while trying to initialize Config.", InfoBarSeverity.Error);
+				return false;
+			}
+
+			_logService.Info("Config initialized.");
+			ShowInfiniteProgressBar = false;
+			return true;
+		}
+		catch (Exception e)
+		{
+			DisplayInfoBar("Critical Error", $"While initializing Config:\n{e.Message}", InfoBarSeverity.Error);
 			return false;
 		}
 	}

@@ -113,5 +113,9 @@
 		  <DependentUpon>SplashPage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 		</Compile>
+		<Compile Update="Views\Pages\MainPageBar.axaml.cs">
+		  <DependentUpon>MainPageBar.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
   </ItemGroup>
 </Project>

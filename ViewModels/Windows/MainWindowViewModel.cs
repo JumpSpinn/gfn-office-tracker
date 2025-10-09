@@ -10,26 +10,29 @@
 public sealed partial class MainWindowViewModel : ViewModelBase
 {
 	private readonly IServiceProvider _serviceProvider;
+	private readonly ConfigController _configController;
 
 	[ObservableProperty]
 	private ViewModelBase? _currentPage;
 
-	public MainWindowViewModel(IServiceProvider sp, LogService lc)
+	public MainWindowViewModel(IServiceProvider sp, ConfigController cc)
 	{
 		_serviceProvider = sp;
-
-		// the first page is the splash screen
+		_configController = cc;
 		_currentPage = sp.GetRequiredService<SplashPageViewModel>();
 
 		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
 		{
+			SetMainWindowBarVisibility(true);
 			CurrentPage = GetCurrentPageViewModel(message.Value);
 		});
 	}
 
 	/// <summary>
-	/// Retrieves the appropriate ViewModel for the specified <see cref="Page"/>.
+	/// Retrieves the current page's ViewModel based on the provided page type.
 	/// </summary>
+	/// <param name="page">The page enum value representing the desired UI page.</param>
+	/// <returns>A ViewModelBase instance corresponding to the given page type.</returns>
 	private ViewModelBase GetCurrentPageViewModel(Page page) =>
 		page switch
 		{
@@ -39,7 +42,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 			Page.WIZARD_DAYS => _serviceProvider.GetRequiredService<WizardDaysPageViewModel>(),
 			Page.WIZARD_DATA => _serviceProvider.GetRequiredService<WizardDataPageViewModel>(),
 			Page.WIZARD_COMPLETED => _serviceProvider.GetRequiredService<WizardCompletedPageViewModel>(),
-			Page.MAIN => _serviceProvider.GetRequiredService<MainPageViewModel>(),
-			_ => throw new ArgumentOutOfRangeException(nameof(page), page, null)
+			Page.MAIN_WINDOW => _serviceProvider.GetRequiredService<MainPageViewModel>(),
+			Page.SETTINGS_WINDOW => _serviceProvider.GetRequiredService<SettingsPageViewModel>(),
+			_ => _serviceProvider.GetRequiredService<NotFoundPageViewModel>()
 		};
 }

@@ -1,5 +1,11 @@
 ﻿namespace OfficeTracker.ViewModels.Pages;
 
+/// <summary>
+/// Represents the view model for the main page of the OfficeTracker application.
+/// This class manages the logic and data-binding for the main page, including
+/// interactions such as adding, deleting, and updating daily entries, navigating
+/// between settings, and managing application-specific data.
+/// </summary>
 public sealed partial class MainPageViewModel
 {
 	[ObservableProperty]
@@ -12,19 +18,19 @@ public sealed partial class MainPageViewModel
 	private bool _canAddCurrentDay;
 
 	private bool _notifyToAddCurrentDay;
+	private bool _triggeredNotifyToAddCurrentDay;
+
 	public uint HomeOfficeQuote
-		=> _mainWindowService.RuntimeData.HomeOfficeTargetQuoted;
+		=> _mainWindowController.RuntimeData.HomeOfficeTargetQuoted;
+
 	public uint OfficeQuote
-		=> _mainWindowService.RuntimeData.OfficeTargetQuoted;
+		=> _mainWindowController.RuntimeData.OfficeTargetQuoted;
 
 	/// <summary>
 	/// Asynchronously refreshes statistical data by retrieving and updating the counts for
 	/// home office days, office days, and determining whether the current day can be added
 	/// based on the last recorded update.
 	/// </summary>
-	/// <returns>
-	/// A task that represents the asynchronous operation of refreshing statistics.
-	/// </returns>
 	private async Task RefreshStatisticsAsync()
 	{
 		var data = await _databaseService.GetDayCountsFromUserSettingsAsync();
@@ -36,16 +42,14 @@ public sealed partial class MainPageViewModel
 
 		HomeOfficeDays = data.Value.homeOfficeCount;
 		OfficeDays = data.Value.officeCount;
+		CanAddCurrentDay = !DateTimeHelper.IsToday(data.Value.lastUpdate);
 		_notifyToAddCurrentDay = CanAddCurrentDay;
 
-#if DEBUG
-		CanAddCurrentDay = true;
-#else
-	    CanAddCurrentDay = !DateTimeHelper.IsToday(data.Value.lastUpdate);
-#endif
-
-		if (_notifyToAddCurrentDay)
-			DialogHelper.ShowDialogAsync($"Willkommen zurück, {_mainWindowService.RuntimeData.UserName}", "Vergiss nicht den heutigen Tag einzutragen!", DialogType.INFO);
+		if (_notifyToAddCurrentDay && !_triggeredNotifyToAddCurrentDay)
+		{
+			_triggeredNotifyToAddCurrentDay = true;
+			DialogHelper.ShowDialogAsync($"Willkommen zurück, {_mainWindowController.RuntimeData.UserName}", "Vergiss nicht den heutigen Tag einzutragen!", DialogType.INFO);
+		}
 	}
 
 	/// <summary>
@@ -61,7 +65,7 @@ public sealed partial class MainPageViewModel
 			Content = dayForm,
 			PrimaryButtonText = "Eintragen",
 			CloseButtonText = "Abbrechen",
-			DefaultButton = ContentDialogButton.Primary
+			DefaultButton = ContentDialogButton.Close
 		};
 
 		uint entryResult = 0;

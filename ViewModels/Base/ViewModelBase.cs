@@ -16,40 +16,30 @@ public abstract class ViewModelBase : ObservableObject
     /// </summary>
     protected void ChangePage(Page page) => _messenger.Send(new ChangePageMessage(page));
 
+    #region MAIN WINDOW BAR
+
+    private bool _mainWindowBarVisible;
 
     /// <summary>
-    /// Stores the current state of the blur effect used within the application.
-    /// Typically utilized to enhance the visual presentation of modals or dialogs
-    /// by applying a blur effect to the underlying content.
+    /// Gets or sets a value indicating whether the main window's bar is visible.
+    /// This property controls the UI visibility for the main window's bar section,
+    /// which may contain navigation or menu items.
     /// </summary>
-    private Effect? _blurEffect;
-
-    /// <summary>
-    /// Represents the current visual blur effect applied to UI components.
-    /// This property can be used to add a blur effect to certain elements,
-    /// often utilized for modals or overlays to visually distinguish content layers.
-    /// </summary>
-    public Effect? BlurEffect
+    public bool MainWindowBarVisible
     {
-	    get => _blurEffect;
-	    private set => SetProperty(ref _blurEffect, value);
+	    get => _mainWindowBarVisible;
+	    private set => SetProperty(ref _mainWindowBarVisible, value);
     }
 
     /// <summary>
-    /// Enables the blur effect by setting the BlurEffect property
-    /// to a new instance with a predefined radius value, enhancing
-    /// the visual presentation of modals or dialogs.
+    /// Sets the visibility of the main window bar based on the specified <paramref name="visible"/> value.
     /// </summary>
-    protected void EnableBlurEffect()
+    /// <param name="visible">A boolean value indicating whether the main window bar should be visible or hidden.</param>
+    protected void SetMainWindowBarVisibility(bool visible)
     {
-	    if (BlurEffect is not null) return;
-	    BlurEffect = new BlurEffect() { Radius = Options.MODAL_BLUR_RADIUS };
+	    if (MainWindowBarVisible == visible) return;
+	    MainWindowBarVisible = visible;
     }
 
-    /// <summary>
-    /// Disables the blur effect by setting the BlurEffect property to null.
-    /// Used typically to revert visual blurring after a modal or overlay interaction.
-    /// </summary>
-    protected void DisableBlurEffect()
-	    => BlurEffect = null;
+    #endregion
 }

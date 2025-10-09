@@ -55,7 +55,7 @@ public sealed partial class App : Application
 		            .LogTo(Console.WriteLine, LogLevel.Information);
 #else
 	            options
-		            .UseSqlite($"Data Source={Options.DB_NAME}")
+		            .UseSqlite($"Data Source={Path.Combine(PathHelper.AppDataPath, Options.DB_NAME)}")
 		            .EnableDetailedErrors();
 #endif
             })

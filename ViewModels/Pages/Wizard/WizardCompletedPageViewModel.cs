@@ -1,5 +1,7 @@
 ﻿namespace OfficeTracker.ViewModels.Pages.Wizard;
 
+using Services.MainWindow.Controllers;
+
 /// <summary>
 /// Represents the view model for the "Wizard Completed" page in the wizard process.
 /// </summary>
@@ -7,16 +9,16 @@
 public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 {
 	private readonly DatabaseService _databaseService;
-	private readonly MainWindowService _mainWindowService;
+	private readonly MainWindowController _mainWindowController;
 
-	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, WizardBalancePageViewModel balance, DatabaseService dbs, MainWindowService mws)
+	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, WizardBalancePageViewModel balance, DatabaseService dbs, MainWindowController mws)
 	{
 		WizardNamePageViewModel = name;
 		WizardDaysPageViewModel = days;
 		WizardDataPageViewModel = data;
 		WizardBalancePageViewModel = balance;
 		_databaseService = dbs;
-		_mainWindowService = mws;
+		_mainWindowController = mws;
 	}
 
 	[ObservableProperty]
@@ -86,8 +88,8 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 
 		if (dialogResult == ContentDialogResult.Primary && userSettings is not null)
 		{
-			_mainWindowService.SetRuntimeDataAsync(userSettings);
-			ChangePage(Page.MAIN);
+			_mainWindowController.SetRuntimeDataAsync(userSettings);
+			ChangePage(Page.MAIN_WINDOW);
 		}
 	}
 

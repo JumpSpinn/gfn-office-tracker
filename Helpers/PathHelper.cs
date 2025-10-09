@@ -1,20 +1,43 @@
 ﻿namespace OfficeTracker.Helpers;
 
 /// <summary>
-/// Provides helper methods and properties for managing and constructing directory paths used by the application.
+/// A helper class that provides utility methods and properties for file system path management
+/// specific to the application environment.
 /// </summary>
 public static class PathHelper
 {
-	/// <summary>
-	/// Path to the temporary directory of the app
-	/// </summary>
-	public static readonly string AppTempPath =
-		Path.Combine(Path.GetTempPath(), AppDomain.CurrentDomain.FriendlyName);
+	#region TEMP PATH
 
 	/// <summary>
-	/// Path for storing the update and backup exe
+	/// Represents the path to the application's temporary directory.
+	/// Combines the system's temp folder with the application's friendly name to create a unique,
+	/// application-specific temporary storage location.
 	/// </summary>
-	public static readonly string UpdatePath =
-		Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-			AppDomain.CurrentDomain.FriendlyName);
+	public static readonly string AppTempPath
+		= Path.Combine(Path.GetTempPath(), AppDomain.CurrentDomain.FriendlyName);
+
+	#endregion
+
+	#region APP DATA PATH
+
+	/// <summary>
+	/// Represents the path to the application's data directory.
+	/// Combines the system's ApplicationData folder with the application's friendly name to create a unique,
+	/// application-specific data storage location.
+	/// </summary>
+	public static readonly string AppDataPath
+		= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppDomain.CurrentDomain.FriendlyName);
+
+	/// <summary>
+	/// Ensures that the application data directory exists.
+	/// If the directory does not exist, it attempts to create it.
+	/// </summary>
+	/// <returns>
+	/// Returns a boolean indicating whether the application data directory exists
+	/// or was successfully created.
+	/// </returns>
+	public static bool EnsureAppDataPathExists()
+		=> Directory.Exists(AppDataPath) || Directory.CreateDirectory(AppDataPath).Exists;
+
+	#endregion
 }
