@@ -73,7 +73,7 @@ global using OfficeTracker.Features.Pages.Main.ViewModels;
 global using OfficeTracker.Features.Pages.Main.Services;
 global using OfficeTracker.Features.Pages.Settings;
 global using OfficeTracker.Features.Pages.Settings.Views;
-global using OfficeTracker.Features.Pages.Settings.ViewModel;
+global using OfficeTracker.Features.Pages.Settings.ViewModels;
 
 global using OfficeTracker.Features.Screens;
 global using OfficeTracker.Features.Screens.NotFound;
