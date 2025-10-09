@@ -116,6 +116,10 @@
 		  <DependentUpon>StatisticControl.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
+	  <Compile Update="Features\Templates\Base\LoadingTemplate.axaml.cs">
+		  <DependentUpon>LoadingTemplate.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
 	  <Compile Update="Features\Templates\Lists\CalculatedWeekListControl.axaml.cs">
 		  <DependentUpon>CalculatedWeekListControl.axaml</DependentUpon>
 		  <SubType>Code</SubType>
