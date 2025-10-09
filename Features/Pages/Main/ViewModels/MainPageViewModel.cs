@@ -32,10 +32,20 @@ public sealed partial class MainPageViewModel : ViewModelBase
     public async Task InitializeAsync()
     {
 	    IsInitializing = true;
-	    await ReCalculateWeeksAsync();
-	    await RefreshStatisticsAsync();
-	    await LoadPlannableDaysAsync();
-	    IsInitializing = false;
+	    try
+	    {
+		    await ReCalculateWeeksAsync();
+		    await RefreshStatisticsAsync();
+		    await LoadPlannableDaysAsync();
+	    }
+	    catch (Exception ex)
+	    {
+		    _logController.Exception(ex);
+	    }
+	    finally
+	    {
+		    IsInitializing = false;
+	    }
     }
 
     #endregion
