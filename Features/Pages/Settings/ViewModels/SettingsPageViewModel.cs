@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.Features.Pages.Settings.ViewModels;
 
-using Dialog.Content;
-
 /// <summary>
 /// Represents the view model for the settings page of the OfficeTracker application.
 /// </summary>
