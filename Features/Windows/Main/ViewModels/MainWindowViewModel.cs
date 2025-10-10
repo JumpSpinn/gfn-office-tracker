@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.Features.Windows.Main.ViewModels;
 
-using Pages.Settings.ViewModels;
-
 /// <summary>
 /// Represents the main view model for the application's main window.
 /// This ViewModel is responsible for managing the navigation logic
@@ -25,7 +23,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
 		_messenger.Register<MainWindowViewModel, ChangePageMessage>(this, (_, message) =>
 		{
-			SetMainWindowBarVisibility(true);
+			SetMainWindowBarVisibility(GetMainWindowBarVisibility(message.Value));
 			CurrentPage = GetCurrentPageViewModel(message.Value);
 		});
 	}
@@ -47,5 +45,13 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 			Page.MAIN_WINDOW => _serviceProvider.GetRequiredService<MainPageViewModel>(),
 			Page.SETTINGS_WINDOW => _serviceProvider.GetRequiredService<SettingsPageViewModel>(),
 			_ => _serviceProvider.GetRequiredService<NotFoundPageViewModel>()
+		};
+
+	private bool GetMainWindowBarVisibility(Page page) =>
+		page switch
+		{
+			Page.MAIN_WINDOW => true,
+			Page.SETTINGS_WINDOW => true,
+			_ => false
 		};
 }

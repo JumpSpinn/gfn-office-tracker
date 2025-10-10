@@ -1,5 +1,7 @@
 namespace OfficeTracker;
 
+using Infrastructure.Database.Extensions;
+
 /// <summary>
 /// Represents the main application class for the OfficeTracker application.
 /// </summary>
@@ -9,6 +11,9 @@ public sealed partial class App : Application
 	/// Gets the application's configured service provider.
 	/// </summary>
 	public IServiceProvider? Services { get; private set; }
+
+	public static IServiceProvider? ServiceProvider
+		=> ((App)Current)?.Services;
 
 	/// <summary>
 	/// Initializes the application's XAML resources and components.
@@ -45,21 +50,7 @@ public sealed partial class App : Application
 
         Services = new ServiceCollection()
 	        .AutoRegister()
-            .AddDbContext<OtContext>(options =>
-            {
-#if DEBUG
-	            options
-		            .UseSqlite($"Data Source={Options.DB_NAME}")
-		            .EnableSensitiveDataLogging()
-		            .EnableDetailedErrors()
-		            .LogTo(Console.WriteLine, LogLevel.Information);
-#else
-	            options
-		            .UseSqlite($"Data Source={Path.Combine(PathHelper.AppDataPath, Options.DB_NAME)}")
-		            .EnableDetailedErrors();
-#endif
-            })
-            .AddSingleton<IDbContextFactory<OtContext>, OtContextFactory>()
+	        .AddDatabaseServices()
             .BuildServiceProvider();
 
         var vm = Services.GetRequiredService<MainWindowViewModel>();

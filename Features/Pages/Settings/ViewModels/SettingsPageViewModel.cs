@@ -8,11 +8,15 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 {
 	private readonly LogController _logController;
 	private readonly ConfigController _configController;
+	private readonly TimingController _timingController;
+	private readonly DatabaseController _databaseController;
 
-	public SettingsPageViewModel(LogController ls, ConfigController cc)
+	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc, DatabaseController dbc)
 	{
 		_logController = ls;
 		_configController = cc;
+		_timingController = tc;
+		_databaseController = dbc;
 
 		ParseConfig();
 		ParseLanguageEnumToCollection();
@@ -20,6 +24,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		_configController.ConfigEntity.PropertyChanged += (_, _) => ParseConfig();
 	}
 
+	/// <summary>
+	/// Parses the current configuration and updates the corresponding properties.
+	/// </summary>
 	private void ParseConfig()
 	{
 		RememberWindowPositionSize = _configController.ConfigEntity.RememberWindowPositionSize;
@@ -86,8 +93,11 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	private string _saveLocation = string.Empty;
 
 	public string SaveLocationTruncate
-		=> StringHelper.Truncate(SaveLocation, 45, "..");
+		=> SaveLocation.Truncate(45, "..");
 
+	/// <summary>
+	/// Open a file dialog to select a new save location.
+	/// </summary>
 	[RelayCommand]
 	private async Task ChangeSaveLocationAsync()
 	{
@@ -95,19 +105,22 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		if(App.MainWindow is null) return;
 
 #pragma warning disable CS0618 // Type or member is obsolete
-		var dialog = new OpenFolderDialog();
+		var fileDialog = new OpenFolderDialog();
 #pragma warning restore CS0618 // Type or member is obsolete
-		var result = await dialog.ShowAsync(App.MainWindow);
-		if (string.IsNullOrEmpty(result)) return;
+		var newPath = await fileDialog.ShowAsync(App.MainWindow);
 
+		if (string.IsNullOrEmpty(newPath)) return;
 		try
 		{
 			_saveLocationChanging = true;
-			_configController.ConfigEntity.DatabasePath = result;
-			// TODO: implement save location service to change location
 
-			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort erfolgreich geändert.", DialogType.SUCCESS);
-			_logController.Info($"Save location changed to: {result}");
+			if (!await _databaseController.BackupDatabaseAsync(newPath)) return;
+
+			_configController.ConfigEntity.DatabasePath = newPath;
+			await _configController.SaveConfigToFile();
+
+			_logController.Info($"Save location changed to: {_configController.ConfigEntity.DatabasePath}");
+			await ShowRestartDialog();
 		}
 		catch (Exception e)
 		{
@@ -120,6 +133,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		}
 	}
 
+	/// <summary>
+	/// Shows a dialog to confirm the reset of the save location to the default location.
+	/// </summary>
 	[RelayCommand]
 	private async Task ChangeSaveLocationToDefaultAsync()
 	{
@@ -134,16 +150,20 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			DefaultButton = ContentDialogButton.Close
 		};
 
-		var result = await dialog.ShowAsyncCorrectly();
-		if (result != ContentDialogResult.Primary) return;
+		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
 
 		try
 		{
 			_saveLocationChanging = true;
-			// TODO: implement save location service to change location to default
 
-			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort wurde erfolgreich zurückgesetzt!", DialogType.SUCCESS);
-			_logController.Info($"Save location changed to default path: {result}");
+			var newPath = PathHelper.AppDataPath;
+			if (!await _databaseController.BackupDatabaseAsync(newPath)) return;
+
+			_configController.ConfigEntity.DatabasePath = newPath;
+			await _configController.SaveConfigToFile();
+
+			_logController.Info($"Save location changed to default path: {_configController.ConfigEntity.DatabasePath}");
+			await ShowRestartDialog();
 		}
 		catch (Exception e)
 		{
@@ -156,6 +176,26 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		}
 	}
 
+	/// <summary>
+	/// Shows a dialog to notify the user that the application will be restarted.
+	/// </summary>
+	private async Task ShowRestartDialog()
+	{
+		var dialog = new ContentDialog
+		{
+			Title = "Erfolgreich",
+			Content = "Speicherort wurde geändert. Office-Tracker wird in Kürze neugestartet, damit die Änderung wirksam wird..",
+			IsPrimaryButtonEnabled = false,
+			IsSecondaryButtonEnabled = false
+		};
+
+		dialog.ShowAsyncCorrectly();
+		_timingController.SetTimeout("RestartApplication", ApplicationHelper.Restart, 5_000);
+	}
+
+	/// <summary>
+	/// Opens the save location folder in the file explorer.
+	/// </summary>
 	[RelayCommand]
 	private void OpenSaveFolder()
 		=> ExplorerHelper.OpenFolder(SaveLocation);

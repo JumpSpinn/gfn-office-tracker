@@ -38,6 +38,7 @@ public abstract class ViewModelBase : ObservableObject
     protected void SetMainWindowBarVisibility(bool visible)
     {
 	    if (MainWindowBarVisible == visible) return;
+	    Console.WriteLine($"Setting MainWindowBarVisible to {visible}");
 	    MainWindowBarVisible = visible;
     }
 

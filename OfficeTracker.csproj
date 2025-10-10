@@ -28,7 +28,6 @@
 			<AvaloniaResource Include="Assets\**" />
 			<Folder Include="Assets\Images\" />
 			<Folder Include="Assets\Screenshots\" />
-			<Folder Include="Features\Dialog\" />
 			<Folder Include="Infrastructure\" />
 	</ItemGroup>
 
@@ -141,5 +140,6 @@
 	<ItemGroup>
 		<AdditionalFiles Include="Features\Dialog\Forms\CurrentDayForm.axaml" />
 		<AdditionalFiles Include="Features\Dialog\Forms\PlannableDayForm.axaml" />
+		<AdditionalFiles Include="Features\Dialog\Content\RestartContentDialog.axaml" />
 	</ItemGroup>
 </Project>
