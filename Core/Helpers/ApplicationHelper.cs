@@ -10,6 +10,8 @@ public static class ApplicationHelper
 		var processMainModule = Process.GetCurrentProcess().MainModule;
 		if (processMainModule is not null)
 			Process.Start(processMainModule.FileName);
+		else if(Environment.ProcessPath is not null)
+			Process.Start(Environment.ProcessPath);
 		Environment.Exit(0);
 	}
 }
