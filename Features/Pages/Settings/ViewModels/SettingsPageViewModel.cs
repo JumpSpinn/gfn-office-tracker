@@ -131,23 +131,6 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	}
 
 	/// <summary>
-	/// Shows a dialog to notify the user that the application will be restarted.
-	/// </summary>
-	private async Task ShowRestartDialog()
-	{
-		var dialog = new ContentDialog
-		{
-			Title = "Erfolgreich",
-			Content = "Speicherort wurde geändert. Office-Tracker wird in Kürze neugestartet, damit die Änderung wirksam wird..",
-			IsPrimaryButtonEnabled = false,
-			IsSecondaryButtonEnabled = false
-		};
-
-		dialog.ShowAsyncCorrectly();
-		_timingController.SetTimeout("RestartApplication", ApplicationHelper.Restart, 5_000);
-	}
-
-	/// <summary>
 	/// Shows a dialog to confirm the reset of the save location to the default location.
 	/// </summary>
 	[RelayCommand]
@@ -164,16 +147,18 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			DefaultButton = ContentDialogButton.Close
 		};
 
-		var result = await dialog.ShowAsyncCorrectly();
-		if (result != ContentDialogResult.Primary) return;
+		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
 
 		try
 		{
 			_saveLocationChanging = true;
-			// TODO: implement save location service to change location to default
+			_configController.ConfigEntity.DatabasePath = PathHelper.AppDataPath;
+			_configController.SaveConfigToFile();
 
-			DialogHelper.ShowDialogAsync("Speicherort", "Speicherort wurde erfolgreich zurückgesetzt!", DialogType.SUCCESS);
-			_logController.Info($"Save location changed to default path: {result}");
+			// TODO: implement save location service to change location
+
+			_logController.Info($"Save location changed to default path: {_configController.ConfigEntity.DatabasePath}");
+			await ShowRestartDialog();
 		}
 		catch (Exception e)
 		{
@@ -184,6 +169,23 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		{
 			_saveLocationChanging = false;
 		}
+	}
+
+	/// <summary>
+	/// Shows a dialog to notify the user that the application will be restarted.
+	/// </summary>
+	private async Task ShowRestartDialog()
+	{
+		var dialog = new ContentDialog
+		{
+			Title = "Erfolgreich",
+			Content = "Speicherort wurde geändert. Office-Tracker wird in Kürze neugestartet, damit die Änderung wirksam wird..",
+			IsPrimaryButtonEnabled = false,
+			IsSecondaryButtonEnabled = false
+		};
+
+		dialog.ShowAsyncCorrectly();
+		_timingController.SetTimeout("RestartApplication", ApplicationHelper.Restart, 5_000);
 	}
 
 	/// <summary>
