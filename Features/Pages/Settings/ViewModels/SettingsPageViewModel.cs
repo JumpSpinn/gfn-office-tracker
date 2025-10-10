@@ -43,7 +43,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	private ObservableCollection<Language> _languages = new();
 
 	[ObservableProperty]
-	private bool _isLanguageSelectionEnabled = true;
+	private bool _isLanguageSelectionEnabled;
 
 	/// <summary>
 	/// Populates an observable collection with all values from the Language enumeration.
