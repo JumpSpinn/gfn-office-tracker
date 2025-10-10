@@ -25,10 +25,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-			<Folder Include="Assets\Fonts\" />
 			<AvaloniaResource Include="Assets\**" />
 			<Folder Include="Assets\Images\" />
 			<Folder Include="Assets\Screenshots\" />
+			<Folder Include="Infrastructure\" />
 	</ItemGroup>
 
   <ItemGroup>
@@ -57,58 +57,89 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
   </ItemGroup>
 
+	<!-- Core: Features: Pages -->
   <ItemGroup>
-		<Compile Update="Views\Windows\MainWindow.axaml.cs">
-			<DependentUpon>MainWindow.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Pages\MainPage.axaml.cs">
-			<DependentUpon>MainPage.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Forms\PlannableDayForm.axaml.cs">
-			<DependentUpon>PlannableDayForm.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Forms\CurrentDayForm.axaml.cs">
-			<DependentUpon>CurrentDayForm.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Controls\StatisticControl.axaml.cs">
-			<DependentUpon>StatisticControl.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Controls\Lists\CalculatedWeekListControl.axaml.cs">
-			<DependentUpon>CalculatedWeekListControl.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Controls\Lists\PlannableDayListControl.axaml.cs">
-			<DependentUpon>PlannableDayListControl.axaml</DependentUpon>
-			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Pages\Wizard\WizardBalancePage.axaml.cs">
+	  <Compile Update="Features\Pages\Main\Views\MainPage.axaml.cs">
+		  <DependentUpon>MainPage.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Pages\Main\Views\MainPageHeader.axaml.cs">
+		  <DependentUpon>MainPageHeader.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Pages\Main\Views\MainPageTabs.axaml.cs">
+		  <DependentUpon>MainPageTabs.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Pages\Settings\Views\SettingsPage.axaml.cs">
+		  <DependentUpon>SettingsPage.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+
+	  <!-- Core: Features: Screens -->
+	  <Compile Update="Features\Screens\NotFound\Views\NotFoundPage.axaml.cs">
+		  <DependentUpon>NotFoundPage.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Screens\Splash\Views\SplashPage.axaml.cs">
+		  <DependentUpon>SplashPage.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Screens\Wizard\Views\WizardBalancePage.axaml.cs">
 		  <DependentUpon>WizardBalancePage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Pages\Wizard\WizardCompletedPage.axaml.cs">
+	  </Compile>
+	  <Compile Update="Features\Screens\Wizard\Views\WizardCompletedPage.axaml.cs">
 		  <DependentUpon>WizardCompletedPage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Pages\Wizard\WizardDataPage.axaml.cs">
+	  </Compile>
+	  <Compile Update="Features\Screens\Wizard\Views\WizardDataPage.axaml.cs">
 		  <DependentUpon>WizardDataPage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Pages\Wizard\WizardDaysPage.axaml.cs">
+	  </Compile>
+	  <Compile Update="Features\Screens\Wizard\Views\WizardDaysPage.axaml.cs">
 		  <DependentUpon>WizardDaysPage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Pages\Wizard\WizardNamePage.axaml.cs">
+	  </Compile>
+	  <Compile Update="Features\Screens\Wizard\Views\WizardNamePage.axaml.cs">
 		  <DependentUpon>WizardNamePage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Pages\Wizard\WizardWelcomePage.axaml.cs">
+	  </Compile>
+	  <Compile Update="Features\Screens\Wizard\Views\WizardWelcomePage.axaml.cs">
 		  <DependentUpon>WizardWelcomePage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
-		</Compile>
+	  </Compile>
+	  
+	  <!-- Core: Features: Templates -->
+	  <Compile Update="Features\Templates\Base\StatisticTemplate.axaml.cs">
+		  <DependentUpon>StatisticTemplate.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Templates\Base\LoadingTemplate.axaml.cs">
+		  <DependentUpon>LoadingTemplate.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Templates\Lists\CalculatedWeekListTemplate.axaml.cs">
+		  <DependentUpon>CalculatedWeekListTemplate.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Templates\Lists\PlannableDayListTemplate.axaml.cs">
+		  <DependentUpon>PlannableDayListTemplate.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  
+	  <!-- Core: Features: Windows -->
+	  <Compile Update="Features\Windows\Main\Views\MainWindow.axaml.cs">
+		  <DependentUpon>MainWindow.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  
   </ItemGroup>
+
+	<!-- Core: Features: Dialogs -->
+	<ItemGroup>
+		<AdditionalFiles Include="Features\Dialog\Forms\CurrentDayForm.axaml" />
+		<AdditionalFiles Include="Features\Dialog\Forms\PlannableDayForm.axaml" />
+		<AdditionalFiles Include="Features\Dialog\Content\RestartContentDialog.axaml" />
+	</ItemGroup>
 </Project>

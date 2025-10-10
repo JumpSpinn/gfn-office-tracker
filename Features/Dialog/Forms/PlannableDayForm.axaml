@@ -1,0 +1,43 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
+             x:Class="OfficeTracker.Features.Dialog.Forms.PlannableDayForm">
+    <Grid RowDefinitions="Auto,Auto" RowSpacing="30">
+        <Grid Grid.Row="0" RowDefinitions="Auto,Auto" HorizontalAlignment="Stretch" RowSpacing="5">
+            <TextBlock
+	            Grid.Row="0"
+	            Text="Wähle ein Datum aus:"
+	            TextWrapping="Wrap"
+	            HorizontalAlignment="Stretch"
+	        />
+            <CalendarDatePicker
+	            x:Name="DatePicker"
+	            Grid.Row="1"
+	            SelectedDate="{x:Static sys:DateTime.Today}"
+	            HorizontalAlignment="Stretch"
+	            Watermark="tt.mm.jjjj"
+	        />
+        </Grid>
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto" HorizontalAlignment="Stretch" RowSpacing="5">
+            <TextBlock Grid.Row="0" Text="Wähle die Art aus:" TextWrapping="Wrap" HorizontalAlignment="Stretch" FontFamily="{ DynamicResource GlobalFont }" />
+            <Grid Grid.Row="1" ColumnDefinitions="*,*" RowDefinitions="*" HorizontalAlignment="Stretch" ColumnSpacing="5">
+	            <RadioButton
+		            x:Name="HomeOfficeRadio"
+		            Grid.Column="0"
+		            Content="HomeOffice"
+		            GroupName="DaySelection"
+		            IsChecked="True"
+	            />
+	            <RadioButton
+		            x:Name="OfficeRadio"
+		            Grid.Column="1"
+		            Content="Standort"
+		            GroupName="DaySelection"
+	            />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

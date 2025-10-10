@@ -5,29 +5,33 @@
 /// </summary>
 public static class Options
 {
-	public const string VERSION = "1.0.0";
+	/// <summary>
+	/// Contains nested configurations utilized in the OfficeTracker application.
+	/// It provides specific settings related to JSON serialization options.
+	/// </summary>
+	public static class Config
+	{
+		/// <summary>
+		/// Represents the JSON serialization options for the OfficeTracker application.
+		/// Configures various settings such as case insensitivity of property names,
+		/// inclusion of fields, handling of numeric values, and default behaviors for
+		/// serialization and formatting.
+		/// </summary>
+		public static readonly JsonSerializerOptions JsonSerializerOptions = new()
+		{
+			PropertyNameCaseInsensitive = true,
+			IncludeFields = true,
+			NumberHandling = JsonNumberHandling.AllowReadingFromString,
+			WriteIndented = true,
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+		};
+	}
+
+	public const string VERSION = "0.0.2";
 
 	public const string DB_NAME = "office-tracker.db";
 
-    public static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        PropertyNameCaseInsensitive = true,
-        IncludeFields = true,
-        NumberHandling = JsonNumberHandling.AllowReadingFromString
-    };
-
-    public static readonly JsonSerializerOptions JsonIndentOptions = new()
-    {
-        PropertyNameCaseInsensitive = true,
-        IncludeFields = true,
-        NumberHandling = JsonNumberHandling.AllowReadingFromString,
-        WriteIndented = true,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-    };
-
-    public const uint MODAL_BLUR_RADIUS = 25;
-
     public const double DIALOG_SIZE = 40;
 
-    public const uint CALCULATE_WEEKS_COUNT = 3; // Default: 3
+    public const uint CALCULATE_WEEKS_COUNT = 3;
 }

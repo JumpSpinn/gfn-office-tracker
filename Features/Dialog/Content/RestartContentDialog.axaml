@@ -1,0 +1,33 @@
+﻿<UserControl
+	x:Class="OfficeTracker.Features.Dialog.Content.RestartContentDialog"
+	xmlns="https://github.com/avaloniaui"
+ 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+ 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:dialogContent="using:OfficeTracker.Features.Dialog.Content"
+	x:DataType="dialogContent:RestartContentDialog"
+ 	mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+ 	>
+	<StackPanel
+		Orientation="Vertical"
+		HorizontalAlignment="Left"
+		Spacing="8"
+	>
+		<StackPanel Orientation="Vertical">
+			<TextBlock
+				HorizontalAlignment="Left"
+				Text="{Binding Description}"
+			/>
+			<TextBlock
+				HorizontalAlignment="Left"
+				Text="{Binding RestartMessage}"
+			/>
+		</StackPanel>
+		<TextBlock
+			HorizontalAlignment="Left"
+			FontSize="20"
+			Text="{Binding Countdown}"
+		/>
+	</StackPanel>
+</UserControl>
+
