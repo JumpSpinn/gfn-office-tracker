@@ -48,7 +48,7 @@
 				</fluent:SettingsExpander>
 
 				<!-- Database -->
-				<fluent:SettingsExpander IsExpanded="True">
+				<fluent:SettingsExpander IsExpanded="False">
 					<fluent:SettingsExpander.Header>
 						<Grid ColumnDefinitions="Auto,*">
 							<materialIcons:MaterialIcon Grid.Column="0" Kind="Database" Height="24" Width="24" Margin="0 0 12 0" />

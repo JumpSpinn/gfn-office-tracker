@@ -1,14 +1,12 @@
 ﻿namespace OfficeTracker.Core.Services.Config.Services;
 
-using Entities;
-
 /// <summary>
 /// Provides services for managing configuration files, including saving
 /// and loading configuration data. Handles directory structure and file
 /// operations required for persistent configuration storage.
 /// </summary>
 [RegisterSingleton]
-public sealed class ConfigService
+public sealed class ConfigService(LogController logController)
 {
 	private const string CONFIG_FILE_NAME = "config.json";
 
@@ -32,7 +30,11 @@ public sealed class ConfigService
 	/// If the directory does not already exist, it will attempt to create it.
 	/// </summary>
 	private bool EnsureConfigDirectoryExists()
-		=> Directory.Exists(_configDirectory) || Directory.CreateDirectory(_configDirectory).Exists;
+	{
+		if (Directory.Exists(_configDirectory) || Directory.CreateDirectory(_configDirectory).Exists) return true;
+		logController.Error("Configuration directory could not be created.");
+		return false;
+	}
 
 	/// <summary>
 	/// Saves the provided configuration object to a file asynchronously.
@@ -43,6 +45,7 @@ public sealed class ConfigService
 		if (!EnsureConfigDirectoryExists()) return false;
 		await File.WriteAllTextAsync(ConfigFilePath,
 			JsonSerializer.Serialize(configEntity, Options.Config.JsonSerializerOptions));
+		logController.Info("Configuration saved.");
 		return true;
 	}
 
@@ -54,7 +57,12 @@ public sealed class ConfigService
 	public async Task<ConfigEntity?> LoadConfigFromFileAsync()
 	{
 		if (!EnsureConfigDirectoryExists()) return null;
-		if(!File.Exists(ConfigFilePath)) return null;
+		if (!File.Exists(ConfigFilePath))
+		{
+			logController.Info("Configuration file does not exist.");
+			return null;
+		}
+		logController.Info("Configuration loaded.");
 		return JsonSerializer.Deserialize<ConfigEntity>(
 			await File.ReadAllTextAsync(ConfigFilePath),
 			Options.Config.JsonSerializerOptions

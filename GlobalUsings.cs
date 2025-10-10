@@ -17,13 +17,13 @@ global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Globalization;
 global using System.Diagnostics;
-global using System.Timers;
 global using Timer = System.Threading.Timer;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Design;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
+global using Microsoft.Data.Sqlite;
 
 global using Avalonia;
 global using Avalonia.Data.Core.Plugins;
@@ -63,6 +63,7 @@ global using OfficeTracker.Core.Services.Log.Enums;
 global using OfficeTracker.Core.Services.Time.Controllers;
 global using OfficeTracker.Core.Services.Time.Entities;
 global using OfficeTracker.Core.Services.Time.Enums;
+global using OfficeTracker.Core.Services.Config.Entities;
 
 global using OfficeTracker.Features.Dialog.Forms;
 

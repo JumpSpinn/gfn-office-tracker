@@ -9,12 +9,14 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	private readonly LogController _logController;
 	private readonly ConfigController _configController;
 	private readonly TimingController _timingController;
+	private readonly DatabaseController _databaseController;
 
-	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc)
+	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc, DatabaseController dbc)
 	{
 		_logController = ls;
 		_configController = cc;
 		_timingController = tc;
+		_databaseController = dbc;
 
 		ParseConfig();
 		ParseLanguageEnumToCollection();
@@ -105,18 +107,19 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 #pragma warning disable CS0618 // Type or member is obsolete
 		var fileDialog = new OpenFolderDialog();
 #pragma warning restore CS0618 // Type or member is obsolete
-		var result = await fileDialog.ShowAsync(App.MainWindow);
+		var newPath = await fileDialog.ShowAsync(App.MainWindow);
 
-		if (string.IsNullOrEmpty(result)) return;
+		if (string.IsNullOrEmpty(newPath)) return;
 		try
 		{
 			_saveLocationChanging = true;
-			_configController.ConfigEntity.DatabasePath = result;
-			_configController.SaveConfigToFile();
 
-			// TODO: implement save location service to change location
+			if (!await _databaseController.BackupDatabaseAsync(newPath)) return;
 
-			_logController.Info($"Save location changed to: {result}");
+			_configController.ConfigEntity.DatabasePath = newPath;
+			await _configController.SaveConfigToFile();
+
+			_logController.Info($"Save location changed to: {_configController.ConfigEntity.DatabasePath}");
 			await ShowRestartDialog();
 		}
 		catch (Exception e)
@@ -152,10 +155,12 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		try
 		{
 			_saveLocationChanging = true;
-			_configController.ConfigEntity.DatabasePath = PathHelper.AppDataPath;
-			_configController.SaveConfigToFile();
 
-			// TODO: implement save location service to change location
+			var newPath = PathHelper.AppDataPath;
+			if (!await _databaseController.BackupDatabaseAsync(newPath)) return;
+
+			_configController.ConfigEntity.DatabasePath = newPath;
+			await _configController.SaveConfigToFile();
 
 			_logController.Info($"Save location changed to default path: {_configController.ConfigEntity.DatabasePath}");
 			await ShowRestartDialog();
