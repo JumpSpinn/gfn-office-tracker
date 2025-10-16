@@ -7,20 +7,8 @@ public static class DatabaseExtensions
 	/// </summary>
 	public static IServiceCollection AddDatabaseServices(this IServiceCollection services)
 	{
-		services.AddDbContext<OtContext>(options =>
-		{
-#if DEBUG
-			options
-				.EnableSensitiveDataLogging()
-				.EnableDetailedErrors()
-				.LogTo(Console.WriteLine, LogLevel.Information);
-#else
-	            options.EnableDetailedErrors();
-#endif
-		}, ServiceLifetime.Transient);
-
+		services.AddDbContext<OtContext>(ServiceLifetime.Transient);
 		services.AddSingleton<IDbContextFactory<OtContext>, OtContextFactory>();
-
 		return services;
 	}
 }
