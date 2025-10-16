@@ -104,6 +104,11 @@ public sealed class CalculateWeekService
 
 		List<CalculatedWeekEntity> cwsTotal = new();
 
+		// calculate current week
+		var currentCalculatedWeek = await CalculateCurrentWeekAsync();
+		if(currentCalculatedWeek is not null)
+			cwsTotal.Add(currentCalculatedWeek);
+
 		for (int i = 0; i < Options.CALCULATE_WEEKS_COUNT; i++)
 		{
 			var cw = await CalculateNextWeekAsync();
@@ -163,18 +168,9 @@ public sealed class CalculateWeekService
 			_currentStartOfWeek = _currentStartOfWeek.AddDays(7);
 			_currentWeekIndex++;
 
-			var homeOfficeDays = _mainWindowController.RuntimeDataEntity.HomeOfficeDays;
-			var officeDays = _mainWindowController.RuntimeDataEntity.OfficeDays;
-
-			var dayOfWeeks = homeOfficeDays
-				.Select(day => new { Day = day, Type = DayType.HOME })
-				.Concat(officeDays.Select(day => new { Day = day, Type = DayType.OFFICE }))
-				.OrderBy(item => item.Day)
-				.ToArray();
-
 			var weekDayStart = _currentStartOfWeek.AddDays(-1);
 			var weekDays = new List<WeekDayEntity>();
-			foreach (var item in dayOfWeeks)
+			foreach (var item in _mainWindowController.RuntimeDataEntity.DayOfWeeks)
 			{
 				var dayType = item.Type;
 
@@ -200,6 +196,58 @@ public sealed class CalculateWeekService
 			var cw = new CalculatedWeekEntity()
 			{
 				WeekName = $"Woche {_currentWeekIndex}",
+				HomeOfficeTargetQuoted = _homeOfficeTargetQuoted,
+				OfficeTargetQuoted = _officeTargetQuoted,
+				HomeOfficeDays = _currentHomeOfficeCount,
+				OfficeDays = _currentOfficeCount,
+				WeekDays = weekDays.ToArray()
+			};
+
+			return cw;
+		}
+		catch (Exception e)
+		{
+			_logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	private async Task<CalculatedWeekEntity?> CalculateCurrentWeekAsync()
+	{
+		try
+		{
+			var remainingDays = DateTimeHelper.GetRemainingDaysOfWeek();
+			_logController.Debug($"Remaining days {remainingDays.Count}");
+
+			var weekDays = new List<WeekDayEntity>();
+			foreach (var item in _mainWindowController.RuntimeDataEntity.DayOfWeeks)
+			{
+				var currentDay = remainingDays.FirstOrDefault(x => x.DayOfWeek == item.Day);
+				if(currentDay == default) continue;
+				_logController.Debug($"Current day {currentDay.DayOfWeek}");
+
+				var dayType = item.Type;
+				var pd = await _databaseService.GetSinglePlannableDayAsync(currentDay);
+				if (pd is not null)
+					dayType = pd.Type;
+
+				switch (dayType)
+				{
+					case DayType.HOME:
+						_currentHomeOfficeCount++;
+						break;
+					case DayType.OFFICE:
+						_currentOfficeCount++;
+						break;
+				}
+
+				weekDays.Add(CreateWeekDayModel(dayType, currentDay));
+			}
+
+			var cw = new CalculatedWeekEntity()
+			{
+				WeekName = $"Aktuelle Woche",
 				HomeOfficeTargetQuoted = _homeOfficeTargetQuoted,
 				OfficeTargetQuoted = _officeTargetQuoted,
 				HomeOfficeDays = _currentHomeOfficeCount,
