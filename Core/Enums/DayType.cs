@@ -7,5 +7,6 @@ public enum DayType
 {
 	NONE,
     HOME = 1,
-    OFFICE = 2
+    OFFICE = 2,
+    PASS = 3,
 }

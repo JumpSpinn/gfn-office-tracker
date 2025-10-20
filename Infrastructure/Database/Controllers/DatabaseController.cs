@@ -6,10 +6,11 @@ public sealed class DatabaseController
 	private readonly LogController _logController;
 	private readonly IDbContextFactory<OtContext> _dbContext;
 
-	public DatabaseController(LogController lc, IDbContextFactory<OtContext> dbContext)
+	public DatabaseController(LogController lc, IDbContextFactory<OtContext> dbContext, MainWindowEvents mwe)
 	{
 		_logController = lc;
 		_dbContext = dbContext;
+		mwe.OnStarted += DeletePlannableDayInPastAsync;
 	}
 
 	/// <summary>
@@ -63,5 +64,21 @@ public sealed class DatabaseController
 		}
 
 		return false;
+	}
+
+	private async Task DeletePlannableDayInPastAsync()
+	{
+		try
+		{
+			await using var db = await _dbContext.CreateDbContextAsync();
+			var days = await db.PlannableDays.Where(x => x.Date < DateTime.Today).ToListAsync();
+			db.PlannableDays.RemoveRange(days);
+			_logController.Debug($"Deleted {days.Count} plannable days in the past.");
+			await db.SaveChangesAsync();
+		}
+		catch (Exception e)
+		{
+			_logController.Exception(e);
+		}
 	}
 }

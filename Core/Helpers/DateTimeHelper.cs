@@ -42,6 +42,25 @@ public static class DateTimeHelper
 		return dt.Date.AddDays(-daysSinceMonday);
 	}
 
+	public static List<DateTime> GetRemainingDaysOfWeek(DateTime? dt = null)
+	{
+		var remainingDays = new List<DateTime>();
+		var currentDate = dt ?? DateTime.Today;
+		var currentDayOfWeek = (int)currentDate.DayOfWeek;
+
+		if (currentDayOfWeek == 0)
+			return remainingDays;
+
+		for (int i = currentDayOfWeek + 1; i <= 7; i++)
+		{
+			var daysToAdd = i - currentDayOfWeek;
+			var nextDay = currentDate.AddDays(daysToAdd);
+			remainingDays.Add(nextDay);
+		}
+
+		return remainingDays;
+	}
+
 	/// <summary>
 	/// Calculates the start date of the next week, assuming the week starts on Monday.
 	/// </summary>

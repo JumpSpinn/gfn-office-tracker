@@ -13,6 +13,7 @@ public sealed class WeekDayEntity
 		{
 			DayType.HOME => "HomeOffice",
 			DayType.OFFICE => "Standort",
+			DayType.PASS => "Vergangen",
 			_ => "Unknown"
 		};
 }

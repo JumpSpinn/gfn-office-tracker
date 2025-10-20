@@ -55,6 +55,7 @@ public sealed class CalculateWeekService
 		{
 			DayType.HOME => "#003764",
 			DayType.OFFICE => "#357a32",
+			DayType.PASS => "#575757",
 			_ => "#FFFFFF"
 		};
 
@@ -62,9 +63,6 @@ public sealed class CalculateWeekService
 	/// Creates a new instance of <see cref="WeekDayEntity"/> populated with details for the specified day.
 	/// The model includes the day type, date, and a corresponding hexadecimal color value based on the type.
 	/// </summary>
-	/// <param name="dayType">The type of the day, representing whether it is a home or office day.</param>
-	/// <param name="date">The specific date associated with the day being modeled.</param>
-	/// <returns>An instance of <see cref="WeekDayEntity"/> containing the provided day details.</returns>
 	private WeekDayEntity CreateWeekDayModel(DayType dayType, DateTime date) =>
 		new()
 		{
@@ -78,10 +76,6 @@ public sealed class CalculateWeekService
 	/// The calculation process resets relevant properties, retrieves user settings,
 	/// and iteratively computes week details up to a defined limit.
 	/// </summary>
-	/// <returns>
-	/// An array of <see cref="CalculatedWeekEntity"/> objects representing the calculated weeks,
-	/// or <c>null</c> if user settings could not be retrieved.
-	/// </returns>
 	public async Task<CalculatedWeekEntity[]?> CalculateWeeksAsync()
 	{
 		ResetCalculationDynamicProperties();
@@ -104,15 +98,19 @@ public sealed class CalculateWeekService
 
 		List<CalculatedWeekEntity> cwsTotal = new();
 
+		// calculate current week
+		var currentCalculatedWeek = await CalculateCurrentWeekAsync();
+		if(currentCalculatedWeek is not null)
+			cwsTotal.Add(currentCalculatedWeek);
+
 		for (int i = 0; i < Options.CALCULATE_WEEKS_COUNT; i++)
 		{
 			var cw = await CalculateNextWeekAsync();
-			if (cw is not null)
-			{
-				cw.HomeOfficeTargetQuoted = _homeOfficeTargetQuoted;
-				cw.OfficeTargetQuoted = _officeTargetQuoted;
-				cwsTotal.Add(cw);
-			}
+			if (cw is null) continue;
+
+			cw.HomeOfficeTargetQuoted = _homeOfficeTargetQuoted;
+			cw.OfficeTargetQuoted = _officeTargetQuoted;
+			cwsTotal.Add(cw);
 		}
 
 		return cwsTotal.ToArray();
@@ -151,10 +149,6 @@ public sealed class CalculateWeekService
 	/// Constructs a new instance of <see cref="CalculatedWeekEntity"/> based on the provided runtime data,
 	/// keeping track of the total counts and creating a structured representation for the week.
 	/// </summary>
-	/// <returns>
-	/// A <see cref="CalculatedWeekEntity"/> object representing the calculated details of the next week,
-	/// or null if an error occurs during the calculation.
-	/// </returns>
 	public async Task<CalculatedWeekEntity?> CalculateNextWeekAsync()
 	{
 		try
@@ -163,18 +157,9 @@ public sealed class CalculateWeekService
 			_currentStartOfWeek = _currentStartOfWeek.AddDays(7);
 			_currentWeekIndex++;
 
-			var homeOfficeDays = _mainWindowController.RuntimeDataEntity.HomeOfficeDays;
-			var officeDays = _mainWindowController.RuntimeDataEntity.OfficeDays;
-
-			var dayOfWeeks = homeOfficeDays
-				.Select(day => new { Day = day, Type = DayType.HOME })
-				.Concat(officeDays.Select(day => new { Day = day, Type = DayType.OFFICE }))
-				.OrderBy(item => item.Day)
-				.ToArray();
-
 			var weekDayStart = _currentStartOfWeek.AddDays(-1);
 			var weekDays = new List<WeekDayEntity>();
-			foreach (var item in dayOfWeeks)
+			foreach (var item in _mainWindowController.RuntimeDataEntity.DayOfWeeks)
 			{
 				var dayType = item.Type;
 
@@ -200,6 +185,64 @@ public sealed class CalculateWeekService
 			var cw = new CalculatedWeekEntity()
 			{
 				WeekName = $"Woche {_currentWeekIndex}",
+				HomeOfficeTargetQuoted = _homeOfficeTargetQuoted,
+				OfficeTargetQuoted = _officeTargetQuoted,
+				HomeOfficeDays = _currentHomeOfficeCount,
+				OfficeDays = _currentOfficeCount,
+				WeekDays = weekDays.ToArray()
+			};
+
+			return cw;
+		}
+		catch (Exception e)
+		{
+			_logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	private async Task<CalculatedWeekEntity?> CalculateCurrentWeekAsync()
+	{
+		try
+		{
+			var startCurrentWeek = DateTimeHelper.GetStartOfCurrentWeek(DateTime.Today);
+			var remainingDays = DateTimeHelper.GetRemainingDaysOfWeek();
+			var index = 0;
+
+			var weekDays = new List<WeekDayEntity>();
+			foreach (var item in _mainWindowController.RuntimeDataEntity.DayOfWeeks)
+			{
+				var dayType = item.Type;
+				var currentDay = remainingDays.FirstOrDefault(x => x.DayOfWeek == item.Day);
+				if (currentDay == default)
+				{
+					startCurrentWeek = currentDay = startCurrentWeek.AddDays(index);
+					dayType = DayType.PASS;
+					index++;
+				}
+				else
+				{
+					var pd = await _databaseService.GetSinglePlannableDayAsync(currentDay);
+					if (pd is not null)
+						dayType = pd.Type;
+
+					switch (dayType)
+					{
+						case DayType.HOME:
+							_currentHomeOfficeCount++;
+							break;
+						case DayType.OFFICE:
+							_currentOfficeCount++;
+							break;
+					}
+				}
+				weekDays.Add(CreateWeekDayModel(dayType, currentDay));
+			}
+
+			var cw = new CalculatedWeekEntity()
+			{
+				WeekName = $"Aktuelle Woche",
 				HomeOfficeTargetQuoted = _homeOfficeTargetQuoted,
 				OfficeTargetQuoted = _officeTargetQuoted,
 				HomeOfficeDays = _currentHomeOfficeCount,

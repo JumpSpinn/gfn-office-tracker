@@ -14,4 +14,11 @@ public sealed class RuntimeDataEntity
 	public uint OfficeTargetQuoted { get; set; }
 
 	public DayOfWeek[] OfficeDays { get; set; } = [];
+
+	public (DayOfWeek Day, DayType Type)[] DayOfWeeks => HomeOfficeDays
+		.Select(d => (Day: d, Type: DayType.HOME))
+		.Concat(OfficeDays
+			.Select(d => (Day: d, Type: DayType.OFFICE)))
+		.OrderBy(item => item.Day)
+		.ToArray();
 }

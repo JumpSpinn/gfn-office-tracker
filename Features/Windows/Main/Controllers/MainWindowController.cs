@@ -9,12 +9,14 @@ public sealed class MainWindowController
 {
 	private readonly LogController _logController;
 	private readonly ConfigController _configController;
+	private readonly MainWindowEvents _mainWindowEvents;
 
 	public MainWindowController(LogController ls, ConfigController cc, MainWindowEvents mwe)
 	{
 		_logController = ls;
 		_configController = cc;
-		mwe.OnWindowSizePositionChanged += OnPositionSizeChanged;
+		_mainWindowEvents = mwe;
+		_mainWindowEvents.OnWindowSizePositionChanged += OnPositionSizeChanged;
 	}
 
 	#region INITIALIZATION
@@ -49,6 +51,7 @@ public sealed class MainWindowController
 			App.MainWindow.Height = _configController.ConfigEntity.WindowSize.Y;
 
 			_initialized = true;
+			_mainWindowEvents.Started();
 			return true;
 		}
 		catch (Exception ex)

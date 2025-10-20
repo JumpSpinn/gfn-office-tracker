@@ -6,34 +6,24 @@
 /// The context is configured to use the SQLite database engine and the database file
 /// specified in the application's configuration.
 /// </summary>
-public class OtContextFactory : IDbContextFactory<OtContext>
+public class OtContextFactory(ConfigController cc) : IDbContextFactory<OtContext>
 {
-	private readonly ConfigController _configController;
-	private readonly LogController _logController;
-
-	public OtContextFactory(ConfigController cc, LogController lc)
-	{
-		_configController = cc;
-		_logController = lc;
-	}
-
 	public OtContext CreateDbContext()
 	{
 		var optionsBuilder = new DbContextOptionsBuilder<OtContext>();
 		// ReSharper disable once RedundantAssignment
-		var dbPath = Path.Combine(_configController.ConfigEntity.DatabasePath, Options.DB_NAME);
+		var dbPath = Path.Combine(cc.ConfigEntity.DatabasePath, Options.DB_NAME);
 #if DEBUG
 		dbPath = Options.DB_NAME;
 #endif
 
-		_logController.Debug($"Database path: {dbPath}");
 		optionsBuilder.UseSqlite($"Data Source={dbPath}");
 
 #if DEBUG
 		optionsBuilder
 			.EnableSensitiveDataLogging()
-			.EnableDetailedErrors()
-			.LogTo(Console.WriteLine, LogLevel.Information);
+			.EnableDetailedErrors();
+			//.LogTo(Console.WriteLine, LogLevel.Information);
 #else
 		optionsBuilder.EnableDetailedErrors();
 #endif
