@@ -34,19 +34,6 @@
 	    <Color x:Key="ContentDialogBackground">#00111f</Color>
 	    <Color x:Key="ContentDialogBorderBrush">#00080f</Color>
 
-	    <!-- BUTTON COLORS -->
-	    <!-- <Color x:Key="AccentButtonBackground">#006f80</Color> -->
-	    <!-- <Color x:Key="AccentButtonBorderBrush">#006f80</Color> -->
-	    <!-- <Color x:Key="AccentButtonForeground">White</Color> -->
-	    <!-- -->
-	    <!-- <Color x:Key="AccentButtonBackgroundPointerOver">#008194</Color> -->
-	    <!-- <Color x:Key="AccentButtonBorderBrushPointerOver">#008194</Color> -->
-	    <!-- <Color x:Key="AccentButtonForegroundPointerOver">White</Color> -->
-	    <!-- -->
-	    <!-- <Color x:Key="AccentButtonBackgroundPressed">#0097ad</Color> -->
-	    <!-- <Color x:Key="AccentButtonBorderBrushPressed">#0097ad</Color> -->
-	    <!-- <Color x:Key="AccentButtonForegroundPressed">White</Color> -->
-
 	    <!-- RADIO BUTTON COLORS -->
 	    <Color x:Key="RadioButtonCheckGlyphFill">#FFFFFF</Color>
 	    <Color x:Key="RadioButtonOuterEllipseCheckedFill">#40FFFFFF</Color>
