@@ -35,17 +35,6 @@
 	    <Color x:Key="ContentDialogBackground">#00111f</Color>
 	    <Color x:Key="ContentDialogBorderBrush">#00080f</Color>
 
-	    <!-- RADIO BUTTON COLORS -->
-	    <!-- <Color x:Key="RadioButtonCheckGlyphFill">#FFFFFF</Color> -->
-	    <!-- <Color x:Key="RadioButtonOuterEllipseCheckedFill">#40FFFFFF</Color> -->
-	    <!-- -->
-	    <!-- <Color x:Key="RadioButtonCheckGlyphFillPointerOver">#FFFFFF</Color> -->
-	    <!-- <Color x:Key="RadioButtonOuterEllipseCheckedFillPointerOver">#40FFFFFF</Color> -->
-	    <!-- -->
-	    <!-- <Color x:Key="RadioButtonOuterEllipseCheckedStroke">#30FFFFFF</Color> -->
-	    <!-- <Color x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver">#30FFFFFF</Color> -->
-	    <!-- <x:Double x:Key="RadioButtonBorderThemeThickness">1</x:Double> -->
-
 	    <Thickness x:Key="ToggleSwitchTopHeaderMargin">0</Thickness>
 
 	    <!-- CONVERTERS -->
