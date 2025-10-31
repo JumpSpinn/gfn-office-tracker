@@ -206,9 +206,10 @@ public sealed class CalculateWeekService
 	{
 		try
 		{
-			var startCurrentWeek = DateTimeHelper.GetStartOfCurrentWeek(DateTime.Today);
+			var startDate = DateTime.Today;
+			var startCurrentWeek = DateTimeHelper.GetStartOfCurrentWeek(startDate);
 			var remainingDays = DateTimeHelper.GetRemainingDaysOfWeek();
-			var index = 0;
+			var firstPass = true;
 
 			var weekDays = new List<WeekDayEntity>();
 			foreach (var item in _mainWindowController.RuntimeDataEntity.DayOfWeeks)
@@ -217,9 +218,9 @@ public sealed class CalculateWeekService
 				var currentDay = remainingDays.FirstOrDefault(x => x.DayOfWeek == item.Day);
 				if (currentDay == default)
 				{
-					startCurrentWeek = currentDay = startCurrentWeek.AddDays(index);
+					startCurrentWeek = currentDay = startCurrentWeek.AddDays(firstPass ? 0 : 1);
 					dayType = DayType.PASS;
-					index++;
+					firstPass = false;
 				}
 				else
 				{
