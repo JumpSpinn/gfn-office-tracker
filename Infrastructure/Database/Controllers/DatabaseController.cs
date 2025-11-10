@@ -67,6 +67,11 @@ public sealed class DatabaseController
 		return false;
 	}
 
+	#region PLANNABLE DAYS
+
+	/// <summary>
+	/// Removes all plannable days from the database that have a date in the past.
+	/// </summary>
 	private async Task DeletePlannableDayInPastAsync()
 	{
 		try
@@ -82,4 +87,6 @@ public sealed class DatabaseController
 			_logController.Exception(e);
 		}
 	}
+
+	#endregion
 }
