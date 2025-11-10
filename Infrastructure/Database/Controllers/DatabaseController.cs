@@ -52,11 +52,13 @@ public sealed class DatabaseController
 	          await db.Database.ExecuteSqlRawAsync(
 	             "CREATE TABLE IF NOT EXISTS __EFMigrationsHistory (MigrationId TEXT NOT NULL PRIMARY KEY, ProductVersion TEXT NOT NULL)");
 
-	          foreach (var migration in allMigrations)
+	          var initialMigration = allMigrations.FirstOrDefault(m => m.Contains("InitialCreate"));
+	          if (initialMigration is not null)
+	          {
 		          await db.Database.ExecuteSqlAsync(
-			          $"INSERT OR IGNORE INTO __EFMigrationsHistory (MigrationId, ProductVersion) VALUES ({migration}, '8.0.0')");
-
-	          _logController.Debug($"Added {allMigrations.Count} migrations to history table.");
+			          $"INSERT OR IGNORE INTO __EFMigrationsHistory (MigrationId, ProductVersion) VALUES ({initialMigration}, '8.0.0')");
+		          _logController.Debug($"Marked InitialCreate as applied. Other migrations will be executed by MigrateAsync.");
+	          }
 	       }
 
 	       _logController.Info("Starting MigrateAsync...");
