@@ -28,7 +28,7 @@
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="models1:PlannableDayModel">
 								<Grid
-									ColumnDefinitions="Auto,*,2*,Auto"
+									ColumnDefinitions="Auto,*,*"
 									ColumnSpacing="10"
 								>
 									<Border
