@@ -22,6 +22,7 @@ public sealed class DatabaseController
 		{
 			await using var db = await _dbContext.CreateDbContextAsync();
 			await db.Database.EnsureCreatedAsync(); // create/migrate database
+			await db.Database.MigrateAsync();
 			var hasData = db.UserSettings.Any();
 
 			return (hasData, true);
