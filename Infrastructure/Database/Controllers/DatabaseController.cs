@@ -25,15 +25,6 @@ public sealed class DatabaseController
 	    {
 	       await using var db = await _dbContext.CreateDbContextAsync();
 
-	       var canConnect = await db.Database.CanConnectAsync();
-	       if (!canConnect)
-	       {
-	          _logController.Error("Could not connect to database.");
-	          return (false, false);
-	       }
-
-	       _logController.Info("Connected to database.");
-
 	       var appliedMigrations = (await db.Database.GetAppliedMigrationsAsync()).ToList();
 	       var allMigrations = db.Database.GetMigrations().ToList();
 	       var pendingMigrations = (await db.Database.GetPendingMigrationsAsync()).ToList();
@@ -45,7 +36,10 @@ public sealed class DatabaseController
 	       foreach (var pending in pendingMigrations)
 		       _logController.Debug($"Pending: {pending}");
 
-	       if (appliedMigrations.Count == 0 && allMigrations.Count > 0)
+	       var initialTableNameCheck = await db.Database.SqlQueryRaw<int>("SELECT COUNT(*) AS Value FROM sqlite_master WHERE type='table' AND name='user_settings'").FirstOrDefaultAsync();
+	       bool initialTableExists = initialTableNameCheck > 0;
+
+	       if (appliedMigrations.Count == 0 && allMigrations.Count > 0 && initialTableExists)
 	       {
 	          _logController.Debug("Database exists but has no migration history. Fixing...");
 
@@ -71,7 +65,9 @@ public sealed class DatabaseController
 	    }
 	    catch (Exception e)
 	    {
-	       _logController.Exception(e);
+		    _logController.Error($"InitializeAsync failed: {e.Message}");
+		    _logController.Error($"Stack trace: {e.StackTrace}");
+		    _logController.Exception(e);
 	    }
 
 	    return (false, false);
