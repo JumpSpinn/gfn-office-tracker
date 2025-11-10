@@ -27,7 +27,7 @@ public static class Options
 		};
 	}
 
-	public const string VERSION = "0.0.2";
+	public const string VERSION = "0.0.4";
 
 	public const string DB_NAME = "office-tracker.db";
 
