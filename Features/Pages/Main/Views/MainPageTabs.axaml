@@ -20,7 +20,7 @@
         >
             <!-- Plannable Days -->
             <fluent:TabViewItem
-                Header="Geplante Tage"
+                Header="Planung"
                 IsClosable="False"
                 BorderThickness="4"
                 IsSelected="True"
@@ -34,7 +34,7 @@
 
             <!-- Calculated Weeks -->
             <fluent:TabViewItem
-                Header="Vorhersage (Statistiken)"
+                Header="Vorhersagen"
                 FontFamily="{DynamicResource GlobalFont}"
                 IsClosable="False"
             >
