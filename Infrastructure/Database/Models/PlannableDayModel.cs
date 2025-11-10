@@ -15,8 +15,6 @@ public sealed class PlannableDayModel
 
 	public DateTime Date { get; set; }
 
-	public bool IsDeleted { get; set; }
-
 	/// <summary>
 	/// Gets a <see cref="PlannableDayColorPairEntity"/> that represents the colors associated with
 	/// the current day's type. The colors are determined based on the <see cref="DayType"/>
