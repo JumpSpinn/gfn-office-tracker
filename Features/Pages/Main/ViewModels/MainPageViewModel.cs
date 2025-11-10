@@ -60,15 +60,13 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// A tuple containing a boolean indicating validation success, a title string for error messages,
     /// and a descriptive message. If the validation succeeds, the title and message will be empty.
     /// </returns>
-    private (bool Result, string Title, string Message) IsSelectedPlannableDateValid(DateTime? dt)
+    private (bool Result, string Title, string Message) IsSelectedPlannableDateValid(DateTime dt)
     {
-	    if(dt is null)
-		    return (false, "Ungültiges Datum", "Du hast das Datum vergessen.");
-	    else if(DateTimeHelper.IsToday((DateTime)dt))
+	    if(DateTimeHelper.IsToday(dt))
 		    return (false, "Ungültiges Datum", "Den heutigen Tag kannst du nicht mehr planen.");
-	    else if(DateTimeHelper.IsInPast((DateTime)dt))
+	    else if(DateTimeHelper.IsInPast(dt))
 		    return (false, "Ungültiges Datum", "Der Tag liegt in der Vergangenheit.");
-	    else if(DateTimeHelper.IsInWeekend((DateTime)dt))
+	    else if(DateTimeHelper.IsInWeekend(dt))
 		    return (false, "Ungültiges Datum", "Du arbeitst am Wochenende?");
 	    return (true, "", "");
     }

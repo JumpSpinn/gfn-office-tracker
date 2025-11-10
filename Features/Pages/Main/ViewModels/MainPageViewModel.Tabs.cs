@@ -94,31 +94,38 @@ public sealed partial class MainPageViewModel
 
 	    var success = false;
 	    var result = await dialog.ShowAsyncCorrectly();
+	    var selectedDate = dayForm.SelectedDate;
+
 	    if (result == ContentDialogResult.Primary)
 	    {
-		    var dateValidation = IsSelectedPlannableDateValid(dayForm.SelectedDate);
-		    if(!dateValidation.Result)
-			    await DialogHelper.ShowDialogAsync(dateValidation.Title, dateValidation.Message, DialogType.WARNING);
-		    else if(await _databaseService.GetSinglePlannableDayByDateAsync((DateTime)dayForm.SelectedDate!) is not null)
-			    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
-		    else if (dayForm.SelectedDayType == DayType.NONE)
-			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
-		    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowController.RuntimeDataEntity.HomeOfficeDays))
-			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.", DialogType.QUESTION);
-		    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsDateInDayArray((DateTime)dayForm.SelectedDate!, _mainWindowController.RuntimeDataEntity.OfficeDays))
-			    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.", DialogType.QUESTION);
+		    if(selectedDate is null)
+			    await DialogHelper.ShowDialogAsync("Ungültiges Datum", "Du hast das Datum vergessen.", DialogType.ERROR);
 		    else
 		    {
-			    var entry = await _databaseService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)dayForm.SelectedDate!);
-			    if (entry is not null)
-			    {
-				    success = true;
-				    AddPlannableDayToCollection(entry);
-				    await ReCalculateWeeksAsync();
-				    await DialogHelper.ShowDialogAsync("Eintrag hinzugefügt", "Eintrag wurde erfolgreich gespeichert.", DialogType.SUCCESS);
-			    }
+			    var dateValidation = IsSelectedPlannableDateValid((DateTime)selectedDate);
+			    if(!dateValidation.Result)
+				    await DialogHelper.ShowDialogAsync(dateValidation.Title, dateValidation.Message, DialogType.WARNING);
+			    else if(await _databaseService.GetSinglePlannableDayByDateAsync((DateTime)selectedDate) is not null)
+				    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
+			    else if (dayForm.SelectedDayType == DayType.NONE)
+				    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
+			    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsDateInDayArray((DateTime)selectedDate, _mainWindowController.RuntimeDataEntity.HomeOfficeDays))
+				    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.", DialogType.QUESTION);
+			    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsDateInDayArray((DateTime)selectedDate, _mainWindowController.RuntimeDataEntity.OfficeDays))
+				    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.", DialogType.QUESTION);
 			    else
-				    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
+			    {
+				    var entry = await _databaseService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)selectedDate);
+				    if (entry is not null)
+				    {
+					    success = true;
+					    AddPlannableDayToCollection(entry);
+					    await ReCalculateWeeksAsync();
+					    await DialogHelper.ShowDialogAsync("Eintrag hinzugefügt", "Eintrag wurde erfolgreich gespeichert.", DialogType.SUCCESS);
+				    }
+				    else
+					    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
+			    }
 		    }
 	    }
 	    else
