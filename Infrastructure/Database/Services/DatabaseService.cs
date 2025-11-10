@@ -275,6 +275,25 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		return null;
 	}
 
+	/// <summary>
+	/// Asynchronously retrieves a single holiday from the database that matches the specified start and end dates.
+	/// </summary>
+	public async Task<HolidayModel?> GetSingleHolidayByStartEndDateAsync(DateTime start, DateTime end)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var day = await db.Holidays.FirstOrDefaultAsync(x => x.StartDate == start && x.EndDate == end);
+			return day;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
 	#endregion
 
 	#region CREATE

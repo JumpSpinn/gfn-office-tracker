@@ -214,6 +214,8 @@ public sealed partial class MainPageViewModel
 			    await DialogHelper.ShowDialogAsync("Enddatum", "Bitte gib ein Enddatum ein.", DialogType.ERROR);
 		    else if(DateTimeHelper.IsInPast((DateTime)startDate) && DateTimeHelper.IsInPast((DateTime)endDate))
 			    await DialogHelper.ShowDialogAsync("Urlaubszeitraum", "Der Urlaubszeitraum muss in der Zukunft liegen.", DialogType.ERROR);
+		    else if(await _databaseService.GetSingleHolidayByStartEndDateAsync((DateTime)startDate, (DateTime)endDate) is not null)
+			    await DialogHelper.ShowDialogAsync("Duplikat", "Urlaubszeitraum wurde bereits eingetragen.", DialogType.WARNING);
 		    else
 		    {
 			    var entry = await _databaseService.CreateHolidayAsync(name, (DateTime)startDate, (DateTime)endDate);
