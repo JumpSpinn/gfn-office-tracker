@@ -9,7 +9,7 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-# Executable umbenennen
+Remove-Item "bin/Release/net9.0/win-x64/publish/OfficeTracker-win-x64.exe" -ErrorAction SilentlyContinue
 Rename-Item "bin/Release/net9.0/win-x64/publish/OfficeTracker.exe" "OfficeTracker-win-x64.exe" -ErrorAction SilentlyContinue
 
 Write-Host "`nPublishing for Linux (linux-x64)..." -ForegroundColor Cyan
@@ -20,7 +20,7 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-# Executable umbenennen
+Remove-Item "bin/Release/net9.0/linux-x64/publish/OfficeTracker-linux-x64" -ErrorAction SilentlyContinue
 Rename-Item "bin/Release/net9.0/linux-x64/publish/OfficeTracker" "OfficeTracker-linux-x64" -ErrorAction SilentlyContinue
 
 Write-Host "`nAll platforms published successfully!" -ForegroundColor Green
