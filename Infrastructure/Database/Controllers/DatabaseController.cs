@@ -10,9 +10,11 @@ public sealed class DatabaseController
 	{
 		_logController = lc;
 		_dbContext = dbContext;
-		mwe.OnStarted += DeletePlannableDayInPastAsync;
-		mwe.OnStarted += DeleteHolidaysInPastAsync;
+		mwe.OnStarted += CleanUpPlannableDaysAsync;
+		mwe.OnStarted += CleanUpHolidaysAsync;
 	}
+
+	#region INITIALIZATION
 
 	/// <summary>
 	/// Initializes the database connection, applies any pending migrations, and verifies the database state.
@@ -73,6 +75,10 @@ public sealed class DatabaseController
 	    return (false, false);
 	}
 
+	#endregion
+
+	#region BACKUP
+
 	/// <summary>
 	/// Create a backup of the database to the new save directory.
 	/// </summary>
@@ -105,12 +111,14 @@ public sealed class DatabaseController
 		return false;
 	}
 
-	#region PLANNABLE DAYS
+	#endregion
+
+	#region CLEANUP
 
 	/// <summary>
 	/// Removes all plannable days from the database that have a date in the past.
 	/// </summary>
-	private async Task DeletePlannableDayInPastAsync()
+	private async Task CleanUpPlannableDaysAsync()
 	{
 		try
 		{
@@ -126,14 +134,10 @@ public sealed class DatabaseController
 		}
 	}
 
-	#endregion
-
-	#region HOLIDAYS
-
 	/// <summary>
 	/// Deletes all holidays from the database that have both their start and end dates in the past.
 	/// </summary>
-	private async Task DeleteHolidaysInPastAsync()
+	private async Task CleanUpHolidaysAsync()
 	{
 		try
 		{
