@@ -37,6 +37,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    await ReCalculateWeeksAsync();
 		    await RefreshStatisticsAsync();
 		    await LoadPlannableDaysAsync();
+		    await LoadHolidaysAsync();
 	    }
 	    catch (Exception ex)
 	    {
@@ -59,7 +60,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// A tuple containing a boolean indicating validation success, a title string for error messages,
     /// and a descriptive message. If the validation succeeds, the title and message will be empty.
     /// </returns>
-    private (bool Result, string Title, string Message) IsSelectedDateValid(DateTime? dt)
+    private (bool Result, string Title, string Message) IsSelectedPlannableDateValid(DateTime? dt)
     {
 	    if(dt is null)
 		    return (false, "Ungültiges Datum", "Du hast das Datum vergessen.");

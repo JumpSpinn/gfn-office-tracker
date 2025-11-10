@@ -55,6 +55,7 @@
 	    <StyleInclude Source="/Features/Templates/Base/StatisticTemplate.axaml"></StyleInclude>
 	    <StyleInclude Source="/Features/Templates/Lists/CalculatedWeekListTemplate.axaml"></StyleInclude>
 	    <StyleInclude Source="/Features/Templates/Lists/PlannableDayListTemplate.axaml"></StyleInclude>
+	    <StyleInclude Source="/Features/Templates/Lists/HolidaysListTemplate.axaml"></StyleInclude>
 
     </Application.Styles>
 

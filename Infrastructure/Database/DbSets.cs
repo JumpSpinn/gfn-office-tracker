@@ -8,4 +8,5 @@ public sealed partial class OtContext
 {
 	public DbSet<UserSettingsModel> UserSettings { get; set; }
 	public DbSet<PlannableDayModel> PlannableDays { get; set; }
+	public DbSet<HolidayModel> Holidays { get; set; }
 }

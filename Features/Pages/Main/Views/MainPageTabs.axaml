@@ -32,6 +32,20 @@
                 />
             </fluent:TabViewItem>
 
+            <!-- Holidays -->
+            <fluent:TabViewItem
+	            Header="Urlaub"
+	            IsClosable="False"
+	            BorderThickness="4"
+	            IsSelected="False"
+	        >
+	            <lists:HolidaysListTemplate
+		            Items="{Binding Holidays}"
+		            AddButtonClicked="RequestShowAddHolidayDialog"
+		            DeleteButtonClicked="RequestShowDeleteHolidayDialog"
+		        />
+            </fluent:TabViewItem>
+
             <!-- Calculated Weeks -->
             <fluent:TabViewItem
                 Header="Vorhersagen"

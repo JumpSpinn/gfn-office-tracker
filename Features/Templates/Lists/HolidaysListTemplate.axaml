@@ -1,0 +1,127 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lists="clr-namespace:OfficeTracker.Features.Templates.Lists"
+        xmlns:models="clr-namespace:OfficeTracker.Infrastructure.Database.Models"
+        >
+	<Design.PreviewWith>
+		<lists:HolidaysListTemplate />
+	</Design.PreviewWith>
+
+	<Style Selector="lists|HolidaysListTemplate">
+		<!-- Set Defaults -->
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Grid
+					RowDefinitions="*,Auto"
+					ColumnDefinitions="*"
+					Margin="10"
+					RowSpacing="5"
+				>
+					<ListBox
+						Grid.Row="0"
+						Grid.Column="0"
+						x:Name="List"
+						SelectionMode="Single"
+						ItemsSource="{TemplateBinding Items}"
+						IsVisible="{Binding Items, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NotNullToVisibilityConverter}}"
+					>
+						<!-- LIST -->
+						<ListBox.ItemTemplate>
+							<DataTemplate DataType="models:HolidayModel">
+								<Grid
+									ColumnDefinitions="Auto,*,*"
+									ColumnSpacing="10"
+								>
+									<Border
+										Grid.Column="0"
+										Width="16"
+										Height="16"
+										CornerRadius="4"
+										VerticalAlignment="Center"
+										BorderThickness="1"
+										BorderBrush="#ff7e21"
+										Background="#30ff7e21"
+									/>
+									<StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5">
+										<TextBlock
+											Text="{Binding StartDate, StringFormat='{}{0:dd.MM.yyyy}'}"
+											VerticalAlignment="Center"
+										/>
+										<TextBlock Text="bis" VerticalAlignment="Center" />
+										<TextBlock
+											Text="{Binding EndDate, StringFormat='{}{0:dd.MM.yyyy}'}"
+											VerticalAlignment="Center"
+										/>
+									</StackPanel>
+									<TextBlock
+										Grid.Column="2"
+										Text="{Binding Name}"
+										VerticalAlignment="Center"
+									/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+
+					<!-- EMPTY LIST PLACEHOLDER -->
+					<Border
+						Grid.Row="0"
+						Padding="20"
+						IsVisible="{Binding Items, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmptyToVisibilityConverter}}"
+					>
+						<StackPanel
+							Orientation="Vertical"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Spacing="5"
+						>
+							<TextBlock
+								Text="🏖️"
+								FontSize="42"
+								HorizontalAlignment="Center"
+							/>
+							<TextBlock
+								Text="Keine Einträge vorhanden"
+								FontSize="16"
+								HorizontalAlignment="Center"
+							/>
+							<TextBlock
+								Text="Füge ein Urlaubs-Zeitraum hinzu"
+								FontSize="12"
+								HorizontalAlignment="Center"
+								Foreground="#90FFFFFF"
+							/>
+						</StackPanel>
+					</Border>
+
+					<!-- ACTIONS -->
+					<Grid
+						Grid.Row="1"
+						Grid.Column="0"
+						ColumnDefinitions="*,Auto"
+						RowDefinitions="*"
+					>
+						<Button
+							Grid.Column="0"
+							x:Name="AddButton"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
+							FontSize="12"
+							Content="Urlaub eintragen"
+						/>
+						<Button
+							Grid.Column="1"
+							Margin="10 0 0 0"
+							x:Name="DeleteButton"
+							VerticalAlignment="Stretch"
+							HorizontalAlignment="Stretch"
+							FontSize="12"
+							Content="Löschen"
+						/>
+					</Grid>
+				</Grid>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+</Styles>
+

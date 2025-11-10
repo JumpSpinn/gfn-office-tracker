@@ -10,6 +10,8 @@ public partial class MainPageTabs : UserControl
 		InitializeComponent();
 	}
 
+	#region PLANNABLE DAYS
+
 	/// <summary>
 	/// Handles the AddButtonClicked event from the PlannableDayListControl. This method invokes the
 	/// ShowAddPlannableDayDialogAsync method in the associated MainPageViewModel to display a dialog
@@ -31,5 +33,34 @@ public partial class MainPageTabs : UserControl
 		if (sender is not PlannableDayListTemplate pdlc) return;
 		mpv.ShowDeletePlannableDayDialogAsync(pdlc.SelectedPlannableDayId);
 	}
+
+	#endregion
+
+	#region HOLIDAYS
+
+	/// <summary>
+	/// Handles the AddButtonClicked event from the HolidaysListTemplate control. This method invokes
+	/// the ShowAddHolidayDialogAsync method in the associated MainPageViewModel to display a dialog
+	/// for adding a new holiday.
+	/// </summary>
+	private void RequestShowAddHolidayDialog(object? sender, RoutedEventArgs e)
+	{
+		if(DataContext is not MainPageViewModel mpv) return;
+		mpv.ShowAddHolidayDialogAsync();
+	}
+
+	/// <summary>
+	/// Handles the DeleteButtonClicked event from the HolidaysListTemplate. This method invokes the
+	/// ShowDeleteHolidayDialogAsync method in the associated MainPageViewModel to display a dialog
+	/// for confirming and processing the deletion of a holiday.
+	/// </summary>
+	private void RequestShowDeleteHolidayDialog(object? sender, RoutedEventArgs e)
+	{
+		if(DataContext is not MainPageViewModel mpv) return;
+		if (sender is not HolidaysListTemplate hlt) return;
+		mpv.ShowDeleteHolidayDialogAsync(hlt.SelectedHolidayId);
+	}
+
+	#endregion
 }
 

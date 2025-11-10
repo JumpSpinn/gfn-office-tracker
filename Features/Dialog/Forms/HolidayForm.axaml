@@ -1,0 +1,63 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
+             x:Class="OfficeTracker.Features.Dialog.Forms.HolidayForm">
+	<StackPanel Orientation="Vertical" Spacing="20">
+		<TextBlock
+			TextWrapping="Wrap"
+			Text="Wenn du ein Urlaub einträgst, wird dies bei bei den Vorhersagen der nächsten Wochen mit einbezogen und beachtet, sodass deine Quote in diesem Zeitraum unverändert bleibt."
+		/>
+		<Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="15">
+			<Grid Grid.Row="0" RowDefinitions="Auto,Auto" HorizontalAlignment="Stretch" RowSpacing="5">
+				<TextBlock
+					Grid.Row="0"
+					Text="Gebe deinem Urlaub einen Namen:"
+					TextWrapping="Wrap"
+					HorizontalAlignment="Stretch"
+				/>
+				<TextBox
+					x:Name="HolidayName"
+					Grid.Row="1"
+					HorizontalAlignment="Stretch"
+					TextAlignment="Left"
+					FontFamily="{DynamicResource GlobalFont}"
+					Watermark="Urlaub XYZ"
+				/>
+			</Grid>
+			<Grid Grid.Row="1" RowDefinitions="Auto,Auto" HorizontalAlignment="Stretch" RowSpacing="5">
+				<TextBlock
+					Grid.Row="0"
+					Text="Erster Urlaubstag:"
+					TextWrapping="Wrap"
+					HorizontalAlignment="Stretch"
+				/>
+				<CalendarDatePicker
+					x:Name="DatePickerStart"
+					Grid.Row="1"
+					SelectedDate="{x:Static sys:DateTime.Today}"
+					HorizontalAlignment="Stretch"
+					Watermark="tt.mm.jjjj"
+				/>
+			</Grid>
+			<Grid Grid.Row="2" RowDefinitions="Auto,Auto" HorizontalAlignment="Stretch" RowSpacing="5">
+				<TextBlock
+					Grid.Row="0"
+					Text="Letzter Urlaubstag:"
+					TextWrapping="Wrap"
+					HorizontalAlignment="Stretch"
+				/>
+				<CalendarDatePicker
+					x:Name="DatePickerEnd"
+					Grid.Row="1"
+					SelectedDate="{x:Static sys:DateTime.Today}"
+					HorizontalAlignment="Stretch"
+					Watermark="tt.mm.jjjj"
+				/>
+			</Grid>
+		</Grid>
+	</StackPanel>
+</UserControl>
+

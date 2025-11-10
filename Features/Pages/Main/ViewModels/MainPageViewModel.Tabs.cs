@@ -96,7 +96,7 @@ public sealed partial class MainPageViewModel
 	    var result = await dialog.ShowAsyncCorrectly();
 	    if (result == ContentDialogResult.Primary)
 	    {
-		    var dateValidation = IsSelectedDateValid(dayForm.SelectedDate);
+		    var dateValidation = IsSelectedPlannableDateValid(dayForm.SelectedDate);
 		    if(!dateValidation.Result)
 			    await DialogHelper.ShowDialogAsync(dateValidation.Title, dateValidation.Message, DialogType.WARNING);
 		    else if(await _databaseService.GetSinglePlannableDayAsync((DateTime)dayForm.SelectedDate!) is not null)
@@ -126,6 +126,135 @@ public sealed partial class MainPageViewModel
 
 	    if (!success)
 		    await ShowAddPlannableDayDialogAsync();
+    }
+
+    #endregion
+
+    #region HOLIDAYS
+
+    /// <summary>
+    /// Represents a collection of holidays used within the main page view model.
+    /// This collection contains instances of <see cref="HolidayModel"/>, which define
+    /// individual holiday details such as name, start date, and end date. It is utilized
+    /// to manage and display holiday information in the application's main page.
+    /// </summary>
+    [ObservableProperty]
+    private ObservableCollection<HolidayModel> _holidays = [];
+
+    /// <summary>
+    /// Removes a holiday from the collection based on the specified identifier.
+    /// </summary>
+    private void RemoveHolidayFromCollection(uint id)
+    {
+	    var pd = Holidays.FirstOrDefault(x => x.Id == id);
+	    if (pd is null) return;
+
+	    var currentCollection = Holidays;
+	    currentCollection.Remove(pd);
+	    Holidays = new ObservableCollection<HolidayModel>(currentCollection);
+    }
+
+    /// <summary>
+    /// Adds a holiday to the collection if it is not already present.
+    /// </summary>
+    private void AddHolidayToCollection(HolidayModel pd)
+    {
+	    var exist = Holidays.FirstOrDefault(x => x.Id == pd.Id);
+	    if (exist is not null) return;
+
+	    var currentCollection = Holidays;
+	    currentCollection.Add(pd);
+	    Holidays = new ObservableCollection<HolidayModel>(currentCollection);
+    }
+
+    /// <summary>
+    /// Loads the list of holidays from the database and updates the Holidays collection.
+    /// </summary>
+    private async Task LoadHolidaysAsync()
+    {
+	    var holidays = await _databaseService.GetAllHolidaysAsync();
+	    Holidays = new ObservableCollection<HolidayModel>(holidays ?? []);
+    }
+
+    /// <summary>
+    /// Displays a dialog for adding a new holiday, allowing the user to specify the holiday details such as name, start date, and end date.
+    /// </summary>
+    public async Task ShowAddHolidayDialogAsync()
+    {
+	    var holidayForm = new HolidayForm();
+	    var dialog = new ContentDialog()
+	    {
+		    Title = "Neuen Urlaub eintragen",
+		    Content = holidayForm,
+		    PrimaryButtonText = "Eintragen",
+		    CloseButtonText = "Abbrechen",
+		    DefaultButton = ContentDialogButton.Close
+	    };
+
+	    var success = false;
+	    var result = await dialog.ShowAsyncCorrectly();
+	    if (result == ContentDialogResult.Primary)
+	    {
+		    var name = holidayForm.HolidayName.Text;
+		    var startDate = holidayForm.SelectedStartDate;
+		    var endDate = holidayForm.SelectedEndDate;
+
+		    if(name is null || name.Trim().Length <= 0)
+			    await DialogHelper.ShowDialogAsync("Urlaubsname", "Bitte gib einen Urlaubsname ein.", DialogType.ERROR);
+		    else if(startDate is null)
+			    await DialogHelper.ShowDialogAsync("Startdatum", "Bitte gib ein Startdatum ein.", DialogType.ERROR);
+		    else if(endDate is null)
+			    await DialogHelper.ShowDialogAsync("Enddatum", "Bitte gib ein Enddatum ein.", DialogType.ERROR);
+		    else if(DateTimeHelper.IsInPast((DateTime)startDate) && DateTimeHelper.IsInPast((DateTime)endDate))
+			    await DialogHelper.ShowDialogAsync("Urlaubszeitraum", "Der Urlaubszeitraum muss in der Zukunft liegen.", DialogType.ERROR);
+		    else
+		    {
+			    var entry = await _databaseService.CreateHolidayAsync(name, (DateTime)startDate, (DateTime)endDate);
+			    if (entry is not null)
+			    {
+				    success = true;
+				    AddHolidayToCollection(entry);
+				    await ReCalculateWeeksAsync();
+				    await DialogHelper.ShowDialogAsync("Urlaub eingetragen", "Urlaub wurde erfolgreich gespeichert.", DialogType.SUCCESS);
+			    }
+			    else
+				    await DialogHelper.ShowDialogAsync("Fehler", "Urlaub konnte nicht gespeichert werden.", DialogType.ERROR);
+		    }
+	    }
+	    else
+		    success = true;
+
+	    if(!success)
+		    await ShowAddHolidayDialogAsync();
+    }
+
+    /// <summary>
+    /// Displays a dialog allowing the user to confirm the deletion of a holiday.
+    /// If confirmed, the holiday is removed from the database and the collection is updated.
+    /// </summary>
+    public async Task ShowDeleteHolidayDialogAsync(uint id)
+    {
+	    var dialog = new ContentDialog()
+	    {
+		    Title = "Urlaub löschen",
+		    Content = "Möchtest du diesen Eintrag wirklich löschen?",
+		    PrimaryButtonText = "Löschen",
+		    CloseButtonText = "Abbrechen",
+		    DefaultButton = ContentDialogButton.Close
+	    };
+
+	    var dialogResult = await dialog.ShowAsyncCorrectly();
+	    if(dialogResult == ContentDialogResult.Primary)
+	    {
+		    var deleted = await _databaseService.DeleteHolidayAsync(id);
+		    if(!deleted)
+			    await DialogHelper.ShowDialogAsync("Eintrag löschen", "Eintrag konnte nicht gelöscht werden.", DialogType.ERROR);
+		    else
+		    {
+			    RemoveHolidayFromCollection(id);
+			    await ReCalculateWeeksAsync();
+		    }
+	    }
     }
 
     #endregion

@@ -252,4 +252,87 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	#endregion
 
 	#endregion
+
+	#region HOLIDAYS
+
+	#region GET
+
+	/// <summary>
+	/// Asynchronously retrieves all holidays from the database in an ordered list by start date.
+	/// </summary>
+	public async Task<List<HolidayModel>?> GetAllHolidaysAsync()
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			return db.Holidays.OrderBy(x => x.StartDate).ToList();
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	#endregion
+
+	#region CREATE
+
+	/// <summary>
+	/// Asynchronously creates a new holiday and saves it to the database.
+	/// </summary>
+	public async Task<HolidayModel?> CreateHolidayAsync(string name, DateTime start, DateTime end)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var holiday = new HolidayModel()
+			{
+				Name = name,
+				StartDate = start,
+				EndDate = end
+			};
+			await db.Holidays.AddAsync(holiday);
+			await db.SaveChangesAsync();
+			return holiday;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	#endregion
+
+	#region DELETE
+
+	/// <summary>
+	/// Asynchronously deletes a holiday record from the database based on the provided holiday ID.
+	/// </summary>
+	public async Task<bool> DeleteHolidayAsync(uint id)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var day = await db.Holidays.FirstOrDefaultAsync(x => x.Id == id);
+			if (day is null) return false;
+
+			db.Holidays.Remove(day);
+			await db.SaveChangesAsync();
+			return true;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return false;
+	}
+
+	#endregion
+
+	#endregion
 }
