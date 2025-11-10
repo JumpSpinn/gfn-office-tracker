@@ -9,4 +9,5 @@ public enum DayType
     HOME = 1,
     OFFICE = 2,
     PASS = 3,
+    HOLIDAY = 4,
 }

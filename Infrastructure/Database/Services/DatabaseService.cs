@@ -283,8 +283,27 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		try
 		{
 			await using var db = await dbContextFactory.CreateDbContextAsync();
-			var day = await db.Holidays.FirstOrDefaultAsync(x => x.StartDate == start && x.EndDate == end);
-			return day;
+			var holiday = await db.Holidays.FirstOrDefaultAsync(x => x.StartDate == start && x.EndDate == end);
+			return holiday;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	/// <summary>
+	/// Asynchronously retrieves a single holiday from the database that overlaps with the specified date.
+	/// </summary>
+	public async Task<HolidayModel?> GetSingleHolidayByDateAsync(DateTime dt)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var holiday = await db.Holidays.FirstOrDefaultAsync(x => x.StartDate <= dt && x.EndDate >= dt);
+			return holiday;
 		}
 		catch (Exception e)
 		{

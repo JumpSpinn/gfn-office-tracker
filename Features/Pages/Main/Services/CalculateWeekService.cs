@@ -56,6 +56,7 @@ public sealed class CalculateWeekService
 			DayType.HOME => "#003764",
 			DayType.OFFICE => "#357a32",
 			DayType.PASS => "#575757",
+			DayType.HOLIDAY => "#ff7e21",
 			_ => "#FFFFFF"
 		};
 
@@ -168,6 +169,10 @@ public sealed class CalculateWeekService
 				if (pd is not null)
 					dayType = pd.Type;
 
+				var hd = await _databaseService.GetSingleHolidayByDateAsync(weekDayStart);
+				if(hd is not null)
+					dayType = DayType.HOLIDAY;
+
 				switch (dayType)
 				{
 					case DayType.HOME:
@@ -227,6 +232,10 @@ public sealed class CalculateWeekService
 					var pd = await _databaseService.GetSinglePlannableDayByDateAsync(currentDay);
 					if (pd is not null)
 						dayType = pd.Type;
+
+					var hd = await _databaseService.GetSingleHolidayByDateAsync(currentDay);
+					if(hd is not null)
+						dayType = DayType.HOLIDAY;
 
 					switch (dayType)
 					{
