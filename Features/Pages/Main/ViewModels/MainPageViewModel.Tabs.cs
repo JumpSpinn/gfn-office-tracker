@@ -99,7 +99,7 @@ public sealed partial class MainPageViewModel
 		    var dateValidation = IsSelectedPlannableDateValid(dayForm.SelectedDate);
 		    if(!dateValidation.Result)
 			    await DialogHelper.ShowDialogAsync(dateValidation.Title, dateValidation.Message, DialogType.WARNING);
-		    else if(await _databaseService.GetSinglePlannableDayAsync((DateTime)dayForm.SelectedDate!) is not null)
+		    else if(await _databaseService.GetSinglePlannableDayByDateAsync((DateTime)dayForm.SelectedDate!) is not null)
 			    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
 		    else if (dayForm.SelectedDayType == DayType.NONE)
 			    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);

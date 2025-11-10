@@ -175,7 +175,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	/// Asynchronously retrieves a specific plannable day from the database based on the provided date.
 	/// If no entry matches the given date, null is returned.
 	/// </summary>
-	public async Task<PlannableDayModel?> GetSinglePlannableDayAsync(DateTime dt)
+	public async Task<PlannableDayModel?> GetSinglePlannableDayByDateAsync(DateTime dt)
 	{
 		try
 		{

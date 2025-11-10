@@ -164,7 +164,7 @@ public sealed class CalculateWeekService
 				var dayType = item.Type;
 
 				weekDayStart = weekDayStart.AddDays(1);
-				var pd = await _databaseService.GetSinglePlannableDayAsync(weekDayStart);
+				var pd = await _databaseService.GetSinglePlannableDayByDateAsync(weekDayStart);
 				if (pd is not null)
 					dayType = pd.Type;
 
@@ -224,7 +224,7 @@ public sealed class CalculateWeekService
 				}
 				else
 				{
-					var pd = await _databaseService.GetSinglePlannableDayAsync(currentDay);
+					var pd = await _databaseService.GetSinglePlannableDayByDateAsync(currentDay);
 					if (pd is not null)
 						dayType = pd.Type;
 
