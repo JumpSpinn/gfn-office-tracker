@@ -6,11 +6,15 @@
 	    <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
 		    <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="5">
 			    <Button Content="Primary"></Button>
+			    <Button Classes="outline" Content="Primary Outline"></Button>
 			    <Button Classes="accent" Content="Secondary"></Button>
+			    <Button Classes="confirm" Content="Confirm"></Button>
 		    </StackPanel>
 		    <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="5">
 			    <Button IsEnabled="False" Content="Primary Disabled"></Button>
+			    <Button Classes="outline" IsEnabled="False" Content="Primary Outline Disabled"></Button>
 			    <Button Classes="accent" IsEnabled="False" Content="Secondary Disabled"></Button>
+			    <Button Classes="confirm" IsEnabled="False" Content="Confirm Disabled"></Button>
 		    </StackPanel>
 	    </Grid>
     </Border>
@@ -64,6 +68,37 @@
       <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundDisabled}" />
     </Style>
 
+    <!-- - Hauptfarbe unverändert -->
+    <!-- - Pointover -> Hauptfarbe 10% heller -->
+    <!-- - Pressed -> Hauptfarbe 10% dunkler -->
+    <!-- - Disabled -> Hauptfarbe = Pressed mit 50% weniger Deckkraft -->
+
+    <Style Selector="^.outline">
+	    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="Transparent" />
+		    <Setter Property="BorderThickness" Value="1" />
+		    <Setter Property="BorderBrush" Value="{TemplateBinding Background}" />
+	    </Style>
+
+	    <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="Transparent" />
+		    <Setter Property="BorderThickness" Value="1" />
+		    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBackgroundPointerOver}" />
+	    </Style>
+
+	    <Style Selector="^:pressed  /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="Transparent" />
+		    <Setter Property="BorderThickness" Value="1" />
+		    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBackgroundPressed}" />
+	    </Style>
+
+	    <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="Transparent" />
+		    <Setter Property="BorderThickness" Value="1" />
+		    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBackgroundDisabled}" />
+	    </Style>
+    </Style>
+
     <Style Selector="^.accent">
       <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="#006f80" />
@@ -71,19 +106,41 @@
       </Style>
 
       <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-	      <Setter Property="Background" Value="#006f80" />
+	      <Setter Property="Background" Value="#008299" />
 	      <Setter Property="Foreground" Value="#ffffff" />
       </Style>
 
       <Style Selector="^:pressed  /template/ ContentPresenter#PART_ContentPresenter">
-	      <Setter Property="Background" Value="#008194" />
-	      <Setter Property="Foreground" Value="#ffffff" />
+	      <Setter Property="Background" Value="#005766" />
+	      <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundPressed}" />
       </Style>
 
-      <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-	      <Setter Property="Background" Value="#464d4e" />
-	      <Setter Property="Foreground" Value="#ffffff" />
-      </Style>
+	    <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="#50005766" />
+		    <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundDisabled}" />
+	    </Style>
+    </Style>
+
+    <Style Selector="^.confirm">
+	    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="#0b8000" />
+		    <Setter Property="Foreground" Value="#ffffff" />
+	    </Style>
+
+	    <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="#0d9900" />
+		    <Setter Property="Foreground" Value="#ffffff" />
+	    </Style>
+
+	    <Style Selector="^:pressed  /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="#086600" />
+		    <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundPressed}" />
+	    </Style>
+
+	    <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		    <Setter Property="Background" Value="#50086600" />
+		    <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundDisabled}" />
+	    </Style>
     </Style>
 
   </ControlTheme>
