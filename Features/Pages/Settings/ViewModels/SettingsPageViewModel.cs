@@ -24,6 +24,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		ParseLanguageEnumToCollection();
 		ParseUsernameAsync();
 		ParseHomeOfficeDayCountAsync();
+		ParseOfficeDayCountAsync();
 
 		_configController.ConfigEntity.PropertyChanged += (_, _) => ParseConfig();
 	}
@@ -112,6 +113,54 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			{
 				HomeOfficeDayCount = (uint)newHomeOfficeDayCount;
 				await DialogHelper.ShowDialogAsync("Erfolgreich", "HomeOffice Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
+			}
+		}
+	}
+
+	#endregion
+
+	#region CHANGE OFFICE DAYS
+
+	private async Task ParseOfficeDayCountAsync()
+		=> OfficeDayCount = await _databaseService.GetOfficeDayCountAsync() ?? 0;
+
+	[ObservableProperty]
+	private uint _officeDayCount;
+
+	[RelayCommand]
+	private async Task ChangeOfficeDayCountAsync()
+	{
+		var inputFormContext = new InputFormViewModel();
+		inputFormContext.SetDescription($"Bitte gebe ein neuen Wert ein, der für die Standort Tage gespeichert werden soll.");
+		inputFormContext.SetInput(OfficeDayCount.ToString());
+		inputFormContext.SetPlaceholder("0");
+		inputFormContext.SetTitle("Standort - Tage:");
+
+		var content = new InputForm() { DataContext = inputFormContext };
+
+		var dialog = new ContentDialog()
+		{
+			Title = "Standort Tage ändern",
+			Content = content,
+			PrimaryButtonText = "Übernehmen",
+			CloseButtonText = "Abbrechen",
+			DefaultButton = ContentDialogButton.Close
+		};
+
+		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
+		if(string.IsNullOrWhiteSpace(inputFormContext.Input))
+			await DialogHelper.ShowDialogAsync("Standort Tage", "Bitte gib einen Wert ein.", DialogType.ERROR);
+		else if(!uint.TryParse(inputFormContext.Input, out var officeDayCount))
+			await DialogHelper.ShowDialogAsync("Standort Tage", "Ungültige Eingabe.", DialogType.ERROR);
+		else if(officeDayCount == OfficeDayCount)
+			await DialogHelper.ShowDialogAsync("Standort Tage", "Standort Tage sind identisch mit den aktuellen.", DialogType.ERROR);
+		else
+		{
+			var newOfficeDayCount = await _databaseService.UpdateOfficeDayCountAsync(officeDayCount);
+			if (newOfficeDayCount is not null)
+			{
+				OfficeDayCount = (uint)newOfficeDayCount;
+				await DialogHelper.ShowDialogAsync("Erfolgreich", "Standort Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
 			}
 		}
 	}

@@ -64,6 +64,25 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	}
 
 	/// <summary>
+	/// Asynchronously retrieves the count of office days from the database.
+	/// </summary>
+	public async Task<uint?> GetOfficeDayCountAsync()
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			return data?.OfficeDayCount;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	/// <summary>
 	/// Asynchronously retrieves the counts of home office and office days from the user's settings in the database.
 	/// </summary>
 	public async Task<(uint homeOfficeCount, uint officeCount, DateTime lastUpdate)?> GetDayCountsFromUserSettingsAsync()
@@ -212,6 +231,28 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 			data.HomeOfficeDayCount = dayCount;
 			await db.SaveChangesAsync();
 			return data.HomeOfficeDayCount;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	/// <summary>
+	/// Asynchronously updates the office day count in the database and returns the updated value.
+	/// </summary>
+	public async Task<uint?> UpdateOfficeDayCountAsync(uint dayCount)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			if (data is null) return null;
+			data.OfficeDayCount = dayCount;
+			await db.SaveChangesAsync();
+			return data.OfficeDayCount;
 		}
 		catch (Exception e)
 		{

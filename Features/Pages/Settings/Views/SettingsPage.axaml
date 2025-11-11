@@ -61,7 +61,7 @@
 							<TextBlock
 								Grid.Column="0"
 								Grid.Row="1"
-								Text="{Binding Username}"
+								Text="{Binding OfficeDayCount}"
 								VerticalAlignment="Center"
 								FontSize="12"
 								Opacity=".5"
@@ -71,7 +71,7 @@
 								Grid.Row="0"
 								Grid.RowSpan="2"
 								Content="Ändern"
-								Command="{Binding ChangeUsernameCommand}"
+								Command="{Binding ChangeOfficeDayCountCommand}"
 							/>
 						</Grid>
 					</fluent:SettingsExpanderItem>
