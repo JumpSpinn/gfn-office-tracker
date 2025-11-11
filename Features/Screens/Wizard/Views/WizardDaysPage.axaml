@@ -50,6 +50,7 @@
 							/>
 							<CheckBox
 								Content="Dienstag"
+								FontFamily="{DynamicResource GlobalFont}"
 								IsChecked="{Binding TuesdaySelected}"
 							/>
 							<CheckBox
