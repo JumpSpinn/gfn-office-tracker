@@ -249,7 +249,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 			if (userSettings is not null)
 			{
 				LoadingText = "Runtime Data found. Loading..";
-				_mainWindowController.SetRuntimeDataAsync(userSettings);
+				_mainWindowController.SetRuntimeData(userSettings);
 				_logController.Info("Runtime Data was loaded.");
 			}
 

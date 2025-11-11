@@ -103,7 +103,7 @@ public sealed class MainWindowController
 	/// work schedule details, and target quotas for home office and office days.
 	/// Marks the runtime data as initialized after setting the new values.
 	/// </summary>
-	public void SetRuntimeDataAsync(UserSettingsModel data)
+	public void SetRuntimeData(UserSettingsModel data)
 	{
 		if (_runtimeDataInitialized)
 		{
