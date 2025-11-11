@@ -83,6 +83,44 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	}
 
 	/// <summary>
+	/// Asynchronously retrieves the configured home office days for the user from the database.
+	/// </summary>
+	public async Task<DayOfWeek[]?> GetHomeOfficeDaysAsync()
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			return data?.HomeOfficeDays;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	/// <summary>
+	/// Asynchronously retrieves the configured office days for the user from the database.
+	/// </summary>
+	public async Task<DayOfWeek[]?> GetOfficeDaysAsync()
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			return data?.OfficeDays;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	/// <summary>
 	/// Asynchronously retrieves the counts of home office and office days from the user's settings in the database.
 	/// </summary>
 	public async Task<(uint homeOfficeCount, uint officeCount, DateTime lastUpdate)?> GetDayCountsFromUserSettingsAsync()
@@ -260,6 +298,50 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 
 		return null;
+	}
+
+	/// <summary>
+	/// Asynchronously updates the home office days in the user's settings within the database.
+	/// </summary>
+	public async Task<bool> UpdateHomeOfficeDaysAsync(DayOfWeek[] days)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			if (data is null) return false;
+			data.HomeOfficeDays = days;
+			await db.SaveChangesAsync();
+			return true;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Asynchronously updates the office days in the user's settings within the database.
+	/// </summary>
+	public async Task<bool> UpdateOfficeDaysAsync(DayOfWeek[] days)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			if (data is null) return false;
+			data.OfficeDays = days;
+			await db.SaveChangesAsync();
+			return true;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return false;
 	}
 
 	#endregion
