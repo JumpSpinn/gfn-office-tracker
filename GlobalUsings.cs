@@ -22,7 +22,6 @@ global using Timer = System.Threading.Timer;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Design;
 global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Logging;
 global using Microsoft.Data.Sqlite;
 
 global using Avalonia;
@@ -82,6 +81,9 @@ global using OfficeTracker.Features.Windows.Main.Data;
 global using OfficeTracker.Features.Windows.Main.Events;
 global using OfficeTracker.Features.Windows.Main.Views;
 global using OfficeTracker.Features.Windows.Main.ViewModels;
+
+global using OfficeTracker.Features.Dialog.Forms.ViewModels;
+global using OfficeTracker.Features.Dialog.Forms.Views;
 
 global using OfficeTracker.Infrastructure.Database.Models;
 global using OfficeTracker.Infrastructure.Database.Services;

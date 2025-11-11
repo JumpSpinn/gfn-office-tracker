@@ -10,16 +10,19 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	private readonly ConfigController _configController;
 	private readonly TimingController _timingController;
 	private readonly DatabaseController _databaseController;
+	private readonly DatabaseService _databaseService;
 
-	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc, DatabaseController dbc)
+	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc, DatabaseController dbc, DatabaseService dbs)
 	{
 		_logController = ls;
 		_configController = cc;
 		_timingController = tc;
 		_databaseController = dbc;
+		_databaseService = dbs;
 
 		ParseConfig();
 		ParseLanguageEnumToCollection();
+		ParseUsernameAsync();
 
 		_configController.ConfigEntity.PropertyChanged += (_, _) => ParseConfig();
 	}
@@ -62,6 +65,54 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	{
 		_configController.ConfigEntity.Language = value;
 		_configController.SaveConfigToFile();
+	}
+
+	#endregion
+
+	#region CHANGE USERNAME
+
+	private async Task ParseUsernameAsync()
+		=> Username = await _databaseService.GetUserNameAsync() ?? string.Empty;
+
+	[ObservableProperty]
+	private string _username = string.Empty;
+
+	[RelayCommand]
+	private async Task ChangeUsernameAsync()
+	{
+		var inputFormContext = new InputFormViewModel();
+		inputFormContext.SetDescription($"Bitte gebe dein neuen Benutzernamen ein und drücke anschließend auf Übernehmen. Die maximale Zeichenlänge beträgt {Options.USERNAME_MAX_LENGTH} Zeichen.");
+		inputFormContext.SetInput(Username);
+		inputFormContext.SetPlaceholder("Max Mustermann");
+		inputFormContext.SetTitle("Neuer Benutzername:");
+
+		var content = new InputForm() { DataContext = inputFormContext };
+
+		var dialog = new ContentDialog()
+		{
+			Title = "Benutzernamen ändern",
+			Content = content,
+			PrimaryButtonText = "Übernehmen",
+			CloseButtonText = "Abbrechen",
+			DefaultButton = ContentDialogButton.Close
+		};
+
+		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
+
+		var userNameInput = inputFormContext.Input;
+		var validation = StringHelper.ValidateUserName(userNameInput);
+		if(!validation.Result)
+			await DialogHelper.ShowDialogAsync("Benutzername", validation.Message, DialogType.ERROR);
+		else
+		{
+			var newUserName = await _databaseService.UpdateUserNameAsync(userNameInput);
+			if (newUserName is not null)
+			{
+				Username = newUserName;
+				await DialogHelper.ShowDialogAsync("Erfolgreich", "Benutzername wurde erfolgreich geändert!",
+					DialogType.SUCCESS);
+			}
+		}
 	}
 
 	#endregion

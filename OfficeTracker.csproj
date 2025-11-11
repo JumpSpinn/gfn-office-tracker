@@ -133,7 +133,13 @@
 		  <DependentUpon>MainWindow.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
-
+	  
+	  <!-- Core: Features: Dialogs -->
+	  <Compile Update="Features\Dialog\Forms\Views\InputForm.axaml.cs">
+		  <DependentUpon>InputForm.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
+	  
   </ItemGroup>
 
 	<!-- Core: Features: Dialogs -->

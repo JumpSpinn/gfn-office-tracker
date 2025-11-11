@@ -26,6 +26,25 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	}
 
 	/// <summary>
+	/// Asynchronously retrieves the user's name from the database.
+	/// </summary>
+	public async Task<string?> GetUserNameAsync()
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			return data?.UserName;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
+	}
+
+	/// <summary>
 	/// Asynchronously retrieves the counts of home office and office days from the user's settings in the database.
 	/// </summary>
 	public async Task<(uint homeOfficeCount, uint officeCount, DateTime lastUpdate)?> GetDayCountsFromUserSettingsAsync()
@@ -52,14 +71,6 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 	/// <summary>
 	/// Asynchronously creates a new user setting entry in the database with the provided parameters.
 	/// </summary>
-	/// <param name="userName">The name of the user for whom the settings are being created.</param>
-	/// <param name="homeOfficeDays">An array of days designated as home office days.</param>
-	/// <param name="officeDays">An array of days designated as office days.</param>
-	/// <param name="homeOfficeDayCount">The initial count of home office days for the user.</param>
-	/// <param name="officeDayCount">The initial count of office days for the user.</param>
-	/// <param name="homeOfficeTargetQuoted">The target number of home office days.</param>
-	/// <param name="officeTargetQuoted">The target number of office days.</param>
-	/// <param name="isCurrentDayTracked">Indicates whether the current day should be set as tracked.</param>
 	public async Task<UserSettingsModel?> CreateUserSettingAsync(string userName, DayOfWeek[] homeOfficeDays, DayOfWeek[] officeDays, uint homeOfficeDayCount, uint officeDayCount, uint homeOfficeTargetQuoted, uint officeTargetQuoted, bool isCurrentDayTracked)
 	{
 		try
@@ -141,6 +152,32 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		}
 
 		return 0;
+	}
+
+	#endregion
+
+	#region UPDATE
+
+	/// <summary>
+	/// Asynchronously updates the user's name in the database.
+	/// </summary>
+	public async Task<string?> UpdateUserNameAsync(string userName)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			if (data is null) return null;
+			data.UserName = userName;
+			await db.SaveChangesAsync();
+			return data.UserName;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return null;
 	}
 
 	#endregion

@@ -27,12 +27,39 @@
 						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock Grid.Column="0" Grid.Row="0" Text="Sprache" VerticalAlignment="Center" />
 							<fluent:FAComboBox
-								Grid.Column="0"
+								Grid.Column="1"
 								Grid.Row="0"
 								HorizontalAlignment="Right"
 								IsEnabled="{Binding IsLanguageSelectionEnabled}"
 								ItemsSource="{Binding Languages}"
 								SelectedItem="{Binding SelectedLanguage}"
+							/>
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<!-- Username -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="0"
+								Text="Benutzername"
+								VerticalAlignment="Center"
+							/>
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="1"
+								Text="{Binding Username}"
+								VerticalAlignment="Center"
+								FontSize="12"
+								Opacity=".5"
+							/>
+							<Button
+								Grid.Column="1"
+								Grid.Row="0"
+								Grid.RowSpan="2"
+								Content="Ändern"
+								Command="{Binding ChangeUsernameCommand}"
 							/>
 						</Grid>
 					</fluent:SettingsExpanderItem>
