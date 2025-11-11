@@ -23,6 +23,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		ParseConfig();
 		ParseLanguageEnumToCollection();
 		ParseUsernameAsync();
+		ParseHomeOfficeDayCountAsync();
 
 		_configController.ConfigEntity.PropertyChanged += (_, _) => ParseConfig();
 	}
@@ -65,6 +66,54 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	{
 		_configController.ConfigEntity.Language = value;
 		_configController.SaveConfigToFile();
+	}
+
+	#endregion
+
+	#region CHANGE HOMEOFFICE DAYS
+
+	private async Task ParseHomeOfficeDayCountAsync()
+		=> HomeOfficeDayCount = await _databaseService.GetHomeOfficeDayCountAsync() ?? 0;
+
+	[ObservableProperty]
+	private uint _homeOfficeDayCount;
+
+	[RelayCommand]
+	private async Task ChangeHomeOfficeDayCountAsync()
+	{
+		var inputFormContext = new InputFormViewModel();
+		inputFormContext.SetDescription($"Bitte gebe ein neuen Wert ein, der für die HomeOffice Tage gespeichert werden soll.");
+		inputFormContext.SetInput(HomeOfficeDayCount.ToString());
+		inputFormContext.SetPlaceholder("0");
+		inputFormContext.SetTitle("HomeOffice - Tage:");
+
+		var content = new InputForm() { DataContext = inputFormContext };
+
+		var dialog = new ContentDialog()
+		{
+			Title = "HomeOffice Tage ändern",
+			Content = content,
+			PrimaryButtonText = "Übernehmen",
+			CloseButtonText = "Abbrechen",
+			DefaultButton = ContentDialogButton.Close
+		};
+
+		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
+		if(string.IsNullOrWhiteSpace(inputFormContext.Input))
+			await DialogHelper.ShowDialogAsync("HomeOffice Tage", "Bitte gib einen Wert ein.", DialogType.ERROR);
+		else if(!uint.TryParse(inputFormContext.Input, out var homeOfficeDayCount))
+			await DialogHelper.ShowDialogAsync("HomeOffice Tage", "Ungültige Eingabe.", DialogType.ERROR);
+		else if(homeOfficeDayCount == HomeOfficeDayCount)
+			await DialogHelper.ShowDialogAsync("HomeOffice Tage", "HomeOffice Tage sind identisch mit den aktuellen.", DialogType.ERROR);
+		else
+		{
+			var newHomeOfficeDayCount = await _databaseService.UpdateHomeOfficeDayCountAsync(homeOfficeDayCount);
+			if (newHomeOfficeDayCount is not null)
+			{
+				HomeOfficeDayCount = (uint)newHomeOfficeDayCount;
+				await DialogHelper.ShowDialogAsync("Erfolgreich", "HomeOffice Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
+			}
+		}
 	}
 
 	#endregion
