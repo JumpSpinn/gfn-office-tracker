@@ -19,4 +19,19 @@ public static class StringHelper
 
 		return string.Concat(value.AsSpan(0, maxLength), suffix);
 	}
+
+	/// <summary>
+	/// Validates a given username according to specific criteria such as length, allowed characters, and non-empty content.
+	/// </summary>
+	public static (string Message, bool Result) ValidateUserName(string userName)
+	{
+		string allowedChars = @"^[\p{L}\s\-']+$";
+		if(string.IsNullOrWhiteSpace(userName))
+			return ("Benutzername darf nicht leer sein.", false);
+		else if(userName.Length > Options.USERNAME_MAX_LENGTH)
+			return ($"Benutzername darf nur maximal {Options.USERNAME_MAX_LENGTH} Zeichen lang sein.", false);
+		else if(!Regex.IsMatch(userName, allowedChars))
+			return ("Benutzername darf nur Buchstaben, Leerzeichen und Bindestriche enthalten.", false);
+		return ("", true);
+	}
 }
