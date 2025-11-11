@@ -109,7 +109,7 @@
 		  <DependentUpon>WizardWelcomePage.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
-	  
+
 	  <!-- Core: Features: Templates -->
 	  <Compile Update="Features\Templates\Base\StatisticTemplate.axaml.cs">
 		  <DependentUpon>StatisticTemplate.axaml</DependentUpon>
@@ -127,19 +127,20 @@
 		  <DependentUpon>PlannableDayListTemplate.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
-	  
+
 	  <!-- Core: Features: Windows -->
 	  <Compile Update="Features\Windows\Main\Views\MainWindow.axaml.cs">
 		  <DependentUpon>MainWindow.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
-	  
+
   </ItemGroup>
 
 	<!-- Core: Features: Dialogs -->
 	<ItemGroup>
 		<AdditionalFiles Include="Features\Dialog\Forms\CurrentDayForm.axaml" />
 		<AdditionalFiles Include="Features\Dialog\Forms\PlannableDayForm.axaml" />
+		<AdditionalFiles Include="Features\Dialog\Forms\HolidayForm.axaml" />
 		<AdditionalFiles Include="Features\Dialog\Content\RestartContentDialog.axaml" />
 	</ItemGroup>
 </Project>
