@@ -40,14 +40,14 @@
 						<TextBlock
 							HorizontalAlignment="Left"
 							TextWrapping="Wrap"
-							Text="Damit wir wissen wer du eigentlich bist, verrate uns doch wie du eigentlich heißt?"
+							Text="Damit wir wissen wer du eigentlich bist, verrate uns doch wie du genannt werden möchtest?"
 						/>
 						<StackPanel Orientation="Vertical" Spacing="2">
 							<TextBox
 								HorizontalAlignment="Stretch"
 								TextAlignment="Left"
 								FontFamily="{DynamicResource GlobalFont}"
-								Watermark="Max Mustermann"
+								Watermark="Benutzername"
 								Text="{Binding Name}"
 							/>
 							<TextBlock
