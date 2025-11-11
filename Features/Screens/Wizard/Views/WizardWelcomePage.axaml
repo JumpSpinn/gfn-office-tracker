@@ -47,6 +47,12 @@
 							TextWrapping="Wrap"
 							Text="Du kannst zu jederzeit zum vorherigen Schritt zurückkehren um noch Änderungen vorzunehmen."
 						/>
+						<TextBlock
+							HorizontalAlignment="Left"
+							TextWrapping="Wrap"
+							Opacity="1"
+							Text="Alle angegebenen Daten, können später in den Einstellungen jederzeit angepasst werden, sollte sich bei dir etwas ändern."
+						/>
 					</StackPanel>
 				</StackPanel>
 				<Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
