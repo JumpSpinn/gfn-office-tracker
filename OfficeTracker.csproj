@@ -139,6 +139,10 @@
 		  <DependentUpon>InputForm.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
+	  <Compile Update="Features\Dialog\Forms\Views\DefaultHomeOfficeDaysForm.axaml.cs">
+		  <DependentUpon>DefaultHomeOfficeDaysForm.axaml</DependentUpon>
+		  <SubType>Code</SubType>
+	  </Compile>
 	  
   </ItemGroup>
 

@@ -53,6 +53,7 @@ global using OfficeTracker.Core.Entities;
 global using OfficeTracker.Core.Enums;
 global using OfficeTracker.Core.Helpers;
 global using OfficeTracker.Core.Messages;
+global using OfficeTracker.Core.Extensions;
 
 global using OfficeTracker.Core.Services.Config.Controllers;
 global using OfficeTracker.Core.Services.Config.Services;

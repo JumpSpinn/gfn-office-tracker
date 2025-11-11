@@ -13,71 +13,6 @@
 		<ScrollViewer Padding="16" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
 			<StackPanel Orientation="Vertical" Spacing="4">
 
-				<!-- Quote -->
-				<fluent:SettingsExpander IsExpanded="True">
-					<fluent:SettingsExpander.Header>
-						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
-							<materialIcons:MaterialIcon Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Kind="Slider" Height="24" Width="24" Margin="0 0 12 0" />
-							<TextBlock Grid.Row="0" Grid.Column="1" Text="Quoten" VerticalAlignment="Center" />
-						</Grid>
-					</fluent:SettingsExpander.Header>
-
-					<!-- Anwesenheitstage - HomeOffice -->
-					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-							<TextBlock
-								Grid.Column="0"
-								Grid.Row="0"
-								Text="Tage - HomeOffice"
-								VerticalAlignment="Center"
-							/>
-							<TextBlock
-								Grid.Column="0"
-								Grid.Row="1"
-								Text="{Binding HomeOfficeDayCount}"
-								VerticalAlignment="Center"
-								FontSize="12"
-								Opacity=".5"
-							/>
-							<Button
-								Grid.Column="1"
-								Grid.Row="0"
-								Grid.RowSpan="2"
-								Content="Ändern"
-								Command="{Binding ChangeHomeOfficeDayCountCommand}"
-							/>
-						</Grid>
-					</fluent:SettingsExpanderItem>
-
-					<!-- Anwesenheitstage - Standort -->
-					<fluent:SettingsExpanderItem>
-						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-							<TextBlock
-								Grid.Column="0"
-								Grid.Row="0"
-								Text="Tage - Standort"
-								VerticalAlignment="Center"
-							/>
-							<TextBlock
-								Grid.Column="0"
-								Grid.Row="1"
-								Text="{Binding OfficeDayCount}"
-								VerticalAlignment="Center"
-								FontSize="12"
-								Opacity=".5"
-							/>
-							<Button
-								Grid.Column="1"
-								Grid.Row="0"
-								Grid.RowSpan="2"
-								Content="Ändern"
-								Command="{Binding ChangeOfficeDayCountCommand}"
-							/>
-						</Grid>
-					</fluent:SettingsExpanderItem>
-
-				</fluent:SettingsExpander>
-
 				<!-- General -->
 				<fluent:SettingsExpander IsExpanded="False">
 					<fluent:SettingsExpander.Header>
@@ -137,6 +72,97 @@
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" IsChecked="{Binding RememberWindowPositionSize}" />
 						</Grid>
 					</fluent:SettingsExpanderItem>
+				</fluent:SettingsExpander>
+
+				<!-- Quote -->
+				<fluent:SettingsExpander IsExpanded="True">
+					<fluent:SettingsExpander.Header>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+							<materialIcons:MaterialIcon Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Kind="Slider" Height="24" Width="24" Margin="0 0 12 0" />
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Quote / Arbeitstage" VerticalAlignment="Center" />
+						</Grid>
+					</fluent:SettingsExpander.Header>
+
+					<!-- Anwesenheitstage - HomeOffice -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="0"
+								Text="Tage - HomeOffice"
+								VerticalAlignment="Center"
+							/>
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="1"
+								Text="{Binding HomeOfficeDayCount}"
+								VerticalAlignment="Center"
+								FontSize="12"
+								Opacity=".5"
+							/>
+							<Button
+								Grid.Column="1"
+								Grid.Row="0"
+								Grid.RowSpan="2"
+								Content="Ändern"
+								Command="{Binding ChangeHomeOfficeDayCountCommand}"
+							/>
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<!-- Anwesenheitstage - Standort -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="0"
+								Text="Tage - Standort"
+								VerticalAlignment="Center"
+							/>
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="1"
+								Text="{Binding OfficeDayCount}"
+								VerticalAlignment="Center"
+								FontSize="12"
+								Opacity=".5"
+							/>
+							<Button
+								Grid.Column="1"
+								Grid.Row="0"
+								Grid.RowSpan="2"
+								Content="Ändern"
+								Command="{Binding ChangeOfficeDayCountCommand}"
+							/>
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="0"
+								Text="Standard Wochentage (HomeOffice)"
+								VerticalAlignment="Center"
+							/>
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="1"
+								Text="{Binding DefaultHomeOfficeWeekdaysDisplay}"
+								VerticalAlignment="Center"
+								FontSize="12"
+								Opacity=".5"
+							/>
+							<Button
+								Grid.Column="1"
+								Grid.Row="0"
+								Grid.RowSpan="2"
+								Content="Ändern"
+								Command="{Binding ChangeDefaultHomeOfficeWeekdaysCommand}"
+							/>
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
 				</fluent:SettingsExpander>
 
 				<!-- Database -->

@@ -1,0 +1,43 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:OfficeTracker.Features.Dialog.Forms.ViewModels"
+             x:DataType="vm:DefaultHomeOfficeDaysFormViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="OfficeTracker.Features.Dialog.Forms.Views.DefaultHomeOfficeDaysForm">
+	<StackPanel Orientation="Vertical" Spacing="10">
+		<TextBlock
+			HorizontalAlignment="Left"
+			TextWrapping="Wrap"
+			Text="Kreuze bitte alle Wochentage an, an denen du standardmäßig im HomeOffice bist:"
+		/>
+		<StackPanel Orientation="Vertical">
+			<CheckBox
+				Content="Montag"
+				FontFamily="{DynamicResource GlobalFont}"
+				IsChecked="{Binding MondaySelected}"
+			/>
+			<CheckBox
+				Content="Dienstag"
+				FontFamily="{DynamicResource GlobalFont}"
+				IsChecked="{Binding TuesdaySelected}"
+			/>
+			<CheckBox
+				Content="Mittwoch"
+				FontFamily="{DynamicResource GlobalFont}"
+				IsChecked="{Binding WednesdaySelected}"
+			/>
+			<CheckBox
+				Content="Donnerstag"
+				FontFamily="{DynamicResource GlobalFont}"
+				IsChecked="{Binding ThursdaySelected}"
+			/>
+			<CheckBox
+				Content="Freitag"
+				FontFamily="{DynamicResource GlobalFont}"
+				IsChecked="{Binding FridaySelected}"
+			/>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

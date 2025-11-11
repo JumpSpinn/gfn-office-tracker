@@ -11,20 +11,23 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	private readonly TimingController _timingController;
 	private readonly DatabaseController _databaseController;
 	private readonly DatabaseService _databaseService;
+	private readonly MainWindowController _mainWindowController;
 
-	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc, DatabaseController dbc, DatabaseService dbs)
+	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc, DatabaseController dbc, DatabaseService dbs, MainWindowController mwc)
 	{
 		_logController = ls;
 		_configController = cc;
 		_timingController = tc;
 		_databaseController = dbc;
 		_databaseService = dbs;
+		_mainWindowController = mwc;
 
 		ParseConfig();
 		ParseLanguageEnumToCollection();
 		ParseUsernameAsync();
 		ParseHomeOfficeDayCountAsync();
 		ParseOfficeDayCountAsync();
+		ParseDefaultWeekdaysAsync();
 
 		_configController.ConfigEntity.PropertyChanged += (_, _) => ParseConfig();
 	}
@@ -73,12 +76,18 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 	#region CHANGE HOMEOFFICE DAYS
 
+	/// <summary>
+	/// Asynchronously parses the home office day count and updates the corresponding property.
+	/// </summary>
 	private async Task ParseHomeOfficeDayCountAsync()
 		=> HomeOfficeDayCount = await _databaseService.GetHomeOfficeDayCountAsync() ?? 0;
 
 	[ObservableProperty]
 	private uint _homeOfficeDayCount;
 
+	/// <summary>
+	/// Asynchronously updates the home office day count property based on user input.
+	/// </summary>
 	[RelayCommand]
 	private async Task ChangeHomeOfficeDayCountAsync()
 	{
@@ -112,7 +121,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			if (newHomeOfficeDayCount is not null)
 			{
 				HomeOfficeDayCount = (uint)newHomeOfficeDayCount;
-				await DialogHelper.ShowDialogAsync("Erfolgreich", "HomeOffice Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
+				await DialogHelper.ShowDialogAsync("HomeOffice Tage", "HomeOffice Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
 			}
 		}
 	}
@@ -121,12 +130,18 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 	#region CHANGE OFFICE DAYS
 
+	/// <summary>
+	/// Asynchronously parses the office day count and updates the corresponding property.
+	/// </summary>
 	private async Task ParseOfficeDayCountAsync()
 		=> OfficeDayCount = await _databaseService.GetOfficeDayCountAsync() ?? 0;
 
 	[ObservableProperty]
 	private uint _officeDayCount;
 
+	/// <summary>
+	/// Asynchronously updates the office day count property based on user input.
+	/// </summary>
 	[RelayCommand]
 	private async Task ChangeOfficeDayCountAsync()
 	{
@@ -160,7 +175,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			if (newOfficeDayCount is not null)
 			{
 				OfficeDayCount = (uint)newOfficeDayCount;
-				await DialogHelper.ShowDialogAsync("Erfolgreich", "Standort Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
+				await DialogHelper.ShowDialogAsync("Standort Tage", "Standort Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
 			}
 		}
 	}
@@ -169,12 +184,20 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 	#region CHANGE USERNAME
 
+	/// <summary>
+	/// Asynchronously retrieves and updates the username property from the database using the DatabaseService.
+	/// </summary>
 	private async Task ParseUsernameAsync()
 		=> Username = await _databaseService.GetUserNameAsync() ?? string.Empty;
 
 	[ObservableProperty]
 	private string _username = string.Empty;
 
+	/// <summary>
+	/// Opens a dialog to allow the user to change their username.
+	/// Validates the input and updates the username if it is valid.
+	/// Displays appropriate success or error messages based on the validation and update process.
+	/// </summary>
 	[RelayCommand]
 	private async Task ChangeUsernameAsync()
 	{
@@ -207,9 +230,84 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			if (newUserName is not null)
 			{
 				Username = newUserName;
-				await DialogHelper.ShowDialogAsync("Erfolgreich", "Benutzername wurde erfolgreich geändert!",
+				_mainWindowController.RuntimeDataEntity.UserName = newUserName;
+				await DialogHelper.ShowDialogAsync("Benutzername", "Benutzername wurde erfolgreich geändert!",
 					DialogType.SUCCESS);
 			}
+		}
+	}
+
+	#endregion
+
+	#region CHANGE DEFAULT HOMEOFFICE WEEKDAYS
+
+	[ObservableProperty]
+	private string _defaultHomeOfficeWeekdaysDisplay = string.Empty;
+
+	private DayOfWeek[] _homeOfficeWeekDays = [];
+	private DayOfWeek[] _officeWeekDays = [];
+
+	/// <summary>
+	/// Updates the display of default home office and office weekdays based on the provided data.
+	/// </summary>
+	private void UpdateDefaultHomeOfficeWeekdaysDisplay(DayOfWeek[]? homeOffice, DayOfWeek[]? office)
+	{
+		_homeOfficeWeekDays = homeOffice ?? [];
+		_officeWeekDays = office ?? [];
+		DefaultHomeOfficeWeekdaysDisplay = _homeOfficeWeekDays.ToCommaSeparatedString();
+		if (DefaultHomeOfficeWeekdaysDisplay.Length <= 0)
+			DefaultHomeOfficeWeekdaysDisplay = "Keine";
+	}
+
+	/// <summary>
+	/// Fetches the default weekdays for home office and office, and updates the display properties accordingly.
+	/// </summary>
+	private async Task ParseDefaultWeekdaysAsync()
+	{
+		var homeOfficeWeekDays = await _databaseService.GetHomeOfficeDaysAsync();
+		var officeWeekDays = await _databaseService.GetOfficeDaysAsync();
+		UpdateDefaultHomeOfficeWeekdaysDisplay(homeOfficeWeekDays, officeWeekDays);
+	}
+
+	/// <summary>
+	/// Opens a dialog allowing the user to update the default home office weekdays.
+	/// Updates the persisted settings and applies changes to runtime data if the user confirms the modifications.
+	/// </summary>
+	[RelayCommand]
+	private async Task ChangeDefaultHomeOfficeWeekdaysAsync()
+	{
+		var viewModel = new DefaultHomeOfficeDaysFormViewModel();
+		viewModel.SetData(_homeOfficeWeekDays);
+		var view = new DefaultHomeOfficeDaysForm() { DataContext = viewModel };
+
+		var dialog = new ContentDialog()
+		{
+			Title = "Standard Wochentage ändern",
+			Content = view,
+			PrimaryButtonText = "Übernehmen",
+			CloseButtonText = "Abbrechen",
+			DefaultButton = ContentDialogButton.Close
+		};
+
+		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
+
+		var (homeOfficeDays, officeDays) = viewModel.GetData();
+		if (homeOfficeDays.Length == 0 && officeDays.Length == 0)
+			await DialogHelper.ShowDialogAsync("Standard Wochentage",
+				"Wenn du diese Fehlermeldung siehst, hast du ein Preis gewonnen!", DialogType.ERROR);
+		else if(homeOfficeDays == _homeOfficeWeekDays && officeDays == _officeWeekDays)
+			await DialogHelper.ShowDialogAsync("Standard Wochentage", "Diese Wochentage sind bereits deine Standard Wochentage.", DialogType.ERROR);
+		else if (!await _databaseService.UpdateHomeOfficeDaysAsync(homeOfficeDays) ||
+		         !await _databaseService.UpdateOfficeDaysAsync(officeDays))
+			await DialogHelper.ShowDialogAsync("Standard Wochentage", "Wochentage konnten nicht gespeichert werden.",
+				DialogType.ERROR);
+		else
+		{
+			_mainWindowController.RuntimeDataEntity.HomeOfficeDays = homeOfficeDays;
+			_mainWindowController.RuntimeDataEntity.OfficeDays = officeDays;
+			UpdateDefaultHomeOfficeWeekdaysDisplay(homeOfficeDays, officeDays);
+			await DialogHelper.ShowDialogAsync("Standard Wochentage", "Änderungen wurden erfolgreich gespeichert.",
+				DialogType.SUCCESS);
 		}
 	}
 
