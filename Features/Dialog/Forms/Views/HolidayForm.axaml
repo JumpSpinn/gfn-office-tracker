@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
-             x:Class="OfficeTracker.Features.Dialog.Forms.HolidayForm">
+             x:Class="OfficeTracker.Features.Dialog.Forms.Views.HolidayForm">
 	<StackPanel Orientation="Vertical" Spacing="20">
 		<TextBlock
 			TextWrapping="Wrap"

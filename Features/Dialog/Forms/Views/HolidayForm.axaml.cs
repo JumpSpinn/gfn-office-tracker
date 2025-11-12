@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Features.Dialog.Forms;
+﻿namespace OfficeTracker.Features.Dialog.Forms.Views;
 
 public partial class HolidayForm : UserControl
 {

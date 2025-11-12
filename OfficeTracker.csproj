@@ -143,14 +143,26 @@
 		  <DependentUpon>DefaultHomeOfficeDaysForm.axaml</DependentUpon>
 		  <SubType>Code</SubType>
 	  </Compile>
-	  
-  </ItemGroup>
 
-	<!-- Core: Features: Dialogs -->
-	<ItemGroup>
-		<AdditionalFiles Include="Features\Dialog\Forms\CurrentDayForm.axaml" />
-		<AdditionalFiles Include="Features\Dialog\Forms\PlannableDayForm.axaml" />
-		<AdditionalFiles Include="Features\Dialog\Forms\HolidayForm.axaml" />
-		<AdditionalFiles Include="Features\Dialog\Content\RestartContentDialog.axaml" />
-	</ItemGroup>
+		<Compile Update="Features\Dialog\Forms\Views\DefaultHomeOfficeDaysForm.axaml.cs">
+			<DependentUpon>DefaultHomeOfficeDaysForm.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+	  <Compile Update="Features\Dialog\Forms\Views\CurrentDayForm.axaml.cs">
+	    <DependentUpon>CurrentDayForm.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Features\Dialog\Forms\Views\HolidayForm.axaml.cs">
+	    <DependentUpon>HolidayForm.axaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+		<Compile Update="Features\Dialog\Forms\Views\PlannableDayForm.axaml.cs">
+			<DependentUpon>PlannableDayForm.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Features\Dialog\Content\RestartContentDialog.axaml.cs">
+			<DependentUpon>RestartContentDialog.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+  </ItemGroup>
 </Project>

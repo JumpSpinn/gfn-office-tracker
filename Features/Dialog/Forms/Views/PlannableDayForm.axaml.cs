@@ -1,4 +1,4 @@
-﻿namespace OfficeTracker.Features.Dialog.Forms;
+﻿namespace OfficeTracker.Features.Dialog.Forms.Views;
 
 /// <summary>
 /// Represents a user control form for planning a specific day type and selecting a specific date.
