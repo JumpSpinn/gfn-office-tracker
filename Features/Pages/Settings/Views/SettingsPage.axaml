@@ -75,7 +75,7 @@
 				</fluent:SettingsExpander>
 
 				<!-- Quote -->
-				<fluent:SettingsExpander IsExpanded="True">
+				<fluent:SettingsExpander IsExpanded="False">
 					<fluent:SettingsExpander.Header>
 						<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
 							<materialIcons:MaterialIcon Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Kind="Slider" Height="24" Width="24" Margin="0 0 12 0" />
@@ -137,6 +137,7 @@
 						</Grid>
 					</fluent:SettingsExpanderItem>
 
+					<!-- Standard Wochentage (HomeOffice) -->
 					<fluent:SettingsExpanderItem>
 						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 							<TextBlock
@@ -159,6 +160,33 @@
 								Grid.RowSpan="2"
 								Content="Ändern"
 								Command="{Binding ChangeDefaultHomeOfficeWeekdaysCommand}"
+							/>
+						</Grid>
+					</fluent:SettingsExpanderItem>
+
+					<!-- HomeOffice Quote -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="0"
+								Text="Quote (HomeOffice)"
+								VerticalAlignment="Center"
+							/>
+							<TextBlock
+								Grid.Column="0"
+								Grid.Row="1"
+								Text="{Binding HomeOfficeTargetQuoted}"
+								VerticalAlignment="Center"
+								FontSize="12"
+								Opacity=".5"
+							/>
+							<Button
+								Grid.Column="1"
+								Grid.Row="0"
+								Grid.RowSpan="2"
+								Content="Ändern"
+								Command="{Binding ChangeHomeOfficeTargetQuotedCommand}"
 							/>
 						</Grid>
 					</fluent:SettingsExpanderItem>

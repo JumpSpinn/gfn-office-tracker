@@ -344,6 +344,30 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		return false;
 	}
 
+	/// <summary>
+	/// Asynchronously updates the user's home office target quota in the database.
+	/// </summary>
+	public async Task<bool> UpdateHomeOfficeTargetQuoteAsync(uint newQuota)
+	{
+		try
+		{
+			await using var db = await dbContextFactory.CreateDbContextAsync();
+			var data = await db.UserSettings.FirstOrDefaultAsync();
+			if (data is null) return false;
+			var officeQuota = 100 - newQuota;
+			data.HomeOfficeTargetQuoted = newQuota;
+			data.OfficeTargetQuoted = officeQuota;
+			await db.SaveChangesAsync();
+			return true;
+		}
+		catch (Exception e)
+		{
+			logController.Exception(e);
+		}
+
+		return false;
+	}
+
 	#endregion
 
 	#endregion

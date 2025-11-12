@@ -24,6 +24,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 		ParseConfig();
 		ParseLanguageEnumToCollection();
+		ParseHomeOfficeTargetQuoted();
 		ParseUsernameAsync();
 		ParseHomeOfficeDayCountAsync();
 		ParseOfficeDayCountAsync();
@@ -307,6 +308,64 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			_mainWindowController.RuntimeDataEntity.OfficeDays = officeDays;
 			UpdateDefaultHomeOfficeWeekdaysDisplay(homeOfficeDays, officeDays);
 			await DialogHelper.ShowDialogAsync("Standard Wochentage", "Änderungen wurden erfolgreich gespeichert.",
+				DialogType.SUCCESS);
+		}
+	}
+
+	#endregion
+
+	#region CHANGE HOMEOFFICE QUOTA
+
+	[ObservableProperty]
+	private uint _homeOfficeTargetQuoted;
+
+	/// <summary>
+	/// Retrieves and assigns the value of the home office target quoted
+	/// from the runtime data entity provided by the main window controller.
+	/// </summary>
+	private void ParseHomeOfficeTargetQuoted()
+		=> HomeOfficeTargetQuoted = _mainWindowController.RuntimeDataEntity.HomeOfficeTargetQuoted;
+
+	/// <summary>
+	/// Initiates a dialog to change the target HomeOffice quota, validates the input, and updates the value in the database and runtime context if valid.
+	/// </summary>
+	[RelayCommand]
+	private async Task ChangeHomeOfficeTargetQuotedAsync()
+	{
+		var inputFormContext = new InputFormViewModel();
+		inputFormContext.SetDescription($"Bitte gebe deine neue gewünschte HomeOffice Ziel-Quote ein.");
+		inputFormContext.SetInput(HomeOfficeTargetQuoted.ToString());
+		inputFormContext.SetPlaceholder("1337");
+		inputFormContext.SetTitle("Quote:");
+
+		var content = new InputForm() { DataContext = inputFormContext };
+
+		var dialog = new ContentDialog()
+		{
+			Title = "Quote (HomeOffice) ändern",
+			Content = content,
+			PrimaryButtonText = "Übernehmen",
+			CloseButtonText = "Abbrechen",
+			DefaultButton = ContentDialogButton.Close
+		};
+
+		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
+
+		var inputResult = inputFormContext.Input;
+		if(string.IsNullOrWhiteSpace(inputResult))
+			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Bitte gib einen Wert ein.", DialogType.ERROR);
+		else if(!uint.TryParse(inputResult, out uint parsedResult))
+			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Das ist ein ungültiger Wert.", DialogType.ERROR);
+		else if(parsedResult == HomeOfficeTargetQuoted)
+			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Diese Quote ist bereits deine aktuelle Ziel-Quote.", DialogType.ERROR);
+		else if(!await _databaseService.UpdateHomeOfficeTargetQuoteAsync(parsedResult))
+			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Änderung konnte nicht gespeichert werden.", DialogType.ERROR);
+		else
+		{
+			HomeOfficeTargetQuoted = parsedResult;
+			_mainWindowController.RuntimeDataEntity.HomeOfficeTargetQuoted = parsedResult;
+			_mainWindowController.RuntimeDataEntity.OfficeTargetQuoted = 100 - parsedResult;
+			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Neue Ziel-Quote wurde erfolgreich gespeichert.",
 				DialogType.SUCCESS);
 		}
 	}

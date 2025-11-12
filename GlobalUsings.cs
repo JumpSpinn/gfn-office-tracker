@@ -66,6 +66,9 @@ global using OfficeTracker.Core.Services.Time.Enums;
 global using OfficeTracker.Core.Services.Config.Entities;
 
 global using OfficeTracker.Features.Dialog.Forms;
+global using CurrentDayForm = OfficeTracker.Features.Dialog.Forms.Views.CurrentDayForm;
+global using HolidayForm = OfficeTracker.Features.Dialog.Forms.Views.HolidayForm;
+global using PlannableDayForm = OfficeTracker.Features.Dialog.Forms.Views.PlannableDayForm;
 
 global using OfficeTracker.Features.Pages.Main.ViewModels;
 global using OfficeTracker.Features.Pages.Main.Services;
