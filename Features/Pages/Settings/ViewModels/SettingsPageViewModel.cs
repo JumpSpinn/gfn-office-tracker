@@ -22,25 +22,53 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		_databaseService = dbs;
 		_mainWindowController = mwc;
 
-		ParseConfig();
+		UpdateConfig();
 		ParseLanguageEnumToCollection();
-		ParseHomeOfficeTargetQuoted();
-		ParseUsernameAsync();
-		ParseHomeOfficeDayCountAsync();
-		ParseOfficeDayCountAsync();
-		ParseDefaultWeekdaysAsync();
 
-		_configController.ConfigEntity.PropertyChanged += (_, _) => ParseConfig();
+		_configController.ConfigEntity.PropertyChanged += (_, _) => UpdateConfig();
 	}
+
+	#region INITIALIZE
+
+	[ObservableProperty]
+	private bool _isInitialized;
+
+	/// <summary>
+	/// Asynchronously initializes the settings page view model by retrieving
+	/// and processing configuration data from the database and runtime environment.
+	/// </summary>
+	public async Task InitializeAsync()
+	{
+		IsInitialized = false;
+		try
+		{
+			ParseHomeOfficeTargetQuoted();
+			await ParseUsernameAsync();
+			await ParseHomeOfficeDayCountAsync();
+			await ParseOfficeDayCountAsync();
+			await ParseDefaultWeekdaysAsync();
+		}
+		catch (Exception e)
+		{
+			_logController.Exception(e);
+		}
+		finally
+		{
+			IsInitialized = true;
+		}
+	}
+
+	#endregion
 
 	/// <summary>
 	/// Parses the current configuration and updates the corresponding properties.
 	/// </summary>
-	private void ParseConfig()
+	private void UpdateConfig()
 	{
 		RememberWindowPositionSize = _configController.ConfigEntity.RememberWindowPositionSize;
 		SelectedLanguage = _configController.ConfigEntity.Language;
 		SaveLocation = _configController.ConfigEntity.DatabasePath;
+		_logController.Debug("Parsed config for settings page.");
 	}
 
 	#region LANGUAGE SELECTION
