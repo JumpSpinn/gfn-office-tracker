@@ -38,7 +38,7 @@
 					<MenuItem
 						Padding="8 0"
 						Margin="0 8"
-						Click="RequestToggleSettingsMenu"
+						Command="{Binding ToggleSettingsMenuCommand}"
 						ToolTip.Tip="Einstellungen öffnen"
 						ToolTip.Placement="Bottom"
 						ToolTip.VerticalOffset="0"
@@ -65,7 +65,7 @@
 					<MenuItem
 						Padding="8 0"
 						Margin="0 8"
-						Click="RequestOpenSaveFolder"
+						Command="{Binding OpenSaveFolderCommand}"
 						ToolTip.Tip="Verzeichnis öffnen"
 						ToolTip.Placement="Bottom"
 						ToolTip.VerticalOffset="0"

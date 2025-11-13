@@ -16,27 +16,6 @@ public sealed partial class MainWindow : AppWindow, IDisposable
         _updateTimer.Elapsed += (_, _) => Dispatcher.UIThread.Post(OnPositionSizeChangeComplete);
     }
 
-    #region MENU BAR
-
-    /// <summary>
-    /// Handles the toggle action for the settings menu in the main window.
-    /// This method interacts with the MainWindowViewModel to change the display state
-    /// of the settings menu.
-    /// </summary>
-    private void RequestToggleSettingsMenu(object? sender, RoutedEventArgs e)
-    {
-	    if (DataContext is not MainWindowViewModel mwvm) return;
-	    mwvm.ToggleSettingsMenu();
-    }
-
-    private void RequestOpenSaveFolder(object? sender, RoutedEventArgs e)
-    {
-	    if (DataContext is not MainWindowViewModel mwvm) return;
-	    mwvm.OpenSaveFolder();
-    }
-
-    #endregion
-
     #region WINDOW POSITION/SIZE CHANGE
 
     private void OnSizeChanged(object? sender, SizeChangedEventArgs e) =>
