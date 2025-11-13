@@ -11,13 +11,15 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	private readonly DatabaseService _databaseService;
 	private readonly MainWindowController _mainWindowController;
 	private readonly CalculateWeekService _calculateWeekService;
+	private readonly ConfigController _configController;
 
-    public MainPageViewModel(DatabaseService ds, LogController lc, MainWindowController mws, CalculateWeekService cws)
+    public MainPageViewModel(DatabaseService ds, LogController lc, MainWindowController mws, CalculateWeekService cws, ConfigController cc)
     {
 	    _logController = lc;
 	    _databaseService = ds;
 	    _mainWindowController = mws;
 	    _calculateWeekService = cws;
+	    _configController = cc;
     }
 
     #region INITIALIZE
@@ -34,8 +36,8 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    IsInitializing = true;
 	    try
 	    {
-		    await ReCalculateWeeksAsync();
 		    await RefreshStatisticsAsync();
+		    await ReCalculateWeeksAsync();
 		    await LoadPlannableDaysAsync();
 		    await LoadHolidaysAsync();
 	    }
@@ -46,6 +48,7 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    finally
 	    {
 		    IsInitializing = false;
+		    UpdateSelectedTabIndex(_configController.ConfigEntity.SelectedTab);
 	    }
     }
 

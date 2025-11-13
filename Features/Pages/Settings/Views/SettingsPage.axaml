@@ -79,6 +79,14 @@
 							<ToggleSwitch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" OffContent="" OnContent="" IsChecked="{Binding RememberWindowPositionSize}" />
 						</Grid>
 					</fluent:SettingsExpanderItem>
+
+					<!-- Save selected tab index -->
+					<fluent:SettingsExpanderItem>
+						<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="Ausgewählten Tab merken" VerticalAlignment="Center" />
+							<ToggleSwitch Grid.Column="1" Grid.Row="0" OffContent="" OnContent="" IsChecked="{Binding RememberSelectedTabIndex}" />
+						</Grid>
+					</fluent:SettingsExpanderItem>
 				</fluent:SettingsExpander>
 
 				<!-- Quote -->

@@ -56,6 +56,8 @@ public sealed class ConfigController
 			ConfigEntity.RememberWindowPositionSize = config.RememberWindowPositionSize;
 			ConfigEntity.Language = config.Language;
 			ConfigEntity.DatabasePath = config.DatabasePath;
+			ConfigEntity.SelectedTab = config.SelectedTab;
+			ConfigEntity.RememberSelectedTabIndex = config.RememberSelectedTabIndex;
 
 			return await SaveConfigToFile();
 		}

@@ -6,6 +6,25 @@
 /// </summary>
 public sealed partial class MainPageViewModel
 {
+	#region SELECTED TAB
+
+	[ObservableProperty]
+	private int _selectedTabIndex;
+
+	/// <summary>
+	/// Updates the selected tab index and synchronizes it with the application configuration.
+	/// </summary>
+	public void UpdateSelectedTabIndex(int index)
+	{
+		SelectedTabIndex = index;
+		if (_configController.ConfigEntity.SelectedTab == index) return;
+		if (!_configController.ConfigEntity.RememberSelectedTabIndex) return;
+		_configController.ConfigEntity.SelectedTab = SelectedTabIndex;
+		_configController.SaveConfigToFile();
+	}
+
+	#endregion
+
 	#region PLANNABLE DAYS
 
     [ObservableProperty]

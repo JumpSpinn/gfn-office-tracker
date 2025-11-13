@@ -17,13 +17,14 @@
             CanDragTabs="False"
             AllowDropTabs="False"
             IsAddTabButtonVisible="False"
+            SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}"
+            SelectionChanged="OnTabSelectionChanged"
         >
             <!-- Plannable Days -->
             <fluent:TabViewItem
                 Header="Planung"
                 IsClosable="False"
                 BorderThickness="4"
-                IsSelected="True"
             >
                 <lists:PlannableDayListTemplate
                     Items="{Binding PlannableDays}"
@@ -37,7 +38,6 @@
 	            Header="Urlaub"
 	            IsClosable="False"
 	            BorderThickness="4"
-	            IsSelected="False"
 	        >
 	            <lists:HolidaysListTemplate
 		            Items="{Binding Holidays}"

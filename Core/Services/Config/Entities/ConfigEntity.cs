@@ -143,6 +143,57 @@ public sealed class ConfigEntity : INotifyPropertyChanged
 
 	#endregion
 
+	#region SELECTED TAB
+
+	/// <summary>
+	/// Backing field indicating whether the application should remember
+	/// the most recently selected tab index in relevant user interfaces.
+	/// This field supports a corresponding property that allows for
+	/// data binding and change notifications.
+	/// </summary>
+	private bool _rememberSelectedTabIndex = true;
+
+	/// <summary>
+	/// Property indicating whether the application should remember the index of the last selected tab.
+	/// When enabled, the application retains the selected tab index across sessions.
+	/// Changes to this property trigger a property change notification.
+	/// </summary>
+	public bool RememberSelectedTabIndex
+	{
+		get => _rememberSelectedTabIndex;
+		set
+		{
+			if (value == _rememberSelectedTabIndex) return;
+			_rememberSelectedTabIndex = value;
+			OnPropertyChanged();
+		}
+	}
+
+	/// <summary>
+	/// Field representing the currently selected tab in the application.
+	/// This value is updated when the user changes tabs, and updating it
+	/// triggers a property change notification for data binding purposes.
+	/// </summary>
+	private int _selectedTab;
+
+	/// <summary>
+	/// Property representing the currently selected tab in the application.
+	/// The value reflects the active tab and is updated when the user switches tabs.
+	/// Modifying this property triggers a property change notification for data binding.
+	/// </summary>
+	public int SelectedTab
+	{
+		get => _selectedTab;
+		set
+		{
+			if (value == _selectedTab) return;
+			_selectedTab = value;
+			OnPropertyChanged();
+		}
+	}
+
+	#endregion
+
 	#region EVENT
 
 	/// <summary>

@@ -10,6 +10,21 @@ public partial class MainPageTabs : UserControl
 		InitializeComponent();
 	}
 
+	#region SELECTED TAB
+
+	/// <summary>
+	/// Handles the event triggered when the selected tab changes in the TabView. This method updates
+	/// the selected tab index in the associated MainPageViewModel.
+	/// </summary>
+	private void OnTabSelectionChanged(object sender, SelectionChangedEventArgs args)
+	{
+		if(DataContext is not MainPageViewModel mpv) return;
+		if (sender is not TabView tabView) return;
+		mpv.UpdateSelectedTabIndex(tabView.SelectedIndex);
+	}
+
+	#endregion
+
 	#region PLANNABLE DAYS
 
 	/// <summary>
@@ -62,5 +77,7 @@ public partial class MainPageTabs : UserControl
 	}
 
 	#endregion
+
+
 }
 

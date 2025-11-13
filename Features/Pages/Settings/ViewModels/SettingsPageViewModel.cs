@@ -66,9 +66,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	private void UpdateConfig()
 	{
 		RememberWindowPositionSize = _configController.ConfigEntity.RememberWindowPositionSize;
+		RememberSelectedTabIndex = _configController.ConfigEntity.RememberSelectedTabIndex;
 		SelectedLanguage = _configController.ConfigEntity.Language;
 		SaveLocation = _configController.ConfigEntity.DatabasePath;
-		_logController.Debug("Parsed config for settings page.");
 	}
 
 	#region LANGUAGE SELECTION
@@ -413,6 +413,26 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	partial void OnRememberWindowPositionSizeChanged(bool value)
 	{
 		_configController.ConfigEntity.RememberWindowPositionSize = value;
+		_configController.SaveConfigToFile();
+	}
+
+	#endregion
+
+	#region REMEMBER SELECTED TAB INDEX
+
+	[ObservableProperty]
+	private bool _rememberSelectedTabIndex;
+
+	/// <summary>
+	/// Handles changes to the RememberSelectedTabIndex property.
+	/// Updates the configuration entity with the new value and saves the updated
+	/// configuration to the configuration file.
+	/// </summary>
+	partial void OnRememberSelectedTabIndexChanged(bool value)
+	{
+		_configController.ConfigEntity.RememberSelectedTabIndex = value;
+		if (!value)
+			_configController.ConfigEntity.SelectedTab = 0; // Reset to default tab
 		_configController.SaveConfigToFile();
 	}
 
