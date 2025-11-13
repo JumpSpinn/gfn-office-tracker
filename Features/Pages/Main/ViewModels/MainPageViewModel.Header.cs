@@ -84,7 +84,7 @@ public sealed partial class MainPageViewModel
 			if (entryResult > 0)
 			{
 				await RefreshStatisticsAsync();
-				await ReCalculateWeeksAsync();
+				await LoadTabDataAsync(TabType.CALCULATED_WEEKS);
 				await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
 			}
 			else

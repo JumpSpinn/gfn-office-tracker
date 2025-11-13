@@ -14,11 +14,14 @@ public sealed partial class MainPageViewModel
 	/// <summary>
 	/// Updates the selected tab index and synchronizes it with the application configuration.
 	/// </summary>
-	public void UpdateSelectedTabIndex(int index)
+	public async Task UpdateSelectedTabIndex(int index)
 	{
 		SelectedTabIndex = index;
+		await LoadTabDataAsync((TabType)index);
+
 		if (_configController.ConfigEntity.SelectedTab == index) return;
 		if (!_configController.ConfigEntity.RememberSelectedTabIndex) return;
+
 		_configController.ConfigEntity.SelectedTab = SelectedTabIndex;
 		_configController.SaveConfigToFile();
 	}
@@ -27,8 +30,18 @@ public sealed partial class MainPageViewModel
 
 	#region PLANNABLE DAYS
 
-    [ObservableProperty]
-    private ObservableCollection<PlannableDayModel> _plannableDays = [];
+	[ObservableProperty]
+	private ObservableCollection<PlannableDayModel> _plannableDays = [];
+
+	/// <summary>
+	/// Asynchronously loads the plannable days data by retrieving it from the MainPageService
+	/// and updates the ViewModel's collection of plannable days.
+	/// </summary>
+	private async Task LoadPlannableDaysAsync()
+	{
+		var plannableDays = await _databaseService.GetAllPlannableDaysAsync();
+		PlannableDays = new ObservableCollection<PlannableDayModel>(plannableDays ?? []);
+	}
 
     /// <summary>
     /// Removes a plannable day from the collection based on the specified identifier.
@@ -57,16 +70,6 @@ public sealed partial class MainPageViewModel
     }
 
     /// <summary>
-    /// Asynchronously loads the plannable days data by retrieving it from the MainPageService
-    /// and updates the ViewModel's collection of plannable days.
-    /// </summary>
-    private async Task LoadPlannableDaysAsync()
-    {
-	    var plannableDays = await _databaseService.GetAllPlannableDaysAsync();
-	    PlannableDays = new ObservableCollection<PlannableDayModel>(plannableDays ?? []);
-    }
-
-    /// <summary>
     /// Asynchronously shows a confirmation dialog to delete a plannable day and processes the deletion if confirmed.
     /// </summary>
     /// <param name="id">The unique identifier of the plannable day to be deleted.</param>
@@ -90,7 +93,7 @@ public sealed partial class MainPageViewModel
 		    else
 		    {
 			    RemovePlannableDayFromCollection(id);
-			    await ReCalculateWeeksAsync();
+			    await LoadTabDataAsync(TabType.CALCULATED_WEEKS);
 		    }
 	    }
     }
@@ -139,7 +142,7 @@ public sealed partial class MainPageViewModel
 				    {
 					    success = true;
 					    AddPlannableDayToCollection(entry);
-					    await ReCalculateWeeksAsync();
+					    await LoadTabDataAsync(TabType.CALCULATED_WEEKS);
 					    await DialogHelper.ShowDialogAsync("Eintrag hinzugefügt", "Eintrag wurde erfolgreich gespeichert.", DialogType.SUCCESS);
 				    }
 				    else
@@ -168,6 +171,15 @@ public sealed partial class MainPageViewModel
     private ObservableCollection<HolidayModel> _holidays = [];
 
     /// <summary>
+    /// Loads the list of holidays from the database and updates the Holidays collection.
+    /// </summary>
+    private async Task LoadHolidaysAsync()
+    {
+	    var holidays = await _databaseService.GetAllHolidaysAsync();
+	    Holidays = new ObservableCollection<HolidayModel>(holidays ?? []);
+    }
+
+    /// <summary>
     /// Removes a holiday from the collection based on the specified identifier.
     /// </summary>
     private void RemoveHolidayFromCollection(uint id)
@@ -191,15 +203,6 @@ public sealed partial class MainPageViewModel
 	    var currentCollection = Holidays;
 	    currentCollection.Add(pd);
 	    Holidays = new ObservableCollection<HolidayModel>(currentCollection);
-    }
-
-    /// <summary>
-    /// Loads the list of holidays from the database and updates the Holidays collection.
-    /// </summary>
-    private async Task LoadHolidaysAsync()
-    {
-	    var holidays = await _databaseService.GetAllHolidaysAsync();
-	    Holidays = new ObservableCollection<HolidayModel>(holidays ?? []);
     }
 
     /// <summary>
@@ -242,7 +245,7 @@ public sealed partial class MainPageViewModel
 			    {
 				    success = true;
 				    AddHolidayToCollection(entry);
-				    await ReCalculateWeeksAsync();
+				    await LoadTabDataAsync(TabType.CALCULATED_WEEKS);
 				    await DialogHelper.ShowDialogAsync("Urlaub eingetragen", "Urlaub wurde erfolgreich gespeichert.", DialogType.SUCCESS);
 			    }
 			    else
@@ -280,7 +283,7 @@ public sealed partial class MainPageViewModel
 		    else
 		    {
 			    RemoveHolidayFromCollection(id);
-			    await ReCalculateWeeksAsync();
+			    await LoadTabDataAsync(TabType.CALCULATED_WEEKS);
 		    }
 	    }
     }

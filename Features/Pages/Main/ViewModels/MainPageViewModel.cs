@@ -33,13 +33,13 @@ public sealed partial class MainPageViewModel : ViewModelBase
     /// </summary>
     public async Task InitializeAsync()
     {
+	    var currentSelectedTab = _configController.ConfigEntity.SelectedTab;
 	    IsInitializing = true;
 	    try
 	    {
+		    // always refresh statistics when initializing the page
 		    await RefreshStatisticsAsync();
-		    await ReCalculateWeeksAsync();
-		    await LoadPlannableDaysAsync();
-		    await LoadHolidaysAsync();
+		    await LoadTabDataAsync((TabType)currentSelectedTab);
 	    }
 	    catch (Exception ex)
 	    {
@@ -48,7 +48,34 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	    finally
 	    {
 		    IsInitializing = false;
-		    UpdateSelectedTabIndex(_configController.ConfigEntity.SelectedTab);
+		    UpdateSelectedTabIndex(currentSelectedTab);
+	    }
+    }
+
+    #endregion
+
+    #region LOAD TAB DATA
+
+    /// <summary>
+    /// Asynchronously loads data for the currently selected tab based on the specified tab type.
+    /// This method determines the selected tab and invokes the corresponding data-loading
+    /// functionality for plannable days, holidays, or calculated weeks.
+    /// </summary>
+    private async Task LoadTabDataAsync(TabType tab)
+    {
+	    if (SelectedTabIndex != (int)tab) return;
+
+	    switch (tab)
+	    {
+		    case TabType.PLANNABLE_DAYS:
+			    await LoadPlannableDaysAsync();
+			    break;
+		    case TabType.HOLIDAYS:
+			    await LoadHolidaysAsync();
+			    break;
+		    case TabType.CALCULATED_WEEKS:
+			    await ReCalculateWeeksAsync();
+			    break;
 	    }
     }
 
