@@ -9,32 +9,26 @@
              x:Class="OfficeTracker.Dialogs.Views.ExceptionDialog">
 	<StackPanel
 		Spacing="8"
-		Orientation="Vertical"
-		>
+		Orientation="Vertical">
 		<fluent:InfoBar
 			Severity="Error"
 			IsOpen="True"
 			IsClosable="False"
-			Message="{Binding Message}"
-			>
-			<Expander
-				Header="Exception Details"
-				IsExpanded="False"
-				>
-				<ScrollViewer
-					MaxHeight="300"
-					>
-					<SelectableTextBlock
-						Text="{Binding ExceptionDetails}"
-						FontFamily="12"
-						TextWrapping="Wrap"
-						Padding="8"
-						Foreground="#f5f5f5"
-						Background="#101010"
-						></SelectableTextBlock>
-				</ScrollViewer>
-			</Expander>
-		</fluent:InfoBar>
+			Message="{Binding Message}"/>
+		<Expander
+			Header="Exception Details"
+			IsExpanded="False">
+			<ScrollViewer
+				MaxHeight="300">
+				<SelectableTextBlock
+					Text="{Binding ExceptionDetails}"
+					FontSize="12"
+					TextWrapping="Wrap"
+					Padding="8"
+					Foreground="#f5f5f5"
+					Background="#101010"/>
+			</ScrollViewer>
+		</Expander>
 	</StackPanel>
 </UserControl>
 
