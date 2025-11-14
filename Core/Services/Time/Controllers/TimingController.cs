@@ -1,7 +1,7 @@
 ﻿namespace OfficeTracker.Core.Services.Time.Controllers;
 
 [RegisterSingleton]
-public sealed class TimingController(LogController logController)
+public sealed class TimingController(LogController logController, MessageBoxController messageBoxController)
 {
 	private readonly ConcurrentDictionary<uint, TimerEntity> _timers = new();
 	private readonly ConcurrentDictionary<uint, string> _intervals = new();
@@ -26,6 +26,7 @@ public sealed class TimingController(LogController logController)
 			catch (Exception ex)
 			{
 				logController.Error($"Error in interval '{name}' (Handle: {handle}) - {ex.Message}");
+				messageBoxController.ShowExceptionAsync(ex);
 			}
 		}, null, timeMs, timeMs);
 
@@ -53,6 +54,7 @@ public sealed class TimingController(LogController logController)
 		catch (Exception ex)
 		{
 			logController.Error($"Error clearing interval (Handle: {handle}) - {ex.Message}");
+			messageBoxController.ShowExceptionAsync(ex);
 		}
 	}
 
@@ -81,6 +83,7 @@ public sealed class TimingController(LogController logController)
 			catch (Exception ex)
 			{
 				logController.Error($"Error in timeout '{name}' (Handle: {handle}) - {ex.Message}");
+				messageBoxController.ShowExceptionAsync(ex);
 			}
 			finally
 			{
@@ -109,6 +112,7 @@ public sealed class TimingController(LogController logController)
 		catch (Exception ex)
 		{
 			logController.Error($"Error clearing timeout (Handle: {handle}) - {ex.Message}");
+			messageBoxController.ShowExceptionAsync(ex);
 		}
 	}
 
@@ -181,6 +185,7 @@ public sealed class TimingController(LogController logController)
 			catch (Exception ex)
 			{
 				logController.Error($"Error disposing timer '{entry.Name}' - {ex.Message}");
+				messageBoxController.ShowExceptionAsync(ex);
 			}
 		}
 		_timers.Clear();

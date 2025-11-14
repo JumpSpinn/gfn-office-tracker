@@ -1,7 +1,5 @@
 ﻿namespace OfficeTracker.Core.Services.Config.Controllers;
 
-using Entities;
-
 /// <summary>
 /// The ConfigController class is responsible for managing the application's configuration,
 /// including initializing, storing, and saving configurations.
@@ -13,11 +11,13 @@ public sealed class ConfigController
 {
 	private readonly LogController _logController;
 	private readonly ConfigService _configService;
+	private readonly MessageBoxController _messageBoxController;
 
-	public ConfigController(LogController ls, ConfigService cs)
+	public ConfigController(LogController ls, ConfigService cs, MessageBoxController mbc)
 	{
 		_logController = ls;
 		_configService = cs;
+		_messageBoxController = mbc;
 	}
 
 	/// <summary>
@@ -64,6 +64,7 @@ public sealed class ConfigController
 		catch (Exception e)
 		{
 			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return false;

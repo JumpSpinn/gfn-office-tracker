@@ -8,8 +8,9 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 {
 	private readonly DatabaseService _databaseService;
 	private readonly MainWindowController _mainWindowController;
+	private readonly MessageBoxController _messageBoxController;
 
-	public WizardCompletedPageViewModel(WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, Features.Screens.Wizard.ViewModels.WizardBalancePageViewModel balance, DatabaseService dbs, MainWindowController mws)
+	public WizardCompletedPageViewModel(MessageBoxController mbc, WizardNamePageViewModel name, WizardDaysPageViewModel days, WizardDataPageViewModel data, Features.Screens.Wizard.ViewModels.WizardBalancePageViewModel balance, DatabaseService dbs, MainWindowController mws)
 	{
 		WizardNamePageViewModel = name;
 		WizardDaysPageViewModel = days;
@@ -17,6 +18,7 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 		WizardBalancePageViewModel = balance;
 		_databaseService = dbs;
 		_mainWindowController = mws;
+		_messageBoxController = mbc;
 	}
 
 	[ObservableProperty]
@@ -82,7 +84,7 @@ public sealed partial class WizardCompletedPageViewModel : ViewModelBase
 			);
 
 		if(userSettings is null)
-			await DialogHelper.ShowDialogAsync("Fehler", "Beim Speichern der Daten ist ein Fehler aufgetreten.", DialogType.ERROR);
+			await _messageBoxController.ShowErrorAsync("Fehler beim Speichern der Daten.");
 
 		if (dialogResult == ContentDialogResult.Primary && userSettings is not null)
 		{

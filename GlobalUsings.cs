@@ -97,3 +97,4 @@ global using OfficeTracker.Infrastructure.Database.Controllers;
 global using OfficeTracker.Dialogs.ViewModels;
 global using OfficeTracker.Dialogs.Views;
 global using OfficeTracker.Dialogs.Base;
+global using OfficeTracker.Dialogs.Controllers;

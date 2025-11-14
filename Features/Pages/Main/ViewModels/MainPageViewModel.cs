@@ -12,14 +12,16 @@ public sealed partial class MainPageViewModel : ViewModelBase
 	private readonly MainWindowController _mainWindowController;
 	private readonly CalculateWeekService _calculateWeekService;
 	private readonly ConfigController _configController;
+	private readonly MessageBoxController _messageBoxController;
 
-    public MainPageViewModel(DatabaseService ds, LogController lc, MainWindowController mws, CalculateWeekService cws, ConfigController cc)
+    public MainPageViewModel(MessageBoxController mbc, DatabaseService ds, LogController lc, MainWindowController mws, CalculateWeekService cws, ConfigController cc)
     {
 	    _logController = lc;
 	    _databaseService = ds;
 	    _mainWindowController = mws;
 	    _calculateWeekService = cws;
 	    _configController = cc;
+	    _messageBoxController = mbc;
     }
 
     #region INITIALIZE
@@ -41,9 +43,10 @@ public sealed partial class MainPageViewModel : ViewModelBase
 		    await RefreshStatisticsAsync();
 		    await LoadTabDataAsync((TabType)currentSelectedTab);
 	    }
-	    catch (Exception ex)
+	    catch (Exception e)
 	    {
-		    _logController.Exception(ex);
+		    _logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 	    }
 	    finally
 	    {

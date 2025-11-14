@@ -13,14 +13,16 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 	private readonly DatabaseController _databaseController;
 	private readonly DatabaseService _databaseService;
 	private readonly LogController _logController;
+	private readonly MessageBoxController _messageBoxController;
 
-	public SplashPageViewModel(MainWindowController mwc, LogController lc, DatabaseController dbc, ConfigController cc, DatabaseService dbs)
+	public SplashPageViewModel(MainWindowController mwc, LogController lc, DatabaseController dbc, ConfigController cc, DatabaseService dbs, MessageBoxController mbc)
 	{
 		_mainWindowController = mwc;
 		_logController = lc;
 		_databaseController = dbc;
 		_databaseService = dbs;
 		_configController = cc;
+		_messageBoxController = mbc;
 		StartInitializationAsync();
 	}
 
@@ -143,7 +145,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		}
 		catch (Exception e)
 		{
-			DisplayInfoBar("Critical Error", $"While initializing Logger:\n{e.Message}", InfoBarSeverity.Error);
+			await _messageBoxController.ShowExceptionAsync(e);
 			return false;
 		}
 	}
@@ -174,7 +176,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		}
 		catch (Exception e)
 		{
-			DisplayInfoBar("Critical Error", $"While initializing Database:\n{e.Message}", InfoBarSeverity.Error);
+			await _messageBoxController.ShowExceptionAsync(e);
 			return false;
 		}
 	}
@@ -218,7 +220,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 				}
 				catch (Exception e)
 				{
-					Console.WriteLine(e);
+					await _messageBoxController.ShowExceptionAsync(e);
 				}
 			}
 
@@ -229,7 +231,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		}
 		catch (Exception e)
 		{
-			DisplayInfoBar("Critical Error", $"While initializing Dialogs:\n{e.Message}", InfoBarSeverity.Error);
+			await _messageBoxController.ShowExceptionAsync(e);
 			return false;
 		}
 	}
@@ -258,7 +260,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		}
 		catch (Exception e)
 		{
-			DisplayInfoBar("Critical Error", $"While loading Runtime Data:\n{e.Message}", InfoBarSeverity.Error);
+			await _messageBoxController.ShowExceptionAsync(e);
 			return false;
 		}
 	}
@@ -287,7 +289,7 @@ public sealed partial class SplashPageViewModel : ViewModelBase
 		}
 		catch (Exception e)
 		{
-			DisplayInfoBar("Critical Error", $"While initializing Config:\n{e.Message}", InfoBarSeverity.Error);
+			await _messageBoxController.ShowExceptionAsync(e);
 			return false;
 		}
 	}

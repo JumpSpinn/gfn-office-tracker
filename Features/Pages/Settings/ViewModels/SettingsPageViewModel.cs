@@ -12,8 +12,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 	private readonly DatabaseController _databaseController;
 	private readonly DatabaseService _databaseService;
 	private readonly MainWindowController _mainWindowController;
+	private readonly MessageBoxController _messageBoxController;
 
-	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc, DatabaseController dbc, DatabaseService dbs, MainWindowController mwc)
+	public SettingsPageViewModel(LogController ls, ConfigController cc, TimingController tc, DatabaseController dbc, DatabaseService dbs, MainWindowController mwc, MessageBoxController mbc)
 	{
 		_logController = ls;
 		_configController = cc;
@@ -21,6 +22,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		_databaseController = dbc;
 		_databaseService = dbs;
 		_mainWindowController = mwc;
+		_messageBoxController = mbc;
 
 		UpdateConfig();
 		ParseLanguageEnumToCollection();
@@ -51,6 +53,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		catch (Exception e)
 		{
 			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 		finally
 		{
@@ -138,19 +141,19 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		};
 
 		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
-		if(string.IsNullOrWhiteSpace(inputFormContext.Input))
-			await DialogHelper.ShowDialogAsync("HomeOffice Tage", "Bitte gib einen Wert ein.", DialogType.ERROR);
+		if (string.IsNullOrWhiteSpace(inputFormContext.Input))
+			await _messageBoxController.ShowWarningAsync("Bitte gib einen Wert ein.");
 		else if(!uint.TryParse(inputFormContext.Input, out var homeOfficeDayCount))
-			await DialogHelper.ShowDialogAsync("HomeOffice Tage", "Ungültige Eingabe.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Ungültige Eingabe.");
 		else if(homeOfficeDayCount == HomeOfficeDayCount)
-			await DialogHelper.ShowDialogAsync("HomeOffice Tage", "HomeOffice Tage sind identisch mit den aktuellen.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("HomeOffice Tage sind identisch mit den aktuellen.");
 		else
 		{
 			var newHomeOfficeDayCount = await _databaseService.UpdateHomeOfficeDayCountAsync(homeOfficeDayCount);
 			if (newHomeOfficeDayCount is not null)
 			{
 				HomeOfficeDayCount = (uint)newHomeOfficeDayCount;
-				await DialogHelper.ShowDialogAsync("HomeOffice Tage", "HomeOffice Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
+				await _messageBoxController.ShowSuccessAsync("HomeOffice Tage wurden erfolgreich geändert!");
 			}
 		}
 	}
@@ -192,19 +195,19 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		};
 
 		if (await dialog.ShowAsyncCorrectly() != ContentDialogResult.Primary) return;
-		if(string.IsNullOrWhiteSpace(inputFormContext.Input))
-			await DialogHelper.ShowDialogAsync("Standort Tage", "Bitte gib einen Wert ein.", DialogType.ERROR);
+		if (string.IsNullOrWhiteSpace(inputFormContext.Input))
+			await _messageBoxController.ShowWarningAsync("Bitte gib einen Wert ein.");
 		else if(!uint.TryParse(inputFormContext.Input, out var officeDayCount))
-			await DialogHelper.ShowDialogAsync("Standort Tage", "Ungültige Eingabe.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Ungültige Eingabe.");
 		else if(officeDayCount == OfficeDayCount)
-			await DialogHelper.ShowDialogAsync("Standort Tage", "Standort Tage sind identisch mit den aktuellen.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Standort Tage sind identisch mit den aktuellen.");
 		else
 		{
 			var newOfficeDayCount = await _databaseService.UpdateOfficeDayCountAsync(officeDayCount);
 			if (newOfficeDayCount is not null)
 			{
 				OfficeDayCount = (uint)newOfficeDayCount;
-				await DialogHelper.ShowDialogAsync("Standort Tage", "Standort Tage wurden erfolgreich geändert!", DialogType.SUCCESS);
+				await _messageBoxController.ShowSuccessAsync("Standort Tage wurden erfolgreich geändert!");
 			}
 		}
 	}
@@ -252,7 +255,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		var userNameInput = inputFormContext.Input;
 		var validation = StringHelper.ValidateUserName(userNameInput);
 		if(!validation.Result)
-			await DialogHelper.ShowDialogAsync("Benutzername", validation.Message, DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync(validation.Message);
+		else if (userNameInput.Equals(Username, StringComparison.OrdinalIgnoreCase))
+			await _messageBoxController.ShowWarningAsync("Benutzername muss anders sein als der aktuelle!");
 		else
 		{
 			var newUserName = await _databaseService.UpdateUserNameAsync(userNameInput);
@@ -260,8 +265,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 			{
 				Username = newUserName;
 				_mainWindowController.RuntimeDataEntity.UserName = newUserName;
-				await DialogHelper.ShowDialogAsync("Benutzername", "Benutzername wurde erfolgreich geändert!",
-					DialogType.SUCCESS);
+				await _messageBoxController.ShowSuccessAsync("Benutzername wurde erfolgreich geändert!");
 			}
 		}
 	}
@@ -322,21 +326,18 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 		var (homeOfficeDays, officeDays) = viewModel.GetData();
 		if (homeOfficeDays.Length == 0 && officeDays.Length == 0)
-			await DialogHelper.ShowDialogAsync("Standard Wochentage",
-				"Wenn du diese Fehlermeldung siehst, hast du ein Preis gewonnen!", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Wenn du diese Fehlermeldung siehst, hast du ein Preis gewonnen!");
 		else if(homeOfficeDays == _homeOfficeWeekDays && officeDays == _officeWeekDays)
-			await DialogHelper.ShowDialogAsync("Standard Wochentage", "Diese Wochentage sind bereits deine Standard Wochentage.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Diese Wochentage sind bereits deine Standard Wochentage.");
 		else if (!await _databaseService.UpdateHomeOfficeDaysAsync(homeOfficeDays) ||
 		         !await _databaseService.UpdateOfficeDaysAsync(officeDays))
-			await DialogHelper.ShowDialogAsync("Standard Wochentage", "Wochentage konnten nicht gespeichert werden.",
-				DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Wochentage konnten nicht gespeichert werden.");
 		else
 		{
 			_mainWindowController.RuntimeDataEntity.HomeOfficeDays = homeOfficeDays;
 			_mainWindowController.RuntimeDataEntity.OfficeDays = officeDays;
 			UpdateDefaultHomeOfficeWeekdaysDisplay(homeOfficeDays, officeDays);
-			await DialogHelper.ShowDialogAsync("Standard Wochentage", "Änderungen wurden erfolgreich gespeichert.",
-				DialogType.SUCCESS);
+			await _messageBoxController.ShowSuccessAsync("Änderungen wurden erfolgreich gespeichert.");
 		}
 	}
 
@@ -381,20 +382,21 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
 		var inputResult = inputFormContext.Input;
 		if(string.IsNullOrWhiteSpace(inputResult))
-			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Bitte gib einen Wert ein.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Bitte gib einen Wert ein.");
 		else if(!uint.TryParse(inputResult, out uint parsedResult))
-			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Das ist ein ungültiger Wert.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Das ist ein ungültiger Wert.");
 		else if(parsedResult == HomeOfficeTargetQuoted)
-			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Diese Quote ist bereits deine aktuelle Ziel-Quote.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Diese Quote ist bereits deine aktuelle Ziel-Quote.");
+		else if (parsedResult > 100)
+			await _messageBoxController.ShowWarningAsync("Quote kann nicht über 100% liegen.");
 		else if(!await _databaseService.UpdateHomeOfficeTargetQuoteAsync(parsedResult))
-			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Änderung konnte nicht gespeichert werden.", DialogType.ERROR);
+			await _messageBoxController.ShowWarningAsync("Änderung konnte nicht gespeichert werden.");
 		else
 		{
 			HomeOfficeTargetQuoted = parsedResult;
 			_mainWindowController.RuntimeDataEntity.HomeOfficeTargetQuoted = parsedResult;
 			_mainWindowController.RuntimeDataEntity.OfficeTargetQuoted = 100 - parsedResult;
-			await DialogHelper.ShowDialogAsync("Quote (HomeOffice)", "Neue Ziel-Quote wurde erfolgreich gespeichert.",
-				DialogType.SUCCESS);
+			await _messageBoxController.ShowSuccessAsync("Neue Ziel-Quote wurde erfolgreich gespeichert.");
 		}
 	}
 
@@ -479,7 +481,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		catch (Exception e)
 		{
 			_logController.Exception(e);
-			DialogHelper.ShowDialogAsync("Speicherort", "Fehler beim Ändern des Speicherorts.", DialogType.ERROR);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 		finally
 		{
@@ -522,7 +524,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 		catch (Exception e)
 		{
 			_logController.Exception(e);
-			DialogHelper.ShowDialogAsync("Speicherort", "Fehler beim Zurücksetzen des Speicherorts.", DialogType.ERROR);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 		finally
 		{

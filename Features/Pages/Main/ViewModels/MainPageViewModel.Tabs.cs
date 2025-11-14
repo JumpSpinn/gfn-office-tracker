@@ -88,8 +88,8 @@ public sealed partial class MainPageViewModel
 	    if(dialogResult == ContentDialogResult.Primary)
 	    {
 		    var deleted = await _databaseService.DeletePlannableDayAsync(id);
-		    if(!deleted)
-			    await DialogHelper.ShowDialogAsync("Eintrag löschen", "Eintrag konnte nicht gelöscht werden.", DialogType.ERROR);
+		    if (!deleted)
+			    await _messageBoxController.ShowErrorAsync("Eintrag konnte nicht gelöscht werden.");
 		    else
 		    {
 			    RemovePlannableDayFromCollection(id);
@@ -121,20 +121,20 @@ public sealed partial class MainPageViewModel
 	    if (result == ContentDialogResult.Primary)
 	    {
 		    if(selectedDate is null)
-			    await DialogHelper.ShowDialogAsync("Ungültiges Datum", "Du hast das Datum vergessen.", DialogType.ERROR);
+			    await _messageBoxController.ShowWarningAsync("Ungültiges Datum. Du hast das Datum vergessen.");
 		    else
 		    {
 			    var dateValidation = IsSelectedPlannableDateValid((DateTime)selectedDate);
 			    if(!dateValidation.Result)
-				    await DialogHelper.ShowDialogAsync(dateValidation.Title, dateValidation.Message, DialogType.WARNING);
+				    await _messageBoxController.ShowWarningAsync($"{dateValidation.Title}\n{dateValidation.Message}");
 			    else if(await _databaseService.GetSinglePlannableDayByDateAsync((DateTime)selectedDate) is not null)
-				    await DialogHelper.ShowDialogAsync("Duplikat", "Diesen Tag hast du bereits geplant!", DialogType.WARNING);
+				    await _messageBoxController.ShowWarningAsync("Diesen Tag hast du bereits geplant!");
 			    else if (dayForm.SelectedDayType == DayType.NONE)
-				    await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
+				    await _messageBoxController.ShowWarningAsync("Du hast was anderes ausgewählt als HomeOffice oder Standort?!");
 			    else if(dayForm.SelectedDayType == DayType.HOME && DateTimeHelper.IsDateInDayArray((DateTime)selectedDate, _mainWindowController.RuntimeDataEntity.HomeOfficeDays))
-				    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.", DialogType.QUESTION);
+				    await _messageBoxController.ShowWarningAsync("Du planst einen HomeOffice Tag an einem regulären HomeOffice Tag.");
 			    else if(dayForm.SelectedDayType == DayType.OFFICE && DateTimeHelper.IsDateInDayArray((DateTime)selectedDate, _mainWindowController.RuntimeDataEntity.OfficeDays))
-				    await DialogHelper.ShowDialogAsync("Achtung", "Du planst einen Standort Tag an einem regulären Standort Tag.", DialogType.QUESTION);
+				    await _messageBoxController.ShowWarningAsync("Du planst einen Standort Tag an einem regulären Standort Tag.");
 			    else
 			    {
 				    var entry = await _databaseService.CreatePlannableDayAsync(dayForm.SelectedDayType, (DateTime)selectedDate);
@@ -143,10 +143,10 @@ public sealed partial class MainPageViewModel
 					    success = true;
 					    AddPlannableDayToCollection(entry);
 					    await LoadTabDataAsync(TabType.CALCULATED_WEEKS);
-					    await DialogHelper.ShowDialogAsync("Eintrag hinzugefügt", "Eintrag wurde erfolgreich gespeichert.", DialogType.SUCCESS);
+					    await _messageBoxController.ShowSuccessAsync("Eintrag wurde erfolgreich gespeichert.");
 				    }
 				    else
-					    await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
+					    await _messageBoxController.ShowErrorAsync("Eintrag konnte nicht gespeichert werden.");
 			    }
 		    }
 	    }
@@ -229,15 +229,15 @@ public sealed partial class MainPageViewModel
 		    var endDate = holidayForm.SelectedEndDate;
 
 		    if(name is null || name.Trim().Length <= 0)
-			    await DialogHelper.ShowDialogAsync("Urlaubsname", "Bitte gib einen Urlaubsname ein.", DialogType.ERROR);
+			    await _messageBoxController.ShowWarningAsync("Bitte gib einen Urlaubsname ein.");
 		    else if(startDate is null)
-			    await DialogHelper.ShowDialogAsync("Startdatum", "Bitte gib ein Startdatum ein.", DialogType.ERROR);
+			    await _messageBoxController.ShowWarningAsync("Bitte gib ein Startdatum ein.");
 		    else if(endDate is null)
-			    await DialogHelper.ShowDialogAsync("Enddatum", "Bitte gib ein Enddatum ein.", DialogType.ERROR);
+			    await _messageBoxController.ShowWarningAsync("Bitte gib ein Enddatum ein.");
 		    else if(DateTimeHelper.IsInPast((DateTime)startDate) && DateTimeHelper.IsInPast((DateTime)endDate))
-			    await DialogHelper.ShowDialogAsync("Urlaubszeitraum", "Der Urlaubszeitraum muss in der Zukunft liegen.", DialogType.ERROR);
+			    await _messageBoxController.ShowWarningAsync("Der Urlaubszeitraum muss in der Zukunft liegen.");
 		    else if(await _databaseService.GetSingleHolidayByStartEndDateAsync((DateTime)startDate, (DateTime)endDate) is not null)
-			    await DialogHelper.ShowDialogAsync("Duplikat", "Urlaubszeitraum wurde bereits eingetragen.", DialogType.WARNING);
+			    await _messageBoxController.ShowWarningAsync("Urlaubszeitraum wurde bereits eingetragen.");
 		    else
 		    {
 			    var entry = await _databaseService.CreateHolidayAsync(name, (DateTime)startDate, (DateTime)endDate);
@@ -246,10 +246,10 @@ public sealed partial class MainPageViewModel
 				    success = true;
 				    AddHolidayToCollection(entry);
 				    await LoadTabDataAsync(TabType.CALCULATED_WEEKS);
-				    await DialogHelper.ShowDialogAsync("Urlaub eingetragen", "Urlaub wurde erfolgreich gespeichert.", DialogType.SUCCESS);
+				    await _messageBoxController.ShowSuccessAsync("Urlaub wurde erfolgreich gespeichert.");
 			    }
 			    else
-				    await DialogHelper.ShowDialogAsync("Fehler", "Urlaub konnte nicht gespeichert werden.", DialogType.ERROR);
+				    await _messageBoxController.ShowErrorAsync("Urlaub konnte nicht gespeichert werden.");
 		    }
 	    }
 	    else
@@ -279,7 +279,7 @@ public sealed partial class MainPageViewModel
 	    {
 		    var deleted = await _databaseService.DeleteHolidayAsync(id);
 		    if(!deleted)
-			    await DialogHelper.ShowDialogAsync("Eintrag löschen", "Eintrag konnte nicht gelöscht werden.", DialogType.ERROR);
+			    await _messageBoxController.ShowErrorAsync("Eintrag konnte nicht gelöscht werden.");
 		    else
 		    {
 			    RemoveHolidayFromCollection(id);

@@ -11,12 +11,14 @@ public sealed class CalculateWeekService
 	private readonly LogController _logController;
 	private readonly DatabaseService _databaseService;
 	private readonly MainWindowController _mainWindowController;
+	private readonly MessageBoxController _messageBoxController;
 
-	public CalculateWeekService(LogController ls, DatabaseService ds, MainWindowController mws)
+	public CalculateWeekService(LogController ls, DatabaseService ds, MainWindowController mws, MessageBoxController mbc)
 	{
 		_logController = ls;
 		_databaseService = ds;
 		_mainWindowController = mws;
+		_messageBoxController = mbc;
 	}
 
 	private uint _homeOfficeTargetQuoted;
@@ -140,6 +142,7 @@ public sealed class CalculateWeekService
 		catch (Exception e)
 		{
 			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 		return null;
 	}
@@ -202,6 +205,7 @@ public sealed class CalculateWeekService
 		catch (Exception e)
 		{
 			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -265,6 +269,7 @@ public sealed class CalculateWeekService
 		catch (Exception e)
 		{
 			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;

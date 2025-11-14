@@ -4,12 +4,14 @@
 public sealed class DatabaseController
 {
 	private readonly LogController _logController;
+	private readonly MessageBoxController _messageBoxController;
 	private readonly IDbContextFactory<OtContext> _dbContext;
 
-	public DatabaseController(LogController lc, IDbContextFactory<OtContext> dbContext, MainWindowEvents mwe)
+	public DatabaseController(LogController lc, IDbContextFactory<OtContext> dbContext, MainWindowEvents mwe, MessageBoxController mbc)
 	{
 		_logController = lc;
 		_dbContext = dbContext;
+		_messageBoxController = mbc;
 		mwe.OnStarted += CleanUpPlannableDaysAsync;
 		mwe.OnStarted += CleanUpHolidaysAsync;
 	}
@@ -65,9 +67,8 @@ public sealed class DatabaseController
 	    }
 	    catch (Exception e)
 	    {
-		    _logController.Error($"InitializeAsync failed: {e.Message}");
-		    _logController.Error($"Stack trace: {e.StackTrace}");
 		    _logController.Exception(e);
+		    await _messageBoxController.ShowExceptionAsync(e);
 	    }
 
 	    return (false, false);
@@ -104,6 +105,7 @@ public sealed class DatabaseController
 		catch (Exception e)
 		{
 			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return false;
@@ -129,6 +131,7 @@ public sealed class DatabaseController
 		catch (Exception e)
 		{
 			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 	}
 
@@ -148,6 +151,7 @@ public sealed class DatabaseController
 		catch (Exception e)
 		{
 			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 		}
 	}
 
