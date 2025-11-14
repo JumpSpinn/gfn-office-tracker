@@ -39,7 +39,7 @@ public sealed class MessageBoxController(IServiceProvider serviceProvider, LogCo
 	/// <summary>
 	/// Displays an exception message dialog with detailed exception information and an optional additional message.
 	/// </summary>
-	private async Task ShowExceptionAsync(Exception ex, string additionalMessage)
+	public async Task ShowExceptionAsync(Exception ex, string additionalMessage)
 	{
 		if (App.MainWindow is null)
 		{
@@ -47,7 +47,7 @@ public sealed class MessageBoxController(IServiceProvider serviceProvider, LogCo
 			return;
 		}
 
-		var message = "";
+		var message = "Exception Description";
 		if (!string.IsNullOrEmpty(additionalMessage))
 			message += $": \n{additionalMessage}";
 
@@ -59,10 +59,11 @@ public sealed class MessageBoxController(IServiceProvider serviceProvider, LogCo
 		var content = new ExceptionDialog{ DataContext = viewModel };
 		var dialog = new ContentDialog()
 		{
-			Title = "EXCEPTION LIKE DEINE MUDDA",
+			Title = "Kritischer Fehler!",
 			Content = content,
 			PrimaryButtonText = "OK",
 			DefaultButton = ContentDialogButton.Primary,
+			SecondaryButtonText = "Report",
 			IsSecondaryButtonEnabled = true
 		};
 
