@@ -29,7 +29,7 @@ public static class GitHubHelper
 			var title = CreateIssueTitle(message);
 			var body = CreateExceptionBody(exception, message);
 			var encodedBody = Uri.EscapeDataString(body);
-			return $"https://github.com/jumpspinn/gfn-office-tracker/issue/new?title={title}&body={encodedBody}&labels=bug";
+			return $"https://github.com/JumpSpinn/gfn-office-tracker/issues/new?title={title}&body={encodedBody}&labels=bug";
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@ public static class GitHubHelper
 			body += "## Steps to Reproduce";
 			body += "1. \n";
 			body += "2. \n";
-			body += "3. \n";
+			body += "3. \n\n";
 
 			if (exception is not null)
 			{
@@ -63,10 +63,9 @@ public static class GitHubHelper
 				body += $"\n```\n\n";
 			}
 
-			body += "## Enviroment";
-			body += "```\n";
-			body += $"- OS: {Environment.OSVersion}";
-			body += $"- .NET Version: {Environment.Version}";
+			body += "## Enviroment\n";
+			body += $"- OS: {Environment.OSVersion}\n";
+			body += $"- .NET Version: {Environment.Version}\n";
 			body += $"- Date: {DateTime.Now:MM/dd/yyyy HH:mm:ss}";
 
 
