@@ -50,7 +50,7 @@ public static class GitHubHelper
 			if (!string.IsNullOrEmpty(message))
 				body += $"{message}\n\n";
 
-			body += "## Steps to Reproduce";
+			body += "## Steps to Reproduce\n";
 			body += "1. \n";
 			body += "2. \n";
 			body += "3. \n\n";
