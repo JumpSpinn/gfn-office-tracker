@@ -48,7 +48,8 @@ public sealed partial class MainPageViewModel
 		if (_notifyToAddCurrentDay && !_triggeredNotifyToAddCurrentDay)
 		{
 			_triggeredNotifyToAddCurrentDay = true;
-			DialogHelper.ShowDialogAsync($"Willkommen zurück, {_mainWindowController.RuntimeDataEntity.UserName}", "Vergiss nicht den heutigen Tag einzutragen!", DialogType.INFO);
+			_messageBoxController.ShowInfoAsync(
+				$"Willkommen zurück, {_mainWindowController.RuntimeDataEntity.UserName}.\nVergiss nicht den heutigen Tag einzutragen!");
 		}
 	}
 
@@ -73,9 +74,10 @@ public sealed partial class MainPageViewModel
 		if (dialogResult == ContentDialogResult.Primary)
 		{
 			if (dayForm.SelectedDayType == DayType.NONE)
-				await DialogHelper.ShowDialogAsync("Höö?", "Du hast was anderes ausgewählt als HomeOffice oder Standort?!", DialogType.ERROR);
+				await _messageBoxController.ShowWarningAsync(
+					"Du hast was anderes ausgewählt als HomeOffice oder Standort?!");
 			else if(DateTimeHelper.IsInWeekend(DateTime.Today))
-				await DialogHelper.ShowDialogAsync("Wochenende", "Du hast Wochenende, genieß' es.", DialogType.QUESTION);
+				await _messageBoxController.ShowWarningAsync("Du hast Wochenende, genieß' es.");
 			else if (dayForm.SelectedDayType == DayType.HOME)
 				entryResult = await _databaseService.IncreaseHomeOfficeCountAsync();
 			else
@@ -85,10 +87,10 @@ public sealed partial class MainPageViewModel
 			{
 				await RefreshStatisticsAsync();
 				await LoadTabDataAsync(TabType.CALCULATED_WEEKS);
-				await DialogHelper.ShowDialogAsync("Eingetragen", "Dein heutiger Tag wurde aufgenommen. Alle Statistiken wurden aktualisiert!", DialogType.SUCCESS);
+				await _messageBoxController.ShowSuccessAsync("Dein heutiger Tag wurde aufgenommen.\nAlle Statistiken wurden aktualisiert!");
 			}
 			else
-				await DialogHelper.ShowDialogAsync("Fehler", "Eintrag konnte nicht gespeichert werden.", DialogType.ERROR);
+				await _messageBoxController.ShowErrorAsync("Eintrag konnte nicht gespeichert werden.");
 		}
 	}
 }

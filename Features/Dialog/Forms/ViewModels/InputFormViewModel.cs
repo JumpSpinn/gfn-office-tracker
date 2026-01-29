@@ -57,6 +57,4 @@ public sealed partial class InputFormViewModel : ViewModelBase
 	}
 
 	#endregion
-
-
 }

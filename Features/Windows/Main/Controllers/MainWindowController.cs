@@ -10,12 +10,14 @@ public sealed class MainWindowController
 	private readonly LogController _logController;
 	private readonly ConfigController _configController;
 	private readonly MainWindowEvents _mainWindowEvents;
+	private readonly MessageBoxController _messageBoxController;
 
-	public MainWindowController(LogController ls, ConfigController cc, MainWindowEvents mwe)
+	public MainWindowController(LogController ls, ConfigController cc, MainWindowEvents mwe, MessageBoxController mbc)
 	{
 		_logController = ls;
 		_configController = cc;
 		_mainWindowEvents = mwe;
+		_messageBoxController = mbc;
 		_mainWindowEvents.OnWindowSizePositionChanged += OnPositionSizeChanged;
 	}
 
@@ -54,9 +56,10 @@ public sealed class MainWindowController
 			_mainWindowEvents.Started();
 			return true;
 		}
-		catch (Exception ex)
+		catch (Exception e)
 		{
-			_logController.Exception(ex);
+			_logController.Exception(e);
+			await _messageBoxController.ShowExceptionAsync(e);
 			return false;
 		}
 	}

@@ -1,7 +1,7 @@
 ﻿namespace OfficeTracker.Infrastructure.Database.Services;
 
 [RegisterSingleton]
-public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactory, LogController logController)
+public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactory, LogController logController, MessageBoxController messageBoxController)
 {
 	#region USER SETTINGS
 
@@ -20,6 +20,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -39,6 +40,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -58,6 +60,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -77,6 +80,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -96,6 +100,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -115,6 +120,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -171,6 +177,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -200,6 +207,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return 0;
@@ -225,6 +233,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return 0;
@@ -251,6 +260,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -273,6 +283,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -295,6 +306,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -317,6 +329,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return false;
@@ -339,6 +352,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return false;
@@ -363,6 +377,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return false;
@@ -391,6 +406,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -411,6 +427,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -441,6 +458,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -469,6 +487,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return false;
@@ -495,6 +514,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -514,6 +534,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -533,6 +554,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -563,6 +585,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return null;
@@ -590,6 +613,7 @@ public sealed class DatabaseService(IDbContextFactory<OtContext> dbContextFactor
 		catch (Exception e)
 		{
 			logController.Exception(e);
+			await messageBoxController.ShowExceptionAsync(e);
 		}
 
 		return false;
