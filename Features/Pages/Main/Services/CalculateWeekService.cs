@@ -106,8 +106,6 @@ public sealed class CalculateWeekService
 			var cw = await CalculateNextWeekAsync();
 			if (cw is null) continue;
 
-			_logController.Debug($"Calculated week {i + 1}: {cw.WeekName}, Start: {cw.WeekStartDate}, End: {cw.WeekEndDate}");
-
 			cw.HomeOfficeTargetQuoted = _homeOfficeTargetQuoted;
 			cw.OfficeTargetQuoted = _officeTargetQuoted;
 			cwsTotal.Add(cw);
