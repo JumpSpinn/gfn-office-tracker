@@ -27,7 +27,6 @@ public sealed class CalculateWeekService
 	private uint _currentWeekIndex;
 	private uint _currentHomeOfficeCount;
 	private uint _currentOfficeCount;
-	private DateTime _lastUpdateUserSettings;
 	private DateTime _currentStartOfWeek;
 
 	#endregion
@@ -42,7 +41,6 @@ public sealed class CalculateWeekService
 		_currentWeekIndex = 0;
 		_currentHomeOfficeCount = 0;
 		_currentOfficeCount = 0;
-		_lastUpdateUserSettings = DateTime.MinValue;
 		_currentStartOfWeek = DateTime.MinValue;
 	}
 
@@ -92,10 +90,7 @@ public sealed class CalculateWeekService
 		_currentOfficeCount = us.OfficeDayCount;
 		_homeOfficeTargetQuoted = us.HomeOfficeTargetQuoted;
 		_officeTargetQuoted = us.OfficeTargetQuoted;
-
-		// Check if we have a nice date to start from
-		_lastUpdateUserSettings = (us.LastUpdate == DateTime.MinValue ? DateTime.Today : us.LastUpdate);
-		_currentStartOfWeek = DateTimeHelper.GetStartOfCurrentWeek(_lastUpdateUserSettings);
+		_currentStartOfWeek = DateTimeHelper.GetStartOfCurrentWeek();
 
 		List<CalculatedWeekEntity> cwsTotal = new();
 
@@ -108,6 +103,8 @@ public sealed class CalculateWeekService
 		{
 			var cw = await CalculateNextWeekAsync();
 			if (cw is null) continue;
+
+			_logController.Debug($"Calculated week {i + 1}: {cw.WeekName}, Start: {cw.WeekStartDate}, End: {cw.WeekEndDate}");
 
 			cw.HomeOfficeTargetQuoted = _homeOfficeTargetQuoted;
 			cw.OfficeTargetQuoted = _officeTargetQuoted;
@@ -211,8 +208,7 @@ public sealed class CalculateWeekService
 	{
 		try
 		{
-			var startDate = DateTime.Today;
-			var startCurrentWeek = DateTimeHelper.GetStartOfCurrentWeek(startDate);
+			var startCurrentWeek = DateTimeHelper.GetStartOfCurrentWeek();
 			var remainingDays = DateTimeHelper.GetRemainingDaysOfWeek();
 			var firstPass = true;
 
