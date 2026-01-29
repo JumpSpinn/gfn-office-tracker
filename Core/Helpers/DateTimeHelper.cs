@@ -36,8 +36,9 @@ public static class DateTimeHelper
 	/// <summary>
 	/// Calculates the start date of the current week, assuming the week starts on Monday.
 	/// </summary>
-	public static DateTime GetStartOfCurrentWeek(DateTime dt)
+	public static DateTime GetStartOfCurrentWeek()
 	{
+		var dt = DateTime.Today;
 		int daysSinceMonday = ((int)dt.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
 		return dt.Date.AddDays(-daysSinceMonday);
 	}
